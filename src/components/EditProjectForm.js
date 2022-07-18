@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Form from "./Form";
 
 const API_URL = "http://localhost:5005";
 
@@ -7,23 +8,16 @@ const EditProjectForm = (props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
-
-  useEffect(() => {                                  // <== ADD
+  useEffect(() => {
     axios
       .get(`${API_URL}/api/projects/${props.id}`)
       .then((response) => {
-        /* 
-          We update the state with the project data coming from the response.
-          This way we set inputs to show the actual title and description of the project
-        */
         const oneProject = response.data;
         setTitle(oneProject.title);
         setDescription(oneProject.description);
       })
       .catch((error) => console.log(error));
-    
   }, [props.id]);
- 
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,89 +25,37 @@ const EditProjectForm = (props) => {
       title: title,
       description: description,
     };
-    // Make a PUT request to update the project
-    axios
-      .put(`${API_URL}/api/projects/${props.id}`, body)
-      .then((response) => {
-        props.handleCanceleAddSaveFormBtn(e);
-        props.getAllProjects(); 
-      });
+
+    axios.put(`${API_URL}/api/projects/${props.id}`, body).then((response) => {
+      props.handleCanceleAddSaveFormBtn(e);
+      props.getAllProjects();
+    });
   };
 
   return (
-    <div className="w-full">
-      <h1 className="flex-1 text-lg font-medium"> Edit Project</h1>
-      <form
-        className="space-y-8 divide-y divide-gray-200 "
-        //Descomptar quan es faci servir bdd
-        onSubmit={handleSubmit}
-        //Comentar quan es faci servir bbdd
-        // onSubmit={(e) => props.handleNewProjectForm(e, title, description)}
-      >
-        <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
-          <div>
-            <div className="mt-6 sm:mt-5 space-y-6 sm:space-y-5">
-              <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                <label
-                  htmlFor="title"
-                  className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-                >
-                  Title
-                </label>
-                <div className="mt-1 sm:mt-0 sm:col-span-2">
-                  <div className="max-w-lg flex rounded-md shadow-sm ">
-                    <input
-                      type="text"
-                      name="title"
-                      id="title"
-                      onChange={(e) => setTitle(e.target.value)}
-                      value={title}
-                      className="flex-1 block w-full focus:ring focus:outline-none focus:ring-lime-600 focus:border min-w-0 rounded-r-md sm:text-sm border border-gray-300 rounded-md"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                <label
-                  htmlFor="description"
-                  className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-                >
-                  Description
-                </label>
-                <div className="mt-1 sm:mt-0 sm:col-span-2">
-                  <textarea
-                    id="description"
-                    name="description"
-                    rows={3}
-                    onChange={(e) => setDescription(e.target.value)}
-                    value={description}
-                    className="max-w-lg shadow-sm block w-full focus:ring focus:outline-none focus:ring-lime-600 focus:border sm:text-sm border border-gray-300 rounded-md"
-                  />
-                </div>
+    <div className="xl:flex-shrink-0 xl:w-96 xl:border-r xl:border-gray-200 bg-white">
+      <div className="pl-4 pr-6 py-6 sm:pl-6 lg:pl-8 xl:pl-0">
+        <div className="flex items-center justify-between">
+          <div className="flex-1 space-y-8">
+            <div className="space-y-8 sm:space-y-0 sm:flex sm:justify-between sm:items-center xl:block xl:space-y-8">
+              {/* Profile */}
+              <div className="flex items-center space-x-3">
+                <Form
+                  formTitle="Edit Project"
+                  onSubmit={handleSubmit}
+                  cancelBtntext="Cancel"
+                  cancelBtnAction={props.handleCanceleAddSaveFormBtn}
+                  acceptBtnText="Save Changes"
+                  projectTitle={title}
+                  projectDescription={description}
+                  setTitle={setTitle}
+                  setDescription={setDescription}
+                />
               </div>
             </div>
           </div>
         </div>
-
-        <div className="pt-5">
-          <div className="flex justify-center">
-            <button
-              type="button"
-              className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-lime-600/50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              onClick={props.handleCanceleAddSaveFormBtn}
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-lime-600 hover:bg-lime-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Save Changes
-            </button>
-          </div>
-        </div>
-      </form>
+      </div>
     </div>
   );
 };

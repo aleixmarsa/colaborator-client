@@ -1,18 +1,19 @@
 import NavBar from "../components/NavBar";
-import NewProjectBtn from "../components/NewProjectBtn";
-import InviteTeamBtn from "../components/InviteTeamBtn";
 import NewProjectForm from "../components/NewProjectForm";
 import EditProjectForm from "../components/EditProjectForm";
+import Form from "../components/Form";
 import DeletProjectModal from "../components/DeleteProjectModal";
 import Footer from "../components/Footer";
+import Button from "../components/Button";
+
 import { useState, useEffect } from "react";
+import axios from "axios";
+import { Menu } from "@headlessui/react";
 
 import {
-  BadgeCheckIcon,
   ChevronDownIcon,
   ChevronRightIcon,
   CollectionIcon,
-  SearchIcon,
   SortAscendingIcon,
   StarIcon,
   UserCircleIcon,
@@ -20,37 +21,7 @@ import {
   TrashIcon,
 } from "@heroicons/react/solid";
 
-import { Menu } from "@headlessui/react";
-import axios from "axios";
 const API_URL = "http://localhost:5005";
-
-const projectsInProgressList = [
-  {
-    name: "First Project",
-    href: "#",
-    siteHref: "#",
-    repoHref: "#",
-    repo: "aleixmarsa/first-project",
-    tech: "React",
-    lastDeploy: "3h ago",
-    location: "Catalunya",
-    starred: true,
-    active: true,
-  },
-  {
-    name: "Second Project",
-    href: "#",
-    siteHref: "#",
-    repoHref: "#",
-    repo: "aleixmarsa/second-project",
-    tech: "React",
-    lastDeploy: "6h ago",
-    location: "Catalunya",
-    starred: true,
-    active: true,
-  },
-  // More projects...
-];
 
 const completedProjects = [
   {
@@ -133,7 +104,6 @@ const ProjectsPage = () => {
     setOpenDeleteModal(true);
     setId(id);
     setProjectTitle(title);
-
   };
 
   return (
@@ -154,48 +124,18 @@ const ProjectsPage = () => {
         <div className="flex-1 min-w-0 bg-white xl:flex">
           {/* Account profile */}
           {newProject ? (
-            <div className="xl:flex-shrink-0 xl:w-96 xl:border-r xl:border-gray-200 bg-white">
-              <div className="pl-4 pr-6 py-6 sm:pl-6 lg:pl-8 xl:pl-0">
-                <div className="flex items-center justify-between">
-                  <div className="flex-1 space-y-8">
-                    <div className="space-y-8 sm:space-y-0 sm:flex sm:justify-between sm:items-center xl:block xl:space-y-8">
-                      {/* Profile */}
-                      <div className="flex items-center space-x-3">
-                        <NewProjectForm
-                          handleNewProjectBtn={handleNewProjectBtn}
-                          handleCanceleAddSaveFormBtn={
-                            handleCanceleAddSaveFormBtn
-                          }
-                          getAllProjects={getAllProjects}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <NewProjectForm
+              handleNewProjectBtn={handleNewProjectBtn}
+              handleCanceleAddSaveFormBtn={handleCanceleAddSaveFormBtn}
+              getAllProjects={getAllProjects}
+            />
           ) : editProject ? (
-            <div className="xl:flex-shrink-0 xl:w-96 xl:border-r xl:border-gray-200 bg-white">
-              <div className="pl-4 pr-6 py-6 sm:pl-6 lg:pl-8 xl:pl-0">
-                <div className="flex items-center justify-between">
-                  <div className="flex-1 space-y-8">
-                    <div className="space-y-8 sm:space-y-0 sm:flex sm:justify-between sm:items-center xl:block xl:space-y-8">
-                      {/* Profile */}
-                      <div className="flex items-center space-x-3">
-                        <EditProjectForm
-                          id={id}
-                          handleNewProjectBtn={handleNewProjectBtn}
-                          handleCanceleAddSaveFormBtn={
-                            handleCanceleAddSaveFormBtn
-                          }
-                          getAllProjects={getAllProjects}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <EditProjectForm
+              id={id}
+              handleNewProjectBtn={handleNewProjectBtn}
+              handleCanceleAddSaveFormBtn={handleCanceleAddSaveFormBtn}
+              getAllProjects={getAllProjects}
+            />
           ) : (
             <div className="xl:flex-shrink-0 xl:w-64 xl:border-r xl:border-gray-200 bg-white">
               <div className="pl-4 pr-6 py-6 sm:pl-6 lg:pl-8 xl:pl-0">
@@ -240,10 +180,19 @@ const ProjectsPage = () => {
                       </div>
                       {/* Action buttons */}
                       <div className="flex flex-col sm:flex-row xl:flex-col">
-                        <NewProjectBtn
-                          handleNewProjectBtn={handleNewProjectBtn}
+                        <Button
+                          position="column"
+                          type="button"
+                          action={handleNewProjectBtn}
+                          text="New Project"
+                          color="lime"
                         />
-                        <InviteTeamBtn />
+                        <Button
+                          position="column"
+                          type="button"
+                          text="Invite Team"
+                          color="white"
+                        />
                       </div>
                     </div>
                     {/* Meta info */}
@@ -464,7 +413,7 @@ const ProjectsPage = () => {
                       <p className="flex text-gray-500 text-sm space-x-2">
                         <span>{project.tech}</span>
                         <span aria-hidden="true">&middot;</span>
-                        <span>Last update {project.updatedAt}</span>
+                        <span>Last update: {project.updatedAt.replace(/([^:]*$)/g,"").replace("T", " ").slice(0, -1)}</span>
                         <span aria-hidden="true">&middot;</span>
                         {/* <span>{project.location}</span> */}
                       </p>
