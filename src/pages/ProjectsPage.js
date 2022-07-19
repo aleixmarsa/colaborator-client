@@ -5,8 +5,9 @@ import Form from "../components/Form";
 import DeletProjectModal from "../components/DeleteProjectModal";
 import Footer from "../components/Footer";
 import Button from "../components/Button";
+import { AuthContext } from "../context/auth.context";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { Menu } from "@headlessui/react";
 
@@ -58,16 +59,34 @@ const classNames = (...classes) => {
 const ProjectsPage = () => {
   const [newProject, setNewProject] = useState(false);
   const [editProject, setEditProject] = useState(false);
+  const [filteredProjects, setFilteredProjects] = useState([]);
+
   const [id, setId] = useState(0);
   const [projectTitle, setProjectTitle] = useState("");
   const [projectsInProgress, setProjectsInProgress] = useState([]);
   const [modalHasRender, setModalHasRender] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(true);
+  const { user } = useContext(AuthContext);
+
+  const filterProjects = (searchText) => {
+    const projectsCopy = [...projectsInProgress];
+    console.log(projectsCopy);
+    searchText !== ""
+      ? setFilteredProjects(
+          projectsCopy.filter((project) =>
+            project.title.toLowerCase().includes(searchText.toLowerCase())
+          )
+        )
+      : setFilteredProjects(projectsInProgress);
+  };
 
   const getAllProjects = () => {
     axios
       .get(`${API_URL}/colaborator-API/projects/`)
-      .then((response) => setProjectsInProgress(response.data))
+      .then((response) => {
+        setProjectsInProgress(response.data);
+        setFilteredProjects(response.data);
+      })
       .catch((error) => console.log(error));
   };
 
@@ -108,7 +127,7 @@ const ProjectsPage = () => {
 
   return (
     <div className="flex flex-col h-screen">
-      <NavBar />
+      <NavBar filterProjects={filterProjects} />
       {modalHasRender && (
         <DeletProjectModal
           getAllProjects={getAllProjects}
@@ -154,7 +173,7 @@ const ProjectsPage = () => {
                         </div>
                         <div className="space-y-1">
                           <div className="text-sm font-medium text-gray-900">
-                            Aleix Marsà
+                            {user.name}
                           </div>
                           <a
                             href="#"
@@ -214,7 +233,7 @@ const ProjectsPage = () => {
           )}
 
           {/* Current Projects List */}
-          
+
           <div className="bg-white lg:min-w-0 lg:flex-1">
             <div className="pl-4 pr-6 pt-4 pb-4 border-b border-t border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 xl:pt-6 xl:border-t-0">
               <div className="flex items-center">
@@ -289,10 +308,10 @@ const ProjectsPage = () => {
               role="list"
               className="relative z-0 divide-y divide-gray-200 border-b border-gray-200"
             >
-              {projectsInProgress.map((project) => (
+              {filteredProjects.map((project) => (
                 <li
                   key={project._id}
-                  className="relative pl-4 pr-6 py-5 hover:bg-gray-50 sm:py-6 sm:pl-6 lg:pl-8 xl:pl-6"
+                  className="relative pl-4 pr-6 py-2 hover:bg-gray-50 sm:pl-6 lg:pl-8 xl:pl-6"
                 >
                   <div className="flex items-center justify-between space-x-4">
                     {/* Repo name and link */}
@@ -406,10 +425,25 @@ const ProjectsPage = () => {
                           />
                         </button>
                       </p>
-                      <p className="flex text-gray-500 text-sm space-x-2">
+                      <p className="flex flex-col items-start text-gray-500 text-sm space-x-2">
                         <span>{project.tech}</span>
                         <span aria-hidden="true">&middot;</span>
-                        <span>Last update: {project.updatedAt.replace(/([^:]*$)/g,"").replace("T", " ").slice(0, -1)}</span>
+                        <span>
+                          <span>Created at: </span>
+                          <span className = "ml-2">
+                            {project.createdAt
+                              .replace(/([^:]*$)/g, "")
+                              .replace("T", " ")
+                              .slice(0, -1)}
+                          </span>
+                        </span>
+                        <span className>
+                          Last update:{" "}
+                          {project.updatedAt
+                            .replace(/([^:]*$)/g, "")
+                            .replace("T", " ")
+                            .slice(0, -1)}
+                        </span>
                         <span aria-hidden="true">&middot;</span>
                         {/* <span>{project.location}</span> */}
                       </p>
