@@ -34,7 +34,7 @@ const NavBar = () => {
                 </h1>
               </div>
               {/* Search section */}
-              <div className="flex-1 flex justify-center lg:justify-end">
+              {location.pathname === '/' ? (<div className="flex-1 flex justify-center lg:justify-end">
                 <div className="w-full px-2 lg:px-6">
                   <label htmlFor="search" className="sr-only">
                     Search projects
@@ -52,7 +52,8 @@ const NavBar = () => {
                     />
                   </div>
                 </div>
-              </div>
+              </div>): <></>}
+              
               <div className="flex lg:hidden">
                 {/* Mobile menu button */}
                 <Disclosure.Button className="bg-lime-600 inline-flex items-center justify-center p-2 rounded-md text-lime-400 hover:text-white hover:bg-lime-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-lime-600 focus:ring-white">
@@ -125,7 +126,7 @@ const NavBar = () => {
                         leaveFrom="transform opacity-100 scale-100"
                         leaveTo="transform opacity-0 scale-95"
                       >
-                        <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <Menu.Items className="origin-top-right absolute right-0 mt-2 w-36 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                           {userNavigation.map((item) => (
                             <Menu.Item key={item.name}>
                               {({ active }) => (
@@ -133,7 +134,7 @@ const NavBar = () => {
                                   onClick={item.action}
                                   className={classNames(
                                     active ? "bg-gray-100" : "",
-                                    "block px-4 py-2 text-sm text-gray-700"
+                                    "block w-full px-4 py-2 text-sm text-gray-700"
                                   )}
                                 >
                                   {item.name}
