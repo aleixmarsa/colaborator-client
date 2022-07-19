@@ -1,12 +1,13 @@
 import { Fragment } from "react";
+import { NavLink } from "react-router-dom";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { SearchIcon, UserCircleIcon } from "@heroicons/react/solid";
 import { MenuAlt1Icon, XIcon } from "@heroicons/react/outline";
 import icon from "../assets/icon.png";
 
 const navigation = [
-  { name: "TEST1", href: "#", current: true },
-  { name: "TEST2", href: "#", current: false },
+  { name: "HOME", href: "#", current: true },
+  { name: "GLOBAL CALENDAR", href: "#", current: false },
 ];
 
 const userNavigation = [
@@ -73,16 +74,36 @@ const NavBar = () => {
               <div className="hidden lg:block lg:w-80">
                 <div className="flex items-center justify-end">
                   <div className="flex">
-                    {navigation.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        className="px-3 py-2 rounded-md text-sm font-medium text-lime-200 hover:text-white"
-                        aria-current={item.current ? "page" : undefined}
-                      >
-                        {item.name}
-                      </a>
-                    ))}
+                    <NavLink
+                      to="/"
+                      className={({ isActive }) =>
+                        isActive
+                          ? "px-3 py-2 rounded-md text-md font-medium text-white hover:text-white"
+                          : "px-3 py-2 rounded-md text-md font-medium text-lime-200 hover:text-white"
+                      }
+                    >
+                      HOME
+                    </NavLink>
+                    <NavLink
+                      to="/global-calendar"
+                      className={({ isActive }) =>
+                        isActive
+                          ? "px-3 py-2 rounded-md text-md font-medium text-white hover:text-white"
+                          : "px-3 py-2 rounded-md text-md font-medium text-lime-200 hover:text-white"
+                      }
+                    >
+                     CALENDAR
+                    </NavLink>
+                    {/* {navigation.map((item) => (
+                        <a
+                          key={item.name}
+                          href={item.href}
+                          className="px-3 py-2 rounded-md text-sm font-medium text-lime-200 hover:text-white"
+                          aria-current={item.current ? "page" : undefined}
+                        >
+                          {item.name}
+                        </a>
+                    ))} */}
                   </div>
                   {/* Profile dropdown */}
                   <Menu as="div" className="ml-4 relative flex-shrink-0 z-10">

@@ -121,7 +121,7 @@ const ProjectsPage = () => {
       {/* 3 column wrapper */}
       <div className="flex-grow w-full max-w-9xl mx-auto xl:px-8 lg:flex">
         {/* Left sidebar & main wrapper */}
-        <div className="flex-1 min-w-0 bg-white xl:flex">
+        <div className="flex-1 min-w-0 bg-white xl:flex ">
           {/* Account profile */}
           {newProject ? (
             <NewProjectForm
@@ -137,7 +137,7 @@ const ProjectsPage = () => {
               getAllProjects={getAllProjects}
             />
           ) : (
-            <div className="xl:flex-shrink-0 xl:w-64 xl:border-r xl:border-gray-200 bg-white">
+            <div className="xl:flex-shrink-0 xl:w-96 xl:border-r xl:border-gray-200 bg-white">
               <div className="pl-4 pr-6 py-6 sm:pl-6 lg:pl-8 xl:pl-0">
                 <div className="flex items-center justify-between">
                   <div className="flex-1 space-y-8">
@@ -187,12 +187,12 @@ const ProjectsPage = () => {
                           text="New Project"
                           color="lime"
                         />
-                        <Button
+                        {/* <Button
                           position="column"
                           type="button"
                           text="Invite Team"
                           color="white"
-                        />
+                        /> */}
                       </div>
                     </div>
                     {/* Meta info */}
@@ -214,6 +214,7 @@ const ProjectsPage = () => {
           )}
 
           {/* Current Projects List */}
+          
           <div className="bg-white lg:min-w-0 lg:flex-1">
             <div className="pl-4 pr-6 pt-4 pb-4 border-b border-t border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 xl:pt-6 xl:border-t-0">
               <div className="flex items-center">
@@ -425,7 +426,7 @@ const ProjectsPage = () => {
           </div>
         </div>
         {/* Activity feed */}
-        <div className="bg-gray-50  pr-4 sm:pr-6 lg:pr-8 lg:flex-shrink-0 lg:border-l lg:border-gray-200 xl:pr-0 lg:max-w-sm xl:max-w-sm">
+        <div className="bg-gray-50  pr-4 sm:pr-6 lg:pr-8 lg:flex-shrink-0 lg:border-l lg:border-gray-200 xl:pr-0 lg:max-w-xl xl:max-w-xl">
           {/* Completed projects List */}
           <div className="bg-white lg:min-w-0 lg:flex-1">
             <div className="pl-4 pr-6 pt-4 pb-4 border-b border-t border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 xl:pt-6 xl:border-t-0">
