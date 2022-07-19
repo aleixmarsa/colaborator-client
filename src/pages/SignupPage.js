@@ -6,25 +6,25 @@ import Footer from "../components/Footer";
 import SignUpForm from "../components/SignUpForm";
 
 function SignupPage(props) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+	const [ email, setEmail ] = useState('');
+	const [ password, setPassword ] = useState('');
+	const [ name, setName ] = useState('');
   const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState(undefined);
+	const [ errorMessage, setErrorMessage ] = useState(undefined);
 
-  const handleEmail = (e) => setEmail(e.target.value);
-  const handlePassword = (e) => setPassword(e.target.value);
-  const handleName = (e) => setName(e.target.value);
+	const handleEmail = (e) => setEmail(e.target.value);
+	const handlePassword = (e) => setPassword(e.target.value);
+	const handleName = (e) => setName(e.target.value);
 
-  const handleSignupSubmit = async (e) => {
-    e.preventDefault();
-    // Create an object representing the request body
-    const requestBody = { email, password, name };
-    try {
+	const handleSignupSubmit = async (e) => {
+		e.preventDefault();
+		// Create an object representing the request body
+		const requestBody = { email, password, name };
+    try{
       await signupService(requestBody);
       navigate("/login");
-    } catch (err) {
-      if (err.response?.status === 400) {
+    }catch(err){
+      if(err.response?.status === 400){
         setErrorMessage(err.response.data.errorMessage);
         console.log(errorMessage);
       }
@@ -34,7 +34,15 @@ function SignupPage(props) {
   return (
     <div className="flex flex-col h-screen mb-auto">
       <NavBar />
-      <SignUpForm />
+      <SignUpForm
+      handleSignupSubmit={handleSignupSubmit}
+      email={email}
+      handleEmail={handleEmail}
+      name={name}
+      handleName={handleName}
+      password={password}
+      handlePassword={handlePassword}
+       />
       <Footer />
     </div>
   );

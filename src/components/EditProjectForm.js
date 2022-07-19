@@ -10,7 +10,7 @@ const EditProjectForm = (props) => {
 
   useEffect(() => {
     axios
-      .get(`${API_URL}/api/projects/${props.id}`)
+      .get(`${API_URL}/colaborator-API/projects/${props.id}`)
       .then((response) => {
         const oneProject = response.data;
         setTitle(oneProject.title);
@@ -26,7 +26,7 @@ const EditProjectForm = (props) => {
       description: description,
     };
 
-    axios.put(`${API_URL}/api/projects/${props.id}`, body).then((response) => {
+    axios.put(`${API_URL}/colaborator-API/projects/${props.id}`, body).then((response) => {
       props.handleCanceleAddSaveFormBtn(e);
       props.getAllProjects();
     });

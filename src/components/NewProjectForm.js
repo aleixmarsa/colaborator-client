@@ -15,7 +15,7 @@ const NewProjectForm = (props) => {
       description: description,
     };
     axios
-      .post(`${API_URL}/api/projects`, body)
+      .post(`${API_URL}/colaborator-API/projects/new-project`, body)
       .then((response) => {
         setTitle("");
         setDescription("");

@@ -36,7 +36,13 @@ function LoginPage(props) {
   return (
     <div className="flex flex-col h-screen mb-auto">
       <NavBar />
-      <LogInForm />
+      <LogInForm
+        handleLoginSubmit={handleLoginSubmit}
+        email={email}
+        handleEmail={handleEmail}
+        password={password}
+        handlePassword={handlePassword}
+      />
       <Footer />
     </div>
   );

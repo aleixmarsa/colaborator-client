@@ -66,7 +66,7 @@ const ProjectsPage = () => {
 
   const getAllProjects = () => {
     axios
-      .get(`${API_URL}/api/projects`)
+      .get(`${API_URL}/colaborator-API/projects/`)
       .then((response) => setProjectsInProgress(response.data))
       .catch((error) => console.log(error));
   };
@@ -300,14 +300,14 @@ const ProjectsPage = () => {
                       <div className="flex items-center space-x-3">
                         <span
                           className={classNames(
-                            project.active ? "bg-green-100" : "bg-gray-100",
+                            project.active ? "bg-green-100" : "bg-green-100",
                             "h-4 w-4 rounded-full flex items-center justify-center"
                           )}
                           aria-hidden="true"
                         >
                           <span
                             className={classNames(
-                              project.active ? "bg-green-400" : "bg-gray-400",
+                              project.active ? "bg-green-400" : "bg-green-400",
                               "h-2 w-2 rounded-full"
                             )}
                           />
@@ -369,11 +369,6 @@ const ProjectsPage = () => {
                           className="relative bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lime-500"
                           onClick={(e) => handleEditProjectBtn(e, project._id)}
                         >
-                          {/* <span className="sr-only">
-                            {project.starred
-                              ? "Add to favorites"
-                              : "Remove from favorites"}
-                          </span> */}
                           <PencilIcon
                             className={classNames(
                               project.active
@@ -513,14 +508,14 @@ const ProjectsPage = () => {
                       <div className="flex items-center space-x-3">
                         <span
                           className={classNames(
-                            project.active ? "bg-green-100" : "bg-gray-100",
+                            project.active ? "bg-gray-100" : "bg-gray-100",
                             "h-4 w-4 rounded-full flex items-center justify-center"
                           )}
                           aria-hidden="true"
                         >
                           <span
                             className={classNames(
-                              project.active ? "bg-green-400" : "bg-gray-400",
+                              project.active ? "bg-gray-400" : "bg-gray-400",
                               "h-2 w-2 rounded-full"
                             )}
                           />

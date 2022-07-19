@@ -1,7 +1,17 @@
 import Button from "./Button";
 import { Link } from "react-router-dom";
 
-const SignUpForm = () => {
+const SignUpForm = (props) => {
+  const {
+    handleSignupSubmit,
+    email,
+    handleEmail,
+    name,
+    handleName,
+    password,
+    handlePassword,
+  } = props;
+
   return (
     <div className="flex-grow flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -15,10 +25,9 @@ const SignUpForm = () => {
           </span>
         </Link>
       </div>
-
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 drop-shadow-xl rounded-md sm:px-10">
-          <form className="space-y-6" action="#" method="POST">
+          <form onSubmit={handleSignupSubmit} className="space-y-6" action="#" method="POST">
             <div>
               <label
                 htmlFor="email"
@@ -31,7 +40,9 @@ const SignUpForm = () => {
                   id="email"
                   name="email"
                   type="email"
+                  value={email}
                   autoComplete="email"
+                  onChange={handleEmail}
                   required
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-lime-600 focus:border-lime-600 sm:text-sm"
                 />
@@ -47,10 +58,12 @@ const SignUpForm = () => {
               </label>
               <div className="mt-1">
                 <input
-                  id="user"
-                  name="user"
-                  type="user"
-                  autoComplete="user"
+                  id="name"
+                  name="name"
+                  type="name"
+                  value={name}
+                  autoComplete="name"
+                  onChange={handleName}
                   required
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-lime-600 focus:border-lime-600 sm:text-sm"
                 />
@@ -69,7 +82,9 @@ const SignUpForm = () => {
                   id="password"
                   name="password"
                   type="password"
+                  value={password}
                   autoComplete="current-password"
+                  onChange={handlePassword}
                   required
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-lime-600 focus:border-lime-600 sm:text-sm"
                 />

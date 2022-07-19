@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useNavigate } from 'react';
 import axios from 'axios';
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -18,7 +18,7 @@ function AuthProviderWrapper(props) {
 		if (storedToken) {
 			// We must send the JWT token in the request's "Authorization" Headers
 			axios
-				.get(`${API_URL}/auth/verify`, { headers: { Authorization: `Bearer ${storedToken}` } })
+				.get(`${API_URL}/colaborator-API/auth/verify`, { headers: { Authorization: `Bearer ${storedToken}` } })
 				.then((response) => {
 					// If the server verifies that JWT token is valid  ✅
 					const user = response.data;
@@ -51,6 +51,7 @@ function AuthProviderWrapper(props) {
 	};
 
 	const logOutUser = () => {
+		
 		// Upon logout, remove the token from the localStorage
 		localStorage.removeItem('authToken');
 

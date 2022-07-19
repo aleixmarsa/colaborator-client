@@ -1,8 +1,10 @@
 import Button from "./Button";
-import logo from "../assets/icon.png";
 import { Link } from "react-router-dom";
 
-const LogInForm = () => {
+const LogInForm = (props) => {
+  const {handleLoginSubmit, email, handleEmail, password, handlePassword} =
+    props;
+
   return (
     <div className="flex-grow flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -16,7 +18,7 @@ const LogInForm = () => {
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 drop-shadow-xl sm:rounded-md sm:px-10">
-          <form className="space-y-6" action="#" method="POST">
+          <form onSubmit={handleLoginSubmit} className="space-y-6" action="#" method="POST">
             <div>
               <label
                 htmlFor="email"
@@ -29,7 +31,9 @@ const LogInForm = () => {
                   id="email"
                   name="email"
                   type="email"
+                  value={email}
                   autoComplete="email"
+                  onChange={handleEmail}
                   required
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
@@ -48,7 +52,9 @@ const LogInForm = () => {
                   id="password"
                   name="password"
                   type="password"
+                  value={password}
                   autoComplete="current-password"
+                  onChange={handlePassword}
                   required
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />

@@ -11,7 +11,7 @@ const DeletProjectModal = (props) => {
 
   const deleteProject = (id) => {
     axios
-      .delete(`${API_URL}/api/projects/${id}`)
+      .delete(`${API_URL}/colaborator-API/projects/delete/${id}`)
       .then(() => {
         props.setOpenDeleteModal(false);
         props.getAllProjects();
