@@ -1,14 +1,10 @@
-import { Fragment } from "react";
-import { NavLink } from "react-router-dom";
+import { Fragment, useContext } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { SearchIcon, UserCircleIcon } from "@heroicons/react/solid";
 import { MenuAlt1Icon, XIcon } from "@heroicons/react/outline";
 import icon from "../assets/icon.png";
-
-const navigation = [
-  { name: "HOME", href: "#", current: true },
-  { name: "GLOBAL CALENDAR", href: "#", current: false },
-];
+import { AuthContext } from "../context/auth.context";
 
 const userNavigation = [
   { name: "Your Profile", href: "#" },
@@ -20,6 +16,9 @@ function classNames(...classes) {
 }
 
 const NavBar = () => {
+  const { isLoggedIn, user } = useContext(AuthContext);
+  let location = useLocation();
+  
   return (
     <Disclosure as="nav" className="flex-shrink-0 bg-lime-600">
       {({ open }) => (
@@ -32,7 +31,7 @@ const NavBar = () => {
                   <img className="h-8 w-auto" src={icon} alt="Workflow" />
                 </div>
                 <h1 className="ml-3 text-3xl font-medium text-white">
-                  coLABorator
+                  co[lab]orator
                 </h1>
               </div>
 
@@ -78,9 +77,10 @@ const NavBar = () => {
                       to="/"
                       className={({ isActive }) =>
                         isActive
-                          ? "px-3 py-2 rounded-md text-md font-medium text-white hover:text-white"
-                          : "px-3 py-2 rounded-md text-md font-medium text-lime-200 hover:text-white"
+                          ? "px-3 py-2 rounded-md text-md font-medium text-white bg-lime-700 hover:text-white"
+                          : "px-3 py-2 rounded-md text-md font-medium text-lime-200 hover:text-e-100 hover:bg-lime-600"
                       }
+
                     >
                       HOME
                     </NavLink>
@@ -88,11 +88,11 @@ const NavBar = () => {
                       to="/global-calendar"
                       className={({ isActive }) =>
                         isActive
-                          ? "px-3 py-2 rounded-md text-md font-medium text-white hover:text-white"
-                          : "px-3 py-2 rounded-md text-md font-medium text-lime-200 hover:text-white"
+                        ? "px-3 py-2 rounded-md text-md font-medium text-white bg-lime-700 hover:text-white"
+                          : "px-3 py-2 rounded-md text-md font-medium text-lime-200 hover:text-e-100 hover:bg-lime-600"
                       }
                     >
-                     CALENDAR
+                      CALENDAR
                     </NavLink>
                     {/* {navigation.map((item) => (
                         <a
@@ -153,22 +153,32 @@ const NavBar = () => {
 
           <Disclosure.Panel className="lg:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1">
-              {navigation.map((item) => (
-                <Disclosure.Button
-                  key={item.name}
-                  as="a"
-                  href={item.href}
-                  className={classNames(
-                    item.current
-                      ? "text-white bg-lime-800"
-                      : "text-lime-200 hover:text-lime-100 hover:bg-lime-600",
-                    "block px-3 py-2 rounded-md text-base font-medium"
-                  )}
-                  aria-current={item.current ? "page" : undefined}
-                >
-                  {item.name}
-                </Disclosure.Button>
-              ))}
+              <Disclosure.Button
+                as="a"
+                href="/"
+                className={classNames(
+                  location.pathname === "/"
+                    ? "text-white bg-lime-700"
+                    : "text-lime-200 hover:text-lime-100 hover:bg-lime-600",
+                  "block px-3 py-2 rounded-md text-base font-medium"
+                )}
+                // aria-current={item.current ? "page" : undefined}
+              >
+                HOME
+              </Disclosure.Button>
+              <Disclosure.Button
+                as="a"
+                href="/global-calendar"
+                className={classNames(
+                  location.pathname === "/global-calendar"
+                    ? "text-white bg-lime-700"
+                    : "text-lime-200 hover:text-lime-100 hover:bg-lime-600",
+                  "block px-3 py-2 rounded-md text-base font-medium"
+                )}
+                // aria-current={item.current ? "page" : undefined}
+              >
+                CALENDAR
+              </Disclosure.Button>
             </div>
             <div className="pt-4 pb-3 border-t border-lime-800">
               <div className="px-2 space-y-1">

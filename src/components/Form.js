@@ -45,7 +45,7 @@ const Form = (props) => {
                                   id="title"
                                   onChange={(e) => setTitle(e.target.value)}
                                   value={projectTitle}
-                                  className="flex-1 block w-full focus:ring focus:outline-none focus:ring-lime-600 focus:border min-w-0 rounded-r-md sm:text-sm border border-gray-300 rounded-md"
+                                  className="flex-1 block w-full focus:ring focus:outline-none focus:ring-lime-600 focus:border sm:text-sm border border-gray-300 rounded-md"
                                 />
                               </div>
                             </div>
