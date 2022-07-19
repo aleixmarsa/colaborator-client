@@ -33,30 +33,17 @@ const EditProjectForm = (props) => {
   };
 
   return (
-    <div className="xl:flex-shrink-0 xl:w-96 xl:border-r xl:border-gray-200 bg-white">
-      <div className="pl-4 pr-6 py-6 sm:pl-6 lg:pl-8 xl:pl-0">
-        <div className="flex items-center justify-between">
-          <div className="flex-1 space-y-8">
-            <div className="space-y-8 sm:space-y-0 sm:flex sm:justify-between sm:items-center xl:block xl:space-y-8">
-              {/* Profile */}
-              <div className="flex items-center space-x-3">
-                <Form
-                  formTitle="Edit Project"
-                  onSubmit={handleSubmit}
-                  cancelBtntext="Cancel"
-                  cancelBtnAction={props.handleCanceleAddSaveFormBtn}
-                  acceptBtnText="Save Changes"
-                  projectTitle={title}
-                  projectDescription={description}
-                  setTitle={setTitle}
-                  setDescription={setDescription}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Form
+      formTitle="Edit Project"
+      onSubmit={handleSubmit}
+      cancelBtntext="Cancel"
+      cancelBtnAction={props.handleCanceleAddSaveFormBtn}
+      acceptBtnText="Save Changes"
+      projectTitle={title}
+      projectDescription={description}
+      setTitle={setTitle}
+      setDescription={setDescription}
+    />
   );
 };
 export default EditProjectForm;
