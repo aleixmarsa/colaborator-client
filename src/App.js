@@ -5,8 +5,8 @@ import GlobalCalendarPage from "./pages/GlobalCalendar";
 import { Routes, Route } from "react-router-dom";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
-import PrivateRoute from './components/PrivateRoute'; 
-import AnonRoute from './components/AnonRoute'; 
+import PrivateRoute from './components/routes/PrivateRoute'; 
+import AnonRoute from './components/routes/AnonRoute'; 
 function App() {
   return (
     <div className="App">

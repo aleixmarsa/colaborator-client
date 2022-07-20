@@ -4,7 +4,7 @@ import Form from "./Form";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-const FormNewProject = (props) => {
+const NewProjectForm = (props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
@@ -39,4 +39,4 @@ const FormNewProject = (props) => {
     />
   );
 };
-export default FormNewProject;
+export default NewProjectForm;

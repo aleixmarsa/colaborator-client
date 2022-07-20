@@ -1,7 +1,7 @@
-import Button from "./Button";
+import Button from "../buttons/Button";
 import { Link } from "react-router-dom";
 
-const FormSignUp = (props) => {
+const SignUpForm = (props) => {
   const {
     handleSignupSubmit,
     email,
@@ -21,7 +21,7 @@ const FormSignUp = (props) => {
         <Link className="mt-2 text-center text-sm text-gray-600" to="/login">
           Or try it using{" "}
           <span className="font-bold text-gray-600 hover:text-gray-500 underline">
-            admin@admin//admin
+            admin@admin.com//Admin123!
           </span>
         </Link>
       </div>
@@ -119,4 +119,4 @@ const FormSignUp = (props) => {
   );
 };
 
-export default FormSignUp;
+export default SignUpForm;

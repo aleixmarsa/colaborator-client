@@ -3,8 +3,8 @@ import { NavLink, useLocation } from "react-router-dom";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { SearchIcon, UserCircleIcon } from "@heroicons/react/solid";
 import { MenuAlt1Icon, XIcon } from "@heroicons/react/outline";
-import icon from "../assets/icon.png";
-import { AuthContext } from "../context/auth.context";
+import icon from "../../assets/icon.png";
+import { AuthContext } from "../../context/auth.context";
 import Avatar from "react-avatar";
 
 function classNames(...classes) {

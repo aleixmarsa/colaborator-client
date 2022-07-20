@@ -1,10 +1,9 @@
-import NavBar from "../components/NavBar";
-import FormNewProject from "../components/FormNewProject";
-import FormEditProject from "../components/FormEditProject";
-import Form from "../components/Form";
-import DeletProjectModal from "../components/DeleteProjectModal";
-import Footer from "../components/Footer";
-import Button from "../components/Button";
+import NavBar from "../components/navbar/NavBar";
+import NewProjectForm from "../components/forms/NewProjectForm";
+import EditProjectForm from "../components/forms/EditProjectForm";
+import DeletProjectModal from "../components/modals/DeleteProjectModal";
+import Footer from "../components/footer/Footer";
+import Button from "../components/buttons/Button";
 import { AuthContext } from "../context/auth.context";
 import Avatar from "react-avatar";
 
@@ -153,19 +152,20 @@ const ProjectsPage = () => {
           openDeleteModal={openDeleteModal}
         />
       )}
+      
       {/* 3 column wrapper */}
       <div className="flex-grow w-full max-w-9xl mx-auto xl:px-8 lg:flex">
         {/* Left sidebar & main wrapper */}
         <div className="flex-1 min-w-0 bg-white xl:flex ">
           {/* Account profile */}
           {newProject ? (
-            <FormNewProject
+            <NewProjectForm
               handleNewProjectBtn={handleNewProjectBtn}
               handleCanceleAddSaveFormBtn={handleCanceleAddSaveFormBtn}
               refresAllProjects={refresAllProjects}
             />
           ) : editProject ? (
-            <FormEditProject
+            <EditProjectForm
               id={id}
               handleNewProjectBtn={handleNewProjectBtn}
               handleCanceleAddSaveFormBtn={handleCanceleAddSaveFormBtn}

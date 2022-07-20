@@ -1,8 +1,8 @@
-import Button from "./Button";
+import Button from "../buttons/Button";
 import { Link } from "react-router-dom";
 
-const FormLogIn = (props) => {
-  const {handleLoginSubmit, email, handleEmail, password, handlePassword} =
+const LogInForm = (props) => {
+  const { handleLoginSubmit, email, handleEmail, password, handlePassword } =
     props;
 
   return (
@@ -12,13 +12,19 @@ const FormLogIn = (props) => {
           Log in to your account
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600">
-          Or try it using <span className="font-bold">admin@admin//admin</span>
+          Or try it using{" "}
+          <span className="font-bold"> admin@admin.com//Admin123!</span>
         </p>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 drop-shadow-xl sm:rounded-md sm:px-10">
-          <form onSubmit={handleLoginSubmit} className="space-y-6" action="#" method="POST">
+          <form
+            onSubmit={handleLoginSubmit}
+            className="space-y-6"
+            action="#"
+            method="POST"
+          >
             <div>
               <label
                 htmlFor="email"
@@ -111,4 +117,4 @@ const FormLogIn = (props) => {
   );
 };
 
-export default FormLogIn;
+export default LogInForm;
