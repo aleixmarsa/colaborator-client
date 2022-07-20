@@ -2,6 +2,8 @@
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
+    "./src/components/buttons/Button.js"
+
   ],
   theme: {
     extend: {
@@ -12,8 +14,15 @@ module.exports = {
           400: "#28b75a80"
         },
       },
+      minHeight: {
+        '42px': '42px',
+       }
     },
 
   },
   plugins: [],
+
+  // safelist: [
+  //   "hover:bg-lime-700"
+  //   ]
 }

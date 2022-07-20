@@ -1,6 +1,6 @@
 import Button from "../buttons/Button";
 import { useState } from "react";
-
+import SelectMenu from "../menus/SelectMenu";
 const Form = (props) => {
   const {
     formTitle,
@@ -71,6 +71,7 @@ const Form = (props) => {
                           </div>
                         </div>
                       </div>
+                      <SelectMenu/>
                     </div>
 
                     <div className="pt-5">

@@ -13,14 +13,15 @@ const Button = (props) => {
   if (color === "lime") {
     textColor = "white";
     borderColor = "transparent";
-    bgColor = "lime-600";
-    hoverBgColor = "lime-700";
+    bgColor = "bg-lime-600";
+    hoverBgColor = "hover:bg-lime-700";
     focusRingColor = "lime-500";
+
   } else if (color === "white") {
     textColor = "gray-700";
     borderColor = "gray-300";
-    bgColor = "white";
-    hoverBgColor = "gray-50";
+    bgColor = "bg-white";
+    hoverBgColor = "hover:bg-gray-50";
     focusRingColor = "lime-500";
   }
   if (position === "column") {
@@ -34,7 +35,7 @@ const Button = (props) => {
   return (
     <button
       type={type}
-      className={`${margin} inline-flex items-center justify-center px-4 py-2 border border-${borderColor} shadow-sm text-sm font-medium rounded-md text-${textColor} bg-${bgColor} hover:bg-${hoverBgColor} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-${focusRingColor} md:${sm} ${xlWidth}`}
+      className={`${margin} inline-flex items-center justify-center px-4 py-2 border border-${borderColor} shadow-sm text-sm font-medium rounded-md text-${textColor} ${bgColor} ${hoverBgColor} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-${focusRingColor} md:${sm} ${xlWidth}`}
       onClick={action}
     >
       {text}

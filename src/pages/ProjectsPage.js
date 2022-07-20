@@ -79,10 +79,7 @@ const ProjectsPage = () => {
   };
 
   const refresAllProjects = (response, action, id) => {
-    console.log(
-      "🚀 ~ file: ProjectsPage.js ~ line 95 ~ refresAllProjects ~ response",
-      response
-    );
+
     let projectsCopy = [...projectsInProgress];
     if (action === "post") {
       projectsCopy = [...projectsInProgress, response.data];
