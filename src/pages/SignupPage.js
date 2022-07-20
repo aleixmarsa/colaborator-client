@@ -26,7 +26,6 @@ function SignupPage(props) {
     }catch(err){
       if(err.response?.status === 400){
         setErrorMessage(err.response.data.errorMessage);
-        console.log(errorMessage);
       }
     }
   };

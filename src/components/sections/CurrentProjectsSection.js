@@ -1,4 +1,6 @@
 import { Menu } from "@headlessui/react";
+import Avatar from "react-avatar";
+
 import {
   ChevronDownIcon,
   ChevronRightIcon,
@@ -134,6 +136,32 @@ const CurrentProjectsSection = (props) => {
                     </a>
                   </h2>
                 </div>
+                <div className="flex items-center space-x-2 text-gray-500 text-sm ">
+                  <span>Team:</span>
+
+                  <div className="flex flex-shrink-0 -space-x-1 ">
+                    {project.team.map((member) => (
+                      <Avatar
+                        round
+                        size="25"
+                        color="gray"
+                        textSizeRatio={1.75}
+                        name={member.name}
+                      />
+                      /* <img
+                                  key={member.handle}
+                                  className="max-w-none h-6 w-6 rounded-full ring-2 ring-white"
+                                  src={member.imageUrl}
+                                  alt={member.name}
+                                /> */
+                    ))}
+                  </div>
+                  {/* {project.totalMembers > project.members.length ? (
+                              <span className="flex-shrink-0 text-xs leading-5 font-medium">
+                                +{project.totalMembers - project.members.length}
+                              </span>
+                            ) : null} */}
+                </div>
                 {/* <a
                         href={project.repoHref}
                         className="relative group flex items-center space-x-2.5"
@@ -222,7 +250,7 @@ const CurrentProjectsSection = (props) => {
                         .slice(0, -1)}
                     </span>
                   </span>
-                  <span className>
+                  <span>
                     Last update:{" "}
                     {project.updatedAt
                       .replace(/([^:]*$)/g, "")

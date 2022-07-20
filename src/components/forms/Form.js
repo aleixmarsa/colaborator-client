@@ -12,6 +12,8 @@ const Form = (props) => {
     projectDescription,
     setTitle,
     setDescription,
+    team,
+    setTeam
   } = props;
 
   return (
@@ -71,7 +73,7 @@ const Form = (props) => {
                           </div>
                         </div>
                       </div>
-                      <SelectMenu/>
+                      <SelectMenu team={team} setTeam={setTeam}/>
                     </div>
 
                     <div className="pt-5">

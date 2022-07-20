@@ -58,7 +58,6 @@ const ProjectsPage = () => {
 
   const filterProjects = (searchText) => {
     const projectsCopy = [...projectsInProgress];
-    console.log(projectsCopy);
     searchText !== ""
       ? setFilteredProjects(
           projectsCopy.filter((project) =>
@@ -73,6 +72,7 @@ const ProjectsPage = () => {
       .get(`${API_URL}/colaborator-API/projects/`)
       .then((response) => {
         setProjectsInProgress(response.data);
+        console.log("🚀 ~ file: ProjectsPage.js ~ line 76 ~ .then ~ response.data", response.data)
         setFilteredProjects(response.data);
       })
       .catch((error) => console.log(error));
@@ -109,7 +109,6 @@ const ProjectsPage = () => {
           openDeleteModal={openDeleteModal}
         />
       )}
-
       {/* 3 column wrapper */}
       <div className="flex-grow w-full max-w-9xl mx-auto xl:px-8 lg:flex">
         <div className="flex-1 min-w-0 bg-white xl:flex ">

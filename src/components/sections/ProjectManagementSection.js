@@ -19,10 +19,6 @@ const ProjectManagementSection = (props) => {
     e.preventDefault();
     setEditProject(false);
     setNewProject(true);
-    console.log(
-      "🚀 ~ file: ProjectsPage.js ~ line 87 ~ handleNewProjectBtn ~ newProject",
-      newProject
-    );
   };
 
   const handleCanceleAddSaveFormBtn = (e) => {

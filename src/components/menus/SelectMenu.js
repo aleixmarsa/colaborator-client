@@ -74,14 +74,9 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const SelectMenu = () => {
+const SelectMenu = (props) => {
   const [users, setUsers] = useState([]);
-  console.log("🚀 ~ file: SelectMenu.js ~ line 78 ~ SelectMenu ~ users", users);
-  const [selected, setSelected] = useState([]);
-  console.log(
-    "🚀 ~ file: SelectMenu.js ~ line 75 ~ SelectMenu ~ selected",
-    selected
-  );
+  const {team, setTeam} = props;
 
   const getAllUsers = () => {
     axios
@@ -97,7 +92,7 @@ const SelectMenu = () => {
   }, []);
 
   return (
-    <Listbox value={selected} onChange={setSelected} multiple>
+    <Listbox value={team} onChange={setTeam} multiple>
       {({ open }) => (
         <div>
           <Listbox.Label className="block text-sm  pt-2 font-medium text-gray-700">
@@ -105,7 +100,7 @@ const SelectMenu = () => {
           </Listbox.Label>
           <div className="mt-1 relative">
             <Listbox.Button className="relative min-h-42px w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-              {selected.map((user) => (
+              {team.map((user) => (
                 <span className="flex items-center mt-1">
                   {/* <img
                     src={user.avatar}
