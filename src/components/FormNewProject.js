@@ -4,7 +4,7 @@ import Form from "./Form";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-const NewProjectForm = (props) => {
+const FormNewProject = (props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
@@ -17,10 +17,10 @@ const NewProjectForm = (props) => {
     axios
       .post(`${API_URL}/colaborator-API/projects/new-project`, body)
       .then((response) => {
+        props.refresAllProjects(response, "post");
         setTitle("");
         setDescription("");
         props.handleCanceleAddSaveFormBtn(e);
-        props.getAllProjects();
       })
       .catch((error) => console.log(error));
   };
@@ -39,4 +39,4 @@ const NewProjectForm = (props) => {
     />
   );
 };
-export default NewProjectForm;
+export default FormNewProject;

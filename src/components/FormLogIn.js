@@ -1,7 +1,7 @@
 import Button from "./Button";
 import { Link } from "react-router-dom";
 
-const LogInForm = (props) => {
+const FormLogIn = (props) => {
   const {handleLoginSubmit, email, handleEmail, password, handlePassword} =
     props;
 
@@ -111,4 +111,4 @@ const LogInForm = (props) => {
   );
 };
 
-export default LogInForm;
+export default FormLogIn;

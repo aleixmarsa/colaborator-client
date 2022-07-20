@@ -1,7 +1,7 @@
 import Button from "./Button";
 import { Link } from "react-router-dom";
 
-const SignUpForm = (props) => {
+const FormSignUp = (props) => {
   const {
     handleSignupSubmit,
     email,
@@ -119,4 +119,4 @@ const SignUpForm = (props) => {
   );
 };
 
-export default SignUpForm;
+export default FormSignUp;

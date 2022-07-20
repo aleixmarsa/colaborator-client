@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { signupService } from "../services/auth.services";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
-import SignUpForm from "../components/SignUpForm";
+import FormSignUp from "../components/FormSignUp";
 
 function SignupPage(props) {
 	const [ email, setEmail ] = useState('');
@@ -34,7 +34,7 @@ function SignupPage(props) {
   return (
     <div className="flex flex-col h-screen mb-auto">
       <NavBar />
-      <SignUpForm
+      <FormSignUp
       handleSignupSubmit={handleSignupSubmit}
       email={email}
       handleEmail={handleEmail}

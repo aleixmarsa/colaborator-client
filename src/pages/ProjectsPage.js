@@ -1,11 +1,12 @@
 import NavBar from "../components/NavBar";
-import NewProjectForm from "../components/NewProjectForm";
-import EditProjectForm from "../components/EditProjectForm";
+import FormNewProject from "../components/FormNewProject";
+import FormEditProject from "../components/FormEditProject";
 import Form from "../components/Form";
 import DeletProjectModal from "../components/DeleteProjectModal";
 import Footer from "../components/Footer";
 import Button from "../components/Button";
 import { AuthContext } from "../context/auth.context";
+import Avatar from "react-avatar";
 
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
@@ -60,10 +61,10 @@ const ProjectsPage = () => {
   const [newProject, setNewProject] = useState(false);
   const [editProject, setEditProject] = useState(false);
   const [filteredProjects, setFilteredProjects] = useState([]);
+  const [projectsInProgress, setProjectsInProgress] = useState([]);
 
   const [id, setId] = useState(0);
   const [projectTitle, setProjectTitle] = useState("");
-  const [projectsInProgress, setProjectsInProgress] = useState([]);
   const [modalHasRender, setModalHasRender] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(true);
   const { user } = useContext(AuthContext);
@@ -88,6 +89,21 @@ const ProjectsPage = () => {
         setFilteredProjects(response.data);
       })
       .catch((error) => console.log(error));
+  };
+
+  const refresAllProjects = (response, action, id) => {
+  console.log("🚀 ~ file: ProjectsPage.js ~ line 95 ~ refresAllProjects ~ response", response)
+    let projectsCopy = [...projectsInProgress];
+    if (action === "post") {
+      projectsCopy = [...projectsInProgress, response.data];
+    } else if (action === "delete") {
+      const index = projectsCopy.findIndex((object) => {
+        return object._id === id;
+      });
+      projectsCopy.splice(index, 1);
+    }
+    setProjectsInProgress(projectsCopy);
+    setFilteredProjects(projectsCopy);
   };
 
   useEffect(() => {
@@ -130,7 +146,7 @@ const ProjectsPage = () => {
       <NavBar filterProjects={filterProjects} />
       {modalHasRender && (
         <DeletProjectModal
-          getAllProjects={getAllProjects}
+          refresAllProjects={refresAllProjects}
           title={projectTitle}
           id={id}
           setOpenDeleteModal={setOpenDeleteModal}
@@ -143,13 +159,13 @@ const ProjectsPage = () => {
         <div className="flex-1 min-w-0 bg-white xl:flex ">
           {/* Account profile */}
           {newProject ? (
-            <NewProjectForm
+            <FormNewProject
               handleNewProjectBtn={handleNewProjectBtn}
               handleCanceleAddSaveFormBtn={handleCanceleAddSaveFormBtn}
-              getAllProjects={getAllProjects}
+              refresAllProjects={refresAllProjects}
             />
           ) : editProject ? (
-            <EditProjectForm
+            <FormEditProject
               id={id}
               handleNewProjectBtn={handleNewProjectBtn}
               handleCanceleAddSaveFormBtn={handleCanceleAddSaveFormBtn}
@@ -169,7 +185,15 @@ const ProjectsPage = () => {
                       src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=256&h=256&q=80"
                       alt=""
                     /> */}
-                          <UserCircleIcon className="h-12 w-12 text-lime-500" />
+                          <Avatar
+                            round
+                            size="50"
+                            textSizeRatio={1.5}
+                            color="gray"
+                            name={user.name}
+                          />
+
+                          {/* <UserCircleIcon className="h-12 w-12 text-lime-500" /> */}
                         </div>
                         <div className="space-y-1">
                           <div className="text-sm font-medium text-gray-900">
@@ -430,7 +454,7 @@ const ProjectsPage = () => {
                         <span aria-hidden="true">&middot;</span>
                         <span>
                           <span>Created at: </span>
-                          <span className = "ml-2">
+                          <span className="ml-2">
                             {project.createdAt
                               .replace(/([^:]*$)/g, "")
                               .replace("T", " ")

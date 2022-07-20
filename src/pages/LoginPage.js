@@ -3,7 +3,7 @@ import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "./../context/auth.context";
 import { loginService } from "../services/auth.services";
-import LogInForm from "../components/LogInForm";
+import FormLogIn from "../components/FormLogIn";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 
@@ -36,7 +36,7 @@ function LoginPage(props) {
   return (
     <div className="flex flex-col h-screen mb-auto">
       <NavBar />
-      <LogInForm
+      <FormLogIn
         handleLoginSubmit={handleLoginSubmit}
         email={email}
         handleEmail={handleEmail}

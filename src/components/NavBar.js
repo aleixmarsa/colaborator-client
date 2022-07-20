@@ -5,6 +5,7 @@ import { SearchIcon, UserCircleIcon } from "@heroicons/react/solid";
 import { MenuAlt1Icon, XIcon } from "@heroicons/react/outline";
 import icon from "../assets/icon.png";
 import { AuthContext } from "../context/auth.context";
+import Avatar from "react-avatar";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -93,7 +94,7 @@ const NavBar = (props) => {
                             : "px-3 py-2 rounded-md text-md font-medium text-lime-200 hover:text-e-100 hover:bg-lime-600"
                         }
                       >
-                        HOME
+                        PROJECTS
                       </NavLink>
                       <NavLink
                         to="/global-calendar"
@@ -121,7 +122,14 @@ const NavBar = (props) => {
                       <div>
                         <Menu.Button className="bg-lime-700 flex text-sm rounded-full text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-lime-700 focus:ring-white">
                           <span className="sr-only">Open user menu</span>
-                          <UserCircleIcon className="h-8 w-8 text-white-500" />
+                          <Avatar
+                            round
+                            size="40"
+                            color="gray"
+                            textSizeRatio={1.75}
+                            name={user.name}
+                          />
+                          {/* <UserCircleIcon className="h-8 w-8 text-white-500" /> */}
                           {/* <img
                           className="h-8 w-8 rounded-full"
                           src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=256&h=256&q=80"
@@ -176,7 +184,7 @@ const NavBar = (props) => {
                   )}
                   // aria-current={item.current ? "page" : undefined}
                 >
-                  HOME
+                  PROJECTS
                 </Disclosure.Button>
                 <Disclosure.Button
                   as="a"
