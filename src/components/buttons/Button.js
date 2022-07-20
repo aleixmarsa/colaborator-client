@@ -34,7 +34,7 @@ const Button = (props) => {
   return (
     <button
       type={type}
-      className={`${margin} inline-flex items-center justify-center px-4 py-2 border border-${borderColor} shadow-sm text-sm font-medium rounded-md text-${textColor} bg-${bgColor} hover:bg-${hoverBgColor} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-${focusRingColor} md:${sm} xl:${xlWidth}`}
+      className={`${margin} inline-flex items-center justify-center px-4 py-2 border border-${borderColor} shadow-sm text-sm font-medium rounded-md text-${textColor} bg-${bgColor} hover:bg-${hoverBgColor} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-${focusRingColor} md:${sm} ${xlWidth}`}
       onClick={action}
     >
       {text}

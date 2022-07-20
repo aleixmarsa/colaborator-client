@@ -1,5 +1,5 @@
 import Button from "../buttons/Button";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 const LogInForm = (props) => {
   const { handleLoginSubmit, email, handleEmail, password, handlePassword } =
@@ -93,7 +93,7 @@ const LogInForm = (props) => {
               </div>
             </div>
 
-            <div>
+            <div className="flex flex-col">
               <Button
                 position="column"
                 type="submit"
@@ -101,7 +101,10 @@ const LogInForm = (props) => {
                 text="Log In"
                 color="lime"
               />
-              <Link to="/signup">
+
+              <Link
+                to="/signup"
+              >
                 <Button
                   position="column"
                   type="submit"

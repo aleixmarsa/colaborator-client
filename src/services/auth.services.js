@@ -1,5 +1,6 @@
 import service from './service';
 
+
 const URL = '/colaborator-API/auth';
 
 const signupService = (user) => {
