@@ -1,5 +1,7 @@
 import { Menu } from "@headlessui/react";
 import Avatar from "react-avatar";
+import { useState } from "react";
+import axios from "axios";
 
 import {
   ChevronDownIcon,
@@ -10,6 +12,8 @@ import {
   FolderAddIcon,
   FolderRemoveIcon,
 } from "@heroicons/react/solid";
+
+const API_URL = process.env.REACT_APP_API_URL;
 
 const ProjectsListSection = (props) => {
   const {
@@ -23,13 +27,32 @@ const ProjectsListSection = (props) => {
     setModalHasRender,
     setOpenDeleteModal,
     setProjectTitle,
+    getAllProjects
   } = props;
+  
   let bgColor = "";
   if (title === "Current Projects") {
     bgColor = "bg-white";
   } else if (title === "Completed Projects") {
     bgColor = "bg-gray-100";
   }
+  const handleMoveBtn = (e, id) => {
+    let isActive = false;
+    if (title === "Completed Projects") {
+      isActive = true;
+    }
+    e.preventDefault();
+    const body = {
+      active: isActive,
+    };
+
+    axios
+      .put(`${API_URL}/colaborator-API/projects/${id}`, body)
+      .then((response) => {
+        props.getAllProjects();
+      });
+  };
+
   const handleEditProjectBtn = (e, id) => {
     e.preventDefault();
     setEditProject(!editProject);
@@ -176,33 +199,25 @@ const ProjectsListSection = (props) => {
                         >
                           Visit site
                         </a> */}
-                  {project.active ? (
-                    <button
-                      type="button"
-                      className="relative bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lime-500"
-                      onClick={(e) =>
-                        handleDeleteProjectBtn(e, project.title, project._id)
-                      }
-                    >
+
+                  <button
+                    type="button"
+                    className="relative bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lime-500"
+                    onClick={(e) => handleMoveBtn(e, project._id)}
+                  >
+                    {project.active ? (
                       <FolderAddIcon
                         className="text-gray-300 hover:text-gray-400h-5 w-5"
                         aria-hidden="true"
                       />
-                    </button>
-                  ) : (
-                    <button
-                      type="button"
-                      className="relative bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lime-500"
-                      onClick={(e) =>
-                        handleDeleteProjectBtn(e, project.title, project._id)
-                      }
-                    >
+                    ) : (
                       <FolderRemoveIcon
                         className="text-gray-300 hover:text-gray-400h-5 w-5"
                         aria-hidden="true"
                       />
-                    </button>
-                  )}
+                    )}
+                  </button>
+
                   <button
                     type="button"
                     className="relative bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lime-500"

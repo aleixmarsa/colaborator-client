@@ -45,8 +45,12 @@ const classNames = (...classes) => {
 
 const ProjectsPage = () => {
   const [editProject, setEditProject] = useState(false);
-  const [filteredProjects, setFilteredProjects] = useState([]);
-  const [projectsInProgress, setProjectsInProgress] = useState([]);
+  const [filteredCurrentProjects, setFilteredCurrentProjects] = useState([]);
+  const [filteredCompletedProjects, setFilteredCompletedProjects] = useState([]);
+
+  const [currentProjects, setCurrentProjects] = useState([]);
+  const [completedProjects, setCompletedProjects] = useState([]);
+
   const [newProject, setNewProject] = useState(false);
 
   const [id, setId] = useState(0);
@@ -56,42 +60,55 @@ const ProjectsPage = () => {
   const { user } = useContext(AuthContext);
 
   const filterProjects = (searchText) => {
-    const projectsCopy = [...projectsInProgress];
+    let projectsCopy = [...currentProjects];
     searchText !== ""
-      ? setFilteredProjects(
+      ? setFilteredCurrentProjects(
           projectsCopy.filter((project) =>
             project.title.toLowerCase().includes(searchText.toLowerCase())
           )
         )
-      : setFilteredProjects(projectsInProgress);
+      : setFilteredCurrentProjects(currentProjects);
+     projectsCopy = [...completedProjects];
+
+      searchText !== ""
+      ? setFilteredCompletedProjects(
+          projectsCopy.filter((project) =>
+            project.title.toLowerCase().includes(searchText.toLowerCase())
+          )
+        )
+      : setFilteredCompletedProjects(completedProjects);
   };
 
   const getAllProjects = () => {
     axios
-      .get(`${API_URL}/colaborator-API/projects/`)
+      .get(`${API_URL}/colaborator-API/projects/current`)
       .then((response) => {
-        setProjectsInProgress(response.data);
-        console.log(
-          "🚀 ~ file: ProjectsPage.js ~ line 76 ~ .then ~ response.data",
-          response.data
-        );
-        setFilteredProjects(response.data);
+        setCurrentProjects(response.data);
+        setFilteredCurrentProjects(response.data);
+      })
+      .catch((error) => console.log(error));
+
+      axios
+      .get(`${API_URL}/colaborator-API/projects/completed`)
+      .then((response) => {
+        setCompletedProjects(response.data);
+        setFilteredCompletedProjects(response.data);
       })
       .catch((error) => console.log(error));
   };
 
   const refresAllProjects = (response, action, id) => {
-    let projectsCopy = [...projectsInProgress];
+    let projectsCopy = [...currentProjects];
     if (action === "post") {
-      projectsCopy = [...projectsInProgress, response.data];
+      projectsCopy = [...currentProjects, response.data];
     } else if (action === "delete") {
       const index = projectsCopy.findIndex((object) => {
         return object._id === id;
       });
       projectsCopy.splice(index, 1);
     }
-    setProjectsInProgress(projectsCopy);
-    setFilteredProjects(projectsCopy);
+    setCurrentProjects(projectsCopy);
+    setFilteredCurrentProjects(projectsCopy);
   };
 
   useEffect(() => {
@@ -119,7 +136,7 @@ const ProjectsPage = () => {
             setNewProject={setNewProject}
             id={id}
             user={user}
-            projectsInProgress={projectsInProgress}
+            projectsInProgress={currentProjects}
             editProject={editProject}
             setEditProject={setEditProject}
             refresAllProjects={refresAllProjects}
@@ -130,7 +147,7 @@ const ProjectsPage = () => {
 
         <ProjectsListSection
           title="Current Projects"
-          filteredProjects={filteredProjects}
+          filteredProjects={filteredCurrentProjects}
           classNames={classNames}
           editProject={editProject}
           setEditProject={setEditProject}
@@ -139,13 +156,15 @@ const ProjectsPage = () => {
           setModalHasRender={setModalHasRender}
           setOpenDeleteModal={setOpenDeleteModal}
           setProjectTitle={setProjectTitle}
+          getAllProjects={getAllProjects}
+
         />
 
         <div >
           {/* Activity feed */}
           <ProjectsListSection
             title="Completed Projects"
-            filteredProjects={filteredProjects}
+            filteredProjects={filteredCompletedProjects}
             classNames={classNames}
             editProject={editProject}
             setEditProject={setEditProject}
@@ -154,6 +173,8 @@ const ProjectsPage = () => {
             setModalHasRender={setModalHasRender}
             setOpenDeleteModal={setOpenDeleteModal}
             setProjectTitle={setProjectTitle}
+            getAllProjects={getAllProjects}
+
           />
         </div>
       </div>
