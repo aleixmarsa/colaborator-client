@@ -14,7 +14,6 @@ import {
 } from "@heroicons/react/solid";
 import SortMenu from "../menus/SortMenu";
 
-
 const ProjectsListSection = (props) => {
   const {
     title,
@@ -75,7 +74,11 @@ const ProjectsListSection = (props) => {
       <div className="pl-4 pr-6 pt-4 pb-4 border-b border-t  sm:pl-6 lg:pl-8 xl:pl-6 xl:pt-6 xl:border-t-0">
         <div className="flex items-center">
           <h1 className="flex-1 text-lg font-medium">{title}</h1>
-          <SortMenu classNames={classNames} filteredProjects={filteredProjects} setFilteredProjects={setFilteredProjects} />
+          <SortMenu
+            classNames={classNames}
+            filteredProjects={filteredProjects}
+            setFilteredProjects={setFilteredProjects}
+          />
         </div>
       </div>
       <ul
@@ -93,35 +96,27 @@ const ProjectsListSection = (props) => {
                 <div className="flex items-center space-x-3">
                   <span
                     className={classNames(
-                      project.active ? "bg-green-100" : "bg-green-100",
+                      project.active ? "bg-green-100" : "bg-yellow-100/70",
                       "h-4 w-4 rounded-full flex items-center justify-center"
                     )}
                     aria-hidden="true"
                   >
                     <span
                       className={classNames(
-                        project.active ? "bg-green-400" : "bg-green-400",
+                        project.active ? "bg-green-400" : "bg-yellow-400",
                         "h-2 w-2 rounded-full"
                       )}
                     />
                   </span>
-
-                  <h2 className="text-sm font-medium">
-                    <a href={project.href}>
-                      <span className="absolute inset-0" aria-hidden="true" />
-                      {project.title}{" "}
-                      <span className="sr-only">
-                        {project.active ? "Running" : "Not running"}
-                      </span>
-                    </a>
-                  </h2>
+                    <h2 className="text-sm font-medium max-w-md truncate">{project.title} </h2>
                 </div>
                 <div className="flex items-center space-x-2 text-gray-500 text-sm ">
                   <span>Team:</span>
 
                   <div className="flex flex-shrink-0 -space-x-1 ">
                     {project.team.map((member) => (
-                      <Avatar key={member._id}
+                      <Avatar
+                        key={member._id}
                         round
                         size="25"
                         color="gray"

@@ -12,35 +12,6 @@ import {
 
 import { useState, useEffect, useContext } from "react";
 
-const API_URL = process.env.REACT_APP_API_URL;
-
-const completedProjects = [
-  {
-    name: "First Completed Project",
-    href: "#",
-    siteHref: "#",
-    repoHref: "#",
-    repo: "aleixmarsa/first-completed-project",
-    tech: "React",
-    lastDeploy: "12h ago",
-    location: "Catalunya",
-    starred: true,
-    active: true,
-  },
-  {
-    name: "Second Completed Project",
-    href: "#",
-    siteHref: "#",
-    repoHref: "#",
-    repo: "aleixmarsa/second-completed-project",
-    tech: "React",
-    lastDeploy: "20h ago",
-    location: "Catalunya",
-    starred: true,
-    active: true,
-  },
-  // More projects...
-];
 
 const classNames = (...classes) => {
   return classes.filter(Boolean).join(" ");
