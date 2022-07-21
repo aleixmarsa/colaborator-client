@@ -5,7 +5,10 @@ import Footer from "../components/footer/Footer";
 import { AuthContext } from "../context/auth.context";
 import ProjectManagementSection from "../components/sections/ProjectManagementSection";
 import ProjectsListSection from "../components/sections/ProjectsListSection";
-import { getAllCurrentProjectsService, getAllCompletedProjectsService } from '../services/project.services';
+import {
+  getAllCurrentProjectsService,
+  getAllCompletedProjectsService,
+} from "../services/project.services";
 
 import { useState, useEffect, useContext } from "react";
 
@@ -81,23 +84,22 @@ const ProjectsPage = () => {
       : setFilteredCompletedProjects(completedProjects);
   };
 
-  const getAllProjects= async () => {
-
+  const getAllProjects = async () => {
     try {
-			const response = await getAllCurrentProjectsService(id);
+      const response = await getAllCurrentProjectsService(id);
       setCurrentProjects(response.data);
       setFilteredCurrentProjects(response.data);
-		} catch (err) {
-			console.log(err);
-		}
+    } catch (err) {
+      console.log(err);
+    }
 
     try {
-			const response = await getAllCompletedProjectsService(id);
+      const response = await getAllCompletedProjectsService(id);
       setCompletedProjects(response.data);
       setFilteredCompletedProjects(response.data);
-		} catch (err) {
-			console.log(err);
-		}
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const refreshAllProjects = (response, action, id) => {
@@ -163,6 +165,7 @@ const ProjectsPage = () => {
         <ProjectsListSection
           title="Current Projects"
           filteredProjects={filteredCurrentProjects}
+          setFilteredProjects={setFilteredCurrentProjects}
           classNames={classNames}
           editProject={editProject}
           setEditProject={setEditProject}
@@ -179,6 +182,7 @@ const ProjectsPage = () => {
           <ProjectsListSection
             title="Completed Projects"
             filteredProjects={filteredCompletedProjects}
+            setFilteredProjects={setFilteredCompletedProjects}
             classNames={classNames}
             editProject={editProject}
             setEditProject={setEditProject}

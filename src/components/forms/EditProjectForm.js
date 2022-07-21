@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import SortMenu from "../menus/SortMenu";
 import Form from "./Form";
 import {
   getProjectDetailsService,
@@ -25,7 +26,7 @@ const EditProjectForm = (props) => {
       const oneProject = response.data;
       setTitle(oneProject.title);
       setDescription(oneProject.description);
-      //TODO
+      //TODO NO SURTEN LES IMATGES QUAN EDITES UN PROJECTE  
       setTeam(oneProject.team);
     } catch (err) {
       console.log(err);
