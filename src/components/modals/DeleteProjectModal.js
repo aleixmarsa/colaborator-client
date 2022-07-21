@@ -2,21 +2,22 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationIcon } from "@heroicons/react/outline";
-import axios from "axios";
+import { deleteProjectService } from '../../services/project.services';
+
 const API_URL = process.env.REACT_APP_API_URL;
 
 const DeletProjectModal = (props) => {
 
   const cancelButtonRef = useRef(null);
 
-  const deleteProject = (id) => {
-    axios
-      .delete(`${API_URL}/colaborator-API/projects/delete/${id}`)
-      .then((response) => {
-        props.setOpenDeleteModal(false);
-        props.refresAllProjects(response, "delete", id);
-      })
-      .catch((err) => console.log(err));
+  const deleteProject = async (id)  => {
+    try {
+			const response = await deleteProjectService(id);
+      props.setOpenDeleteModal(false);
+      props.refreshAllProjects(response, "delete", id);
+		} catch (err) {
+			console.log(err);
+		}
   };
 
   return (

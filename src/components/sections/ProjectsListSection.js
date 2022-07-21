@@ -1,7 +1,7 @@
 import { Menu } from "@headlessui/react";
 import Avatar from "react-avatar";
 import { useState } from "react";
-import axios from "axios";
+import { updateProjectService } from "../../services/project.services";
 
 import {
   ChevronDownIcon,
@@ -13,7 +13,6 @@ import {
   FolderRemoveIcon,
 } from "@heroicons/react/solid";
 
-const API_URL = process.env.REACT_APP_API_URL;
 
 const ProjectsListSection = (props) => {
   const {
@@ -27,16 +26,17 @@ const ProjectsListSection = (props) => {
     setModalHasRender,
     setOpenDeleteModal,
     setProjectTitle,
-    getAllProjects
+    getAllProjects,
   } = props;
-  
+
   let bgColor = "";
   if (title === "Current Projects") {
     bgColor = "bg-white";
   } else if (title === "Completed Projects") {
     bgColor = "bg-gray-100";
   }
-  const handleMoveBtn = (e, id) => {
+
+  const handleMoveBtn = async (e, id) => {
     let isActive = false;
     if (title === "Completed Projects") {
       isActive = true;
@@ -46,11 +46,12 @@ const ProjectsListSection = (props) => {
       active: isActive,
     };
 
-    axios
-      .put(`${API_URL}/colaborator-API/projects/${id}`, body)
-      .then((response) => {
-        props.getAllProjects();
-      });
+    try {
+      await updateProjectService(id, body);
+      props.getAllProjects();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleEditProjectBtn = (e, id) => {
