@@ -8,6 +8,7 @@ const NewProjectForm = (props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [team, setTeam] = useState([]);
+  const[isActive, setIsActive]=useState(true)
 
   const handleSubmit = (e) => {
     const teamIds = team.map((user)=> user._id)
@@ -16,7 +17,8 @@ const NewProjectForm = (props) => {
     const body = {
       title: title,
       description: description,
-      team: teamIds
+      team: teamIds,
+      active: isActive
       
     };
     axios
