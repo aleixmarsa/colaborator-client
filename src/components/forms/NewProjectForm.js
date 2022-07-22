@@ -10,10 +10,7 @@ const NewProjectForm = (props) => {
 
   const handleSubmit = async (e) => {
     const teamIds = team.map((user) => user._id);
-    console.log(
-      "🚀 ~ file: NewProjectForm.js ~ line 14 ~ handleSubmit ~ teamIds",
-      teamIds
-    );
+
     e.preventDefault();
     const body = {
       title: title,

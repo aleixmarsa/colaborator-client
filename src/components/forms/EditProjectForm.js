@@ -13,10 +13,7 @@ const EditProjectForm = (props) => {
   const [description, setDescription] = useState("");
   const [team, setTeam] = useState([]);
   const { id } = props;
-  console.log(
-    "🚀 ~ file: EditProjectForm.js ~ line 13 ~ EditProjectForm ~ id",
-    id
-  );
+
 
   const getProject = async (id) => {
     //TODO MIRAR QUE ES

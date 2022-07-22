@@ -6,10 +6,7 @@ const SortMenu = (props) => {
 
   const sortProjects = (type) => {
     let filteredProjectsCopy = [...filteredProjects];
-    console.log(
-      "🚀 ~ file: SortMenu.js ~ line 9 ~ sort ~ filteredProjectsCopy",
-      filteredProjectsCopy
-    );
+
 
     if (type === "name") {
       filteredProjectsCopy.sort((a, b) => {

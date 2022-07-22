@@ -12,7 +12,6 @@ import {
 
 import { useState, useEffect, useContext } from "react";
 
-
 const classNames = (...classes) => {
   return classes.filter(Boolean).join(" ");
 };
@@ -23,17 +22,15 @@ const ProjectsPage = () => {
   const [filteredCompletedProjects, setFilteredCompletedProjects] = useState(
     []
   );
-
   const [currentProjects, setCurrentProjects] = useState([]);
   const [completedProjects, setCompletedProjects] = useState([]);
-
   const [newProject, setNewProject] = useState(false);
-
   const [id, setId] = useState(0);
   const [projectTitle, setProjectTitle] = useState("");
   const [modalHasRender, setModalHasRender] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(true);
   const { user } = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
 
   const filterProjects = (searchText) => {
     let projectsCopy = [...currentProjects];
@@ -60,6 +57,7 @@ const ProjectsPage = () => {
       const response = await getAllCurrentProjectsService(id);
       setCurrentProjects(response.data);
       setFilteredCurrentProjects(response.data);
+      setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -106,7 +104,8 @@ const ProjectsPage = () => {
   return (
     <div className="flex flex-col h-screen">
       <NavBar filterProjects={filterProjects} />
-      {modalHasRender && (
+      {loading && <div>Loading...</div>}
+      {!loading && modalHasRender && (
         <DeletProjectModal
           refreshAllProjects={refreshAllProjects}
           title={projectTitle}
