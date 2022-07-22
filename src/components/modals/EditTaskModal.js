@@ -30,16 +30,17 @@ const EditTaskModal = (props) => {
   }, [props.editTaskId])
 
   const handleSubmitEditForm = (e) => {
-    //e.preventDefault();
+
     const body = {
       title: title,
       description: description,
       color: color
     };
 
-    axios.put(`${API_URL}/colaborator-API/card/updateCard/${props.editTaskId}`, body).then((response) => {
-      props.handleCanceleAddSaveFormBtn(e);
-      props.getAllProjects();
+    axios.put(`${API_URL}/colaborator-API/projects/card/updateCard/${props.editTaskId}`, body)
+    .then((response) => {
+      props.setOpenEditModal(false);
+      props.getAllCards()
     });
   };
 

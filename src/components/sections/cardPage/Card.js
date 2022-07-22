@@ -14,8 +14,9 @@ const taskStatColorChange = (stat) => {
 
 function Card(props) {
 
+    console.log(props)
 
-    const { title, stat, color, cardId, setDeleteModalHasRender, 
+    const { title, stat, cardLimitDate, color, cardId, setDeleteModalHasRender, 
             setOpenDeleteModal, setDeleteTaskId, getAllCards,
             setEditModalHasRender, setOpenEditModal, setEditTaskId} = props
 
@@ -96,8 +97,17 @@ function Card(props) {
                     
                 </div>
 
+                
+
             </div>
+            
         </div>
+        {
+            cardLimitDate && (
+                <span className="text-gray-500 text-sm">Limit Date: {cardLimitDate}</span>
+            ) 
+        }
+        
         </li>
     );
 }
