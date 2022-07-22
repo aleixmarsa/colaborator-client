@@ -1,5 +1,4 @@
 import { useState, useContext } from "react";
-// import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "./../context/auth.context";
 import { loginService } from "../services/auth.services";
@@ -43,6 +42,7 @@ function LoginPage(props) {
         password={password}
         handlePassword={handlePassword}
       />
+			{errorMessage && <p className="error-message">{errorMessage}</p>}
       <Footer />
     </div>
   );

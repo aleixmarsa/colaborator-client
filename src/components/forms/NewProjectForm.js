@@ -1,34 +1,34 @@
 import { useState } from "react";
-import axios from "axios";
 import Form from "./Form";
-
-const API_URL = process.env.REACT_APP_API_URL;
+import { addNewProjectService } from "../../services/project.services";
 
 const NewProjectForm = (props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [team, setTeam] = useState([]);
+  const [isActive, setIsActive] = useState(true);
 
-  const handleSubmit = (e) => {
-    const teamIds = team.map((user)=> user._id)
-    console.log("🚀 ~ file: NewProjectForm.js ~ line 14 ~ handleSubmit ~ teamIds", teamIds)
-    e.preventDefault(); 
+  const handleSubmit = async (e) => {
+    const teamIds = team.map((user) => user._id);
+
+    e.preventDefault();
     const body = {
       title: title,
       description: description,
-      team: teamIds
-      
+      team: teamIds,
+      active: isActive,
     };
-    axios
-      .post(`${API_URL}/colaborator-API/projects/new-project`, body)
-      .then((response) => {
-        props.refresAllProjects(response, "post");
-        setTitle("");
-        setDescription("");
-        setTeam([])
-        props.handleCanceleAddSaveFormBtn(e);
-      })
-      .catch((error) => console.log(error));
+
+    try {
+      const response = await addNewProjectService(body);
+      props.refreshAllProjects(response, "post");
+      setTitle("");
+      setDescription("");
+      setTeam([]);
+      props.handleCanceleAddSaveFormBtn(e);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

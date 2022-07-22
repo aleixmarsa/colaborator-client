@@ -42,6 +42,7 @@ function SignupPage(props) {
       password={password}
       handlePassword={handlePassword}
        />
+			{errorMessage && <p className="error-message">{errorMessage}</p>}
       <Footer />
     </div>
   );

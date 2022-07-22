@@ -1,0 +1,2 @@
+[-] Loading ?
+[-] La ruta del backend que retorna la llista d'usuaris potser es pot limitar a que retorni el nom .select('name)

@@ -12,7 +12,7 @@ const ProjectManagementSection = (props) => {
     setNewProject,
     editProject,
     setEditProject,
-    refresAllProjects,
+    refreshAllProjects,
     getAllProjects,
   } = props;
   const handleNewProjectBtn = (e) => {
@@ -32,7 +32,7 @@ const ProjectManagementSection = (props) => {
         <NewProjectForm
           handleNewProjectBtn={handleNewProjectBtn}
           handleCanceleAddSaveFormBtn={handleCanceleAddSaveFormBtn}
-          refresAllProjects={refresAllProjects}
+          refreshAllProjects={refreshAllProjects}
         />
       ) : editProject ? (
         <EditProjectForm

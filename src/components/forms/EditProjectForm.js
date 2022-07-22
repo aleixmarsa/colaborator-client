@@ -1,35 +1,52 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import SortMenu from "../menus/SortMenu";
 import Form from "./Form";
+import {
+  getProjectDetailsService,
+  updateProjectService,
+} from "../../services/project.services";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
 const EditProjectForm = (props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [team, setTeam] = useState([]);
+  const { id } = props;
 
+
+  const getProject = async (id) => {
+    //TODO MIRAR QUE ES
+    localStorage.getItem("authToken");
+    try {
+      const response = await getProjectDetailsService(id);
+      const oneProject = response.data;
+      setTitle(oneProject.title);
+      setDescription(oneProject.description);
+      //TODO NO SURTEN LES IMATGES QUAN EDITES UN PROJECTE  
+      setTeam(oneProject.team);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   useEffect(() => {
-    axios
-      .get(`${API_URL}/colaborator-API/projects/${props.taskId}`)
-      .then((response) => {
-        const oneProject = response.data;
-        setTitle(oneProject.title);
-        setDescription(oneProject.description);
-      })
-      .catch((error) => console.log(error));
-  }, [props.id]);
+    getProject(id);
+  }, [id]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const body = {
       title: title,
       description: description,
     };
 
-    axios.put(`${API_URL}/colaborator-API/projects/${props.id}`, body).then((response) => {
+    try {
+      await updateProjectService(props.id, body);
       props.handleCanceleAddSaveFormBtn(e);
       props.getAllProjects();
-    });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -43,6 +60,8 @@ const EditProjectForm = (props) => {
       projectDescription={description}
       setTitle={setTitle}
       setDescription={setDescription}
+      team={team}
+      setTeam={setTeam}
     />
   );
 };

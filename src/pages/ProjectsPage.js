@@ -3,13 +3,12 @@ import NavBar from "../components/navbar/NavBar";
 import DeletProjectModal from "../components/modals/DeleteProjectModal";
 import Footer from "../components/footer/Footer";
 import { AuthContext } from "../context/auth.context";
-import ProjectManagementSection from "../components/sections/projectPage/ProjectManagementSection";
-import CurrentProjectsSection from "../components/sections/projectPage/CurrentProjectsSection";
-import CompletedProjectsSection from "../components/sections/projectPage/CompletedProjectsSection"
-import { useState, useEffect, useContext } from "react";
-import axios from "axios";
-
-const API_URL = process.env.REACT_APP_API_URL;
+import ProjectManagementSection from "../components/sections/ProjectManagementSection";
+import ProjectsListSection from "../components/sections/ProjectsListSection";
+import {
+  getAllCurrentProjectsService,
+  getAllCompletedProjectsService,
+} from "../services/project.services";
 
 
 const completedProjects = [
@@ -39,6 +38,7 @@ const completedProjects = [
   },
   // More projects...
 ];
+import { useState, useEffect, useContext } from "react";
 
 const classNames = (...classes) => {
   return classes.filter(Boolean).join(" ");
@@ -46,51 +46,83 @@ const classNames = (...classes) => {
 
 const ProjectsPage = () => {
   const [editProject, setEditProject] = useState(false);
-  const [filteredProjects, setFilteredProjects] = useState([]);
-  const [projectsInProgress, setProjectsInProgress] = useState([]);
+  const [filteredCurrentProjects, setFilteredCurrentProjects] = useState([]);
+  const [filteredCompletedProjects, setFilteredCompletedProjects] = useState(
+    []
+  );
+  const [currentProjects, setCurrentProjects] = useState([]);
+  const [completedProjects, setCompletedProjects] = useState([]);
   const [newProject, setNewProject] = useState(false);
-
   const [id, setId] = useState(0);
   const [projectTitle, setProjectTitle] = useState("");
   const [modalHasRender, setModalHasRender] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(true);
   const { user } = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
 
   const filterProjects = (searchText) => {
-    const projectsCopy = [...projectsInProgress];
+    let projectsCopy = [...currentProjects];
     searchText !== ""
-      ? setFilteredProjects(
+      ? setFilteredCurrentProjects(
           projectsCopy.filter((project) =>
             project.title.toLowerCase().includes(searchText.toLowerCase())
           )
         )
-      : setFilteredProjects(projectsInProgress);
+      : setFilteredCurrentProjects(currentProjects);
+    projectsCopy = [...completedProjects];
+
+    searchText !== ""
+      ? setFilteredCompletedProjects(
+          projectsCopy.filter((project) =>
+            project.title.toLowerCase().includes(searchText.toLowerCase())
+          )
+        )
+      : setFilteredCompletedProjects(completedProjects);
   };
 
-  const getAllProjects = () => {
-    axios
-      .get(`${API_URL}/colaborator-API/projects/`)
-      .then((response) => {
-        setProjectsInProgress(response.data);
-        console.log("🚀 ~ file: ProjectsPage.js ~ line 76 ~ .then ~ response.data", response.data)
-        setFilteredProjects(response.data);
-      })
-      .catch((error) => console.log(error));
+  const getAllProjects = async () => {
+    try {
+      const response = await getAllCurrentProjectsService(id);
+      setCurrentProjects(response.data);
+      setFilteredCurrentProjects(response.data);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+
+    try {
+      const response = await getAllCompletedProjectsService(id);
+      setCompletedProjects(response.data);
+      setFilteredCompletedProjects(response.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const refresAllProjects = (response, action, id) => {
+  const refreshAllProjects = (response, action, id) => {
+    let currentProjectsCopy = [...currentProjects];
+    let completedProjectsCopy = [...completedProjects];
 
-    let projectsCopy = [...projectsInProgress];
     if (action === "post") {
-      projectsCopy = [...projectsInProgress, response.data];
+      currentProjectsCopy = [...currentProjects, response.data];
     } else if (action === "delete") {
-      const index = projectsCopy.findIndex((object) => {
+      const indexCurrent = currentProjectsCopy.findIndex((object) => {
         return object._id === id;
       });
-      projectsCopy.splice(index, 1);
+      const indexCompleted = completedProjectsCopy.findIndex((object) => {
+        return object._id === id;
+      });
+      if (indexCurrent !== -1) {
+        currentProjectsCopy.splice(indexCurrent, 1);
+      }
+      if (indexCompleted !== -1) {
+        completedProjectsCopy.splice(indexCompleted, 1);
+      }
     }
-    setProjectsInProgress(projectsCopy);
-    setFilteredProjects(projectsCopy);
+    setCurrentProjects(currentProjectsCopy);
+    setFilteredCurrentProjects(currentProjectsCopy);
+    setCompletedProjects(completedProjectsCopy);
+    setFilteredCompletedProjects(completedProjectsCopy);
   };
 
   useEffect(() => {
@@ -100,9 +132,10 @@ const ProjectsPage = () => {
   return (
     <div className="flex flex-col h-screen">
       <NavBar filterProjects={filterProjects} />
-      {modalHasRender && (
+      {loading && <div>Loading...</div>}
+      {!loading && modalHasRender && (
         <DeletProjectModal
-          refresAllProjects={refresAllProjects}
+          refreshAllProjects={refreshAllProjects}
           title={projectTitle}
           id={id}
           setOpenDeleteModal={setOpenDeleteModal}
@@ -111,22 +144,43 @@ const ProjectsPage = () => {
       )}
       {/* 3 column wrapper */}
       <div className="flex-grow w-full max-w-9xl mx-auto xl:px-8 lg:flex">
-        <div className="flex-1 min-w-0 bg-white xl:flex ">
+        <div className="flex-2 bg-white xl:flex ">
           {/* Project Managment*/}
           <ProjectManagementSection
             newProject={newProject}
             setNewProject={setNewProject}
             id={id}
             user={user}
-            projectsInProgress={projectsInProgress}
+            projectsInProgress={currentProjects}
             editProject={editProject}
             setEditProject={setEditProject}
-            refresAllProjects={refresAllProjects}
+            refreshAllProjects={refreshAllProjects}
             getAllProjects={getAllProjects}
           />
-          {/* Current Projects List */}
-          <CurrentProjectsSection
-            filteredProjects={filteredProjects}
+        </div>
+        {/* Current Projects List */}
+
+        <ProjectsListSection
+          title="Current Projects"
+          filteredProjects={filteredCurrentProjects}
+          setFilteredProjects={setFilteredCurrentProjects}
+          classNames={classNames}
+          editProject={editProject}
+          setEditProject={setEditProject}
+          setNewProject={setNewProject}
+          setId={setId}
+          setModalHasRender={setModalHasRender}
+          setOpenDeleteModal={setOpenDeleteModal}
+          setProjectTitle={setProjectTitle}
+          getAllProjects={getAllProjects}
+        />
+
+        <div>
+          {/* Activity feed */}
+          <ProjectsListSection
+            title="Completed Projects"
+            filteredProjects={filteredCompletedProjects}
+            setFilteredProjects={setFilteredCompletedProjects}
             classNames={classNames}
             editProject={editProject}
             setEditProject={setEditProject}
@@ -135,13 +189,9 @@ const ProjectsPage = () => {
             setModalHasRender={setModalHasRender}
             setOpenDeleteModal={setOpenDeleteModal}
             setProjectTitle={setProjectTitle}
+            getAllProjects={getAllProjects}
           />
         </div>
-        {/* Activity feed */}
-        <CompletedProjectsSection
-          classNames={classNames}
-          completedProjects={completedProjects}
-        />
       </div>
       <Footer />
     </div>
