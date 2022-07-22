@@ -43,53 +43,55 @@ function Project(props) {
       <div className="w-full flex items-center justify-between p-2 space-x-6 m-1">
         <div className="flex-1 truncate">
           <div className="flex flex-row justify-between items-center space-x-3">
-            <div className="flex flex-row items-center w-1/4">
+            <div className="flex flex-row justify-between w-1/3">
               <h3 className="text-gray-900 text-sm font-medium truncate">
                 {project.title}
               </h3>
-            </div>
-            <div className="flex flex-row items-center w-1/4">
-              <div className="flex items-center space-x-2 text-gray-500 text-sm ">
-                <span>Team:</span>
-
-                <div className="flex flex-shrink-0 -space-x-1 ">
-                  {project.team.map((member) => (
-                    <Avatar
-                      key={member._id}
-                      round
-                      size="25"
-                      color="gray"
-                      textSizeRatio={1.75}
-                      name={member.name}
-                    />
-                  ))}
+              <div className=" hidden xl:flex lg:flex md:flex flex-row items-center">
+                <div className="flex items-center space-x-2 text-gray-500 text-sm ">
+                  <span>Team:</span>
+                  <div className="flex flex-shrink-0 -space-x-1 ">
+                    {project.team.map((member) => (
+                      <Avatar
+                        key={member._id}
+                        round
+                        size="25"
+                        color="gray"
+                        textSizeRatio={1.75}
+                        name={member.name}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="flex flex-row items-center w-1/4">
-              <p className="flex flex-col items-start text-gray-500 text-sm space-x-2">
-                <span>
-                  <span>Created at: </span>
-                  <span className="ml-2">
-                    {project.createdAt
+
+            <div className="hidden xl:flex flex-row items-center justify-end w-1/3 ">
+              <div className="flex flex-col justify-center items-end  text-gray-500 text-sm space-x-2">
+                <div>
+                  <span>
+                    <span>Created at: </span>
+                    <span className="ml-2">
+                      {project.createdAt
+                        .replace(/([^:]*$)/g, "")
+                        .replace("T", " ")
+                        .slice(0, -1)}
+                    </span>
+                  </span>
+                </div>
+                <div>
+                  <span>
+                    Last update:{" "}
+                    {project.updatedAt
                       .replace(/([^:]*$)/g, "")
                       .replace("T", " ")
                       .slice(0, -1)}
                   </span>
-                </span>
-                <span>
-                  Last update:{" "}
-                  {project.updatedAt
-                    .replace(/([^:]*$)/g, "")
-                    .replace("T", " ")
-                    .slice(0, -1)}
-                </span>
-                <span aria-hidden="true">&middot;</span>
-                {/* <span>{project.location}</span> */}
-              </p>
+                </div>
+              </div>
             </div>
 
-            <div className="flex flex-row justify-between items-center">
+            <div className="flex flex-row justify-end items-center w-1/8 pr-5">
               <button
                 type="button"
                 className="relative bg-white rounded-full focus:outline-none focus:ring-2 mr-1"
