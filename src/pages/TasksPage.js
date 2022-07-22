@@ -138,6 +138,7 @@ function ProjectCards(props) {
                               key={card._id}
                               draggableId={card._id}
                               index={index}
+                              
                             >
                               {(draggableProvided) => (
                                 <div
@@ -151,6 +152,7 @@ function ProjectCards(props) {
                                     stat={card.stat}
                                     color={card.color}
                                     cardId={card._id}
+                                    cardLimitDate = {card.limitDate}
                                     setDeleteModalHasRender={
                                       setDeleteModalHasRender
                                     }
