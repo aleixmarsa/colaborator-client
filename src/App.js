@@ -21,6 +21,7 @@ function App() {
         <Route exact path="/signup" element={<AnonRoute><SignupPage /></AnonRoute>} />
         <Route exact path="/login" element={<AnonRoute><LoginPage /></AnonRoute>} />
         <Route exact path="/user-list" element={<PrivateRoute><UserList /></PrivateRoute>} />
+        <Route exact path="/:projectId/tasks" element={<PrivateRoute><ProjectCards /></PrivateRoute>} />
         <Route exact path="/chat/:chatId" element={<PrivateRoute><Chat /></PrivateRoute>} />
       
       </Routes>

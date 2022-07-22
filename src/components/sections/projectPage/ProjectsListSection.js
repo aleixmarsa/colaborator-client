@@ -1,7 +1,8 @@
 import { Menu } from "@headlessui/react";
+import { Link } from "react-router-dom";
 import Avatar from "react-avatar";
 import { useState } from "react";
-import { updateProjectService } from "../../services/project.services";
+import { updateProjectService } from "../../../services/project.services";
 
 import {
   ChevronDownIcon,
@@ -12,7 +13,7 @@ import {
   FolderAddIcon,
   FolderRemoveIcon,
 } from "@heroicons/react/solid";
-import SortMenu from "../menus/SortMenu";
+import SortMenu from "../../menus/SortMenu";
 
 const ProjectsListSection = (props) => {
   const {
@@ -86,6 +87,7 @@ const ProjectsListSection = (props) => {
         className="relative z-0 divide-y divide-gray-200 border-b border-gray-200"
       >
         {filteredProjects.map((project) => (
+          <Link to={`/${project._id}/tasks`}>
           <li
             key={project._id}
             className={`relative pl-4 pr-6 py-2 ${bgColor} hover:bg-gray-50 sm:pl-6 lg:pl-8 xl:pl-6`}
@@ -214,6 +216,7 @@ const ProjectsListSection = (props) => {
               </div>
             </div>
           </li>
+          </Link>
         ))}
       </ul>
     </div>

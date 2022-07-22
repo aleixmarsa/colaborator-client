@@ -3,41 +3,14 @@ import NavBar from "../components/navbar/NavBar";
 import DeletProjectModal from "../components/modals/DeleteProjectModal";
 import Footer from "../components/footer/Footer";
 import { AuthContext } from "../context/auth.context";
-import ProjectManagementSection from "../components/sections/ProjectManagementSection";
-import ProjectsListSection from "../components/sections/ProjectsListSection";
+import ProjectManagementSection from "../components/sections/projectPage/ProjectManagementSection";
+import ProjectsListSection from "../components/sections/projectPage/ProjectsListSection";
 import {
   getAllCurrentProjectsService,
   getAllCompletedProjectsService,
 } from "../services/project.services";
 
 
-const completedProjects = [
-  {
-    name: "First Completed Project",
-    href: "#",
-    siteHref: "#",
-    repoHref: "#",
-    repo: "aleixmarsa/first-completed-project",
-    tech: "React",
-    lastDeploy: "12h ago",
-    location: "Catalunya",
-    starred: true,
-    active: true,
-  },
-  {
-    name: "Second Completed Project",
-    href: "#",
-    siteHref: "#",
-    repoHref: "#",
-    repo: "aleixmarsa/second-completed-project",
-    tech: "React",
-    lastDeploy: "20h ago",
-    location: "Catalunya",
-    starred: true,
-    active: true,
-  },
-  // More projects...
-];
 import { useState, useEffect, useContext } from "react";
 
 const classNames = (...classes) => {
