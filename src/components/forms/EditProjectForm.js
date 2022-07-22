@@ -10,7 +10,7 @@ const EditProjectForm = (props) => {
 
   useEffect(() => {
     axios
-      .get(`${API_URL}/colaborator-API/projects/${props.id}`)
+      .get(`${API_URL}/colaborator-API/projects/${props.taskId}`)
       .then((response) => {
         const oneProject = response.data;
         setTitle(oneProject.title);

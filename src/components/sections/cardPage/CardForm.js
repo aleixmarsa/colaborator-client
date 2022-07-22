@@ -5,15 +5,13 @@ import axios from "axios";
 const API_URL = "http://localhost:5005"
 
 function CardForm (props) {
-    console.log(props)
-
 
     const [cardForm, setCardForm] = useState(false);
 
     const [cardTitle, setCardTitle] = useState("")
     const [cardDescription, setCardDescription] = useState("");
     const [cardStat, setCardStat] = useState("TODO");
-    const [cardColor, setCardColor] = useState("Red")
+    const [cardColor, setCardColor] = useState("white")
 
 
     const handleSubmitNewCard = (e) => {
@@ -26,16 +24,18 @@ function CardForm (props) {
           stat: cardStat,
           color: cardColor
         };
+        console.log("Body que viene del formulario: ", body)
 
         axios
             .post(`${API_URL}/colaborator-API/projects/${props.projectId}/card/new-card`, body)
             .then((response) => {
+
                 props.setCards([...props.cards, response.data])
 
                 setCardTitle("");
                 setCardDescription("");
-                setCardForm(false)
-                setCardColor("white")
+                setCardForm(false);
+                setCardColor("white");
                 setCardStat("TODO");
                 
                 props.getAllCards()
@@ -55,31 +55,26 @@ function CardForm (props) {
                     <div>
                         <div className="mt-6 sm:mt-5 space-y-6 sm:space-y-5">
                         <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                            <label
-                            htmlFor="title"
-                            className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-                            >
-                            Title
+                            <label htmlFor="title" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                Title
                             </label>
+
                             <div className="mt-1 sm:mt-0 sm:col-span-2">
-                            <div className="max-w-lg flex rounded-md shadow-sm ">
-                                <input
-                                type="text"
-                                name="title"
-                                id="title"
-                                onChange={(e) => setCardTitle(e.target.value)}
-                                value={cardTitle}
-                                className="flex-1 block w-full focus:ring focus:outline-none focus:ring-lime-600 focus:border min-w-0 rounded-r-md sm:text-sm border border-gray-300 rounded-md"
-                                />
-                            </div>
+                                <div className="max-w-lg flex rounded-md shadow-sm ">
+                                    <input
+                                    type="text"
+                                    name="title"
+                                    id="title"
+                                    onChange={(e) => setCardTitle(e.target.value)}
+                                    value={cardTitle}
+                                    className="flex-1 block w-full focus:ring focus:outline-none focus:ring-lime-600 focus:border min-w-0 rounded-r-md sm:text-sm border border-gray-300 rounded-md"
+                                    />
+                                </div>
                             </div>
                         </div>
                         <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                            <label
-                            htmlFor="description"
-                            className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-                            >
-                            Description
+                            <label htmlFor="description" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                Description
                             </label>
                             <div className="mt-1 sm:mt-0 sm:col-span-2">
                             <textarea
@@ -98,18 +93,18 @@ function CardForm (props) {
                             </label>
                             <div className="mt-1 sm:mt-0 sm:col-span-2">
                                 <select
-                                id="country"
-                                name="country"
-                                autoComplete="country-name"
-                                className="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+                                    id="color"
+                                    name="color"
+                                    className="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+                                    onChange={(e) => setCardColor(e.target.value)}
                                 >
-                                <option>white</option>
-                                <option>yellow</option>
-                                <option>green</option>
-                                <option>red</option>
-                                <option>orange</option>
-                                <option>blue</option>
-                                <option>gray</option>
+                                <option value="white">White</option>
+                                <option value="yellow">Yellow</option>
+                                <option value="green">Green</option>
+                                <option value="red">Red</option>
+                                <option value="orange">Orange</option>
+                                <option value="blue">Blue</option>
+                                <option value="gray">Gray</option>
                                 </select>
                             </div>
                         </div>

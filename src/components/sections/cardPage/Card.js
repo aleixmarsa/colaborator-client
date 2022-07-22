@@ -3,6 +3,8 @@ import { MailIcon, PhoneIcon } from "@heroicons/react/solid";
 
 import { useState, useEffect } from "react";
 
+
+
 const taskStatColorChange = (stat) => {
   if (stat === "TODO") return "bg-blue-200";
   if (stat === "PROGRESS") return "bg-amber-200";
@@ -10,12 +12,8 @@ const taskStatColorChange = (stat) => {
 };
 
 
-
-
-
 function Card(props) {
 
-    console.log(props)
 
     const { title, stat, color, cardId, setDeleteModalHasRender, 
             setOpenDeleteModal, setDeleteTaskId, getAllCards,
@@ -37,31 +35,46 @@ function Card(props) {
     }
 
     const setColorBackground = () => {
-        return `bg-${color}-100`
+        if(color === "white") return "bg-white-100"
+        if(color === "yellow") return "bg-yellow-100"
+        if(color === "green") return "bg-green-100"
+        if(color === "red") return "bg-red-100"
+        if(color === "orange") return "bg-orange-100"
+        if(color === "blue") return "bg-blue-100"
+        if(color === "gray") return "bg-gray-100"
+    }
+
+    const setColorBorder = () => {
+        if(color === "white") return "border-white-300"
+        if(color === "yellow") return "border-yellow-300"
+        if(color === "green") return "border-green-300"
+        if(color === "red") return "border-red-300"
+        if(color === "orange") return "border-orange-300"
+        if(color === "blue") return "border-blue-300"
+        if(color === "gray") return "border-gray-300"
     }
 
     return (
         <li
-        className={`col-span-1 ${setColorBackground()} rounded-lg shadow divide-y divide-gray-200 list-none`}
+        className={`col-span-1 bg-white rounded-md shadow-xl divide-y divide-gray-200 list-none m-2 border-2 ${setColorBorder()}`}
         >
-        <div className="w-full flex items-center justify-between p-3 space-x-6 m-1">
+        <div className="w-full flex items-center justify-between p-2 space-x-6 m-1">
             <div className="flex-1 truncate">
-                <div className="flex flex-row justify-between space-x-3">
+                <div className="flex flex-row justify-between items-center space-x-3">
                     <h3 className="text-gray-900 text-sm font-medium truncate">
                         {title}
                     </h3>
-                    <div>
+                    <div className="flex flex-row justify-between items-center">
                     
-                        <span
+                        {/* <span
                         className={`flex-shrink-0 inline-block px-2 py-0.5 mr-3 text-black-800 text-xs font-medium ${taskStatColorChange(
                             stat
                         )} rounded-full`}
                         >
-                        {stat}
-                        </span>
+                        </span> */}
                         <button
                             type="button"
-                            className="relative bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lime-500"
+                            className="relative bg-white rounded-full focus:outline-none focus:ring-2 mr-1"
                             onClick={() => handleEditTaskBtn(cardId)}
                             >
                             <PencilIcon
@@ -71,7 +84,7 @@ function Card(props) {
                         </button>
                         <button
                             type="button"
-                            className="relative bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lime-500"
+                            className="relative bg-white rounded-full focus:outline-none focus:ring-2"
                             onClick={() => handleDeleteTaskBtn(cardId)}
                             >
                             <TrashIcon
@@ -83,13 +96,6 @@ function Card(props) {
                     
                 </div>
 
-                <div className="m-1">
-                    <img
-                    className="w-8 h-8 bg-gray-300 rounded-full flex-shrink-0 mb-5"
-                    src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60"
-                    alt=""
-                    />
-                </div>
             </div>
         </div>
         </li>

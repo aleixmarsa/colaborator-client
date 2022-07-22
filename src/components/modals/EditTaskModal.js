@@ -1,23 +1,48 @@
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { ExclamationIcon } from "@heroicons/react/outline";
+
 import axios from "axios";
+
 const API_URL = process.env.REACT_APP_API_URL;
 
 const EditTaskModal = (props) => {
 
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [color, setColor] = useState("");
+
 
   const cancelButtonRef = useRef(null);
 
-  const deleteTask = (id) => {
+
+  useEffect(() => {
     axios
-      .delete(`${API_URL}/colaborator-API/projects/card/delete/${id}`)
+      .get(`${API_URL}/colaborator-API/projects/card/edit/${props.editTaskId}`)
       .then((response) => {
-        props.setOpenDeleteModal(false);
-        props.getAllCards()
+        
+        console.log("GET para la editcion de la tarjeta: ", response.data)
+        setTitle(response.data.title);
+        setDescription(response.data.description);
+        setColor(response.data.color);
+
       })
       .catch((err) => console.log(err));
+  }, [props.editTaskId])
+
+  const handleSubmitEditForm = (e) => {
+    //e.preventDefault();
+    const body = {
+      title: title,
+      description: description,
+      color: color
+    };
+
+    axios.put(`${API_URL}/colaborator-API/card/updateCard/${props.editTaskId}`, body).then((response) => {
+      props.handleCanceleAddSaveFormBtn(e);
+      props.getAllProjects();
+    });
   };
+
 
   
   return (
@@ -69,88 +94,56 @@ const EditTaskModal = (props) => {
                             name="first-name"
                             id="first-name"
                             autoComplete="given-name"
+                            onChange={(e) => setTitle(e.target.value)}
+                            value={title}
                             className="max-w-lg block w-full h-8 border-2 shadow-xl focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-lime-300 rounded-md"
                             />
                         </div>
                     </div>
+                    <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                            <label htmlFor="description" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                Description
+                            </label>
+                            <div className="mt-1 sm:mt-0 sm:col-span-2">
+                            <textarea
+                                id="description"
+                                name="description"
+                                onChange={(e) => setDescription(e.target.value)}
+                                value={description}
+                                rows={3}
+                                // onChange={(e) => setCardDescription(e.target.value)}
+                                // value={cardDescription}
+                                className="max-w-lg shadow-sm block w-full focus:ring focus:outline-none focus:ring-lime-600 focus:border sm:text-sm border border-gray-300 rounded-md"
+                            />
+                            </div>
+                        </div>
+
 
                     <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                    <label htmlFor="country" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                        Color
-                    </label>
-                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                        <select
-                        id="country"
-                        name="country"
-                        autoComplete="country-name"
-                        className="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-                        >
-                        <option>United States</option>
-                        <option>Canada</option>
-                        <option>Mexico</option>
-                        </select>
-                    </div>
-                    </div>
-
-                    <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                    <label htmlFor="street-address" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                        Street address
-                    </label>
-                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                        <input
-                        type="text"
-                        name="street-address"
-                        id="street-address"
-                        autoComplete="street-address"
-                        className="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
-                        />
-                    </div>
+                      <label htmlFor="country" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                          Color
+                      </label>
+                      <div className="mt-1 sm:mt-0 sm:col-span-2">
+                          <select
+                          id="country"
+                          name="country"
+                          autoComplete="country-name"
+                          value={color}
+                          onChange={(e) => setColor(e.target.value)}
+                          className="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+                          >
+                          <option value="white">White</option>
+                          <option value="yellow">Yellow</option>
+                          <option value="green">Green</option>
+                          <option value="red">Red</option>
+                          <option value="orange">Orange</option>
+                          <option value="blue">Blue</option>
+                          <option value="gray">Gray</option>
+                          </select>
+                      </div>
                     </div>
 
-                    <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                    <label htmlFor="city" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                        City
-                    </label>
-                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                        <input
-                        type="text"
-                        name="city"
-                        id="city"
-                        autoComplete="address-level2"
-                        className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-                        />
-                    </div>
-                    </div>
-
-                    <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                    <label htmlFor="region" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                        State / Province
-                    </label>
-                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                        <input
-                        type="text"
-                        name="region"
-                        id="region"
-                        autoComplete="address-level1"
-                        className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-                        />
-                    </div>
-                    </div>
-
-                    <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                    <label htmlFor="postal-code" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                        ZIP / Postal code
-                    </label>
-                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                        <input
-                        type="text"
-                        name="postal-code"
-                        id="postal-code"
-                        autoComplete="postal-code"
-                        className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-                        />
-                    </div>
-                    </div>
+                    
                 </div>
                 </div>
                   
@@ -160,7 +153,7 @@ const EditTaskModal = (props) => {
                   <button
                     type="button"
                     className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-lime-500 text-base font-medium text-white hover:bg-lime-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
-                    onClick={() => deleteTask(props.EditTaskId)}
+                    onClick={() => handleSubmitEditForm(props.EditTaskId)}
                   >
                     Edit
                   </button>
