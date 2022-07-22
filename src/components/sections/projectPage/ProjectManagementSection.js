@@ -1,7 +1,7 @@
-import NewProjectForm from "../forms/NewProjectForm";
-import EditProjectForm from "../forms/EditProjectForm";
+import NewProjectForm from "../../forms/NewProjectForm";
+import EditProjectForm from "../../forms/EditProjectForm";
 import Avatar from "react-avatar";
-import Button from "../buttons/Button";
+import Button from "../../buttons/Button";
 import { CollectionIcon } from "@heroicons/react/solid";
 const ProjectManagementSection = (props) => {
   const {
