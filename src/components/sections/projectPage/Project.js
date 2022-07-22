@@ -38,7 +38,7 @@ function Project(props) {
 
   return (
     <li
-      className={`col-span-1  bg-white rounded-md shadow-xl divide-y divide-gray-200 list-none m-2 border-2 }`}
+      className={`col-span-1 max-w bg-white rounded-md shadow-xl divide-y border border-lime-400 list-none m-2 border-2 }`}
     >
       <div className="w-full flex items-center justify-between p-2 space-x-6 m-1">
         <div className="flex-1 truncate">
@@ -47,7 +47,9 @@ function Project(props) {
               <h3 className="text-gray-900 text-sm font-medium truncate">
                 {project.title}
               </h3>
-              <div className=" hidden xl:flex lg:flex md:flex flex-row items-center">
+              
+            </div>
+            <div className=" hidden xl:flex lg:flex flex-row items-center w-1/3">
                 <div className="flex items-center space-x-2 text-gray-500 text-sm ">
                   <span>Team:</span>
                   <div className="flex flex-shrink-0 -space-x-1 ">
@@ -64,9 +66,8 @@ function Project(props) {
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div className="hidden xl:flex flex-row items-center justify-end w-1/3 ">
+            <div className="hidden xl:flex flex-row items-center justify-center w-1/3 ">
               <div className="flex flex-col justify-center items-end  text-gray-500 text-sm space-x-2">
                 <div>
                   <span>

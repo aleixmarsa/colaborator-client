@@ -155,10 +155,11 @@ const ProjectsPage = () => {
 
         <div>
           {/* Activity feed */}
-          <div className="bg-gray-50 pr-4 sm:pr-6 lg:pr-8 lg:flex-shrink-0 lg:border-l lg:border-gray-200 xl:pr-0">
-            <div className="pl-6 lg:w-80">
-              <div className="pt-6 pb-2">
-                <h2 className="text-sm font-semibold">Activity</h2>
+          <div className="drop-shadow-md  lg:min-w-0 lg:flex-1  mr-5 gap-6 mt-5 mb-10 ">
+      <div className="p-6 pt-2 bg-stone-50">
+        <div className=" flex items-center border-b-2 mb-5  pb-2  ">
+          <h2 className="flex-1 text-xl">ACTIVITY</h2>
+
               </div>
               <div>
                 <ul role="list" className="divide-y divide-gray-200">
