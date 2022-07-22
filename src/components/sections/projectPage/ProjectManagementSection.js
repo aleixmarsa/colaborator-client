@@ -58,7 +58,7 @@ const ProjectManagementSection = (props) => {
                       <Avatar
                         round
                         size="50"
-                        textSizeRatio={1.5}
+                        textSizeRatio={1.9}
                         color="gray"
                         name={user.name}
                       />
