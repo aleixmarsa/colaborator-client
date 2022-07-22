@@ -3,9 +3,9 @@ import NavBar from "../components/navbar/NavBar";
 import DeletProjectModal from "../components/modals/DeleteProjectModal";
 import Footer from "../components/footer/Footer";
 import { AuthContext } from "../context/auth.context";
-import ProjectManagementSection from "../components/sections/ProjectManagementSection";
-import CurrentProjectsSection from "../components/sections/CurrentProjectsSection";
-import CompletedProjectsSection from "../components/sections/CompletedProjectsSection";
+import ProjectManagementSection from "../components/sections/projectPage/ProjectManagementSection";
+import CurrentProjectsSection from "../components/sections/projectPage/CurrentProjectsSection";
+import CompletedProjectsSection from "../components/sections/projectPage/CompletedProjectsSection"
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 

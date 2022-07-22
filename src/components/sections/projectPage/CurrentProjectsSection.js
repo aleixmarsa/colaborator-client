@@ -1,6 +1,8 @@
 import { Menu } from "@headlessui/react";
 import Avatar from "react-avatar";
 
+import { Link } from "react-router-dom";
+
 import {
   ChevronDownIcon,
   ChevronRightIcon,
@@ -21,6 +23,7 @@ const CurrentProjectsSection = (props) => {
     setOpenDeleteModal,
     setProjectTitle,
   } = props;
+  
   const handleEditProjectBtn = (e, id) => {
     e.preventDefault();
     setEditProject(!editProject);
@@ -35,6 +38,7 @@ const CurrentProjectsSection = (props) => {
     setId(id);
     setProjectTitle(title);
   };
+  
   return (
     <div className="bg-white lg:min-w-0 lg:flex-1">
       <div className="pl-4 pr-6 pt-4 pb-4 border-b border-t border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 xl:pt-6 xl:border-t-0">
@@ -127,13 +131,15 @@ const CurrentProjectsSection = (props) => {
                   </span>
 
                   <h2 className="text-sm font-medium">
-                    <a href={project.href}>
-                      <span className="absolute inset-0" aria-hidden="true" />
+                    <Link to={`/${project._id}/tasks`}> 
+                      {project.name} 
+                    
+                      <span className="absolute inset-0" aria-hidden="true"/>
                       {project.title}{" "}
                       <span className="sr-only">
                         {project.active ? "Running" : "Not running"}
                       </span>
-                    </a>
+                    </Link>
                   </h2>
                 </div>
                 <div className="flex items-center space-x-2 text-gray-500 text-sm ">

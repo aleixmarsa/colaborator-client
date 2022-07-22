@@ -1,6 +1,6 @@
 import { ChevronRightIcon, StarIcon } from "@heroicons/react/solid";
 
-import SortMenu from "../menus/SortMenu";
+import SortMenu from "../../menus/SortMenu"
 
 const CompletedProjectsSection = (props) => {
   const { classNames, completedProjects } = props;
