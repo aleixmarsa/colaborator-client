@@ -17,13 +17,9 @@ const ChatBox = (props) => {
   // const { chatId } = useParams();
 
   useEffect(() => {
-    console.log(
-      "🚀 ~ file: chat.js ~ line 14 ~ useEffect ~ useEffect",
-      useEffect
-    );
     getAllMessages();
     socketConnection();
-  }, []);
+  }, [chatId]);
 
   const socketConnection = () => {
     const storedToken = localStorage.getItem("authToken");
@@ -50,6 +46,8 @@ const ChatBox = (props) => {
   const getAllMessages = async () => {
     try {
       const response = await getAllMessagesService(chatId);
+      console.log("🚀 ~ file: ChatBox.js ~ line 53 ~ getAllMessages ~ chatId", chatId)
+      
       setAllMessages(response.data);
     } catch (err) {
       console.log(err);
@@ -58,7 +56,12 @@ const ChatBox = (props) => {
 
   const handleChange = (e) => {
     e.preventDefault();
+    console.log(e)
     setText(e.target.value);
+  };
+
+  const handleKeyDown = (e) => {
+    if(e.key ==="Enter") sendMessage(e);
   };
 
   const sendMessage = (e) => {
@@ -120,6 +123,7 @@ const ChatBox = (props) => {
             name="text"
             value={text}
             onChange={handleChange}
+            onKeyDown={handleKeyDown}
           />
 
           <div>
