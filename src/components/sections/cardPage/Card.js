@@ -104,7 +104,7 @@ function Card(props) {
         </div>
         {
             cardLimitDate && (
-                <span className="text-gray-500 text-sm">Limit Date: {cardLimitDate}</span>
+                <span className="text-gray-500 text-xs">Limit Date: {cardLimitDate}</span>
             ) 
         }
         

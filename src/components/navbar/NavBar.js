@@ -28,7 +28,7 @@ const NavBar = (props) => {
   let location = useLocation();
 
   return (
-    <Disclosure as="nav" className="flex-shrink-0 bg-lime-600">
+    <Disclosure as="nav" className="flex-shrink-0 bg-green-700">
       {({ open }) => (
         <>
           <div className="max-w-9xl mx-auto px-2 sm:px-4 lg:px-8">
@@ -49,7 +49,7 @@ const NavBar = (props) => {
               />
               <div className="flex lg:hidden">
                 {/* Mobile menu button */}
-                <Disclosure.Button className="bg-lime-600 inline-flex items-center justify-center p-2 rounded-md text-lime-400 hover:text-white hover:bg-lime-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-lime-600 focus:ring-white">
+                <Disclosure.Button className="bg-green-600 inline-flex items-center justify-center p-2 rounded-md text-green-400 hover:text-white hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-600 focus:ring-white">
                   <span className="sr-only">Open main menu</span>
                   {open ? (
                     <XIcon className="block h-6 w-6" aria-hidden="true" />
@@ -70,8 +70,8 @@ const NavBar = (props) => {
                         to="/"
                         className={({ isActive }) =>
                           isActive
-                            ? "px-3 py-2 rounded-md text-md font-medium text-white bg-lime-700 hover:text-white"
-                            : "px-3 py-2 rounded-md text-md font-medium text-lime-200 hover:text-e-100 hover:bg-lime-600"
+                            ? "px-3 py-2 rounded-md text-md font-medium text-white bg-green-600 hover:text-white"
+                            : "px-3 py-2 rounded-md text-md font-medium text-white hover:text-e-100 hover:bg-green-600"
                         }
                       >
                         PROJECTS
@@ -80,8 +80,8 @@ const NavBar = (props) => {
                         to="/global-calendar"
                         className={({ isActive }) =>
                           isActive
-                            ? "px-3 py-2 rounded-md text-md font-medium text-white bg-lime-700 hover:text-white"
-                            : "px-3 py-2 rounded-md text-md font-medium text-lime-200 hover:text-e-100 hover:bg-lime-600"
+                            ? "px-3 py-2 rounded-md text-md font-medium text-white bg-green-600 hover:text-white"
+                            : "px-3 py-2 rounded-md text-md font-medium text-white hover:text-e-100 hover:bg-green-600"
                         }
                       >
                         CALENDAR
@@ -90,7 +90,7 @@ const NavBar = (props) => {
                         <a
                           key={item.name}
                           href={item.href}
-                          className="px-3 py-2 rounded-md text-sm font-medium text-lime-200 hover:text-white"
+                          className="px-3 py-2 rounded-md text-sm font-medium text-green-200 hover:text-white"
                           aria-current={item.current ? "page" : undefined}
                         >
                           {item.name}
@@ -100,7 +100,7 @@ const NavBar = (props) => {
                     {/* Profile dropdown */}
                     <Menu as="div" className="ml-4 relative flex-shrink-0 z-10">
                       <div>
-                        <Menu.Button className="bg-lime-700 flex text-sm rounded-full text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-lime-700 focus:ring-white">
+                        <Menu.Button className="bg-green-700 flex text-sm rounded-full text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-700 focus:ring-white">
                           <span className="sr-only">Open user menu</span>
                           <Avatar
                             round
@@ -158,8 +158,8 @@ const NavBar = (props) => {
                   href="/"
                   className={classNames(
                     location.pathname === "/"
-                      ? "text-white bg-lime-700"
-                      : "text-lime-200 hover:text-lime-100 hover:bg-lime-600",
+                      ? "text-white bg-green-700"
+                      : "text-green-200 hover:text-green-100 hover:bg-green-600",
                     "block px-3 py-2 rounded-md text-base font-medium"
                   )}
                   // aria-current={item.current ? "page" : undefined}
@@ -171,8 +171,8 @@ const NavBar = (props) => {
                   href="/global-calendar"
                   className={classNames(
                     location.pathname === "/global-calendar"
-                      ? "text-white bg-lime-700"
-                      : "text-lime-200 hover:text-lime-100 hover:bg-lime-600",
+                      ? "text-white bg-green-700"
+                      : "text-green-200 hover:text-green-100 hover:bg-green-600",
                     "block px-3 py-2 rounded-md text-base font-medium"
                   )}
                   // aria-current={item.current ? "page" : undefined}
@@ -180,14 +180,14 @@ const NavBar = (props) => {
                   CALENDAR
                 </Disclosure.Button>
               </div>
-              <div className="pt-4 pb-3 border-t border-lime-800">
+              <div className="pt-4 pb-3 border-t border-green-800">
                 <div className="px-2 space-y-1">
                   {userNavigation.map((item) => (
                     <Disclosure.Button
                       key={item.name}
                       as="a"
                       onClick={item.action}
-                      className="block px-3 py-2 rounded-md text-base font-medium text-lime-200 hover:text-lime-100 hover:bg-lime-600"
+                      className="block px-3 py-2 rounded-md text-base font-medium text-green-200 hover:text-green-100 hover:bg-green-600"
                     >
                       {item.name}
                     </Disclosure.Button>

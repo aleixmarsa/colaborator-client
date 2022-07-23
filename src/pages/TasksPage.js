@@ -138,7 +138,6 @@ function ProjectCards(props) {
                               key={card._id}
                               draggableId={card._id}
                               index={index}
-                              
                             >
                               {(draggableProvided) => (
                                 <div
@@ -152,7 +151,7 @@ function ProjectCards(props) {
                                     stat={card.stat}
                                     color={card.color}
                                     cardId={card._id}
-                                    cardLimitDate = {card.limitDate}
+                                    cardLimitDate={card.limitDate}
                                     setDeleteModalHasRender={
                                       setDeleteModalHasRender
                                     }
@@ -197,12 +196,10 @@ function ProjectCards(props) {
 
             <Droppable droppableId="progress">
               {(droppableProvided) => (
-
-                
                 <div className="p-6 pt-2 bg-stone-50">
-                    <div className=" border-b-2 mb-5  pb-2  ">
-                      <h2 className="text-xl  border-color-black">IN PROGRESS</h2>
-                    </div>
+                  <div className=" border-b-2 mb-5  pb-2  ">
+                    <h2 className="text-xl  border-color-black">IN PROGRESS</h2>
+                  </div>
 
                   <div
                     {...droppableProvided.droppableProps}
@@ -232,6 +229,7 @@ function ProjectCards(props) {
                                   stat={card.stat}
                                   color={card.color}
                                   cardId={card._id}
+                                  cardLimitDate={card.limitDate}
                                   setDeleteModalHasRender={
                                     setDeleteModalHasRender
                                   }
@@ -258,9 +256,9 @@ function ProjectCards(props) {
             <Droppable droppableId="done">
               {(droppableProvided) => (
                 <div className="p-6 pt-2 bg-stone-50">
-                    <div className=" border-b-2 mb-5  pb-2  ">
-                      <h2 className="text-xl  border-color-black">DONE</h2>
-                    </div>
+                  <div className=" border-b-2 mb-5  pb-2  ">
+                    <h2 className="text-xl  border-color-black">DONE</h2>
+                  </div>
 
                   <div
                     {...droppableProvided.droppableProps}
@@ -287,6 +285,7 @@ function ProjectCards(props) {
                                   stat={card.stat}
                                   color={card.color}
                                   cardId={card._id}
+                                  cardLimitDate={card.limitDate}
                                   setDeleteModalHasRender={
                                     setDeleteModalHasRender
                                   }
