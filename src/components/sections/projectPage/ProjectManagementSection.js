@@ -12,7 +12,6 @@ const ProjectManagementSection = (props) => {
     setNewProject,
     editProject,
     setEditProject,
-    refreshAllProjects,
     getAllProjects,
   } = props;
   const handleNewProjectBtn = (e) => {
@@ -32,7 +31,7 @@ const ProjectManagementSection = (props) => {
         <NewProjectForm
           handleNewProjectBtn={handleNewProjectBtn}
           handleCanceleAddSaveFormBtn={handleCanceleAddSaveFormBtn}
-          refreshAllProjects={refreshAllProjects}
+          getAllProjects={getAllProjects}
         />
       ) : editProject ? (
         <EditProjectForm
@@ -59,7 +58,7 @@ const ProjectManagementSection = (props) => {
                         round
                         size="50"
                         textSizeRatio={1.9}
-                        color="gray"
+                        // color="gray"
                         name={user.name}
                       />
 

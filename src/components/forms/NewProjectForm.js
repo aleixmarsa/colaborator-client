@@ -21,7 +21,9 @@ const NewProjectForm = (props) => {
 
     try {
       const response = await addNewProjectService(body);
-      props.refreshAllProjects(response, "post");
+      console.log("🚀 ~ file: NewProjectForm.js ~ line 24 ~ handleSubmit ~ response", response)
+      
+      props.getAllProjects();
       setTitle("");
       setDescription("");
       setTeam([]);

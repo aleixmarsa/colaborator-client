@@ -66,6 +66,10 @@ const ProjectsPage = () => {
     try {
       const response = await getAllCurrentProjectsService(id);
       setCurrentProjects(response.data);
+      console.log(
+        "🚀 ~ file: ProjectsPage.js ~ line 69 ~ getAllProjects ~ response.data",
+        response.data
+      );
       setFilteredCurrentProjects(response.data);
       setLoading(false);
     } catch (err) {
@@ -81,31 +85,31 @@ const ProjectsPage = () => {
     }
   };
 
-  const refreshAllProjects = (response, action, id) => {
-    let currentProjectsCopy = [...currentProjects];
-    let completedProjectsCopy = [...completedProjects];
+  // const refreshAllProjects = (response, action, id) => {
+  //   let currentProjectsCopy = [...currentProjects];
+  //   let completedProjectsCopy = [...completedProjects];
 
-    if (action === "post") {
-      currentProjectsCopy = [...currentProjects, response.data];
-    } else if (action === "delete") {
-      const indexCurrent = currentProjectsCopy.findIndex((object) => {
-        return object._id === id;
-      });
-      const indexCompleted = completedProjectsCopy.findIndex((object) => {
-        return object._id === id;
-      });
-      if (indexCurrent !== -1) {
-        currentProjectsCopy.splice(indexCurrent, 1);
-      }
-      if (indexCompleted !== -1) {
-        completedProjectsCopy.splice(indexCompleted, 1);
-      }
-    }
-    setCurrentProjects(currentProjectsCopy);
-    setFilteredCurrentProjects(currentProjectsCopy);
-    setCompletedProjects(completedProjectsCopy);
-    setFilteredCompletedProjects(completedProjectsCopy);
-  };
+  //   if (action === "post") {
+  //     currentProjectsCopy = [...currentProjects, response.data];
+  //   } else if (action === "delete") {
+  //     const indexCurrent = currentProjectsCopy.findIndex((object) => {
+  //       return object._id === id;
+  //     });
+  //     const indexCompleted = completedProjectsCopy.findIndex((object) => {
+  //       return object._id === id;
+  //     });
+  //     if (indexCurrent !== -1) {
+  //       currentProjectsCopy.splice(indexCurrent, 1);
+  //     }
+  //     if (indexCompleted !== -1) {
+  //       completedProjectsCopy.splice(indexCompleted, 1);
+  //     }
+  //   }
+  //   setCurrentProjects(currentProjectsCopy);
+  //   setFilteredCurrentProjects(currentProjectsCopy);
+  //   setCompletedProjects(completedProjectsCopy);
+  //   setFilteredCompletedProjects(completedProjectsCopy);
+  // };
 
   useEffect(() => {
     getAllProjects();
@@ -117,7 +121,7 @@ const ProjectsPage = () => {
       {loading && <div>Loading...</div>}
       {!loading && modalHasRender && (
         <DeletProjectModal
-          refreshAllProjects={refreshAllProjects}
+          getAllProjects={getAllProjects}
           title={projectTitle}
           id={id}
           setOpenDeleteModal={setOpenDeleteModal}
@@ -136,7 +140,7 @@ const ProjectsPage = () => {
             projectsInProgress={currentProjects}
             editProject={editProject}
             setEditProject={setEditProject}
-            refreshAllProjects={refreshAllProjects}
+            // refreshAllProjects={refreshAllProjects}
             getAllProjects={getAllProjects}
           />
         </div>

@@ -87,7 +87,7 @@ const ProjectsListSection = (props) => {
           return (
             <Link to={`/${project._id}/tasks`}>
               <Project
-              project={project}
+                project={project}
                 editProject={editProject}
                 setEditProject={setEditProject}
                 setNewProject={setNewProject}

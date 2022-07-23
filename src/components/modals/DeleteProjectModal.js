@@ -14,7 +14,7 @@ const DeletProjectModal = (props) => {
     try {
 			const response = await deleteProjectService(id);
       props.setOpenDeleteModal(false);
-      props.refreshAllProjects(response, "delete", id);
+      props.getAllProjects();
 		} catch (err) {
 			console.log(err);
 		}

@@ -1,6 +1,5 @@
 [-] Loading ?
 [-] Validacions login formik
-[-] Imatges avatars al crear projecte o a l'editar
+[-] Quan s'edita projecte, els membres de l'equip no es poden canviar
 [-] Canviar card per task
 [-] A la col·lecció de projectes falta la relació amb les tasques
-q

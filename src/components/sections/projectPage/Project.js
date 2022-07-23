@@ -53,16 +53,18 @@ function Project(props) {
                 <div className="flex items-center space-x-2 text-gray-500 text-sm ">
                   <span>Team:</span>
                   <div className="flex flex-shrink-0 -space-x-1 ">
-                    {project.team.map((member) => (
-                      <Avatar
+                    {project.team.map((member) => {
+                      return <Avatar
                         key={member._id}
                         round
                         size="25"
-                        color="gray"
+                        // color="gray"
                         textSizeRatio={1.75}
                         name={member.name}
                       />
-                    ))}
+                    }
+
+                    )}
                   </div>
                 </div>
               </div>

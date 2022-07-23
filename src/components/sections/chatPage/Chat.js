@@ -60,7 +60,7 @@ const Chat = () => {
                     <Avatar
                       round
                       size="25"
-                      color="gray"
+                    //   color="gray"
                       textSizeRatio={1.9}
                       name={user.name}
                     />

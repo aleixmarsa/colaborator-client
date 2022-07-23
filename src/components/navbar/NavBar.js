@@ -105,7 +105,7 @@ const NavBar = (props) => {
                           <Avatar
                             round
                             size="35"
-                            color="gray"
+                            // color="gray"
                             textSizeRatio={1.9}
                             name={user.name}
                           />

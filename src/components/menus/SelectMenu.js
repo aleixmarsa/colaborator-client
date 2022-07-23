@@ -47,7 +47,7 @@ const SelectMenu = (props) => {
                   <Avatar
                     round
                     size="20"
-                    color="gray"
+                    // color="gray"
                     textSizeRatio={2}
                     name={user.name}
                   />
@@ -87,7 +87,7 @@ const SelectMenu = (props) => {
                           <Avatar
                             round
                             size="30"
-                            color="gray"
+                            // color="gray"
                             textSizeRatio={1.75}
                             name={person.name}
                           />
