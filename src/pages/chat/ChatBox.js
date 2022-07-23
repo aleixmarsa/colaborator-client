@@ -3,6 +3,8 @@ import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { getAllMessagesService } from "../../services/chat.services";
 import { AuthContext } from "../../context/auth.context";
+import { ChevronDoubleRightIcon } from "@heroicons/react/solid";
+import Avatar from "react-avatar";
 
 import io from "socket.io-client";
 let socket;
@@ -73,7 +75,16 @@ const ChatBox = (props) => {
 
   return (
     <div className=" flex flex-col justify-between h-full">
-      <h2 className="flex-1 text-lg ">Chatting with: {chatReceiver}</h2>
+      <div className="flex justify-center mt-2">
+        <Avatar
+          round
+          size="25"
+          color="gray"
+          textSizeRatio={1.9}
+          name={user.name}
+        />
+        <h2 className="text-lg font-medium ml-3 ">{chatReceiver}</h2>
+      </div>
 
       <div className=" flex flex-col justify-between h-full">
         <div className=" space-y-10 grid grid-cols-1">
@@ -94,27 +105,35 @@ const ChatBox = (props) => {
                       : "bg-gray-200 rounded-tl-none"
                   }`}
                 >
-                  {message.sender.name}: {message.text}
+                  {message.text}
+                  {/* {message.sender.name}: {message.text} */}
                 </p>
               </div>
             );
           })}
         </div>
-        <div className="mb-2 flex mx-2">
+        <div className="mb-2 flex mx-2 border border-gray-200 h-10 items-center">
           <input
-            className="bg-gray-200 border border-black mr-1 w-full"
+            className="mx-1 w-full focus:outline-none"
             type="text"
             placeholder=" Type a message..."
             name="text"
             value={text}
             onChange={handleChange}
           />
-          <button
+
+          <div>
+            <ChevronDoubleRightIcon
+              className="text-gray-300 hover:text-gray-400 h-8 w-8 cursor-pointer mr-1"
+              onClick={sendMessage}
+            />
+          </div>
+          {/* <button
             className="bg-gray-200 border border-black w-14 h-8"
             onClick={sendMessage}
           >
             Send
-          </button>
+          </button> */}
         </div>
       </div>
     </div>
