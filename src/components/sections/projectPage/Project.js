@@ -38,7 +38,7 @@ function Project(props) {
 
   return (
     <li
-      className={`col-span-1 max-w bg-white rounded-md shadow-xl divide-y border border-lime-600 list-none m-2 border-2 }`}
+      className={`col-span-1 max-w bg-white rounded-md shadow-xl divide-y border border-lime-600 list-none m-2 `}
     >
       <div className="w-full flex items-center justify-between p-2 space-x-6 m-1">
         <div className="flex-1 truncate">

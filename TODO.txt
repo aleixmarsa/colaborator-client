@@ -3,3 +3,4 @@
 [-] Imatges avatars al crear projecte o a l'editar
 [-] Canviar card per task
 [-] A la col·lecció de projectes falta la relació amb les tasques
+q
