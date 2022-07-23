@@ -123,7 +123,7 @@ function ProjectCards(props) {
                       <h2 className="text-xl  border-color-black">TO-DO</h2>
                     </div>
 
-                    <div
+                    <div 
                       {...droppableProvided.droppableProps}
                       ref={droppableProvided.innerRef}
                       className=""

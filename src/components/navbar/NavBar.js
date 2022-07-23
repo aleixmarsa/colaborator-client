@@ -37,9 +37,9 @@ const NavBar = (props) => {
               <div className="flex items-center px-2 lg:px-0 xl:w-64">
                 <div className="flex-shrink-0">
                   <img className="h-8 w-auto" src={icon} alt="Workflow" />
-                </div>
-                <h1 className="ml-3 text-3xl font-medium text-white">
-                  co[lab]orator
+                </div>  
+                <h1 className="ml-3 text-3xl font-small text-white">
+                  co<span className="font-extrabold">lab</span>orator
                 </h1>
               </div>
               <SearchMenu
@@ -104,9 +104,9 @@ const NavBar = (props) => {
                           <span className="sr-only">Open user menu</span>
                           <Avatar
                             round
-                            size="40"
+                            size="35"
                             color="gray"
-                            textSizeRatio={1.75}
+                            textSizeRatio={1.90}
                             name={user.name}
                           />
                           {/* <UserCircleIcon className="h-8 w-8 text-white-500" /> */}
