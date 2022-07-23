@@ -37,7 +37,7 @@ const NavBar = (props) => {
               <div className="flex items-center px-2 lg:px-0 xl:w-64">
                 <div className="flex-shrink-0">
                   <img className="h-8 w-auto" src={icon} alt="Workflow" />
-                </div>  
+                </div>
                 <h1 className="ml-3 text-3xl font-small text-white">
                   co<span className="font-extrabold">lab</span>orator
                 </h1>
@@ -62,7 +62,7 @@ const NavBar = (props) => {
                 </Disclosure.Button>
               </div>
               {/* Links section */}´
-              {isLoggedIn && (
+              {isLoggedIn ? (
                 <div className="hidden lg:block lg:w-80">
                   <div className="flex items-center justify-end">
                     <div className="flex">
@@ -106,7 +106,7 @@ const NavBar = (props) => {
                             round
                             size="35"
                             color="gray"
-                            textSizeRatio={1.90}
+                            textSizeRatio={1.9}
                             name={user.name}
                           />
                           {/* <UserCircleIcon className="h-8 w-8 text-white-500" /> */}
@@ -146,6 +146,29 @@ const NavBar = (props) => {
                       </Transition>
                     </Menu>
                   </div>
+                </div>
+              ) : (
+                <div className="flex">
+                  <NavLink
+                    to="/login"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "px-3 py-2 rounded-md text-sm font-small text-white bg-lime-700 hover:text-white"
+                        : "px-3 py-2 rounded-md text-sm font-small text-lime-200 hover:text-e-100 hover:bg-lime-600"
+                    }
+                  >
+                    LOG IN
+                  </NavLink>
+                  <NavLink
+                    to="/signup"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "px-3 py-2 rounded-md text-sm font-small text-white bg-lime-700 hover:text-white"
+                        : "px-3 py-2 rounded-md text-sm font-small text-lime-200 hover:text-e-100 hover:bg-lime-600"
+                    }
+                  >
+                    SIGN UP
+                  </NavLink>
                 </div>
               )}
             </div>

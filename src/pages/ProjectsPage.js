@@ -10,7 +10,6 @@ import {
   getAllCompletedProjectsService,
 } from "../services/project.services";
 
-
 import { useState, useEffect, useContext } from "react";
 
 const classNames = (...classes) => {
@@ -18,9 +17,14 @@ const classNames = (...classes) => {
 };
 
 const activityItems = [
-  { project: 'Workcation', commit: '2d89f0c8', environment: 'production', time: '1h' },
+  {
+    project: "Workcation",
+    commit: "2d89f0c8",
+    environment: "production",
+    time: "1h",
+  },
   // More items...
-]
+];
 
 const ProjectsPage = () => {
   const [editProject, setEditProject] = useState(false);
@@ -156,10 +160,9 @@ const ProjectsPage = () => {
         <div>
           {/* Activity feed */}
           <div className="drop-shadow-md  lg:min-w-0 lg:flex-1  mr-5 gap-6 mt-5 mb-10 ">
-      <div className="p-6 pt-2 bg-stone-50">
-        <div className=" flex items-center border-b-2 mb-5  pb-2  ">
-          <h2 className="flex-1 text-xl">ACTIVITY</h2>
-
+            <div className="p-6 pt-2 bg-stone-50">
+              <div className=" flex items-center border-b-2 mb-5  pb-2  ">
+                <h2 className="flex-1 text-xl">ACTIVITY</h2>
               </div>
               <div>
                 <ul role="list" className="divide-y divide-gray-200">
@@ -177,7 +180,8 @@ const ProjectsPage = () => {
                             <p className="text-sm text-gray-500">{item.time}</p>
                           </div>
                           <p className="text-sm text-gray-500">
-                            Deployed {item.project} ({item.commit} in master) to {item.environment}
+                            Deployed {item.project} ({item.commit} in master) to{" "}
+                            {item.environment}
                           </p>
                         </div>
                       </div>
@@ -185,7 +189,10 @@ const ProjectsPage = () => {
                   ))}
                 </ul>
                 <div className="py-4 text-sm border-t border-gray-200">
-                  <a href="#" className="text-indigo-600 font-semibold hover:text-indigo-900">
+                  <a
+                    href="#"
+                    className="text-indigo-600 font-semibold hover:text-indigo-900"
+                  >
                     View all activity <span aria-hidden="true">&rarr;</span>
                   </a>
                 </div>
@@ -208,9 +215,8 @@ const ProjectsPage = () => {
             getAllProjects={getAllProjects}
           /> */}
         </div>
-        
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };
