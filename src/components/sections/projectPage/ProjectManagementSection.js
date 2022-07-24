@@ -26,8 +26,7 @@ const ProjectManagementSection = (props) => {
     setNewProjectForm(true);
   };
 
-  const handleCancelAddSaveFormBtn = (e) => {
-    e.preventDefault();
+  const handleCancelAddSaveFormBtn = () => {
     setEditProjectForm(false);
     setNewProjectForm(false);
   };

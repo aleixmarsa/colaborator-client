@@ -57,9 +57,8 @@ const ProjectsListSection = (props) => {
         </div>
 
         {filteredProjects.map((project) => {
-          console.log(project)
             return (
-            <Link to={`/${project._id}/tasks`}>
+            <Link key={project._id} to={`/${project._id}/tasks`}>
               <Project
                 project={project}
                 editProjectForm={editProjectForm}

@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Form from "./Form";
 import { addNewProjectService } from "../../services/project.services";
 import { AuthContext } from "../../context/auth.context";
 import { useContext } from "react";
+
+import io from "socket.io-client";
+let socket;
 
 const NewProjectForm = (props) => {
   const [title, setTitle] = useState("");
@@ -12,9 +15,25 @@ const NewProjectForm = (props) => {
 
   const { user } = useContext(AuthContext);
 
+  useEffect(() => {
+    socketConnection();
+  }, []);
+
+  const socketConnection = () => {
+    const storedToken = localStorage.getItem("authToken");
+    socket = io.connect("http://localhost:5005", {
+      extraHeaders: { Authorization: `Bearer ${storedToken}` },
+    });
+    socket.on("receive_new_project", (e) => {
+      console.log("PROJECTE REBUT")
+      props.getAllProjects();
+
+    });
+  };
+
   const handleSubmit = async (e) => {
     const teamIds = team.map((user) => user._id);
-
+    console.log("IIIIIIIIIIIIIIIIIEEEEEEEEEEEEEEEEEEEEEEEES")
     e.preventDefault();
     const body = {
       title: title,
@@ -24,18 +43,24 @@ const NewProjectForm = (props) => {
       active: isActive,
     };
 
-    try {
-      const response = await addNewProjectService(body);
-      console.log("🚀 ~ file: NewProjectForm.js ~ line 24 ~ handleSubmit ~ response", response)
-      
-      props.getAllProjects();
-      setTitle("");
-      setDescription("");
-      setTeam([]);
-      props.handleCancelAddSaveFormBtn(e);
-    } catch (err) {
-      console.log(err);
-    }
+    socket.emit("new_project", body);
+    props.handleCancelAddSaveFormBtn();
+    setTitle("");
+    setDescription("");
+    setTeam([]);
+
+    // try {
+    //   const response = await addNewProjectService(body);
+    //   console.log("🚀 ~ file: NewProjectForm.js ~ line 24 ~ handleSubmit ~ response", response)
+
+    //   props.getAllProjects();
+    //   setTitle("");
+    //   setDescription("");
+    //   setTeam([]);
+    //   props.handleCancelAddSaveFormBtn(e);
+    // } catch (err) {
+    //   console.log(err);
+    // }
   };
 
   return (
