@@ -40,6 +40,7 @@ const EditProjectForm = (props) => {
       projectId:projectId,
       title: title,
       description: description,
+      team:team
     };
 
     props.socket.emit("edit_project", body);
