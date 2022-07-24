@@ -64,7 +64,7 @@ const ProjectsPage = () => {
 
   const getAllProjects = async () => {
     try {
-      const response = await getAllCurrentProjectsService(id);
+      const response = await getAllCurrentProjectsService();
       setCurrentProjects(response.data);
       console.log(
         "🚀 ~ file: ProjectsPage.js ~ line 69 ~ getAllProjects ~ response.data",
@@ -77,7 +77,7 @@ const ProjectsPage = () => {
     }
 
     try {
-      const response = await getAllCompletedProjectsService(id);
+      const response = await getAllCompletedProjectsService();
       setCompletedProjects(response.data);
       setFilteredCompletedProjects(response.data);
     } catch (err) {
@@ -140,7 +140,6 @@ const ProjectsPage = () => {
             projectsInProgress={currentProjects}
             editProject={editProject}
             setEditProject={setEditProject}
-            // refreshAllProjects={refreshAllProjects}
             getAllProjects={getAllProjects}
           />
         </div>

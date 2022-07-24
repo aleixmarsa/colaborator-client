@@ -1,18 +1,7 @@
-import { Menu } from "@headlessui/react";
 import { Link } from "react-router-dom";
-import Avatar from "react-avatar";
-import { useState } from "react";
 import { updateProjectService } from "../../../services/project.services";
 
-import {
-  ChevronDownIcon,
-  ChevronRightIcon,
-  SortAscendingIcon,
-  PencilIcon,
-  TrashIcon,
-  FolderAddIcon,
-  FolderRemoveIcon,
-} from "@heroicons/react/solid";
+
 import SortMenu from "../../menus/SortMenu";
 import Project from "./Project";
 
@@ -29,7 +18,6 @@ const ProjectsListSection = (props) => {
     setModalHasRender,
     setOpenDeleteModal,
     setProjectTitle,
-    getAllProjects,
   } = props;
 
   let bgColor = "";
