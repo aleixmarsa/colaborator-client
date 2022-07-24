@@ -11,12 +11,11 @@ const ProjectsListSection = (props) => {
     filteredProjects,
     setFilteredProjects,
     classNames,
-    editProject,
-    setEditProject,
-    setNewProject,
-    setId,
+    editProjectForm,
+    setEditProjectForm,
+    setNewProjectForm,
+    setProjectId,
     setModalHasRender,
-    setOpenDeleteModal,
     setProjectTitle,
   } = props;
 
@@ -45,20 +44,7 @@ const ProjectsListSection = (props) => {
     }
   };
 
-  const handleEditProjectBtn = (e, id) => {
-    e.preventDefault();
-    setEditProject(!editProject);
-    setNewProject(false);
-    setId(id);
-  };
 
-  const handleDeleteProjectBtn = (e, title, id) => {
-    e.preventDefault();
-    setModalHasRender(true);
-    setOpenDeleteModal(true);
-    setId(id);
-    setProjectTitle(title);
-  };
   return (
     <div className="drop-shadow-md xl:border-r xl:border-gray-200 lg:min-w-0 lg:flex-1 ml-5 mr-5 gap-6 mt-5 mb-10 ">
       <div className="p-6 pt-2 bg-stone-50 xl:mr-5">
@@ -76,13 +62,12 @@ const ProjectsListSection = (props) => {
             <Link to={`/${project._id}/tasks`}>
               <Project
                 project={project}
-                editProject={editProject}
-                setEditProject={setEditProject}
-                setNewProject={setNewProject}
-                setId={setId}
+                editProjectForm={editProjectForm}
+                setEditProjectForm={setEditProjectForm}
+                setNewProjectForm={setNewProjectForm}
+                setId={setProjectId}
                 setModalHasRender={setModalHasRender}
                 setProjectTitle={setProjectTitle}
-                setOpenDeleteModal={setOpenDeleteModal}
               />
             </Link>
           );

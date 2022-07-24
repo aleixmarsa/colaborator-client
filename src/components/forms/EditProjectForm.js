@@ -12,7 +12,7 @@ const EditProjectForm = (props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [team, setTeam] = useState([]);
-  const { id } = props;
+  const { projectId, handleCancelAddSaveFormBtn, getAllProjects } = props;
 
 
   const getProject = async (id) => {
@@ -30,8 +30,8 @@ const EditProjectForm = (props) => {
     }
   };
   useEffect(() => {
-    getProject(id);
-  }, [id]);
+    getProject(projectId);
+  }, [projectId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,9 +41,9 @@ const EditProjectForm = (props) => {
     };
 
     try {
-      await updateProjectService(props.id, body);
-      props.handleCanceleAddSaveFormBtn(e);
-      props.getAllProjects();
+      await updateProjectService(projectId, body);
+      handleCancelAddSaveFormBtn(e);
+      getAllProjects();
     } catch (err) {
       console.log(err);
     }
@@ -54,7 +54,7 @@ const EditProjectForm = (props) => {
       formTitle="Edit Project"
       onSubmit={handleSubmit}
       cancelBtntext="Cancel"
-      cancelBtnAction={props.handleCanceleAddSaveFormBtn}
+      cancelBtnAction={handleCancelAddSaveFormBtn}
       acceptBtnText="Save Changes"
       projectTitle={title}
       projectDescription={description}

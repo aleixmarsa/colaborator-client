@@ -24,10 +24,8 @@ function LoginPage(props, location) {
     try {
       const response = await loginService(requestBody);
 
-      const {authToken, userId} = response.data;
-
-      // const token = response.data.authToken;
-      logInUser(authToken, userId);
+      const token = response.data.authToken;
+      logInUser(token);
       navigate("/");
     } catch (err) {
       const errorDescription = err?.response?.data?.message;

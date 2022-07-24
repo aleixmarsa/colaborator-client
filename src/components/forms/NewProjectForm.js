@@ -1,12 +1,16 @@
 import { useState } from "react";
 import Form from "./Form";
 import { addNewProjectService } from "../../services/project.services";
+import { AuthContext } from "../../context/auth.context";
+import { useContext } from "react";
 
 const NewProjectForm = (props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [team, setTeam] = useState([]);
   const [isActive, setIsActive] = useState(true);
+
+  const { user } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     const teamIds = team.map((user) => user._id);
@@ -15,6 +19,7 @@ const NewProjectForm = (props) => {
     const body = {
       title: title,
       description: description,
+      admin: user._id,
       team: teamIds,
       active: isActive,
     };
@@ -27,7 +32,7 @@ const NewProjectForm = (props) => {
       setTitle("");
       setDescription("");
       setTeam([]);
-      props.handleCanceleAddSaveFormBtn(e);
+      props.handleCancelAddSaveFormBtn(e);
     } catch (err) {
       console.log(err);
     }
@@ -38,7 +43,7 @@ const NewProjectForm = (props) => {
       formTitle="Create a new Project"
       onSubmit={handleSubmit}
       cancelBtntext="Cancel"
-      cancelBtnAction={props.handleCanceleAddSaveFormBtn}
+      cancelBtnAction={props.handleCancelAddSaveFormBtn}
       acceptBtnText="New Project"
       projectTitle={title}
       projectDescription={description}

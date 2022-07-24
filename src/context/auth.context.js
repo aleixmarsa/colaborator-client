@@ -38,10 +38,8 @@ function AuthProviderWrapper(props) {
 		}
 	};
 
-	const logInUser = (authToken, userId) => {
-		localStorage.setItem('authToken', authToken);
-		localStorage.setItem('id', userId);
-
+	const logInUser = (token) => {
+		localStorage.setItem('authToken', token);
 		verifyStoredToken();
 
 		/* 
@@ -56,8 +54,6 @@ function AuthProviderWrapper(props) {
 		
 		// Upon logout, remove the token from the localStorage
 		localStorage.removeItem('authToken');
-		localStorage.removeItem('id');
-
 
 		// Update the state variables
 		setIsLoggedIn(false);

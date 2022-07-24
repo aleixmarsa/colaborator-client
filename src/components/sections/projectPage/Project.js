@@ -1,37 +1,31 @@
 import { TrashIcon, PencilIcon } from "@heroicons/react/solid";
-import { MailIcon, PhoneIcon } from "@heroicons/react/solid";
 import Avatar from "react-avatar";
-import { useState, useEffect } from "react";
 
-const taskStatColorChange = (stat) => {
-  if (stat === "TODO") return "bg-blue-200";
-  if (stat === "PROGRESS") return "bg-amber-200";
-  if (stat === "DONE") return "bg-green-200";
-};
+
 
 function Project(props) {
   const {
     project,
-    editProject,
-    setEditProject,
-    setNewProject,
+    editProjectForm,
+    setEditProjectForm,
+    setNewProjectForm,
     setId,
     setModalHasRender,
     setProjectTitle,
-    setOpenDeleteModal,
   } = props;
 
   const handleEditProjectBtn = (e, id) => {
     e.preventDefault();
-    setEditProject(!editProject);
-    setNewProject(false);
+    setEditProjectForm(!editProjectForm);
+    setNewProjectForm(false);
     setId(id);
   };
 
   const handleDeleteProjectBtn = (e, title, id) => {
     e.preventDefault();
     setModalHasRender(true);
-    setOpenDeleteModal(true);
+    setEditProjectForm(false);
+    setNewProjectForm(false);
     setId(id);
     setProjectTitle(title);
   };

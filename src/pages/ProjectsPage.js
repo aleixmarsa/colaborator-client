@@ -1,8 +1,6 @@
 import NavBar from "../components/navbar/NavBar";
 
 import DeletProjectModal from "../components/modals/DeleteProjectModal";
-import Footer from "../components/footer/Footer";
-import { AuthContext } from "../context/auth.context";
 import ProjectManagementSection from "../components/sections/projectPage/ProjectManagementSection";
 import ProjectsListSection from "../components/sections/projectPage/ProjectsListSection";
 import {
@@ -10,7 +8,7 @@ import {
   getAllCompletedProjectsService,
 } from "../services/project.services";
 
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect} from "react";
 
 const classNames = (...classes) => {
   return classes.filter(Boolean).join(" ");
@@ -27,20 +25,23 @@ const activityItems = [
 ];
 
 const ProjectsPage = () => {
-  const [editProject, setEditProject] = useState(false);
+  const [projectId, setProjectId] = useState(0);
+  const [projectTitle, setProjectTitle] = useState("");
+  const [newProjectForm, setNewProjectForm] = useState(false);
+  const [editProjectForm, setEditProjectForm] = useState(false);
+  const [currentProjects, setCurrentProjects] = useState([]);
   const [filteredCurrentProjects, setFilteredCurrentProjects] = useState([]);
+
+  const [modalHasRender, setModalHasRender] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+
+  
   const [filteredCompletedProjects, setFilteredCompletedProjects] = useState(
     []
   );
-  const [currentProjects, setCurrentProjects] = useState([]);
   const [completedProjects, setCompletedProjects] = useState([]);
-  const [newProject, setNewProject] = useState(false);
-  const [id, setId] = useState(0);
-  const [projectTitle, setProjectTitle] = useState("");
-  const [modalHasRender, setModalHasRender] = useState(false);
-  const [openDeleteModal, setOpenDeleteModal] = useState(true);
-  const { user } = useContext(AuthContext);
-  const [loading, setLoading] = useState(true);
+
 
   const filterProjects = (searchText) => {
     let projectsCopy = [...currentProjects];
@@ -66,10 +67,6 @@ const ProjectsPage = () => {
     try {
       const response = await getAllCurrentProjectsService();
       setCurrentProjects(response.data);
-      console.log(
-        "🚀 ~ file: ProjectsPage.js ~ line 69 ~ getAllProjects ~ response.data",
-        response.data
-      );
       setFilteredCurrentProjects(response.data);
       setLoading(false);
     } catch (err) {
@@ -85,32 +82,6 @@ const ProjectsPage = () => {
     }
   };
 
-  // const refreshAllProjects = (response, action, id) => {
-  //   let currentProjectsCopy = [...currentProjects];
-  //   let completedProjectsCopy = [...completedProjects];
-
-  //   if (action === "post") {
-  //     currentProjectsCopy = [...currentProjects, response.data];
-  //   } else if (action === "delete") {
-  //     const indexCurrent = currentProjectsCopy.findIndex((object) => {
-  //       return object._id === id;
-  //     });
-  //     const indexCompleted = completedProjectsCopy.findIndex((object) => {
-  //       return object._id === id;
-  //     });
-  //     if (indexCurrent !== -1) {
-  //       currentProjectsCopy.splice(indexCurrent, 1);
-  //     }
-  //     if (indexCompleted !== -1) {
-  //       completedProjectsCopy.splice(indexCompleted, 1);
-  //     }
-  //   }
-  //   setCurrentProjects(currentProjectsCopy);
-  //   setFilteredCurrentProjects(currentProjectsCopy);
-  //   setCompletedProjects(completedProjectsCopy);
-  //   setFilteredCompletedProjects(completedProjectsCopy);
-  // };
-
   useEffect(() => {
     getAllProjects();
   }, []);
@@ -121,11 +92,11 @@ const ProjectsPage = () => {
       {loading && <div>Loading...</div>}
       {!loading && modalHasRender && (
         <DeletProjectModal
+          projectId={projectId}
           getAllProjects={getAllProjects}
-          title={projectTitle}
-          id={id}
-          setOpenDeleteModal={setOpenDeleteModal}
-          openDeleteModal={openDeleteModal}
+          projectTitle={projectTitle}
+          setModalHasRender={setModalHasRender}
+          modalHasRender={modalHasRender}
         />
       )}
       {/* 3 column wrapper */}
@@ -133,13 +104,12 @@ const ProjectsPage = () => {
         <div className="flex-2 bg-white xl:flex ">
           {/* Project Managment*/}
           <ProjectManagementSection
-            newProject={newProject}
-            setNewProject={setNewProject}
-            id={id}
-            user={user}
+            newProjectForm={newProjectForm}
+            setNewProjectForm={setNewProjectForm}
+            projectId={projectId}
             projectsInProgress={currentProjects}
-            editProject={editProject}
-            setEditProject={setEditProject}
+            editProjectForm={editProjectForm}
+            setEditProjectForm={setEditProjectForm}
             getAllProjects={getAllProjects}
           />
         </div>
@@ -150,12 +120,11 @@ const ProjectsPage = () => {
           filteredProjects={filteredCurrentProjects}
           setFilteredProjects={setFilteredCurrentProjects}
           classNames={classNames}
-          editProject={editProject}
-          setEditProject={setEditProject}
-          setNewProject={setNewProject}
-          setId={setId}
+          editProjectForm={editProjectForm}
+          setEditProjectForm={setEditProjectForm}
+          setNewProjectForm={setNewProjectForm}
+          setProjectId={setProjectId}
           setModalHasRender={setModalHasRender}
-          setOpenDeleteModal={setOpenDeleteModal}
           setProjectTitle={setProjectTitle}
           getAllProjects={getAllProjects}
         />
