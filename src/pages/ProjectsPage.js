@@ -11,6 +11,9 @@ import { AuthContext } from "../context/auth.context";
 import { useContext } from "react";
 import { useState, useEffect } from "react";
 
+import io from "socket.io-client";
+let socket;
+
 const classNames = (...classes) => {
   return classes.filter(Boolean).join(" ");
 };
@@ -81,8 +84,21 @@ const ProjectsPage = () => {
     }
   };
 
+  const socketConnection = () => {
+    const storedToken = localStorage.getItem("authToken");
+    socket = io.connect("http://localhost:5005", {
+      extraHeaders: { Authorization: `Bearer ${storedToken}` },
+    });
+    socket.on("receive_new_project", (e) => {
+      console.log("PROJECTE REBUT")
+      getAllProjects();
+
+    });
+  };
+
   useEffect(() => {
     getAllProjects();
+    socketConnection();
   }, []);
 
   return (
@@ -103,6 +119,7 @@ const ProjectsPage = () => {
         <div className="flex-2 bg-white xl:flex ">
           {/* Project Managment*/}
           <ProjectManagementSection
+          socket={socket}
             newProjectForm={newProjectForm}
             setNewProjectForm={setNewProjectForm}
             projectId={projectId}

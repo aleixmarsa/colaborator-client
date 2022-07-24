@@ -5,7 +5,6 @@ import { AuthContext } from "../../context/auth.context";
 import { useContext } from "react";
 
 import io from "socket.io-client";
-let socket;
 
 const NewProjectForm = (props) => {
   const [title, setTitle] = useState("");
@@ -15,21 +14,6 @@ const NewProjectForm = (props) => {
 
   const { user } = useContext(AuthContext);
 
-  useEffect(() => {
-    socketConnection();
-  }, []);
-
-  const socketConnection = () => {
-    const storedToken = localStorage.getItem("authToken");
-    socket = io.connect("http://localhost:5005", {
-      extraHeaders: { Authorization: `Bearer ${storedToken}` },
-    });
-    socket.on("receive_new_project", (e) => {
-      console.log("PROJECTE REBUT")
-      props.getAllProjects();
-
-    });
-  };
 
   const handleSubmit = async (e) => {
     const teamIds = team.map((user) => user._id);
@@ -43,7 +27,7 @@ const NewProjectForm = (props) => {
       active: isActive,
     };
 
-    socket.emit("new_project", body);
+    props.socket.emit("new_project", body);
     props.handleCancelAddSaveFormBtn();
     setTitle("");
     setDescription("");

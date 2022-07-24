@@ -8,6 +8,7 @@ import { useContext } from "react";
 
 const ProjectManagementSection = (props) => {
   const {
+    socket,
     projectId,
     projectsInProgress,
     newProjectForm,
@@ -34,6 +35,7 @@ const ProjectManagementSection = (props) => {
     <>
       {newProjectForm ? (
         <NewProjectForm
+        socket= {socket}
           handleNewProjectBtn={handleNewProjectBtn}
           handleCancelAddSaveFormBtn={handleCancelAddSaveFormBtn}
           getAllProjects={getAllProjects}
