@@ -5,11 +5,11 @@ const URL = "/colaborator-API/projects";
 const getAllProjectsService = () => {
   return service.get(`${URL}/`);
 };
-const getAllCurrentProjectsService = () => {
-  return service.get(`${URL}/current`);
+const getAllCurrentProjectsService = (userId) => {
+  return service.get(`${URL}/${userId}/current`);
 };
-const getAllCompletedProjectsService = () => {
-  return service.get(`${URL}/completed`);
+const getAllCompletedProjectsService = (userId) => {
+  return service.get(`${URL}/${userId}/completed`);
 };
 const getProjectDetailsService = (id) => {
   return service.get(`${URL}/${id}`);

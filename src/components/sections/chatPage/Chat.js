@@ -3,10 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { startChatService } from "../../../services/chat.services";
 import { getAllUsersService } from "../../../services/user.services";
 import Avatar from "react-avatar";
-
+import { AuthContext } from "../../../context/auth.context";
+import { useContext } from "react";
 import ChatBox from "../../../pages/chat/ChatBox";
 
 const Chat = () => {
+  const { user } = useContext(AuthContext);
+
   const [users, setUsers] = useState(null);
   const [showChat, setShowChat] = useState("");
   const [chatReceiver, setChatReceiver] = useState("");
@@ -50,10 +53,11 @@ const Chat = () => {
           <div className="border-r-2 h-full col-span-1 ">
             <h2 className="flex-1 text-lg border-b-2">CHATS</h2>
             <div>
-              {users.map((user) => {
-                return (
+              {users.map((chatUser) => {
+                if(chatUser._id !== user._id){
+                  return (
                   <div
-                    key={user._id}
+                    key={chatUser._id}
                     className="flex justify-around hover:bg-gray-300 mt-3 mr-3 flex cursor-pointer w-sm border p-2"
                     onClick={(e) => handleClick(e, user)}
                   >
@@ -62,18 +66,14 @@ const Chat = () => {
                       size="25"
                     //   color="gray"
                       textSizeRatio={1.9}
-                      name={user.name}
+                      name={chatUser.name}
                     />
-                    <p>{user.name}</p>
-
-                    {/* <button
-                      onClick={(e) => handleClick(e, user)}
-                    >
-                      Chat with {user.name}
-                    </button> */}
+                    <p>{chatUser.name}</p>
                     <hr className="mt-3" />
                   </div>
                 );
+                }
+               
               })}
             </div>
           </div>

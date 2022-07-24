@@ -7,8 +7,9 @@ import {
   getAllCurrentProjectsService,
   getAllCompletedProjectsService,
 } from "../services/project.services";
-
-import { useState, useEffect} from "react";
+import { AuthContext } from "../context/auth.context";
+import { useContext } from "react";
+import { useState, useEffect } from "react";
 
 const classNames = (...classes) => {
   return classes.filter(Boolean).join(" ");
@@ -31,17 +32,15 @@ const ProjectsPage = () => {
   const [editProjectForm, setEditProjectForm] = useState(false);
   const [currentProjects, setCurrentProjects] = useState([]);
   const [filteredCurrentProjects, setFilteredCurrentProjects] = useState([]);
+  const { user } = useContext(AuthContext);
 
   const [modalHasRender, setModalHasRender] = useState(false);
   const [loading, setLoading] = useState(true);
 
-
-  
   const [filteredCompletedProjects, setFilteredCompletedProjects] = useState(
     []
   );
   const [completedProjects, setCompletedProjects] = useState([]);
-
 
   const filterProjects = (searchText) => {
     let projectsCopy = [...currentProjects];
@@ -65,7 +64,7 @@ const ProjectsPage = () => {
 
   const getAllProjects = async () => {
     try {
-      const response = await getAllCurrentProjectsService();
+      const response = await getAllCurrentProjectsService(user._id);
       setCurrentProjects(response.data);
       setFilteredCurrentProjects(response.data);
       setLoading(false);
@@ -74,7 +73,7 @@ const ProjectsPage = () => {
     }
 
     try {
-      const response = await getAllCompletedProjectsService();
+      const response = await getAllCompletedProjectsService(user._id);
       setCompletedProjects(response.data);
       setFilteredCompletedProjects(response.data);
     } catch (err) {
