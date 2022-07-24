@@ -1,11 +1,14 @@
 import { Link } from "react-router-dom";
 import { updateProjectService } from "../../../services/project.services";
-
+import { AuthContext } from "../../../context/auth.context";
+import { useContext } from "react";
 
 import SortMenu from "../../menus/SortMenu";
 import Project from "./Project";
 
 const ProjectsListSection = (props) => {
+  const { user } = useContext(AuthContext);
+
   const {
     title,
     filteredProjects,
@@ -57,8 +60,10 @@ const ProjectsListSection = (props) => {
           />
         </div>
 
-        {filteredProjects.map((project, index) => {
-          return (
+        {filteredProjects.map((project) => {
+          console.log(project)
+          if(project.team.find(member => member._id === user._id)){
+            return (
             <Link to={`/${project._id}/tasks`}>
               <Project
                 project={project}
@@ -71,6 +76,8 @@ const ProjectsListSection = (props) => {
               />
             </Link>
           );
+          }
+
         })}
       </div>
     </div>
