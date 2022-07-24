@@ -90,9 +90,14 @@ const ProjectsPage = () => {
       extraHeaders: { Authorization: `Bearer ${storedToken}` },
     });
     socket.on("receive_new_project", (e) => {
-      console.log("PROJECTE REBUT")
+      console.log("PROJECTE REBUT");
       getAllProjects();
-
+    });
+    socket.on("receive_edit_project", (e) => {
+      getAllProjects();
+    });
+    socket.on("receive_delete_project", (e) => {
+      getAllProjects();
     });
   };
 
@@ -107,6 +112,7 @@ const ProjectsPage = () => {
       {loading && <div>Loading...</div>}
       {!loading && modalHasRender && (
         <DeletProjectModal
+          socket={socket}
           projectId={projectId}
           getAllProjects={getAllProjects}
           projectTitle={projectTitle}
@@ -119,7 +125,7 @@ const ProjectsPage = () => {
         <div className="flex-2 bg-white xl:flex ">
           {/* Project Managment*/}
           <ProjectManagementSection
-          socket={socket}
+            socket={socket}
             newProjectForm={newProjectForm}
             setNewProjectForm={setNewProjectForm}
             projectId={projectId}

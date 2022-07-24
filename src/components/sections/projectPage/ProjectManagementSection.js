@@ -20,7 +20,6 @@ const ProjectManagementSection = (props) => {
 
   const { user } = useContext(AuthContext);
 
-
   const handleNewProjectBtn = (e) => {
     e.preventDefault();
     setEditProjectForm(false);
@@ -35,13 +34,14 @@ const ProjectManagementSection = (props) => {
     <>
       {newProjectForm ? (
         <NewProjectForm
-        socket= {socket}
+          socket={socket}
           handleNewProjectBtn={handleNewProjectBtn}
           handleCancelAddSaveFormBtn={handleCancelAddSaveFormBtn}
           getAllProjects={getAllProjects}
         />
       ) : editProjectForm ? (
         <EditProjectForm
+          socket={socket}
           projectId={projectId}
           handleCancelAddSaveFormBtn={handleCancelAddSaveFormBtn}
           getAllProjects={getAllProjects}

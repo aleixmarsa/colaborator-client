@@ -7,6 +7,7 @@ import { deleteProjectService } from "../../services/project.services";
 const DeletProjectModal = (props) => {
   const cancelButtonRef = useRef(null);
   const {
+    socket,
     projectId,
     getAllProjects,
     projectTitle,
@@ -15,13 +16,18 @@ const DeletProjectModal = (props) => {
   } = props;
 
   const deleteProject = async (id) => {
-    try {
-      await deleteProjectService(id);
-      setModalHasRender(false);
-      getAllProjects();
-    } catch (err) {
-      console.log(err);
-    }
+
+    props.socket.emit("delete_project", id);
+    setModalHasRender(false);
+    getAllProjects();
+
+    // try {
+    //   await deleteProjectService(id);
+    //   setModalHasRender(false);
+    //   getAllProjects();
+    // } catch (err) {
+    //   console.log(err);
+    // }
   };
 
   return (

@@ -4,7 +4,6 @@ import { addNewProjectService } from "../../services/project.services";
 import { AuthContext } from "../../context/auth.context";
 import { useContext } from "react";
 
-import io from "socket.io-client";
 
 const NewProjectForm = (props) => {
   const [title, setTitle] = useState("");

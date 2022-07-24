@@ -27,13 +27,13 @@ const Chat = () => {
     }
   };
 
-  const handleClick = async (e, user) => {
+  const handleClick = async (e, userChat) => {
     e.preventDefault();
-    console.log(`Trying to start chat with ${user.name}`);
+    console.log(`Trying to start chat with ${userChat.name}`);
     try {
-      const response = await startChatService(user._id);
+      const response = await startChatService(userChat._id);
       setShowChat(response.data._id);
-      setChatReceiver(user.name);
+      setChatReceiver(userChat.name);
 
       //   navigate(`/chat/${response.data._id}`);
     } catch (err) {
@@ -59,7 +59,7 @@ const Chat = () => {
                   <div
                     key={chatUser._id}
                     className="flex justify-around hover:bg-gray-300 mt-3 mr-3 flex cursor-pointer w-sm border p-2"
-                    onClick={(e) => handleClick(e, user)}
+                    onClick={(e) => handleClick(e, chatUser)}
                   >
                     <Avatar
                       round

@@ -34,19 +34,25 @@ const EditProjectForm = (props) => {
   }, [projectId]);
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
     const body = {
+      projectId:projectId,
       title: title,
       description: description,
     };
 
-    try {
-      await updateProjectService(projectId, body);
-      handleCancelAddSaveFormBtn(e);
-      getAllProjects();
-    } catch (err) {
-      console.log(err);
-    }
+    props.socket.emit("edit_project", body);
+    handleCancelAddSaveFormBtn(e);
+
+
+    // try {
+    //   await updateProjectService(projectId, body);
+    //   handleCancelAddSaveFormBtn(e);
+    //   getAllProjects();
+    // } catch (err) {
+    //   console.log(err);
+    // }
   };
 
   return (
