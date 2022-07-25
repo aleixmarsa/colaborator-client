@@ -13,8 +13,8 @@ const Button = (props) => {
   if (color === "green") {
     textColor = "white";
     borderColor = "transparent";
-    bgColor = "bg-green-600";
-    hoverBgColor = "hover:bg-green-700";
+    bgColor = "bg-green-700";
+    hoverBgColor = "hover:bg-green-600";
     focusRingColor = "green-500";
 
   } else if (color === "white") {

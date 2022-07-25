@@ -80,7 +80,7 @@ function CardForm (props) {
                                     id="title"
                                     onChange={(e) => setCardTitle(e.target.value)}
                                     value={cardTitle}
-                                    className="flex-1 block w-full focus:ring focus:outline-none focus:ring-lime-600 focus:border min-w-0 rounded-r-md sm:text-sm border border-gray-300 rounded-md"
+                                    className="flex-1 block w-full focus:ring focus:outline-none focus:ring-green-600 focus:border min-w-0 rounded-r-md sm:text-sm border border-gray-300 rounded-md"
                                     />
                                 </div>
                             </div>
@@ -96,7 +96,7 @@ function CardForm (props) {
                                 rows={3}
                                 onChange={(e) => setCardDescription(e.target.value)}
                                 value={cardDescription}
-                                className="max-w-lg shadow-sm block w-full focus:ring focus:outline-none focus:ring-lime-600 focus:border sm:text-sm border border-gray-300 rounded-md"
+                                className="max-w-lg shadow-sm block w-full focus:ring focus:outline-none focus:ring-green-600 focus:border sm:text-sm border border-gray-300 rounded-md"
                             />
                             </div>
                         </div>

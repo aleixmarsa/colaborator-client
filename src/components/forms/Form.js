@@ -47,7 +47,7 @@ const Form = (props) => {
                                   id="title"
                                   onChange={(e) => setTitle(e.target.value)}
                                   value={projectTitle}
-                                  className="flex-1 block w-full focus:ring focus:outline-none focus:ring-lime-600 focus:border sm:text-sm border border-gray-300 rounded-md"
+                                  className="flex-1 block w-full focus:ring focus:outline-none focus:ring-green-600 focus:border sm:text-sm border border-gray-300 rounded-md"
                                 />
                               </div>
                             </div>
@@ -67,7 +67,7 @@ const Form = (props) => {
                                 rows={3}
                                 onChange={(e) => setDescription(e.target.value)}
                                 value={projectDescription}
-                                className="max-w-lg shadow-sm block w-full focus:ring focus:outline-none focus:ring-lime-600 focus:border sm:text-sm border border-gray-300 rounded-md"
+                                className="max-w-lg shadow-sm block w-full focus:ring focus:outline-none focus:ring-green-600 focus:border sm:text-sm border border-gray-300 rounded-md"
                               />
                             </div>
                           </div>

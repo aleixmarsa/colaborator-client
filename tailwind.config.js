@@ -34,6 +34,6 @@ module.exports = {
   plugins: [],
 
   // safelist: [
-  //   "hover:bg-lime-700"
+  //   "hover:bg-green-700"
   //   ]
 }
