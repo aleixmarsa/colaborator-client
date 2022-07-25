@@ -117,6 +117,7 @@ function ProjectCards(props) {
       <NavBar />
       {deleteModalHasRender && (
         <DeleteTaskModal
+          socket={socket}
           setOpenDeleteModal={setOpenDeleteModal}
           openDeleteModal={openDeleteModal}
           deleteTaskId={deleteTaskId}
@@ -125,6 +126,7 @@ function ProjectCards(props) {
       )}
       {editModalHasRender && (
         <EditTaskModal
+          socket={socket}
           setOpenEditModal={setOpenEditModal}
           openEditModal={openEditModal}
           editTaskId={editTaskId}

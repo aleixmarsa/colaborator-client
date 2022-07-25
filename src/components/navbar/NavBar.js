@@ -70,8 +70,8 @@ const NavBar = (props) => {
                         to="/"
                         className={({ isActive }) =>
                           isActive
-                            ? "px-3 py-2 rounded-md text-md font-medium text-white bg-green-600 hover:text-white"
-                            : "px-3 py-2 rounded-md text-md font-medium text-white hover:text-e-100 hover:bg-green-600"
+                            ? "px-3 py-2 mx-1 rounded-md text-md font-small text-white bg-green-600 hover:text-white"
+                            : "px-3 py-2 mx-1 rounded-md text-md font-small text-white hover:text-e-100 hover:bg-green-600"
                         }
                       >
                         PROJECTS
@@ -80,8 +80,8 @@ const NavBar = (props) => {
                         to="/monthCalendar"
                         className={({ isActive }) =>
                           isActive
-                            ? "px-3 py-2 rounded-md text-md font-medium text-white bg-green-600 hover:text-white"
-                            : "px-3 py-2 rounded-md text-md font-medium text-white hover:text-e-100 hover:bg-green-600"
+                            ? "px-3 py-2 mx-1 rounded-md text-md font-small text-white bg-green-600 hover:text-white"
+                            : "px-3 py-2 mx-1 rounded-md text-md font-small text-white hover:text-e-100 hover:bg-green-600"
                         }
                       >
                         CALENDAR
@@ -90,8 +90,8 @@ const NavBar = (props) => {
                         to="/chat"
                         className={({ isActive }) =>
                           isActive
-                            ? "px-3 py-2 rounded-md text-sm font-small text-white bg-lime-700 hover:text-white"
-                            : "px-3 py-2 rounded-md text-sm font-small text-lime-200 hover:text-e-100 hover:bg-lime-600"
+                            ? "px-3 py-2 mx-1 rounded-md text-md font-small text-white bg-green-600 hover:text-white"
+                            : "px-3 py-2 mx-1 rounded-md text-md font-small text-white hover:text-e-100 hover:bg-green-600"
                         }
                       >
                         CHAT

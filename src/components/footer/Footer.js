@@ -55,7 +55,7 @@ const navigation = [
 
 const Footer = () => {
   return (
-    <footer className="bg-lime-600">
+    <footer className="bg-green-700">
       <div className="flex flex-col max-w-2xl mx-auto py-6 px-4 sm:px-6 md:flex md:items-center md:justify-between lg:px-8">
         <div className="mt-8 md:mt-0">
           <p className="text-center text-lg text-white">

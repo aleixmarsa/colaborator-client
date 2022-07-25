@@ -26,20 +26,25 @@ const EditTaskModal = (props) => {
 
   const handleSubmitEditForm = (e) => {
     const body = {
+      taskId: props.editTaskId,
       title: title,
       description: description,
       color: color,
     };
 
-    axios
-      .put(
-        `${API_URL}/colaborator-API/projects/card/updateCard/${props.editTaskId}`,
-        body
-      )
-      .then((response) => {
-        props.setOpenEditModal(false);
-        props.getAllCards();
-      });
+    props.socket.emit("edit_task", body);
+    props.setOpenEditModal(false);
+
+
+    // axios
+    //   .put(
+    //     `${API_URL}/colaborator-API/projects/card/updateCard/${props.editTaskId}`,
+    //     body
+    //   )
+    //   .then((response) => {
+    //     props.setOpenEditModal(false);
+    //     props.getAllCards();
+    //   });
   };
 
   return (
