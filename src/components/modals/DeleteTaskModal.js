@@ -5,19 +5,20 @@ import axios from "axios";
 const API_URL = process.env.REACT_APP_API_URL;
 
 const DeleteTaskModal = (props) => {
-
   const cancelButtonRef = useRef(null);
 
   const deleteTask = (id) => {
-    axios
-      .delete(`${API_URL}/colaborator-API/projects/card/delete/${id}`)
-      .then((response) => {
-        props.setOpenDeleteModal(false);
-        props.getAllCards()
-      })
-      .catch((err) => console.log(err));
-  };
+    props.socket.emit("delete_task", id);
+    props.setOpenDeleteModal(false);
 
+    //   axios
+    //     .delete(`${API_URL}/colaborator-API/projects/card/delete/${id}`)
+    //     .then((response) => {
+    //       props.setOpenDeleteModal(false);
+    //       props.getAllCards()
+    //     })
+    //     .catch((err) => console.log(err));
+  };
 
   return (
     <Transition.Root show={props.openDeleteModal} as={Fragment}>
@@ -64,7 +65,8 @@ const DeleteTaskModal = (props) => {
                         as="h3"
                         className="text-lg leading-6 font-medium text-gray-900"
                       >
-                        Delete task: <span className="text-gray-400">{props.title}</span>
+                        Delete task:{" "}
+                        <span className="text-gray-400">{props.title}</span>
                       </Dialog.Title>
                       <div className="mt-2">
                         <p className="text-sm text-gray-500">
@@ -85,7 +87,7 @@ const DeleteTaskModal = (props) => {
                   <button
                     type="button"
                     className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                    onClick={() =>props.setOpenDeleteModal(false)}
+                    onClick={() => props.setOpenDeleteModal(false)}
                     ref={cancelButtonRef}
                   >
                     Cancel
