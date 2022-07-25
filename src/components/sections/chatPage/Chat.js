@@ -63,7 +63,6 @@ const Chat = () => {
       console.log(err);
     }
   };
-  
 
   const directChathandleClick = async (e, userChat) => {
     e.preventDefault();
@@ -103,7 +102,7 @@ const Chat = () => {
   return (
     <div className="drop-shadow-md  h-5/6  mt-5">
       <div className=" flex flex-col p-6 pt-2 h-full bg-stone-50 ">
-        <div className="grid grid-cols-5 h-full">
+        <div className="grid grid-cols-5 grid-rows-1 h-full">
           <div className="border-r-2 h-full col-span-1 ">
             <h2 className="text-2xl flex-1 border-b-2">CHATS</h2>
             <div>
@@ -154,7 +153,7 @@ const Chat = () => {
               })}
             </div>
           </div>
-          <div className="col-span-4 flex flex-col bg-white rounded-md shadow-xl divide-y border list-none ml-2">
+          <div className="col-span-4 flex h-full flex-col bg-white rounded-md shadow-xl divide-y border list-none ml-2">
               {showChat && (
                 <ChatBox chatId={showChat} chatReceiver={chatReceiver} isProjectChat={isProjectChat}/>
               )}

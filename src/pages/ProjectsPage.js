@@ -12,8 +12,8 @@ import { useContext } from "react";
 import { useState, useEffect } from "react";
 
 import io from "socket.io-client";
-let socket;
 
+let socket;
 const classNames = (...classes) => {
   return classes.filter(Boolean).join(" ");
 };

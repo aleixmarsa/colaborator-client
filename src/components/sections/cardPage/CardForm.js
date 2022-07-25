@@ -39,24 +39,21 @@ function CardForm (props) {
         // props.getAllCards()
         props.setCardForm(false)
 
-        // axios
-        //     .post(`${API_URL}/colaborator-API/projects/${props.projectId}/card/new-card`, body)
-        //     .then((response) => {
-
+        //  axios
+        //      .post(`${API_URL}/colaborator-API/projects/${props.projectId}/card/new-card`, body)
+        //      .then((response) => {
         //         props.setCards([...props.cards, response.data])
-
         //         setCardTitle("");
-        //         setCardDescription("");
-        //         setCardForm(false);
-        //         setCardColor("white");
-        //         setCardStat("TODO");
-        //         setCardLimitDate("")
-                
-        //         props.getAllCards()
-        //         props.setCardForm(false)
-
+        //          setCardDescription("");
+        //          setCardForm(false);
+        //          setCardColor("white");
+        //          setCardStat("TODO");
+        //          setCardLimitDate("")
+              
+        //          props.getAllCards()
+        //          props.setCardForm(false)
         //     })
-        //     .catch((error) => console.log(error));
+        //      .catch((error) => console.log(error));
     };
 
     

@@ -16,7 +16,6 @@ const NewProjectForm = (props) => {
 
   const handleSubmit = async (e) => {
     const teamIds = team.map((user) => user._id);
-    console.log("IIIIIIIIIIIIIIIIIEEEEEEEEEEEEEEEEEEEEEEEES")
     e.preventDefault();
     const body = {
       title: title,
