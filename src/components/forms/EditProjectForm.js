@@ -16,14 +16,11 @@ const EditProjectForm = (props) => {
 
 
   const getProject = async (id) => {
-    //TODO MIRAR QUE ES
-    localStorage.getItem("authToken");
     try {
       const response = await getProjectDetailsService(id);
       const oneProject = response.data;
       setTitle(oneProject.title);
       setDescription(oneProject.description);
-      //TODO NO SURTEN LES IMATGES QUAN EDITES UN PROJECTE  
       setTeam(oneProject.team);
     } catch (err) {
       console.log(err);
