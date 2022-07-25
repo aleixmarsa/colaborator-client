@@ -12,7 +12,7 @@ const EditProjectForm = (props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [team, setTeam] = useState([]);
-  const { projectId, handleCancelAddSaveFormBtn, getAllProjects } = props;
+  const { projectId, handleCancelAddSaveFormBtn} = props;
 
 
   const getProject = async (id) => {
