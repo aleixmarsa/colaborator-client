@@ -5,6 +5,12 @@ const URL = "/colaborator-API/projects";
 const getAllProjectsService = () => {
   return service.get(`${URL}/`);
 };
+
+const getProjectTeamsService = (id) => {
+  return service.get(`${URL}/${id}/team`);
+};
+
+
 const getAllCurrentProjectsService = (userId) => {
   return service.get(`${URL}/${userId}/current`);
 };
@@ -34,4 +40,5 @@ export {
   updateProjectService,
   getProjectDetailsService,
   deleteProjectService,
+  getProjectTeamsService
 };

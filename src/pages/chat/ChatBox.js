@@ -1,6 +1,5 @@
 import { useEffect, useState, useContext } from "react";
 
-import { useParams } from "react-router-dom";
 import { getAllMessagesService } from "../../services/chat.services";
 import { AuthContext } from "../../context/auth.context";
 import { ChevronDoubleRightIcon } from "@heroicons/react/solid";
@@ -12,7 +11,7 @@ let socket;
 const ChatBox = (props) => {
   const [allMessages, setAllMessages] = useState([]);
   const [text, setText] = useState("");
-  const { chatId, chatReceiver } = props;
+  const { chatId, chatReceiver, isProjectChat } = props;
   const { user } = useContext(AuthContext);
   // const { chatId } = useParams();
 
@@ -46,8 +45,11 @@ const ChatBox = (props) => {
   const getAllMessages = async () => {
     try {
       const response = await getAllMessagesService(chatId);
-      console.log("🚀 ~ file: ChatBox.js ~ line 53 ~ getAllMessages ~ chatId", chatId)
-      
+      console.log(
+        "🚀 ~ file: ChatBox.js ~ line 53 ~ getAllMessages ~ chatId",
+        chatId
+      );
+
       setAllMessages(response.data);
     } catch (err) {
       console.log(err);
@@ -56,12 +58,12 @@ const ChatBox = (props) => {
 
   const handleChange = (e) => {
     e.preventDefault();
-    console.log(e)
+    console.log(e);
     setText(e.target.value);
   };
 
   const handleKeyDown = (e) => {
-    if(e.key ==="Enter") sendMessage(e);
+    if (e.key === "Enter") sendMessage(e);
   };
 
   const sendMessage = (e) => {
@@ -102,15 +104,19 @@ const ChatBox = (props) => {
                 key={message._id}
               >
                 <p
-                  className={` p-5 rounded-2xl ${
+                  className={` py-2 px-3 rounded-2xl text-left ${
                     isMessageFromUser(message)
-                      ? "bg-lime-200 rounded-tr-none"
+                      ? "bg-green-300 rounded-tr-none"
                       : "bg-gray-200 rounded-tl-none"
                   }`}
                 >
+                  {!isMessageFromUser(message) && isProjectChat && (
+                    <p className="text-sm font-bold">{message.sender.name}</p>
+                  )}
                   {message.text}
                   {/* {message.sender.name}: {message.text} */}
                 </p>
+                
               </div>
             );
           })}
