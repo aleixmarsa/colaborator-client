@@ -7,6 +7,9 @@ import { Routes, Route } from "react-router-dom";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import ProjectCards from "./pages/TasksPage";
+import CalendarPage from "./pages/CalendarPage";
+import DayCalendarPage from "./pages/DayCalendarPage"
+import WeekCalendarPage from "./pages/WeekCalendarPage"
 
 import PrivateRoute from './components/routes/PrivateRoute'; 
 import AnonRoute from './components/routes/AnonRoute'; 
@@ -23,6 +26,9 @@ function App() {
         <Route exact path="/user-list" element={<PrivateRoute><UserList /></PrivateRoute>} />
         <Route exact path="/:projectId/tasks" element={<PrivateRoute><ProjectCards /></PrivateRoute>} />
         <Route exact path="/chat/:chatId" element={<PrivateRoute><Chat /></PrivateRoute>} />
+        <Route exact path="/monthCalendar" element={<PrivateRoute><CalendarPage /></PrivateRoute>} />
+        <Route exact path="/dayCalendarPage" element={<PrivateRoute><DayCalendarPage /></PrivateRoute>} />
+        <Route exact path="/weekCalendarPage" element={<PrivateRoute><WeekCalendarPage /></PrivateRoute>} />
       
       </Routes>
     </div>

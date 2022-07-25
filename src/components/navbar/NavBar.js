@@ -77,7 +77,7 @@ const NavBar = (props) => {
                         PROJECTS
                       </NavLink>
                       <NavLink
-                        to="/global-calendar"
+                        to="/monthCalendar"
                         className={({ isActive }) =>
                           isActive
                             ? "px-3 py-2 rounded-md text-md font-medium text-white bg-green-600 hover:text-white"

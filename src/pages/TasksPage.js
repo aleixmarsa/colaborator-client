@@ -128,6 +128,13 @@ function ProjectCards(props) {
                       ref={droppableProvided.innerRef}
                       className=""
                     >
+                      <button
+                        onClick={() => setCardForm(true)}
+                        type="button"
+                        className="inline-flex items-center p-1 border border-transparent rounded-full shadow-sm text-white bg-green-700 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 m-2"
+                      >
+                        <PlusSmIconSolid className="h-5 w-5" aria-hidden="true" />
+                      </button>
                       {cards.map((card, index) => {
                         if (
                           card.stat === "TODO" &&
@@ -163,6 +170,7 @@ function ProjectCards(props) {
                                     setOpenEditModal={setOpenDeleteModal}
                                     setEditTaskId={seteditTaskId}
                                     getAllCards={getAllCards}
+                                    cardIndex={index}
                                   />
                                 </div>
                               )}
@@ -174,13 +182,7 @@ function ProjectCards(props) {
 
                     {droppableProvided.placeholder}
 
-                    <button
-                      onClick={() => setCardForm(true)}
-                      type="button"
-                      className="inline-flex items-center p-1 border border-transparent rounded-full shadow-sm text-white bg-green-700 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 m-5"
-                    >
-                      <PlusSmIconSolid className="h-5 w-5" aria-hidden="true" />
-                    </button>
+                    
                   </div>
                 )}
               </Droppable>

@@ -10,19 +10,19 @@ const Button = (props) => {
   let xlWidth = "";
   let sm= ""
 
-  if (color === "lime") {
+  if (color === "green") {
     textColor = "white";
     borderColor = "transparent";
-    bgColor = "bg-lime-600";
-    hoverBgColor = "hover:bg-lime-700";
-    focusRingColor = "lime-500";
+    bgColor = "bg-green-600";
+    hoverBgColor = "hover:bg-green-700";
+    focusRingColor = "green-500";
 
   } else if (color === "white") {
     textColor = "gray-700";
     borderColor = "gray-300";
     bgColor = "bg-white";
     hoverBgColor = "hover:bg-gray-50";
-    focusRingColor = "lime-500";
+    focusRingColor = "green-500";
   }
   if (position === "column") {
     margin = "mt-3";

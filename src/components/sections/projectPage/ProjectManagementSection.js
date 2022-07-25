@@ -63,7 +63,7 @@ const ProjectManagementSection = (props) => {
                         name={user.name}
                       />
 
-                      {/* <UserCircleIcon className="h-12 w-12 text-lime-500" /> */}
+                      {/* <UserCircleIcon className="h-12 w-12 text-green-500" /> */}
                     </div>
                     <div className="space-y-1">
                       <div className="text-sm font-medium text-gray-900">
@@ -98,7 +98,7 @@ const ProjectManagementSection = (props) => {
                       type="button"
                       action={handleNewProjectBtn}
                       text="New Project"
-                      color="lime"
+                      color="green"
                     />
                     {/* <Button
                           position="column"

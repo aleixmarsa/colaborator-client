@@ -97,7 +97,7 @@ const EditTaskModal = (props) => {
                             autoComplete="given-name"
                             onChange={(e) => setTitle(e.target.value)}
                             value={title}
-                            className="max-w-lg block w-full h-8 border-2 shadow-xl focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-lime-300 rounded-md"
+                            className="max-w-lg block w-full h-8 border-2 shadow-xl focus:ring-green-500 focus:border-green-500 sm:max-w-xs sm:text-sm border-green-300 rounded-md"
                             />
                         </div>
                     </div>
@@ -114,7 +114,7 @@ const EditTaskModal = (props) => {
                                 rows={3}
                                 // onChange={(e) => setCardDescription(e.target.value)}
                                 // value={cardDescription}
-                                className="max-w-lg shadow-sm block w-full focus:ring focus:outline-none focus:ring-lime-600 focus:border sm:text-sm border border-gray-300 rounded-md"
+                                className="max-w-lg shadow-sm block w-full focus:ring focus:outline-none focus:ring-green-600 focus:border sm:text-sm border border-gray-300 rounded-md"
                             />
                             </div>
                         </div>
@@ -131,7 +131,7 @@ const EditTaskModal = (props) => {
                           autoComplete="country-name"
                           value={color}
                           onChange={(e) => setColor(e.target.value)}
-                          className="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+                          className="max-w-lg block focus:ring-green-500 focus:border-green-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
                           >
                           <option value="white">White</option>
                           <option value="yellow">Yellow</option>
@@ -153,14 +153,14 @@ const EditTaskModal = (props) => {
                 <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                   <button
                     type="button"
-                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-lime-500 text-base font-medium text-white hover:bg-lime-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-500 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
                     onClick={() => handleSubmitEditForm(props.EditTaskId)}
                   >
                     Edit
                   </button>
                   <button
                     type="button"
-                    className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                    className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                     onClick={() =>props.setOpenEditModal(false)}
                     ref={cancelButtonRef}
                   >
