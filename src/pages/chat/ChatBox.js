@@ -79,7 +79,7 @@ const ChatBox = (props) => {
   };
 
   return (
-    <div className=" flex flex-col justify-between max-h-full ">
+    <div className=" flex flex-col justify-between h-full ">
       <div className="flex justify-center mt-2">
         <Avatar
           round
@@ -91,7 +91,7 @@ const ChatBox = (props) => {
         <h2 className="text-lg font-medium ml-3 ">{chatReceiver}</h2>
       </div>
 
-      <div className=" flex flex-col justify-between h-full overflow-auto">
+      <div className=" flex flex-col-reverse justify-between h-full overflow-auto">
         <div className=" space-y-10 grid grid-cols-1   ">
           {allMessages.map((message) => {
             return (
@@ -122,7 +122,7 @@ const ChatBox = (props) => {
         </div>
 
       </div>
-      <div className="mb-2 flex mx-2 border border-gray-200 h-10 items-center">
+      <div className="my-2 flex mx-2 border border-gray-200 h-10 items-center">
           <input
             className="mx-1 w-full focus:outline-none"
             type="text"
