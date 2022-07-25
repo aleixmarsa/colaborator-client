@@ -90,7 +90,6 @@ const ProjectsPage = () => {
       extraHeaders: { Authorization: `Bearer ${storedToken}` },
     });
     socket.on("receive_new_project", (e) => {
-      console.log("PROJECTE REBUT");
       getAllProjects();
     });
     socket.on("receive_edit_project", (e) => {

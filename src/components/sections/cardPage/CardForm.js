@@ -28,24 +28,35 @@ function CardForm (props) {
         };
         console.log("Body que viene del formulario: ", body)
 
-        axios
-            .post(`${API_URL}/colaborator-API/projects/${props.projectId}/card/new-card`, body)
-            .then((response) => {
+        props.socket.emit("new_task", props.projectId, body);
+        setCardTitle("");
+        setCardDescription("");
+        setCardForm(false);
+        setCardColor("white");
+        setCardStat("TODO");
+        setCardLimitDate("")
+        
+        // props.getAllCards()
+        props.setCardForm(false)
 
-                props.setCards([...props.cards, response.data])
+        // axios
+        //     .post(`${API_URL}/colaborator-API/projects/${props.projectId}/card/new-card`, body)
+        //     .then((response) => {
 
-                setCardTitle("");
-                setCardDescription("");
-                setCardForm(false);
-                setCardColor("white");
-                setCardStat("TODO");
-                setCardLimitDate("")
+        //         props.setCards([...props.cards, response.data])
+
+        //         setCardTitle("");
+        //         setCardDescription("");
+        //         setCardForm(false);
+        //         setCardColor("white");
+        //         setCardStat("TODO");
+        //         setCardLimitDate("")
                 
-                props.getAllCards()
-                props.setCardForm(false)
+        //         props.getAllCards()
+        //         props.setCardForm(false)
 
-            })
-            .catch((error) => console.log(error));
+        //     })
+        //     .catch((error) => console.log(error));
     };
 
     
