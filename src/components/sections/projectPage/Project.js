@@ -1,44 +1,38 @@
 import { TrashIcon, PencilIcon } from "@heroicons/react/solid";
-import { MailIcon, PhoneIcon } from "@heroicons/react/solid";
 import Avatar from "react-avatar";
-import { useState, useEffect } from "react";
 
-const taskStatColorChange = (stat) => {
-  if (stat === "TODO") return "bg-blue-200";
-  if (stat === "PROGRESS") return "bg-amber-200";
-  if (stat === "DONE") return "bg-green-200";
-};
+
 
 function Project(props) {
   const {
     project,
-    editProject,
-    setEditProject,
-    setNewProject,
+    editProjectForm,
+    setEditProjectForm,
+    setNewProjectForm,
     setId,
     setModalHasRender,
     setProjectTitle,
-    setOpenDeleteModal,
   } = props;
 
   const handleEditProjectBtn = (e, id) => {
     e.preventDefault();
-    setEditProject(!editProject);
-    setNewProject(false);
+    setEditProjectForm(!editProjectForm);
+    setNewProjectForm(false);
     setId(id);
   };
 
   const handleDeleteProjectBtn = (e, title, id) => {
     e.preventDefault();
     setModalHasRender(true);
-    setOpenDeleteModal(true);
+    setEditProjectForm(false);
+    setNewProjectForm(false);
     setId(id);
     setProjectTitle(title);
   };
 
   return (
     <li
-      className={`col-span-1 max-w bg-white rounded-md shadow-xl divide-y border border-lime-400 list-none m-2 border-2 }`}
+      className={`col-span-1 max-w bg-white rounded-md shadow-xl divide-y border border-lime-600 list-none m-2 `}
     >
       <div className="w-full flex items-center justify-between p-2 space-x-6 m-1">
         <div className="flex-1 truncate">
@@ -53,16 +47,18 @@ function Project(props) {
                 <div className="flex items-center space-x-2 text-gray-500 text-sm ">
                   <span>Team:</span>
                   <div className="flex flex-shrink-0 -space-x-1 ">
-                    {project.team.map((member) => (
-                      <Avatar
+                    {project.team.map((member) => {
+                      return <Avatar
                         key={member._id}
                         round
                         size="25"
-                        color="gray"
+                        // color="gray"
                         textSizeRatio={1.75}
                         name={member.name}
                       />
-                    ))}
+                    }
+
+                    )}
                   </div>
                 </div>
               </div>

@@ -36,8 +36,8 @@ const NavBar = (props) => {
               {/* Logo section */}
               <div className="flex items-center px-2 lg:px-0 xl:w-64">
                 <div className="flex-shrink-0">
-                  <img className="h-8 w-auto" src={icon} alt="Workflow" />
-                </div>  
+                  <img className="h-8 w-auto" src={icon} alt="Erlenmeyer" />
+                </div>
                 <h1 className="ml-3 text-3xl font-small text-white">
                   co<span className="font-extrabold">lab</span>orator
                 </h1>
@@ -62,8 +62,8 @@ const NavBar = (props) => {
                 </Disclosure.Button>
               </div>
               {/* Links section */}´
-              {isLoggedIn && (
-                <div className="hidden lg:block lg:w-80">
+              <div className="hidden lg:block lg:w-80">
+                {isLoggedIn ? (
                   <div className="flex items-center justify-end">
                     <div className="flex">
                       <NavLink
@@ -86,16 +86,16 @@ const NavBar = (props) => {
                       >
                         CALENDAR
                       </NavLink>
-                      {/* {navigation.map((item) => (
-                        <a
-                          key={item.name}
-                          href={item.href}
-                          className="px-3 py-2 rounded-md text-sm font-medium text-green-200 hover:text-white"
-                          aria-current={item.current ? "page" : undefined}
-                        >
-                          {item.name}
-                        </a>
-                    ))} */}
+                      <NavLink
+                        to="/chat"
+                        className={({ isActive }) =>
+                          isActive
+                            ? "px-3 py-2 rounded-md text-sm font-small text-white bg-lime-700 hover:text-white"
+                            : "px-3 py-2 rounded-md text-sm font-small text-lime-200 hover:text-e-100 hover:bg-lime-600"
+                        }
+                      >
+                        CHAT
+                      </NavLink>
                     </div>
                     {/* Profile dropdown */}
                     <Menu as="div" className="ml-4 relative flex-shrink-0 z-10">
@@ -105,16 +105,10 @@ const NavBar = (props) => {
                           <Avatar
                             round
                             size="35"
-                            color="gray"
-                            textSizeRatio={1.90}
+                            // color="gray"
+                            textSizeRatio={1.9}
                             name={user.name}
                           />
-                          {/* <UserCircleIcon className="h-8 w-8 text-white-500" /> */}
-                          {/* <img
-                          className="h-8 w-8 rounded-full"
-                          src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=256&h=256&q=80"
-                          alt=""
-                        /> */}
                         </Menu.Button>
                       </div>
                       <Transition
@@ -146,11 +140,36 @@ const NavBar = (props) => {
                       </Transition>
                     </Menu>
                   </div>
-                </div>
-              )}
+                ) : (
+                  <div className="flex items-center justify-end">
+                    <div className="flex">
+                      <NavLink
+                        to="/login"
+                        className={({ isActive }) =>
+                          isActive
+                            ? "px-3 py-2 rounded-md text-sm font-small text-white bg-lime-700 hover:text-white"
+                            : "px-3 py-2 rounded-md text-sm font-small text-lime-200 hover:text-e-100 hover:bg-lime-600"
+                        }
+                      >
+                        LOG IN
+                      </NavLink>
+                      <NavLink
+                        to="/signup"
+                        className={({ isActive }) =>
+                          isActive
+                            ? "px-3 py-2 rounded-md text-sm font-small text-white bg-lime-700 hover:text-white"
+                            : "px-3 py-2 rounded-md text-sm font-small text-lime-200 hover:text-e-100 hover:bg-lime-600"
+                        }
+                      >
+                        SIGN UP
+                      </NavLink>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-          {isLoggedIn && (
+          {isLoggedIn ? (
             <Disclosure.Panel className="lg:hidden">
               <div className="px-2 pt-2 pb-3 space-y-1">
                 <Disclosure.Button
@@ -179,6 +198,19 @@ const NavBar = (props) => {
                 >
                   CALENDAR
                 </Disclosure.Button>
+                <Disclosure.Button
+                  as="a"
+                  href="/chat"
+                  className={classNames(
+                    location.pathname === "/global-calendar"
+                      ? "text-white bg-lime-700"
+                      : "text-lime-200 hover:text-lime-100 hover:bg-lime-600",
+                    "block px-3 py-2 rounded-md text-base font-medium"
+                  )}
+                  // aria-current={item.current ? "page" : undefined}
+                >
+                  CHAT
+                </Disclosure.Button>
               </div>
               <div className="pt-4 pb-3 border-t border-green-800">
                 <div className="px-2 space-y-1">
@@ -193,6 +225,37 @@ const NavBar = (props) => {
                     </Disclosure.Button>
                   ))}
                 </div>
+              </div>
+            </Disclosure.Panel>
+          ) : (
+            <Disclosure.Panel className="lg:hidden">
+              <div className="px-2 pt-2 pb-3 space-y-1">
+                <Disclosure.Button
+                  as="a"
+                  href="/"
+                  className={classNames(
+                    location.pathname === "/login"
+                      ? "text-white bg-lime-700"
+                      : "text-lime-200 hover:text-lime-100 hover:bg-lime-600",
+                    "block px-3 py-2 rounded-md text-base font-medium"
+                  )}
+                  // aria-current={item.current ? "page" : undefined}
+                >
+                  LOG IN
+                </Disclosure.Button>
+                <Disclosure.Button
+                  as="a"
+                  href="/global-calendar"
+                  className={classNames(
+                    location.pathname === "/signup"
+                      ? "text-white bg-lime-700"
+                      : "text-lime-200 hover:text-lime-100 hover:bg-lime-600",
+                    "block px-3 py-2 rounded-md text-base font-medium"
+                  )}
+                  // aria-current={item.current ? "page" : undefined}
+                >
+                  SIGN UP
+                </Disclosure.Button>
               </div>
             </Disclosure.Panel>
           )}

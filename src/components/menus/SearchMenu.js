@@ -7,7 +7,7 @@ const SearchMenu = (props) => {
           {/* Search section */}
           {location.pathname === "/" ? (
             <div className="flex-1 flex justify-center">
-              <div className="w-1/2 px-2 ">
+              <div className="w-2/3 px-2 ">
                 <label htmlFor="search" className="sr-only">
                   Search projects
                 </label>

@@ -1,2 +1,5 @@
 [-] Loading ?
-[-] La ruta del backend que retorna la llista d'usuaris potser es pot limitar a que retorni el nom .select('name)
+[-] Validacions login formik
+[-] Quan s'edita projecte, els membres de l'equip no es poden canviar
+[-] Canviar card per task
+[-] A la col·lecció de projectes falta la relació amb les tasques
