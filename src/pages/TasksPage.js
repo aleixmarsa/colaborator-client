@@ -34,11 +34,16 @@ function ProjectCards(props) {
   const [cards, setCards] = useState([]);
 
   const updateCardStat = (cardId, destination) => {
-    axios
-      .put(
-        `${API_URL}/colaborator-API/projects/card/updateCard/${cardId}/${destination}`
-      )
-      .then((response) => {});
+  console.log("🚀 ~ file: TasksPage.js ~ line 37 ~ updateCardStat ~ cardId", cardId)
+
+    
+    socket.emit("edit_task_state", cardId, destination);
+
+    // axios
+    //   .put(
+    //     `${API_URL}/colaborator-API/projects/card/updateCard/${cardId}/${destination}`
+    //   )
+    //   .then((response) => {});
   };
 
   const getAllCards = () => {
@@ -61,6 +66,12 @@ function ProjectCards(props) {
     socket.on("receive_edit_task", (e) => {
       getAllCards();
     });
+
+    socket.on("receive_edit_task_state", (e) => {
+      console.log("rebut")
+      getAllCards();
+    });
+
     socket.on("receive_delete_task", (e) => {
       getAllCards();
     });
