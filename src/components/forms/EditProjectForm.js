@@ -12,41 +12,45 @@ const EditProjectForm = (props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [team, setTeam] = useState([]);
-  const { id } = props;
+  const { projectId, handleCancelAddSaveFormBtn, getAllProjects } = props;
 
 
   const getProject = async (id) => {
-    //TODO MIRAR QUE ES
-    localStorage.getItem("authToken");
     try {
       const response = await getProjectDetailsService(id);
       const oneProject = response.data;
       setTitle(oneProject.title);
       setDescription(oneProject.description);
-      //TODO NO SURTEN LES IMATGES QUAN EDITES UN PROJECTE  
       setTeam(oneProject.team);
     } catch (err) {
       console.log(err);
     }
   };
   useEffect(() => {
-    getProject(id);
-  }, [id]);
+    getProject(projectId);
+  }, [projectId]);
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
     const body = {
+      projectId:projectId,
       title: title,
       description: description,
+      team:team
     };
 
-    try {
-      await updateProjectService(props.id, body);
-      props.handleCanceleAddSaveFormBtn(e);
-      props.getAllProjects();
-    } catch (err) {
-      console.log(err);
-    }
+    props.socket.emit("edit_project", body);
+    handleCancelAddSaveFormBtn(e);
+
+
+    // try {
+    //   await updateProjectService(projectId, body);
+    //   handleCancelAddSaveFormBtn(e);
+    //   getAllProjects();
+    // } catch (err) {
+    //   console.log(err);
+    // }
   };
 
   return (
@@ -54,7 +58,7 @@ const EditProjectForm = (props) => {
       formTitle="Edit Project"
       onSubmit={handleSubmit}
       cancelBtntext="Cancel"
-      cancelBtnAction={props.handleCanceleAddSaveFormBtn}
+      cancelBtnAction={handleCancelAddSaveFormBtn}
       acceptBtnText="Save Changes"
       projectTitle={title}
       projectDescription={description}

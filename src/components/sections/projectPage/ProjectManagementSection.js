@@ -3,42 +3,47 @@ import EditProjectForm from "../../forms/EditProjectForm";
 import Avatar from "react-avatar";
 import Button from "../../buttons/Button";
 import { CollectionIcon } from "@heroicons/react/solid";
+import { AuthContext } from "../../../context/auth.context";
+import { useContext } from "react";
+
 const ProjectManagementSection = (props) => {
   const {
-    id,
-    user,
+    socket,
+    projectId,
     projectsInProgress,
-    newProject,
-    setNewProject,
-    editProject,
-    setEditProject,
-    refreshAllProjects,
+    newProjectForm,
+    setNewProjectForm,
+    editProjectForm,
+    setEditProjectForm,
     getAllProjects,
   } = props;
+
+  const { user } = useContext(AuthContext);
+
   const handleNewProjectBtn = (e) => {
     e.preventDefault();
-    setEditProject(false);
-    setNewProject(true);
+    setEditProjectForm(false);
+    setNewProjectForm(true);
   };
 
-  const handleCanceleAddSaveFormBtn = (e) => {
-    e.preventDefault();
-    setEditProject(false);
-    setNewProject(false);
+  const handleCancelAddSaveFormBtn = () => {
+    setEditProjectForm(false);
+    setNewProjectForm(false);
   };
   return (
     <>
-      {newProject ? (
+      {newProjectForm ? (
         <NewProjectForm
+          socket={socket}
           handleNewProjectBtn={handleNewProjectBtn}
-          handleCanceleAddSaveFormBtn={handleCanceleAddSaveFormBtn}
-          refreshAllProjects={refreshAllProjects}
+          handleCancelAddSaveFormBtn={handleCancelAddSaveFormBtn}
+          getAllProjects={getAllProjects}
         />
-      ) : editProject ? (
+      ) : editProjectForm ? (
         <EditProjectForm
-          id={id}
-          handleNewProjectBtn={handleNewProjectBtn}
-          handleCanceleAddSaveFormBtn={handleCanceleAddSaveFormBtn}
+          socket={socket}
+          projectId={projectId}
+          handleCancelAddSaveFormBtn={handleCancelAddSaveFormBtn}
           getAllProjects={getAllProjects}
         />
       ) : (
@@ -59,7 +64,7 @@ const ProjectManagementSection = (props) => {
                         round
                         size="50"
                         textSizeRatio={1.9}
-                        color="gray"
+                        // color="gray"
                         name={user.name}
                       />
 

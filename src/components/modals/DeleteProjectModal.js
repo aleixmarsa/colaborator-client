@@ -1,32 +1,42 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationIcon } from "@heroicons/react/outline";
-import { deleteProjectService } from '../../services/project.services';
-
-const API_URL = process.env.REACT_APP_API_URL;
+import { deleteProjectService } from "../../services/project.services";
 
 const DeletProjectModal = (props) => {
-
   const cancelButtonRef = useRef(null);
+  const {
+    socket,
+    projectId,
+    getAllProjects,
+    projectTitle,
+    setModalHasRender,
+    modalHasRender,
+  } = props;
 
-  const deleteProject = async (id)  => {
-    try {
-			const response = await deleteProjectService(id);
-      props.setOpenDeleteModal(false);
-      props.refreshAllProjects(response, "delete", id);
-		} catch (err) {
-			console.log(err);
-		}
+  const deleteProject = async (id) => {
+
+    props.socket.emit("delete_project", id);
+    setModalHasRender(false);
+    getAllProjects();
+
+    // try {
+    //   await deleteProjectService(id);
+    //   setModalHasRender(false);
+    //   getAllProjects();
+    // } catch (err) {
+    //   console.log(err);
+    // }
   };
 
   return (
-    <Transition.Root show={props.openDeleteModal} as={Fragment}>
+    <Transition.Root show={modalHasRender} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-10"
         initialFocus={cancelButtonRef}
-        onClose={props.setOpenDeleteModal}
+        onClose={setModalHasRender}
       >
         <Transition.Child
           as={Fragment}
@@ -65,7 +75,8 @@ const DeletProjectModal = (props) => {
                         as="h3"
                         className="text-lg leading-6 font-medium text-gray-900"
                       >
-                        Delete project: <span className="text-gray-400">{props.title}</span>
+                        Delete project:{" "}
+                        <span className="text-gray-400">{projectTitle}</span>
                       </Dialog.Title>
                       <div className="mt-2">
                         <p className="text-sm text-gray-500">
@@ -81,14 +92,14 @@ const DeletProjectModal = (props) => {
                   <button
                     type="button"
                     className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
-                    onClick={() => deleteProject(props.id)}
+                    onClick={() => deleteProject(projectId)}
                   >
                     Delete Project
                   </button>
                   <button
                     type="button"
                     className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                    onClick={() =>props.setOpenDeleteModal(false)}
+                    onClick={() => setModalHasRender(false)}
                     ref={cancelButtonRef}
                   >
                     Cancel

@@ -1,42 +1,49 @@
 import NavBar from "../components/navbar/NavBar";
 
 import DeletProjectModal from "../components/modals/DeleteProjectModal";
-import Footer from "../components/footer/Footer";
-import { AuthContext } from "../context/auth.context";
 import ProjectManagementSection from "../components/sections/projectPage/ProjectManagementSection";
 import ProjectsListSection from "../components/sections/projectPage/ProjectsListSection";
 import {
   getAllCurrentProjectsService,
   getAllCompletedProjectsService,
 } from "../services/project.services";
+import { AuthContext } from "../context/auth.context";
+import { useContext } from "react";
+import { useState, useEffect } from "react";
 
-
-import { useState, useEffect, useContext } from "react";
+import io from "socket.io-client";
+let socket;
 
 const classNames = (...classes) => {
   return classes.filter(Boolean).join(" ");
 };
 
 const activityItems = [
-  { project: 'Workcation', commit: '2d89f0c8', environment: 'production', time: '1h' },
+  {
+    project: "Workcation",
+    commit: "2d89f0c8",
+    environment: "production",
+    time: "1h",
+  },
   // More items...
-]
+];
 
 const ProjectsPage = () => {
-  const [editProject, setEditProject] = useState(false);
+  const [projectId, setProjectId] = useState(0);
+  const [projectTitle, setProjectTitle] = useState("");
+  const [newProjectForm, setNewProjectForm] = useState(false);
+  const [editProjectForm, setEditProjectForm] = useState(false);
+  const [currentProjects, setCurrentProjects] = useState([]);
   const [filteredCurrentProjects, setFilteredCurrentProjects] = useState([]);
+  const { user } = useContext(AuthContext);
+
+  const [modalHasRender, setModalHasRender] = useState(false);
+  const [loading, setLoading] = useState(true);
+
   const [filteredCompletedProjects, setFilteredCompletedProjects] = useState(
     []
   );
-  const [currentProjects, setCurrentProjects] = useState([]);
   const [completedProjects, setCompletedProjects] = useState([]);
-  const [newProject, setNewProject] = useState(false);
-  const [id, setId] = useState(0);
-  const [projectTitle, setProjectTitle] = useState("");
-  const [modalHasRender, setModalHasRender] = useState(false);
-  const [openDeleteModal, setOpenDeleteModal] = useState(true);
-  const { user } = useContext(AuthContext);
-  const [loading, setLoading] = useState(true);
 
   const filterProjects = (searchText) => {
     let projectsCopy = [...currentProjects];
@@ -60,7 +67,7 @@ const ProjectsPage = () => {
 
   const getAllProjects = async () => {
     try {
-      const response = await getAllCurrentProjectsService(id);
+      const response = await getAllCurrentProjectsService(user._id);
       setCurrentProjects(response.data);
       setFilteredCurrentProjects(response.data);
       setLoading(false);
@@ -69,7 +76,7 @@ const ProjectsPage = () => {
     }
 
     try {
-      const response = await getAllCompletedProjectsService(id);
+      const response = await getAllCompletedProjectsService(user._id);
       setCompletedProjects(response.data);
       setFilteredCompletedProjects(response.data);
     } catch (err) {
@@ -77,34 +84,25 @@ const ProjectsPage = () => {
     }
   };
 
-  const refreshAllProjects = (response, action, id) => {
-    let currentProjectsCopy = [...currentProjects];
-    let completedProjectsCopy = [...completedProjects];
-
-    if (action === "post") {
-      currentProjectsCopy = [...currentProjects, response.data];
-    } else if (action === "delete") {
-      const indexCurrent = currentProjectsCopy.findIndex((object) => {
-        return object._id === id;
-      });
-      const indexCompleted = completedProjectsCopy.findIndex((object) => {
-        return object._id === id;
-      });
-      if (indexCurrent !== -1) {
-        currentProjectsCopy.splice(indexCurrent, 1);
-      }
-      if (indexCompleted !== -1) {
-        completedProjectsCopy.splice(indexCompleted, 1);
-      }
-    }
-    setCurrentProjects(currentProjectsCopy);
-    setFilteredCurrentProjects(currentProjectsCopy);
-    setCompletedProjects(completedProjectsCopy);
-    setFilteredCompletedProjects(completedProjectsCopy);
+  const socketConnection = () => {
+    const storedToken = localStorage.getItem("authToken");
+    socket = io.connect("http://localhost:5005", {
+      extraHeaders: { Authorization: `Bearer ${storedToken}` },
+    });
+    socket.on("receive_new_project", (e) => {
+      getAllProjects();
+    });
+    socket.on("receive_edit_project", (e) => {
+      getAllProjects();
+    });
+    socket.on("receive_delete_project", (e) => {
+      getAllProjects();
+    });
   };
 
   useEffect(() => {
     getAllProjects();
+    socketConnection();
   }, []);
 
   return (
@@ -113,11 +111,12 @@ const ProjectsPage = () => {
       {loading && <div>Loading...</div>}
       {!loading && modalHasRender && (
         <DeletProjectModal
-          refreshAllProjects={refreshAllProjects}
-          title={projectTitle}
-          id={id}
-          setOpenDeleteModal={setOpenDeleteModal}
-          openDeleteModal={openDeleteModal}
+          socket={socket}
+          projectId={projectId}
+          getAllProjects={getAllProjects}
+          projectTitle={projectTitle}
+          setModalHasRender={setModalHasRender}
+          modalHasRender={modalHasRender}
         />
       )}
       {/* 3 column wrapper */}
@@ -125,14 +124,13 @@ const ProjectsPage = () => {
         <div className="flex-2 bg-white xl:flex ">
           {/* Project Managment*/}
           <ProjectManagementSection
-            newProject={newProject}
-            setNewProject={setNewProject}
-            id={id}
-            user={user}
+            socket={socket}
+            newProjectForm={newProjectForm}
+            setNewProjectForm={setNewProjectForm}
+            projectId={projectId}
             projectsInProgress={currentProjects}
-            editProject={editProject}
-            setEditProject={setEditProject}
-            refreshAllProjects={refreshAllProjects}
+            editProjectForm={editProjectForm}
+            setEditProjectForm={setEditProjectForm}
             getAllProjects={getAllProjects}
           />
         </div>
@@ -143,12 +141,11 @@ const ProjectsPage = () => {
           filteredProjects={filteredCurrentProjects}
           setFilteredProjects={setFilteredCurrentProjects}
           classNames={classNames}
-          editProject={editProject}
-          setEditProject={setEditProject}
-          setNewProject={setNewProject}
-          setId={setId}
+          editProjectForm={editProjectForm}
+          setEditProjectForm={setEditProjectForm}
+          setNewProjectForm={setNewProjectForm}
+          setProjectId={setProjectId}
           setModalHasRender={setModalHasRender}
-          setOpenDeleteModal={setOpenDeleteModal}
           setProjectTitle={setProjectTitle}
           getAllProjects={getAllProjects}
         />
@@ -156,10 +153,9 @@ const ProjectsPage = () => {
         <div>
           {/* Activity feed */}
           <div className="drop-shadow-md  lg:min-w-0 lg:flex-1  mr-5 gap-6 mt-5 mb-10 ">
-      <div className="p-6 pt-2 bg-stone-50">
-        <div className=" flex items-center border-b-2 mb-5  pb-2  ">
-          <h2 className="flex-1 text-xl">ACTIVITY</h2>
-
+            <div className="p-6 pt-2 bg-stone-50">
+              <div className=" flex items-center border-b-2 mb-5  pb-2  ">
+                <h2 className="flex-1 text-xl">ACTIVITY</h2>
               </div>
               <div>
                 <ul role="list" className="divide-y divide-gray-200">
@@ -177,7 +173,8 @@ const ProjectsPage = () => {
                             <p className="text-sm text-gray-500">{item.time}</p>
                           </div>
                           <p className="text-sm text-gray-500">
-                            Deployed {item.project} ({item.commit} in master) to {item.environment}
+                            Deployed {item.project} ({item.commit} in master) to{" "}
+                            {item.environment}
                           </p>
                         </div>
                       </div>
@@ -185,7 +182,10 @@ const ProjectsPage = () => {
                   ))}
                 </ul>
                 <div className="py-4 text-sm border-t border-gray-200">
-                  <a href="#" className="text-indigo-600 font-semibold hover:text-indigo-900">
+                  <a
+                    href="#"
+                    className="text-indigo-600 font-semibold hover:text-indigo-900"
+                  >
                     View all activity <span aria-hidden="true">&rarr;</span>
                   </a>
                 </div>
@@ -208,9 +208,8 @@ const ProjectsPage = () => {
             getAllProjects={getAllProjects}
           /> */}
         </div>
-        
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

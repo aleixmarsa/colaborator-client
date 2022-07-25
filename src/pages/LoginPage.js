@@ -6,13 +6,14 @@ import LogInForm from "../components/forms/LogInForm";
 import NavBar from "../components/navbar/NavBar";
 import Footer from "../components/footer/Footer";
 
-function LoginPage(props) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+function LoginPage(props, location) {
+  // const { email2 = 'defaultValue', password2="defaultValue" } = location.state || ""
+
+  const [email, setEmail] = useState("admin@admin.com");
+  const [password, setPassword] = useState("Admin123!");
   const [errorMessage, setErrorMessage] = useState(undefined);
   const navigate = useNavigate();
   const { logInUser } = useContext(AuthContext);
-
   const handleEmail = (e) => setEmail(e.target.value);
   const handlePassword = (e) => setPassword(e.target.value);
 

@@ -11,6 +11,9 @@ import NavBar from "../components/navbar/NavBar";
 import DeleteTaskModal from "../components/modals/DeleteTaskModal";
 import EditTaskModal from "../components/modals/EditTaskModal";
 
+import io from "socket.io-client";
+let socket;
+
 const API_URL = "http://localhost:5005";
 
 function ProjectCards(props) {
@@ -47,8 +50,25 @@ function ProjectCards(props) {
       .catch((error) => console.log(error));
   };
 
+  const socketConnection = () => {
+    const storedToken = localStorage.getItem("authToken");
+    socket = io.connect("http://localhost:5005", {
+      extraHeaders: { Authorization: `Bearer ${storedToken}` },
+    });
+    socket.on("receive_new_task", (e) => {
+      getAllCards();
+    });
+    socket.on("receive_edit_task", (e) => {
+      getAllCards();
+    });
+    socket.on("receive_delete_task", (e) => {
+      getAllCards();
+    });
+  };
+
   useEffect(() => {
     getAllCards();
+    socketConnection();
   }, []);
 
   const reorder = (list, startIndex, endIndex) => {
@@ -123,7 +143,7 @@ function ProjectCards(props) {
                       <h2 className="text-xl  border-color-black">TO-DO</h2>
                     </div>
 
-                    <div 
+                    <div
                       {...droppableProvided.droppableProps}
                       ref={droppableProvided.innerRef}
                       className=""
@@ -186,6 +206,7 @@ function ProjectCards(props) {
               </Droppable>
             ) : (
               <CardForm
+                socket={socket}
                 setCardForm={setCardForm}
                 setCards={setCards}
                 getAllCards={getAllCards}
