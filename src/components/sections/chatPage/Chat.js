@@ -63,6 +63,7 @@ const Chat = () => {
       console.log(err);
     }
   };
+  
 
   const directChathandleClick = async (e, userChat) => {
     e.preventDefault();
@@ -154,11 +155,9 @@ const Chat = () => {
             </div>
           </div>
           <div className="col-span-4 flex flex-col bg-white rounded-md shadow-xl divide-y border list-none ml-2">
-            <div className="bg-white h-full rounded-md shadow-xl divide-y border list-none m-2">
               {showChat && (
                 <ChatBox chatId={showChat} chatReceiver={chatReceiver} isProjectChat={isProjectChat}/>
               )}
-            </div>
           </div>
         </div>
       </div>

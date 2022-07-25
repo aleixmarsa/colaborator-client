@@ -35,7 +35,10 @@ const ProjectsPage = () => {
   const [editProjectForm, setEditProjectForm] = useState(false);
   const [currentProjects, setCurrentProjects] = useState([]);
   const [filteredCurrentProjects, setFilteredCurrentProjects] = useState([]);
+  const [hasNewMessage, setHasNewMessage] = useState(false);
+
   const { user } = useContext(AuthContext);
+  
 
   const [modalHasRender, setModalHasRender] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -98,6 +101,10 @@ const ProjectsPage = () => {
     socket.on("receive_delete_project", (e) => {
       getAllProjects();
     });
+    socket.on("receive_alert_message", (e) => {
+      console.log("MISSATGE REBUT")
+      setHasNewMessage(true)
+    });
   };
 
   useEffect(() => {
@@ -107,7 +114,7 @@ const ProjectsPage = () => {
 
   return (
     <div className="flex flex-col h-screen">
-      <NavBar filterProjects={filterProjects} />
+      <NavBar hasNewMessage={hasNewMessage} filterProjects={filterProjects} />
       {loading && <div>Loading...</div>}
       {!loading && modalHasRender && (
         <DeletProjectModal

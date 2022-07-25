@@ -90,7 +90,7 @@ const Form = (props) => {
                           position="row"
                           type="submit"
                           text={acceptBtnText}
-                          color="lime"
+                          color="green"
                         />
                       </div>
                     </div>
