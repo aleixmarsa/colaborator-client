@@ -25,24 +25,24 @@ const NewProjectForm = (props) => {
       active: isActive,
     };
 
-    props.socket.emit("new_project", body);
-    props.handleCancelAddSaveFormBtn();
-    setTitle("");
-    setDescription("");
-    setTeam([]);
+    // props.socket.emit("new_project", body);
+    // props.handleCancelAddSaveFormBtn();
+    // setTitle("");
+    // setDescription("");
+    // setTeam([]);
 
-    // try {
-    //   const response = await addNewProjectService(body);
-    //   console.log("🚀 ~ file: NewProjectForm.js ~ line 24 ~ handleSubmit ~ response", response)
-
-    //   props.getAllProjects();
-    //   setTitle("");
-    //   setDescription("");
-    //   setTeam([]);
-    //   props.handleCancelAddSaveFormBtn(e);
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    try {
+      const response = await addNewProjectService(body);
+      console.log("🚀 ~ file: NewProjectForm.js ~ line 24 ~ handleSubmit ~ response", response)
+      props.socket.emit("new_project", body);
+      // props.getAllProjects();
+      setTitle("");
+      setDescription("");
+      setTeam([]);
+      props.handleCancelAddSaveFormBtn(e);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

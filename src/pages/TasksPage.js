@@ -26,7 +26,6 @@ function ProjectCards(props) {
   const [editModalHasRender, setEditModalHasRender] = useState(false);
 
   const [openDeleteModal, setOpenDeleteModal] = useState(true);
-  const [openEditModal, setOpenEditModal] = useState(true);
 
   const [deleteTaskId, setDeleteTaskId] = useState("");
   const [editTaskId, seteditTaskId] = useState("");
@@ -34,16 +33,20 @@ function ProjectCards(props) {
   const [cards, setCards] = useState([]);
 
   const updateCardStat = (cardId, destination) => {
-  console.log("🚀 ~ file: TasksPage.js ~ line 37 ~ updateCardStat ~ cardId", cardId)
+    console.log(
+      "🚀 ~ file: TasksPage.js ~ line 37 ~ updateCardStat ~ cardId",
+      cardId
+    );
 
-    
-    socket.emit("edit_task_state", cardId, destination);
+    // socket.emit("edit_task_state", cardId, destination);
 
-    // axios
-    //   .put(
-    //     `${API_URL}/colaborator-API/projects/card/updateCard/${cardId}/${destination}`
-    //   )
-    //   .then((response) => {});
+    axios
+      .put(
+        `${API_URL}/colaborator-API/projects/card/updateCard/${cardId}/${destination}`
+      )
+      .then((response) => {
+        socket.emit("edit_task_state", cardId, destination);
+      });
   };
 
   const getAllCards = () => {
@@ -68,7 +71,7 @@ function ProjectCards(props) {
     });
 
     socket.on("receive_edit_task_state", (e) => {
-      console.log("rebut")
+      console.log("rebut");
       getAllCards();
     });
 
@@ -129,8 +132,8 @@ function ProjectCards(props) {
       {deleteModalHasRender && (
         <DeleteTaskModal
           socket={socket}
-          setOpenDeleteModal={setOpenDeleteModal}
-          openDeleteModal={openDeleteModal}
+          setDeleteModalHasRender={setDeleteModalHasRender}
+          deleteModalHasRender={deleteModalHasRender}
           deleteTaskId={deleteTaskId}
           getAllCards={getAllCards}
         />
@@ -138,8 +141,8 @@ function ProjectCards(props) {
       {editModalHasRender && (
         <EditTaskModal
           socket={socket}
-          setOpenEditModal={setOpenEditModal}
-          openEditModal={openEditModal}
+          setEditModalHasRender={setEditModalHasRender}
+          editModalHasRender={editModalHasRender}
           editTaskId={editTaskId}
           getAllCards={getAllCards}
         />
@@ -166,7 +169,10 @@ function ProjectCards(props) {
                         type="button"
                         className="inline-flex items-center p-1 border border-transparent rounded-full shadow-sm text-white bg-green-700 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 m-2"
                       >
-                        <PlusSmIconSolid className="h-5 w-5" aria-hidden="true" />
+                        <PlusSmIconSolid
+                          className="h-5 w-5"
+                          aria-hidden="true"
+                        />
                       </button>
                       {cards.map((card, index) => {
                         if (
@@ -195,12 +201,10 @@ function ProjectCards(props) {
                                     setDeleteModalHasRender={
                                       setDeleteModalHasRender
                                     }
-                                    setOpenDeleteModal={setOpenDeleteModal}
                                     setDeleteTaskId={setDeleteTaskId}
                                     setEditModalHasRender={
                                       setEditModalHasRender
                                     }
-                                    setOpenEditModal={setOpenDeleteModal}
                                     setEditTaskId={seteditTaskId}
                                     getAllCards={getAllCards}
                                     cardIndex={index}
@@ -214,8 +218,6 @@ function ProjectCards(props) {
                     </div>
 
                     {droppableProvided.placeholder}
-
-                    
                   </div>
                 )}
               </Droppable>
