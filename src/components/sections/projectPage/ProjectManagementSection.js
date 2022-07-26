@@ -20,6 +20,10 @@ const ProjectManagementSection = (props) => {
   } = props;
 
   const { user } = useContext(AuthContext);
+  console.log(
+    "🚀 ~ file: ProjectManagementSection.js ~ line 22 ~ ProjectManagementSection ~ user",
+    user
+  );
 
   const handleNewProjectBtn = (e) => {
     e.preventDefault();

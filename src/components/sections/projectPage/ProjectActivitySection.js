@@ -49,12 +49,12 @@ const ProjectActivitySection = (props) => {
       <div className=" lg:min-w-0 lg:flex-1 mr-5 gap-6">
         <div className="p-6 pt-4 bg-white">
           <div className=" flex items-center border-b-2 mb-3 pb-2  ">
-            <h2 className="flex-1 text-xl">LAST ACTIVITY</h2>
+            <h2 className="flex-1 text-xl">LAST ACTIVITIES</h2>
           </div>
           <div>
             <ul role="list" className="divide-y divide-gray-200">
-              {activity.map((item) => (
-                <li key={item._id} className="flex flex-col gap-2 py-4">
+              {activity.reverse().map((item) => (
+                <li key={item._id} className="flex flex-col text-left gap-2 py-4">
                   <p className="text-sm text-black font-semibold">
                     {item.project.title}
                   </p>

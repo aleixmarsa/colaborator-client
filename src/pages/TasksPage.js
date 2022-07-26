@@ -133,6 +133,7 @@ function ProjectCards(props) {
       <NavBar />
       {deleteModalHasRender && (
         <DeleteTaskModal
+          projectId={projectId}
           socket={socket}
           setDeleteModalHasRender={setDeleteModalHasRender}
           deleteModalHasRender={deleteModalHasRender}
@@ -142,6 +143,7 @@ function ProjectCards(props) {
       )}
       {editModalHasRender && (
         <EditTaskModal
+          projectId={projectId}
           socket={socket}
           setEditModalHasRender={setEditModalHasRender}
           editModalHasRender={editModalHasRender}
@@ -150,19 +152,98 @@ function ProjectCards(props) {
         />
       )}
       <div className="flex flex-row h-full">
-      <LateralBar 
-        projectId={projectId}
-      /> 
-      <DragDropContext onDragEnd={(result) => updateCards(result)}>
-        <div className=" container mx-auto mt-2">
-         
-          <div className="drop-shadow-md grid grid-cols-1 ml-5 mr-5 md:grid-cols-1 lg:grid-cols-3 gap-6 mt-5 mb-10 ">
-            {!cardForm ? (
-              <Droppable droppableId="todo">
+        <LateralBar projectId={projectId} />
+        <DragDropContext onDragEnd={(result) => updateCards(result)}>
+          <div className=" container mx-auto mt-2">
+            <div className="drop-shadow-md grid grid-cols-1 ml-5 mr-5 md:grid-cols-1 lg:grid-cols-3 gap-6 mt-5 mb-10 ">
+              {!cardForm ? (
+                <Droppable droppableId="todo">
+                  {(droppableProvided) => (
+                    <div className="p-6 pt-2 bg-stone-50">
+                      <div className=" border-b-2 mb-5  pb-2  ">
+                        <h2 className="text-xl  border-color-black">TO-DO</h2>
+                      </div>
+
+                      <div
+                        {...droppableProvided.droppableProps}
+                        ref={droppableProvided.innerRef}
+                        className=""
+                      >
+                        <button
+                          onClick={() => setCardForm(true)}
+                          type="button"
+                          className="inline-flex items-center p-1 border border-transparent rounded-full shadow-sm text-white bg-green-700 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                        >
+                          <PlusSmIconSolid
+                            className="h-5 w-5"
+                            aria-hidden="true"
+                          />
+                        </button>
+                        {cards.map((card, index) => {
+                          if (
+                            card.stat === "TODO" &&
+                            card.project === projectId
+                          ) {
+                            return (
+                              <Draggable
+                                key={card._id}
+                                draggableId={card._id}
+                                index={index}
+                              >
+                                {(draggableProvided) => (
+                                  <div
+                                    {...draggableProvided.draggableProps}
+                                    ref={draggableProvided.innerRef}
+                                    {...draggableProvided.dragHandleProps}
+                                  >
+                                    <Card
+                                      title={card.title}
+                                      description={card.description}
+                                      stat={card.stat}
+                                      color={card.color}
+                                      cardId={card._id}
+                                      cardLimitDate={card.limitDate}
+                                      setDeleteModalHasRender={
+                                        setDeleteModalHasRender
+                                      }
+                                      setDeleteTaskId={setDeleteTaskId}
+                                      setEditModalHasRender={
+                                        setEditModalHasRender
+                                      }
+                                      setEditTaskId={seteditTaskId}
+                                      getAllCards={getAllCards}
+                                      cardIndex={index}
+                                    />
+                                  </div>
+                                )}
+                              </Draggable>
+                            );
+                          }
+                        })}
+                      </div>
+
+                      {droppableProvided.placeholder}
+                    </div>
+                  )}
+                </Droppable>
+              ) : (
+                <CardForm
+                  socket={socket}
+                  setCardForm={setCardForm}
+                  setCards={setCards}
+                  getAllCards={getAllCards}
+                  cards={cards}
+                  projectId={projectId}
+                />
+              )}
+
+              <Droppable droppableId="progress">
                 {(droppableProvided) => (
                   <div className="p-6 pt-2 bg-stone-50">
-                    <div className=" border-b-2 mb-3 pb-2">
-                      <h2 className="text-xl  border-color-black">TO-DO</h2>
+                    <div className=" border-b-2 mb-5  pb-2  ">
+                      <h2 className="text-xl  border-color-black">
+                        IN PROGRESS
+                      </h2>
                     </div>
 
                     <div
@@ -170,19 +251,9 @@ function ProjectCards(props) {
                       ref={droppableProvided.innerRef}
                       className=""
                     >
-                      <button
-                        onClick={() => setCardForm(true)}
-                        type="button"
-                        className="inline-flex items-center p-1 border border-transparent rounded-full shadow-sm text-white bg-green-700 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                      >
-                        <PlusSmIconSolid
-                          className="h-5 w-5"
-                          aria-hidden="true"
-                        />
-                      </button>
                       {cards.map((card, index) => {
                         if (
-                          card.stat === "TODO" &&
+                          card.stat === "PROGRESS" &&
                           card.project === projectId
                         ) {
                           return (
@@ -207,13 +278,14 @@ function ProjectCards(props) {
                                     setDeleteModalHasRender={
                                       setDeleteModalHasRender
                                     }
+                                    setOpenDeleteModal={setOpenDeleteModal}
                                     setDeleteTaskId={setDeleteTaskId}
                                     setEditModalHasRender={
                                       setEditModalHasRender
                                     }
+                                    setOpenEditModal={setOpenDeleteModal}
                                     setEditTaskId={seteditTaskId}
                                     getAllCards={getAllCards}
-                                    cardIndex={index}
                                   />
                                 </div>
                               )}
@@ -227,134 +299,70 @@ function ProjectCards(props) {
                   </div>
                 )}
               </Droppable>
-            ) : (
-              <CardForm
-                socket={socket}
-                setCardForm={setCardForm}
-                setCards={setCards}
-                getAllCards={getAllCards}
-                cards={cards}
-                projectId={projectId}
-              />
-            )}
 
-            <Droppable droppableId="progress">
-              {(droppableProvided) => (
-                <div className="p-6 pt-2 bg-stone-50">
-                  <div className=" border-b-2 mb-3 pb-2">
-                    <h2 className="text-xl  border-color-black">IN PROGRESS</h2>
+              <Droppable droppableId="done">
+                {(droppableProvided) => (
+                  <div className="p-6 pt-2 bg-stone-50">
+                    <div className=" border-b-2 mb-5  pb-2  ">
+                      <h2 className="text-xl  border-color-black">DONE</h2>
+                    </div>
+
+                    <div
+                      {...droppableProvided.droppableProps}
+                      ref={droppableProvided.innerRef}
+                      className=""
+                    >
+                      {cards.map((card, index) => {
+                        if (
+                          card.stat === "DONE" &&
+                          card.project === projectId
+                        ) {
+                          return (
+                            <Draggable
+                              key={card._id}
+                              draggableId={card._id}
+                              index={index}
+                            >
+                              {(draggableProvided) => (
+                                <div
+                                  {...draggableProvided.draggableProps}
+                                  ref={draggableProvided.innerRef}
+                                  {...draggableProvided.dragHandleProps}
+                                >
+                                  <Card
+                                    title={card.title}
+                                    description={card.description}
+                                    stat={card.stat}
+                                    color={card.color}
+                                    cardId={card._id}
+                                    cardLimitDate={card.limitDate}
+                                    setDeleteModalHasRender={
+                                      setDeleteModalHasRender
+                                    }
+                                    setOpenDeleteModal={setOpenDeleteModal}
+                                    setDeleteTaskId={setDeleteTaskId}
+                                    setEditModalHasRender={
+                                      setEditModalHasRender
+                                    }
+                                    setOpenEditModal={setOpenDeleteModal}
+                                    setEditTaskId={seteditTaskId}
+                                    getAllCards={getAllCards}
+                                  />
+                                </div>
+                              )}
+                            </Draggable>
+                          );
+                        }
+                      })}
+                    </div>
+
+                    {droppableProvided.placeholder}
                   </div>
-
-                  <div
-                    {...droppableProvided.droppableProps}
-                    ref={droppableProvided.innerRef}
-                    className=""
-                  >
-                    {cards.map((card, index) => {
-                      if (
-                        card.stat === "PROGRESS" &&
-                        card.project === projectId
-                      ) {
-                        return (
-                          <Draggable
-                            key={card._id}
-                            draggableId={card._id}
-                            index={index}
-                          >
-                            {(draggableProvided) => (
-                              <div
-                                {...draggableProvided.draggableProps}
-                                ref={draggableProvided.innerRef}
-                                {...draggableProvided.dragHandleProps}
-                              >
-                                <Card
-                                  title={card.title}
-                                  description={card.description}
-                                  stat={card.stat}
-                                  color={card.color}
-                                  cardId={card._id}
-                                  cardLimitDate={card.limitDate}
-                                  setDeleteModalHasRender={
-                                    setDeleteModalHasRender
-                                  }
-                                  setOpenDeleteModal={setOpenDeleteModal}
-                                  setDeleteTaskId={setDeleteTaskId}
-                                  setEditModalHasRender={setEditModalHasRender}
-                                  setOpenEditModal={setOpenDeleteModal}
-                                  setEditTaskId={seteditTaskId}
-                                  getAllCards={getAllCards}
-                                />
-                              </div>
-                            )}
-                          </Draggable>
-                        );
-                      }
-                    })}
-                  </div>
-
-                  {droppableProvided.placeholder}
-                </div>
-              )}
-            </Droppable>
-
-            <Droppable droppableId="done">
-              {(droppableProvided) => (
-                <div className="p-6 pt-2 bg-stone-50">
-                  <div className=" border-b-2 mb-3 pb-2">
-                    <h2 className="text-xl  border-color-black">DONE</h2>
-                  </div>
-
-                  <div
-                    {...droppableProvided.droppableProps}
-                    ref={droppableProvided.innerRef}
-                    className=""
-                  >
-                    {cards.map((card, index) => {
-                      if (card.stat === "DONE" && card.project === projectId) {
-                        return (
-                          <Draggable
-                            key={card._id}
-                            draggableId={card._id}
-                            index={index}
-                          >
-                            {(draggableProvided) => (
-                              <div
-                                {...draggableProvided.draggableProps}
-                                ref={draggableProvided.innerRef}
-                                {...draggableProvided.dragHandleProps}
-                              >
-                                <Card
-                                  title={card.title}
-                                  description={card.description}
-                                  stat={card.stat}
-                                  color={card.color}
-                                  cardId={card._id}
-                                  cardLimitDate={card.limitDate}
-                                  setDeleteModalHasRender={
-                                    setDeleteModalHasRender
-                                  }
-                                  setOpenDeleteModal={setOpenDeleteModal}
-                                  setDeleteTaskId={setDeleteTaskId}
-                                  setEditModalHasRender={setEditModalHasRender}
-                                  setOpenEditModal={setOpenDeleteModal}
-                                  setEditTaskId={seteditTaskId}
-                                  getAllCards={getAllCards}
-                                />
-                              </div>
-                            )}
-                          </Draggable>
-                        );
-                      }
-                    })}
-                  </div>
-
-                  {droppableProvided.placeholder}
-                </div>
-              )}
-            </Droppable>
+                )}
+              </Droppable>
+            </div>
           </div>
-        </div>
-      </DragDropContext>
+        </DragDropContext>
       </div>
     </div>
   );

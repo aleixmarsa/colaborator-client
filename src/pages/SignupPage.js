@@ -6,25 +6,29 @@ import Footer from "../components/footer/Footer";
 import SignUpForm from "../components/forms/SignUpForm";
 
 function SignupPage(props) {
-	const [ email, setEmail ] = useState('');
-	const [ password, setPassword ] = useState('');
-	const [ name, setName ] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [role, setRole] = useState("");
+
   const navigate = useNavigate();
-	const [ errorMessage, setErrorMessage ] = useState(undefined);
+  const [errorMessage, setErrorMessage] = useState(undefined);
 
-	const handleEmail = (e) => setEmail(e.target.value);
-	const handlePassword = (e) => setPassword(e.target.value);
-	const handleName = (e) => setName(e.target.value);
+  const handleEmail = (e) => setEmail(e.target.value);
+  const handlePassword = (e) => setPassword(e.target.value);
+  const handleName = (e) => setName(e.target.value);
+  const handleRole = (e) => setRole(e.target.value);
 
-	const handleSignupSubmit = async (e) => {
-		e.preventDefault();
-		// Create an object representing the request body
-		const requestBody = { email, password, name };
-    try{
+  const handleSignupSubmit = async (e) => {
+    e.preventDefault();
+    // Create an object representing the request body
+    const requestBody = { email, password, name, role };
+    console.log("🚀 ~ file: SignupPage.js ~ line 26 ~ handleSignupSubmit ~ requestBody", requestBody)
+    try {
       await signupService(requestBody);
       navigate("/login");
-    }catch(err){
-      if(err.response?.status === 400){
+    } catch (err) {
+      if (err.response?.status === 400) {
         setErrorMessage(err.response.data.errorMessage);
       }
     }
@@ -34,15 +38,17 @@ function SignupPage(props) {
     <div className="flex flex-col h-screen mb-auto">
       <NavBar />
       <SignUpForm
-      handleSignupSubmit={handleSignupSubmit}
-      email={email}
-      handleEmail={handleEmail}
-      name={name}
-      handleName={handleName}
-      password={password}
-      handlePassword={handlePassword}
-       />
-			{errorMessage && <p className="error-message">{errorMessage}</p>}
+        handleSignupSubmit={handleSignupSubmit}
+        email={email}
+        handleEmail={handleEmail}
+        role={role}
+        handleRole={handleRole}
+        name={name}
+        handleName={handleName}
+        password={password}
+        handlePassword={handlePassword}
+      />
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
       <Footer />
     </div>
   );
