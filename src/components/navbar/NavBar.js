@@ -42,11 +42,15 @@ const NavBar = (props) => {
                   co<span className="font-extrabold">lab</span>orator
                 </h1>
               </div>
-              <SearchMenu
-                location={location}
-                search={search}
-                handleSearch={handleSearch}
-              />
+              {location.pathname === "/projects" ? (
+                <SearchMenu
+                  location={location}
+                  search={search}
+                  handleSearch={handleSearch}
+                />
+              ) : (
+                <></>
+              )}
               <div className="flex lg:hidden">
                 {/* Mobile menu button */}
                 <Disclosure.Button className="bg-green-600 inline-flex items-center justify-center p-2 rounded-md text-green-400 hover:text-white hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-600 focus:ring-white">
@@ -67,7 +71,7 @@ const NavBar = (props) => {
                   <div className="flex items-center justify-end">
                     <div className="flex">
                       <NavLink
-                        to="/"
+                        to="/projects"
                         className={({ isActive }) =>
                           isActive
                             ? "px-3 py-2 mx-1 rounded-md text-md font-small text-white bg-green-600 hover:text-white"
@@ -185,7 +189,7 @@ const NavBar = (props) => {
               <div className="px-2 pt-2 pb-3 space-y-1">
                 <Disclosure.Button
                   as="a"
-                  href="/"
+                  href="/projects"
                   className={classNames(
                     location.pathname === "/"
                       ? "text-white bg-green-700"

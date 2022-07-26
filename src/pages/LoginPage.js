@@ -26,7 +26,7 @@ function LoginPage(props, location) {
 
       const token = response.data.authToken;
       logInUser(token);
-      navigate("/");
+      navigate("/projects");
     } catch (err) {
       const errorDescription = err?.response?.data?.message;
       setErrorMessage(errorDescription);
