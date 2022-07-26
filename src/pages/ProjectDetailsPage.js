@@ -76,13 +76,13 @@ const ProjectDetailsPage = () => {
                     </div>
                     
                     <div>
-                        <Link to={`/${projectId}/xat`}>
+                        <Link to={`/${projectId}/chat`}>
                             <img src="/images/xat_image.jpg" alt="" width="300" heigth="150">
 
                             </img>
                             
                         </Link>
-                        <h3 className="text-gray-400">Xat</h3>
+                        <h3 className="text-gray-400">Chat</h3>
                     </div>
                     
                     <div>
