@@ -106,29 +106,42 @@ const ProjectsPage = () => {
   }, []);
 
   return (
+
     <div className="flex flex-col h-screen">
-      <NavBar hasNewMessage={hasNewMessage} filterProjects={filterProjects} />
-      {loading && <div>Loading...</div>}
-      {!loading && modalHasRender && (
-        <DeletProjectModal
-          socket={socket}
-          projectId={projectId}
-          getAllProjects={getAllProjects}
-          projectTitle={projectTitle}
-          setModalHasRender={setModalHasRender}
-          modalHasRender={modalHasRender}
-        />
-      )}
-      {/* 3 column wrapper */}
-      <div className=" w-full max-w-9xl mx-auto lg:px-8 lg:flex">
-        <div className="flex-2 bg-white xl:flex ">
-          {/* Project Managment*/}
-          <ProjectManagementSection
+        <NavBar hasNewMessage={hasNewMessage} filterProjects={filterProjects} />
+        
+        {loading && <div>Loading...</div>}
+        {!loading && modalHasRender && (
+            <DeletProjectModal
             socket={socket}
-            newProjectForm={newProjectForm}
-            setNewProjectForm={setNewProjectForm}
             projectId={projectId}
-            projectsInProgress={currentProjects}
+            getAllProjects={getAllProjects}
+            projectTitle={projectTitle}
+            setModalHasRender={setModalHasRender}
+            modalHasRender={modalHasRender}
+            />
+      )}
+
+        <div className="grid grid-cols-1 ml-5 mr-5 md:grid-cols-1 lg:grid-cols-3">
+        
+
+            <ProjectManagementSection
+                socket={socket}
+                newProjectForm={newProjectForm}
+                setNewProjectForm={setNewProjectForm}
+                projectId={projectId}
+                projectsInProgress={currentProjects}
+                editProjectForm={editProjectForm}
+                setEditProjectForm={setEditProjectForm}
+                getAllProjects={getAllProjects}
+            />
+
+
+            <ProjectsListSection
+            title="Current Projects"
+            filteredProjects={filteredCurrentProjects}
+            setFilteredProjects={setFilteredCurrentProjects}
+            classNames={classNames}
             editProjectForm={editProjectForm}
             setEditProjectForm={setEditProjectForm}
             getAllProjects={getAllProjects}

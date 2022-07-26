@@ -161,7 +161,7 @@ function ProjectCards(props) {
               <Droppable droppableId="todo">
                 {(droppableProvided) => (
                   <div className="p-6 pt-2 bg-stone-50">
-                    <div className=" border-b-2 mb-5  pb-2  ">
+                    <div className=" border-b-2 mb-3 pb-2">
                       <h2 className="text-xl  border-color-black">TO-DO</h2>
                     </div>
 
@@ -241,7 +241,7 @@ function ProjectCards(props) {
             <Droppable droppableId="progress">
               {(droppableProvided) => (
                 <div className="p-6 pt-2 bg-stone-50">
-                  <div className=" border-b-2 mb-5  pb-2  ">
+                  <div className=" border-b-2 mb-3 pb-2">
                     <h2 className="text-xl  border-color-black">IN PROGRESS</h2>
                   </div>
 
@@ -300,7 +300,7 @@ function ProjectCards(props) {
             <Droppable droppableId="done">
               {(droppableProvided) => (
                 <div className="p-6 pt-2 bg-stone-50">
-                  <div className=" border-b-2 mb-5  pb-2  ">
+                  <div className=" border-b-2 mb-3 pb-2">
                     <h2 className="text-xl  border-color-black">DONE</h2>
                   </div>
 

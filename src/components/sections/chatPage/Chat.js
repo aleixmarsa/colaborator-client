@@ -100,42 +100,41 @@ const Chat = () => {
 
   console.log(showChat);
   return (
-    <div className="drop-shadow-md  h-5/6  mt-5">
+    <div className="drop-shadow-md  h-5/6  m-5">
       <div className=" flex flex-col p-6 pt-2 h-full bg-stone-50 ">
         <div className="grid grid-cols-5 grid-rows-1 h-full">
-          <div className="border-r-2 h-full col-span-1 ">
-            <h2 className="text-2xl flex-1 border-b-2">CHATS</h2>
+          <div className="h-full col-span-1 mr-2">
+            <h2 className=" flex justify-center text-2xl flex-1 border-b-2">CHATS</h2>
             <div>
-              <h1 className="mt-5 underline underline-offset-4 ">PROJECTS</h1>
+              <h1 className=" text-left mt-5">PROJECTS</h1>
 
               {projects.map((project) => {
                 return (
                   <div
                     key={project._id}
-                    className="flex justify-start gap-10 hover:bg-gray-300 mt-3 mr-3 cursor-pointer w-sm p-2"
+                    className="flex justify-start gap-2 hover:bg-gray-300 mt-3 mr-3 cursor-pointer w-sm p-2 border-b-2"
                     onClick={(e) => projectChatHandleClick(e, project)}
                   >
                     <Avatar
                       round
                       size="25"
-                      //   color="gray"
                       textSizeRatio={1.9}
                       name={project.title}
                     />
-                    <p>{project.title}</p>
+                    <p className="text-left">{project.title}</p>
                     <hr className="mt-3" />
                   </div>
                 );
               })}
             </div>
             <div>
-              <h1 className="mt-5 underline underline-offset-4 ">COWORKERS</h1>
+              <h1 className="text-left mt-5">COWORKERS</h1>
               {users.map((chatUser) => {
                 if (chatUser._id !== user._id) {
                   return (
                     <div
                       key={chatUser._id}
-                      className="flex justify-start gap-10 hover:bg-gray-300 mt-3 mr-3 cursor-pointer w-sm  p-2"
+                      className="flex justify-start gap-2 hover:bg-gray-300 mt-3 mr-3 cursor-pointer w-sm p-2 border-b-2"
                       onClick={(e) => directChathandleClick(e, chatUser)}
                     >
                       <Avatar

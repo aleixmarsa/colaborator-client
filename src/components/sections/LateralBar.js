@@ -1,4 +1,4 @@
-import { CalendarIcon, ChatIcon, ArrowLeftIcon, TagIcon, InboxIcon, UsersIcon } from '@heroicons/react/outline'
+import { CalendarIcon, ChatIcon, ArrowLeftIcon, TagIcon, HomeIcon } from '@heroicons/react/outline'
 
 import { Link } from 'react-router-dom'
 
@@ -13,16 +13,17 @@ function LateralBar (props) {
     const {projectId} = props;
 
     const navigation = [
+        { name: 'Home', icon: HomeIcon, href: '#', current: false, keyLink: {projectId}, link: `/${projectId}` },
         { name: 'Tasks', icon: TagIcon, href: '#', current: false, keyLink: {projectId}, link: `/${projectId}/tasks` },
-        { name: 'Chats', icon: ChatIcon, href: '#', current: false },
+        { name: 'Chats', icon: ChatIcon, href: '#', current: false, keyLink: {projectId}, link: `/${projectId}/xat`},
         { name: 'Calendar', icon: CalendarIcon, href: '#', current: false, keyLink: {projectId}, link: `/${projectId}/monthCalendar`  },
-        { name: 'Projects', icon: ArrowLeftIcon, href: '#', current: false },
+        { name: 'Projects', icon: ArrowLeftIcon, href: '#', current: false, keyLink: "", link: "/"},
     ]
 
     console.log(navigation)
 
     return (
-        <div className="flex flex-col flex-grow border-r max-w-fit  border-gray-200 pb-4 bg-white">
+        <div className="flex flex-col flex-grow max-w-fit h-screen border-r border-gray-200 pb-4 bg-white">
             <div className="mt-1 flex-grow flex flex-col">
                 <nav className="flex-1 bg-white space-y-1" aria-label="Sidebar">
                     {navigation.map((item) => (
@@ -33,13 +34,13 @@ function LateralBar (props) {
                             className={classNames(
                                 item.current
                                 ? 'bg-green-50 border-green-600 text-green-600'
-                                : 'border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+                                : 'border-transparent text-green-600 hover:bg-green-50 hover:text-green-900',
                                 'group flex items-center px-3 py-2 text-sm font-medium border-l-4'
                             )}
                             >
                             <item.icon
                                 className={classNames(
-                                item.current ? 'text-green-500' : 'text-gray-400 group-hover:text-gray-500',
+                                item.current ? 'text-green-500' : 'text-green-700 group-hover:text-green-500',
                                 'mr-3 flex-shrink-0 h-6 w-6'
                                 )}
                                 aria-hidden="true"

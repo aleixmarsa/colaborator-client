@@ -14,6 +14,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 
 import styled from "@emotion/styled";
+import { useParams } from 'react-router-dom';
 
 const API_URL = "http://localhost:5005";
 
@@ -44,6 +45,8 @@ export const StyleWrapper = styled.div`
 
 function CalendarPage () {
 
+    const {projectId} = useParams();
+
     const [events, setEvents] = useState([])
 
     const getAllEvents = () => {
@@ -51,12 +54,11 @@ function CalendarPage () {
         axios
         .get(`${API_URL}/colaborator-API/projects/card/get-cards`)
         .then((allCards) => {
-            console.log("All cards:", allCards.data)
+
             let array = [];
             allCards.data.map((event) => {
-                console.log(event)
+
                 
-    
                 let startDate = event.limitDate + 'T07:00:00';
                 let endDate = event.limitDate + 'T08:00:00';
     
@@ -85,29 +87,27 @@ function CalendarPage () {
         <>
             <NavBar />
             
-
             <div className="flex flex-row">
-              <LateralBar />
-                <StyleWrapper>
-                  <div className='m-2'>
-                    <FullCalendar
-                        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                        height="auto"
-                        initialView="dayGridMonth"
-                        headerToolbar={{center: 'dayGridMonth,timeGridWeek,timeGridDay new'}}
-                        customButtons={{
-                        new: {
-                            text: 'new',
-                            click: () => console.log('new event'),
-                        },
-                        }}
-                        events={events}
-                        nowIndicator
-                        dateClick={(e) => console.log(e.dateStr)}
-                        eventClick={(e) => console.log(e.event.id)}
-                    />
-                    </div>
-                </StyleWrapper>
+                <LateralBar 
+                    projectId={projectId}
+                />
+                    <StyleWrapper>
+                        <div className='m-2'>
+                            <FullCalendar
+                                plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                                height="auto"
+                                initialView="dayGridMonth"
+                                headerToolbar={{center: 'dayGridMonth,timeGridWeek,timeGridDay'}}
+                                customButtons={{
+                                    new: {
+                                        text: 'new',
+                                        click: () => console.log('new event'),
+                                    },
+                                }}
+                                events={events}
+                            />
+                        </div>
+                    </StyleWrapper>
             </div>
         </>
     )
