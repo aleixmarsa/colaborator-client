@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 
 import "../index.css";
@@ -15,6 +15,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 
 import styled from "@emotion/styled";
 import { useParams } from 'react-router-dom';
+import { SocketContext } from '../context/socket.context';
 
 const API_URL = "http://localhost:5005";
 
@@ -48,6 +49,7 @@ function CalendarPage () {
     const {projectId} = useParams();
 
     const [events, setEvents] = useState([])
+    const socket = useContext(SocketContext);
 
     const getAllEvents = () => {
 
@@ -82,6 +84,12 @@ function CalendarPage () {
         getAllEvents()
     }, [])
 
+
+
+    socket.on("receive_render_calendar", () => {
+        console.log("hola")
+        getAllEvents();
+      });
 
     return (
         <>

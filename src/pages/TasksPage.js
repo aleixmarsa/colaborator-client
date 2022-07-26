@@ -160,32 +160,42 @@ function ProjectCards(props) {
                                 draggableId={card._id}
                                 index={index}
                               >
-                                {(draggableProvided) => (
-                                  <div
-                                    {...draggableProvided.draggableProps}
-                                    ref={draggableProvided.innerRef}
-                                    {...draggableProvided.dragHandleProps}
-                                  >
-                                    <Card
-                                      title={card.title}
-                                      description={card.description}
-                                      stat={card.stat}
-                                      color={card.color}
-                                      cardId={card._id}
-                                      cardLimitDate={card.limitDate}
-                                      setDeleteModalHasRender={
-                                        setDeleteModalHasRender
-                                      }
-                                      setDeleteTaskId={setDeleteTaskId}
-                                      setEditModalHasRender={
-                                        setEditModalHasRender
-                                      }
-                                      setEditTaskId={seteditTaskId}
-                                      getAllCards={getAllCards}
-                                      cardIndex={index}
-                                    />
-                                  </div>
-                                )}
+                                {(draggableProvided, snapshot) => {
+                                  if (snapshot.isDragging) {
+                                    draggableProvided.draggableProps.style.left =
+                                      undefined;
+                                    draggableProvided.draggableProps.style.top =
+                                      undefined;
+                                  }
+
+                                  return (
+                                    <div
+                                      {...draggableProvided.draggableProps}
+                                      ref={draggableProvided.innerRef}
+                                      {...draggableProvided.dragHandleProps}
+                                      className="static"
+                                    >
+                                      <Card
+                                        title={card.title}
+                                        description={card.description}
+                                        stat={card.stat}
+                                        color={card.color}
+                                        cardId={card._id}
+                                        cardLimitDate={card.limitDate}
+                                        setDeleteModalHasRender={
+                                          setDeleteModalHasRender
+                                        }
+                                        setDeleteTaskId={setDeleteTaskId}
+                                        setEditModalHasRender={
+                                          setEditModalHasRender
+                                        }
+                                        setEditTaskId={seteditTaskId}
+                                        getAllCards={getAllCards}
+                                        cardIndex={index}
+                                      />
+                                    </div>
+                                  );
+                                }}
                               </Draggable>
                             );
                           }
@@ -231,33 +241,41 @@ function ProjectCards(props) {
                               draggableId={card._id}
                               index={index}
                             >
-                              {(draggableProvided) => (
-                                <div
-                                  {...draggableProvided.draggableProps}
-                                  ref={draggableProvided.innerRef}
-                                  {...draggableProvided.dragHandleProps}
-                                >
-                                  <Card
-                                    title={card.title}
-                                    description={card.description}
-                                    stat={card.stat}
-                                    color={card.color}
-                                    cardId={card._id}
-                                    cardLimitDate={card.limitDate}
-                                    setDeleteModalHasRender={
-                                      setDeleteModalHasRender
-                                    }
-                                    setOpenDeleteModal={setOpenDeleteModal}
-                                    setDeleteTaskId={setDeleteTaskId}
-                                    setEditModalHasRender={
-                                      setEditModalHasRender
-                                    }
-                                    setOpenEditModal={setOpenDeleteModal}
-                                    setEditTaskId={seteditTaskId}
-                                    getAllCards={getAllCards}
-                                  />
-                                </div>
-                              )}
+                              {(draggableProvided, snapshot) => {
+                                if (snapshot.isDragging) {
+                                  draggableProvided.draggableProps.style.left =
+                                    undefined;
+                                  draggableProvided.draggableProps.style.top =
+                                    undefined;
+                                }
+                                return (
+                                  <div
+                                    {...draggableProvided.draggableProps}
+                                    ref={draggableProvided.innerRef}
+                                    {...draggableProvided.dragHandleProps}
+                                  >
+                                    <Card
+                                      title={card.title}
+                                      description={card.description}
+                                      stat={card.stat}
+                                      color={card.color}
+                                      cardId={card._id}
+                                      cardLimitDate={card.limitDate}
+                                      setDeleteModalHasRender={
+                                        setDeleteModalHasRender
+                                      }
+                                      setOpenDeleteModal={setOpenDeleteModal}
+                                      setDeleteTaskId={setDeleteTaskId}
+                                      setEditModalHasRender={
+                                        setEditModalHasRender
+                                      }
+                                      setOpenEditModal={setOpenDeleteModal}
+                                      setEditTaskId={seteditTaskId}
+                                      getAllCards={getAllCards}
+                                    />
+                                  </div>
+                                );
+                              }}
                             </Draggable>
                           );
                         }
@@ -292,7 +310,14 @@ function ProjectCards(props) {
                               draggableId={card._id}
                               index={index}
                             >
-                              {(draggableProvided) => (
+                              {(draggableProvided, snapshot) => {
+                                if (snapshot.isDragging) {
+                                  draggableProvided.draggableProps.style.left =
+                                    undefined;
+                                  draggableProvided.draggableProps.style.top =
+                                    undefined;
+                                }
+                                return(
                                 <div
                                   {...draggableProvided.draggableProps}
                                   ref={draggableProvided.innerRef}
@@ -318,7 +343,8 @@ function ProjectCards(props) {
                                     getAllCards={getAllCards}
                                   />
                                 </div>
-                              )}
+                                
+                              )}}
                             </Draggable>
                           );
                         }
