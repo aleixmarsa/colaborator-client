@@ -53,7 +53,7 @@ const ProjectActivitySection = (props) => {
           </div>
           <div>
             <ul role="list" className="divide-y divide-gray-200">
-              {activity.map((item) => (
+              {activity.reverse().map((item) => (
                 <li key={item._id} className="flex flex-col text-left gap-2 py-4">
                   <p className="text-sm text-black font-semibold">
                     {item.project.title}
