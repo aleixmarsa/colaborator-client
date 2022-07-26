@@ -35,7 +35,7 @@ function LateralBar (props) {
                                 item.current
                                 ? 'bg-green-50 border-green-600 text-green-600'
                                 : 'border-transparent text-green-600 hover:bg-green-50 hover:text-green-900',
-                                'group flex items-center px-3 py-2 text-sm font-medium border-l-4'
+                                'group flex items-center px-3 py-2 text-sm font-medium border-l-4 mb-3'
                             )}
                             >
                             <item.icon

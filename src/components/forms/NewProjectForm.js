@@ -57,7 +57,7 @@ const NewProjectForm = (props) => {
       onSubmit={handleSubmit}
       cancelBtntext="Cancel"
       cancelBtnAction={props.handleCancelAddSaveFormBtn}
-      acceptBtnText="New Project"
+      acceptBtnText="Create"
       projectTitle={title}
       projectDescription={description}
       setTitle={setTitle}

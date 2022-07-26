@@ -17,7 +17,7 @@ const Form = (props) => {
   } = props;
 
   return (
-    <div className="xl:flex-shrink-0 xl:w-96 xl:border-r xl:border-gray-200 bg-white">
+    <div className="h-full  py-6 sm:pl-6 lg:pl-8 xl:pl-0">
       <div className="pl-4 pr-6 py-6 sm:pl-6 lg:pl-8 xl:pl-0">
         <div className="flex items-center justify-between">
           <div className="flex-1 space-y-8">
@@ -35,11 +35,12 @@ const Form = (props) => {
                           <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                             <label
                               htmlFor="title"
-                              className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                              className="text-sm font-medium text-gray-700 text-left"
                             >
                               Title
                             </label>
-                            <div className="mt-1 sm:mt-0 sm:col-span-2">
+                            <br/>
+                            <div className="sm:mt-0 sm:col-span-2">
                               <div className="max-w-lg flex rounded-md shadow-sm ">
                                 <input
                                   type="text"
@@ -47,7 +48,7 @@ const Form = (props) => {
                                   id="title"
                                   onChange={(e) => setTitle(e.target.value)}
                                   value={projectTitle}
-                                  className="flex-1 block w-full focus:ring focus:outline-none focus:ring-green-600 focus:border sm:text-sm border border-gray-300 rounded-md"
+                                  className="flex-1 block w-full focus:ring focus:outline-none focus:ring-green-600 focus:border sm:text-sm border border-gray-300 rounded-md w-32"
                                 />
                               </div>
                             </div>
@@ -60,6 +61,7 @@ const Form = (props) => {
                             >
                               Description
                             </label>
+                            <br/>
                             <div className="mt-1 sm:mt-0 sm:col-span-2">
                               <textarea
                                 id="description"
