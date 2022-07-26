@@ -11,7 +11,7 @@ const DeleteTaskModal = (props) => {
   const cancelButtonRef = useRef(null);
   const { user } = useContext(AuthContext);
   const socket = useContext(SocketContext)
-  
+
   const deleteTask = async (id) => {
 
 
@@ -23,7 +23,7 @@ const DeleteTaskModal = (props) => {
 
     try {
       await deleteTaskService(id);
-      socket.emit("delete_task", id);
+      socket.emit("render_tasks");
       await addNewActivityService(activity);
 
       props.setDeleteModalHasRender(false);

@@ -38,7 +38,7 @@ function ProjectCards(props) {
         `${API_URL}/colaborator-API/projects/card/updateCard/${cardId}/${destination}`
       )
       .then((response) => {
-        socket.emit("edit_task_state", cardId, destination);
+        socket.emit("render_tasks");
       });
   };
 
@@ -51,19 +51,7 @@ function ProjectCards(props) {
       .catch((error) => console.log(error));
   };
 
-  socket.on("receive_new_task", (e) => {
-    getAllCards();
-  });
-  socket.on("receive_edit_task", (e) => {
-    getAllCards();
-  });
-
-  socket.on("receive_edit_task_state", (e) => {
-    console.log("rebut");
-    getAllCards();
-  });
-
-  socket.on("receive_delete_task", (e) => {
+  socket.on("receive_render_tasks", (e) => {
     getAllCards();
   });
 

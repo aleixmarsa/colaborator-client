@@ -15,12 +15,10 @@ const DeletProjectModal = (props) => {
 
   const deleteProject = async (id) => {
 
-    // props.socket.emit("delete_project", id);
-    // setModalHasRender(false);
 
     try {
       await deleteProjectService(id);
-      socket.emit("delete_project", id);
+      socket.emit("render_projects");
       setModalHasRender(false);
       // getAllProjects();
     } catch (err) {

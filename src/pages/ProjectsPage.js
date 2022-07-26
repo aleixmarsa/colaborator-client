@@ -54,17 +54,11 @@ const ProjectsPage = () => {
     }
   };
 
-    socket.on("receive_new_project", (e) => {
+    socket.on("receive_render_projects", (e) => {
       getAllProjects();
     });
-    socket.on("receive_edit_project", (e) => {
-      getAllProjects();
-    });
-    socket.on("receive_delete_project", (e) => {
-      getAllProjects();
-    });
+
     socket.on("receive_alert_message", (e) => {
-      console.log("MISSATGE REBUT");
       setHasNewMessage(true);
     });
 

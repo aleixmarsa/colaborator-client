@@ -49,13 +49,12 @@ const EditProjectForm = (props) => {
       user: user._id,
     };
 
-    // props.socket.emit("edit_project", body);
-    // // handleCancelAddSaveFormBtn(e);
 
     try {
       await updateProjectService(projectId, body);
       await addNewActivityService(activity);
-      socket.emit("edit_project", body);
+      socket.emit("render_projects");
+
       handleCancelAddSaveFormBtn(e);
       // getAllProjects();
     } catch (err) {

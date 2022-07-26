@@ -44,7 +44,7 @@ function CardForm(props) {
       await addNewActivityService(activity);
 
       props.setCards([...props.cards, response.data]);
-      socket.emit("new_task", props.projectId, body);
+      socket.emit("render_tasks");
       setCardTitle("");
       setCardDescription("");
       setCardForm(false);

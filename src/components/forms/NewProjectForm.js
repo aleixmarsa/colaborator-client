@@ -31,18 +31,12 @@ const NewProjectForm = (props) => {
       user: user._id,
     };
 
-    // props.socket.emit("new_project", body);
-    // props.handleCancelAddSaveFormBtn();
-    // setTitle("");
-    // setDescription("");
-    // setTeam([]);
 
     try {
       const responseProject = await addNewProjectService(body);
       activity.project = responseProject.data._id;
       await addNewActivityService(activity);
-
-      socket.emit("new_project", body);
+      socket.emit("render_projects");
 
       setTitle("");
       setDescription("");
