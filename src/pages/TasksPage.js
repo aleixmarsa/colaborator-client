@@ -129,7 +129,7 @@ function ProjectCards(props) {
   };
 
   return (
-    <>
+    <div className="h-screen">
       <NavBar />
       {deleteModalHasRender && (
         <DeleteTaskModal
@@ -149,7 +149,7 @@ function ProjectCards(props) {
           getAllCards={getAllCards}
         />
       )}
-      <div className="flex flex-row">
+      <div className="flex flex-row h-full">
       <LateralBar 
         projectId={projectId}
       /> 
@@ -356,7 +356,7 @@ function ProjectCards(props) {
         </div>
       </DragDropContext>
       </div>
-    </>
+    </div>
   );
 }
 

@@ -5,15 +5,17 @@ import {
   getProjectDetailsService,
   updateProjectService,
 } from "../../services/project.services";
+import { AuthContext } from "../../context/auth.context";
+import { useContext } from "react";
+import { addNewActivityService } from "../../services/activity.services";
 
-const API_URL = process.env.REACT_APP_API_URL;
 
 const EditProjectForm = (props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [team, setTeam] = useState([]);
   const { projectId, handleCancelAddSaveFormBtn} = props;
-
+  const { user } = useContext(AuthContext);
 
   const getProject = async (id) => {
     try {
@@ -26,12 +28,12 @@ const EditProjectForm = (props) => {
       console.log(err);
     }
   };
+
   useEffect(() => {
     getProject(projectId);
   }, [projectId]);
 
   const handleSubmit = async (e) => {
-
     e.preventDefault();
     const body = {
       projectId:projectId,
@@ -40,13 +42,18 @@ const EditProjectForm = (props) => {
       team:team
     };
 
+    const activity = {
+      title: "Project info edited",
+      project: projectId,
+      user: user._id,
+    };
 
     // props.socket.emit("edit_project", body);
     // // handleCancelAddSaveFormBtn(e);
 
-
     try {
       await updateProjectService(projectId, body);
+      await addNewActivityService(activity);
       props.socket.emit("edit_project", body);
       handleCancelAddSaveFormBtn(e);
       // getAllProjects();

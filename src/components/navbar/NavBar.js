@@ -31,7 +31,7 @@ const NavBar = (props) => {
     <Disclosure as="nav" className="flex-shrink-0 bg-green-700">
       {({ open }) => (
         <>
-          <div className="max-w-9xl mx-auto px-2 sm:px-4 lg:px-8">
+          <div className="max-w-9xl mx-auto px-4 sm:px-4 lg:px-8">
             <div className="relative flex items-center justify-between h-16">
               {/* Logo section */}
               <div className="flex items-center px-2 lg:px-0 xl:w-64">
@@ -74,9 +74,8 @@ const NavBar = (props) => {
                             : "px-3 py-2 mx-1 rounded-md text-md font-small text-white hover:bg-green-600"
                         }
                       >
-                        PROJECTS  
+                        PROJECTS
                       </NavLink>
-                      <span className="px-3 py-2 rounded-md text-md font-medium text-white bg-green-700 ">|</span>
                       <NavLink
                         to="/monthCalendar"
                         className={({ isActive }) =>
@@ -88,9 +87,8 @@ const NavBar = (props) => {
                         CALENDAR
                       </NavLink>
 
-
                       <div className=" relative py-2">
-                      {hasNewMessage ? (
+                        {hasNewMessage ? (
                           <span class="flex h-3 w-3 absolute right-0">
                             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
                             <span class="relative inline-flex rounded-full h-3 w-3 bg-amber-500"></span>
@@ -98,17 +96,16 @@ const NavBar = (props) => {
                         ) : (
                           <></>
                         )}
-                      <NavLink
-                        to="/chat"
-                        className={({ isActive }) =>
-                          isActive
-                            ? "px-3 py-2 rounded-md text-md font-small text-white bg-green-600 hover:text-white"
-                            : "px-3 py-2 rounded-md text-md font-small text-white hover:bg-green-600"
-                        }
-                      >
- 
-                        CHAT
-                      </NavLink>
+                        <NavLink
+                          to="/chat"
+                          className={({ isActive }) =>
+                            isActive
+                              ? "px-3 py-2 rounded-md text-md font-small text-white bg-green-600 hover:text-white"
+                              : "px-3 py-2 rounded-md text-md font-small text-white hover:bg-green-600"
+                          }
+                        >
+                          CHAT
+                        </NavLink>
                       </div>
                     </div>
                     {/* Profile dropdown */}

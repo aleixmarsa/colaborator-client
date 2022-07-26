@@ -1,18 +1,16 @@
 import { useState, useEffect } from "react";
 import Form from "./Form";
 import { addNewProjectService } from "../../services/project.services";
+import { addNewActivityService } from "../../services/activity.services";
 import { AuthContext } from "../../context/auth.context";
 import { useContext } from "react";
-
 
 const NewProjectForm = (props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [team, setTeam] = useState([]);
   const [isActive, setIsActive] = useState(true);
-
   const { user } = useContext(AuthContext);
-
 
   const handleSubmit = async (e) => {
     const teamIds = team.map((user) => user._id);
@@ -25,6 +23,12 @@ const NewProjectForm = (props) => {
       active: isActive,
     };
 
+    const activity = {
+      title: "Project created",
+      project: null,
+      user: user._id,
+    };
+
     // props.socket.emit("new_project", body);
     // props.handleCancelAddSaveFormBtn();
     // setTitle("");
@@ -32,10 +36,12 @@ const NewProjectForm = (props) => {
     // setTeam([]);
 
     try {
-      const response = await addNewProjectService(body);
-      console.log("🚀 ~ file: NewProjectForm.js ~ line 24 ~ handleSubmit ~ response", response)
+      const responseProject = await addNewProjectService(body);
+      activity.project = responseProject.data._id;
+      await addNewActivityService(activity);
+
       props.socket.emit("new_project", body);
-      // props.getAllProjects();
+
       setTitle("");
       setDescription("");
       setTeam([]);

@@ -22,11 +22,11 @@ function LateralBar (props) {
     console.log(navigation)
 
     return (
-        <div className="flex flex-col flex-grow border-r border-gray-200 pb-4 bg-white">
+        <div className="flex flex-col flex-grow border-r max-w-fit  border-gray-200 pb-4 bg-white">
             <div className="mt-1 flex-grow flex flex-col">
                 <nav className="flex-1 bg-white space-y-1" aria-label="Sidebar">
                     {navigation.map((item) => (
-                        <Link key={item.keyLink} to={`/${item.link}`}> 
+                        <Link key={item.keyLink} to={`${item.link}`}> 
                             <a
                             key={item.name}
                             href
