@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 
 import ProjectsPage from "./pages/ProjectsPage";
@@ -27,6 +26,9 @@ function App() {
         <Route exact path="/chat" element={<PrivateRoute><ChatPage /></PrivateRoute>} />
         <Route exact path="/:projectId/tasks" element={<PrivateRoute><ProjectCards /></PrivateRoute>} />
         {/* <Route exact path="/chat/:chatId" element={<PrivateRoute><Chat /></PrivateRoute>} /> */}
+        <Route exact path="/:projectId/monthCalendar" element={<PrivateRoute><CalendarPage /></PrivateRoute>} />
+        <Route exact path="/weekCalendar" element={<PrivateRoute><WeekCalendarPage /></PrivateRoute>} />
+        <Route exact path="/dayCalendar" element={<PrivateRoute><DayCalendarPage /></PrivateRoute>} />
       
       </Routes>
     </div>

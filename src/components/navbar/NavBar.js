@@ -74,8 +74,9 @@ const NavBar = (props) => {
                             : "px-3 py-2 rounded-md text-md font-medium text-white hover:text-e-100 hover:bg-green-600"
                         }
                       >
-                        PROJECTS
+                        PROJECTS  
                       </NavLink>
+                      <span className="px-3 py-2 rounded-md text-md font-medium text-white bg-green-700 ">|</span>
                       <NavLink
                         to="/monthCalendar"
                         className={({ isActive }) =>
@@ -86,12 +87,13 @@ const NavBar = (props) => {
                       >
                         CALENDAR
                       </NavLink>
+                      <span className="px-3 py-2 rounded-md text-md font-medium text-white bg-green-700 ">|</span>
                       <NavLink
                         to="/chat"
                         className={({ isActive }) =>
                           isActive
-                            ? "px-3 py-2 rounded-md text-sm font-small text-white bg-lime-700 hover:text-white"
-                            : "px-3 py-2 rounded-md text-sm font-small text-lime-200 hover:text-e-100 hover:bg-lime-600"
+                          ? "px-3 py-2 rounded-md text-md font-medium text-white bg-green-600 hover:text-white"
+                          : "px-3 py-2 rounded-md text-md font-medium text-white hover:text-e-100 hover:bg-green-600"
                         }
                       >
                         CHAT
@@ -147,8 +149,8 @@ const NavBar = (props) => {
                         to="/login"
                         className={({ isActive }) =>
                           isActive
-                            ? "px-3 py-2 rounded-md text-sm font-small text-white bg-lime-700 hover:text-white"
-                            : "px-3 py-2 rounded-md text-sm font-small text-lime-200 hover:text-e-100 hover:bg-lime-600"
+                            ? "px-3 py-2 rounded-md text-sm font-small text-white bg-green-700 hover:text-white"
+                            : "px-3 py-2 rounded-md text-sm font-small text-green-200 hover:text-e-100 hover:bg-green-600"
                         }
                       >
                         LOG IN
@@ -157,8 +159,8 @@ const NavBar = (props) => {
                         to="/signup"
                         className={({ isActive }) =>
                           isActive
-                            ? "px-3 py-2 rounded-md text-sm font-small text-white bg-lime-700 hover:text-white"
-                            : "px-3 py-2 rounded-md text-sm font-small text-lime-200 hover:text-e-100 hover:bg-lime-600"
+                            ? "px-3 py-2 rounded-md text-sm font-small text-white bg-green-700 hover:text-white"
+                            : "px-3 py-2 rounded-md text-sm font-small text-green-200 hover:text-e-100 hover:bg-green-600"
                         }
                       >
                         SIGN UP
@@ -203,8 +205,8 @@ const NavBar = (props) => {
                   href="/chat"
                   className={classNames(
                     location.pathname === "/global-calendar"
-                      ? "text-white bg-lime-700"
-                      : "text-lime-200 hover:text-lime-100 hover:bg-lime-600",
+                      ? "text-white bg-green-700"
+                      : "text-green-200 hover:text-green-100 hover:bg-green-600",
                     "block px-3 py-2 rounded-md text-base font-medium"
                   )}
                   // aria-current={item.current ? "page" : undefined}
@@ -235,8 +237,8 @@ const NavBar = (props) => {
                   href="/"
                   className={classNames(
                     location.pathname === "/login"
-                      ? "text-white bg-lime-700"
-                      : "text-lime-200 hover:text-lime-100 hover:bg-lime-600",
+                      ? "text-white bg-green-700"
+                      : "text-green-200 hover:text-green-100 hover:bg-green-600",
                     "block px-3 py-2 rounded-md text-base font-medium"
                   )}
                   // aria-current={item.current ? "page" : undefined}
@@ -248,8 +250,8 @@ const NavBar = (props) => {
                   href="/global-calendar"
                   className={classNames(
                     location.pathname === "/signup"
-                      ? "text-white bg-lime-700"
-                      : "text-lime-200 hover:text-lime-100 hover:bg-lime-600",
+                      ? "text-white bg-green-700"
+                      : "text-green-200 hover:text-green-100 hover:bg-green-600",
                     "block px-3 py-2 rounded-md text-base font-medium"
                   )}
                   // aria-current={item.current ? "page" : undefined}

@@ -39,30 +39,27 @@ function CardForm (props) {
         // props.getAllCards()
         props.setCardForm(false)
 
-        // axios
-        //     .post(`${API_URL}/colaborator-API/projects/${props.projectId}/card/new-card`, body)
-        //     .then((response) => {
-
+        //  axios
+        //      .post(`${API_URL}/colaborator-API/projects/${props.projectId}/card/new-card`, body)
+        //      .then((response) => {
         //         props.setCards([...props.cards, response.data])
-
         //         setCardTitle("");
-        //         setCardDescription("");
-        //         setCardForm(false);
-        //         setCardColor("white");
-        //         setCardStat("TODO");
-        //         setCardLimitDate("")
-                
-        //         props.getAllCards()
-        //         props.setCardForm(false)
-
+        //          setCardDescription("");
+        //          setCardForm(false);
+        //          setCardColor("white");
+        //          setCardStat("TODO");
+        //          setCardLimitDate("")
+              
+        //          props.getAllCards()
+        //          props.setCardForm(false)
         //     })
-        //     .catch((error) => console.log(error));
+        //      .catch((error) => console.log(error));
     };
 
     
 
     return (
-        <div class="p-6 bg-white rounded-md">
+        <div className="p-6 bg-white rounded-md">
             <h2 className='text-2xl'>New Card</h2>
             <form className="space-y-8 divide-y divide-gray-200" onSubmit={handleSubmitNewCard}>
                 <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
@@ -81,7 +78,7 @@ function CardForm (props) {
                                     id="title"
                                     onChange={(e) => setCardTitle(e.target.value)}
                                     value={cardTitle}
-                                    className="flex-1 block w-full focus:ring focus:outline-none focus:ring-lime-600 focus:border min-w-0 rounded-r-md sm:text-sm border border-gray-300 rounded-md"
+                                    className="flex-1 block w-full focus:ring focus:outline-none focus:ring-green-600 focus:border min-w-0 rounded-r-md sm:text-sm border border-gray-300 rounded-md"
                                     />
                                 </div>
                             </div>
@@ -97,7 +94,7 @@ function CardForm (props) {
                                 rows={3}
                                 onChange={(e) => setCardDescription(e.target.value)}
                                 value={cardDescription}
-                                className="max-w-lg shadow-sm block w-full focus:ring focus:outline-none focus:ring-lime-600 focus:border sm:text-sm border border-gray-300 rounded-md"
+                                className="max-w-lg shadow-sm block w-full focus:ring focus:outline-none focus:ring-green-600 focus:border sm:text-sm border border-gray-300 rounded-md"
                             />
                             </div>
                         </div>
@@ -109,7 +106,7 @@ function CardForm (props) {
                                 <select
                                     id="color"
                                     name="color"
-                                    className="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+                                    className="max-w-lg block focus:ring-green-500 focus:border-green-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
                                     onChange={(e) => setCardColor(e.target.value)}
                                 >
                                 <option value="white">White</option>
@@ -130,7 +127,7 @@ function CardForm (props) {
                             <div className="mt-1 sm:mt-0 sm:col-span-2">
                                 <input type="date"
                                         name="limitDate"
-                                        className="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+                                        className="max-w-lg block focus:ring-green-500 focus:border-green-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
                                         onChange={(e) => setCardLimitDate(e.target.value)}
                                 >
 

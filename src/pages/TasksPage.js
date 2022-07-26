@@ -11,6 +11,8 @@ import NavBar from "../components/navbar/NavBar";
 import DeleteTaskModal from "../components/modals/DeleteTaskModal";
 import EditTaskModal from "../components/modals/EditTaskModal";
 
+import LateralBar from "../components/sections/LateralBar";
+
 import io from "socket.io-client";
 let socket;
 
@@ -131,9 +133,13 @@ function ProjectCards(props) {
           getAllCards={getAllCards}
         />
       )}
-
+      <div className="flex flex-row">
+      <LateralBar 
+        projectId={projectId}
+      /> 
       <DragDropContext onDragEnd={(result) => updateCards(result)}>
-        <div className="container mx-auto mt-2">
+        <div className=" container mx-auto mt-2">
+         
           <div className="drop-shadow-md grid grid-cols-1 ml-5 mr-5 md:grid-cols-1 lg:grid-cols-3 gap-6 mt-5 mb-10 ">
             {!cardForm ? (
               <Droppable droppableId="todo">
@@ -151,7 +157,7 @@ function ProjectCards(props) {
                       <button
                         onClick={() => setCardForm(true)}
                         type="button"
-                        className="inline-flex items-center p-1 border border-transparent rounded-full shadow-sm text-white bg-green-700 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 m-2"
+                        className="inline-flex items-center p-1 border border-transparent rounded-full shadow-sm text-white bg-green-700 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                       >
                         <PlusSmIconSolid className="h-5 w-5" aria-hidden="true" />
                       </button>
@@ -334,6 +340,7 @@ function ProjectCards(props) {
           </div>
         </div>
       </DragDropContext>
+      </div>
     </>
   );
 }

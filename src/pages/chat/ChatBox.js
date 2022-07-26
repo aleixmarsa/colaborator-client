@@ -102,9 +102,9 @@ const ChatBox = (props) => {
                 key={message._id}
               >
                 <p
-                  className={` p-5 rounded-2xl ${
+                  className={` p-5 rounded-2xl truncate max-w-screen-md ${
                     isMessageFromUser(message)
-                      ? "bg-lime-200 rounded-tr-none"
+                      ? "bg-green-200 rounded-tr-none"
                       : "bg-gray-200 rounded-tl-none"
                   }`}
                 >

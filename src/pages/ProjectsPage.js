@@ -106,7 +106,7 @@ const ProjectsPage = () => {
   }, []);
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col l-screen">
       <NavBar filterProjects={filterProjects} />
       {loading && <div>Loading...</div>}
       {!loading && modalHasRender && (
@@ -120,7 +120,7 @@ const ProjectsPage = () => {
         />
       )}
       {/* 3 column wrapper */}
-      <div className="flex-grow w-full max-w-9xl mx-auto xl:px-8 lg:flex">
+      <div className=" w-full max-w-9xl mx-auto lg:px-8 lg:flex">
         <div className="flex-2 bg-white xl:flex ">
           {/* Project Managment*/}
           <ProjectManagementSection
@@ -184,7 +184,7 @@ const ProjectsPage = () => {
                 <div className="py-4 text-sm border-t border-gray-200">
                   <a
                     href="#"
-                    className="text-indigo-600 font-semibold hover:text-indigo-900"
+                    className="text-green-600 font-semibold hover:text-green-900"
                   >
                     View all activity <span aria-hidden="true">&rarr;</span>
                   </a>

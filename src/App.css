@@ -36,3 +36,23 @@
     transform: rotate(360deg);
   }
 }
+
+.fc .fc-button-primary {
+  color: #fff;
+  color: var(--fc-button-text-color, #fff);
+  background-color: #e0d31d;
+  background-color: var(--fc-button-bg-color, #dce80a);
+  border-color: #2C3E50;
+  border-color: var(--fc-button-border-color, #a9ac14)
+}
+
+.fc-right button{
+  text-transform: uppercase;
+  border-radius: 2px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: box-shadow linear 0.4s;
+  background-color: #2196F3;
+  border-color: #2196F3;
+  margin-top: 10px;
+}
