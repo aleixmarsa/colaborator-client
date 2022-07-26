@@ -35,12 +35,13 @@ const NavBar = (props) => {
             <div className="relative flex items-center justify-between h-16">
               {/* Logo section */}
               <div className="flex items-center px-2 lg:px-0 xl:w-64">
-                <div className="flex-shrink-0">
+                {/* <div className="flex-shrink-0">
                   <img className="h-8 w-auto" src={icon} alt="Erlenmeyer" />
                 </div>
                 <h1 className="ml-3 text-3xl font-small text-white">
                   co<span className="font-extrabold">lab</span>orator
-                </h1>
+                </h1> */}
+                <img src="/images/logo.png" alt=""></img>
               </div>
               <SearchMenu
                 location={location}
@@ -76,7 +77,7 @@ const NavBar = (props) => {
                       >
                         PROJECTS  
                       </NavLink>
-                      <span className="px-3 py-2 rounded-md text-md font-medium text-white bg-green-700 ">|</span>
+
                       <NavLink
                         to="/monthCalendar"
                         className={({ isActive }) =>
@@ -87,7 +88,6 @@ const NavBar = (props) => {
                       >
                         CALENDAR
                       </NavLink>
-
 
                       <div className=" relative py-2">
                       {hasNewMessage ? (

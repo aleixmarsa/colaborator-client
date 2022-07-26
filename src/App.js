@@ -12,9 +12,9 @@ import WeekCalendarPage from "./pages/WeekCalendarPage"
 import ProjectDetailsPage from "./pages/ProjectDetailsPage";
 import PrivateRoute from './components/routes/PrivateRoute'; 
 import AnonRoute from './components/routes/AnonRoute'; 
-// import UserList from "./pages/chat/userList";
+
 import ChatPage from "./pages/ChatPage";
-// import Chat from "./pages/chat/chat";
+
 function App() {
   return (
     <div className="App">
@@ -23,10 +23,9 @@ function App() {
         <Route exact path="/global-calendar" element={<PrivateRoute><GlobalCalendarPage /></PrivateRoute>} />
         <Route exact path="/signup" element={<AnonRoute><SignupPage /></AnonRoute>} />
         <Route exact path="/login" element={<AnonRoute><LoginPage /></AnonRoute>} />
-        <Route exact path="/chat" element={<PrivateRoute><ChatPage /></PrivateRoute>} />
+        <Route exact path="/:projectId/xat" element={<PrivateRoute><ChatPage /></PrivateRoute>} />
         <Route exact path="/:projectId" element={<PrivateRoute><ProjectDetailsPage /></PrivateRoute>} />
         <Route exact path="/:projectId/tasks" element={<PrivateRoute><ProjectCards /></PrivateRoute>} />
-        {/* <Route exact path="/chat/:chatId" element={<PrivateRoute><Chat /></PrivateRoute>} /> */}
         <Route exact path="/:projectId/monthCalendar" element={<PrivateRoute><CalendarPage /></PrivateRoute>} />
         <Route exact path="/weekCalendar" element={<PrivateRoute><WeekCalendarPage /></PrivateRoute>} />
         <Route exact path="/dayCalendar" element={<PrivateRoute><DayCalendarPage /></PrivateRoute>} />

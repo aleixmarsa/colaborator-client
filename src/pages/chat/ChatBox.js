@@ -79,7 +79,7 @@ const ChatBox = (props) => {
   };
 
   return (
-    <div className=" flex flex-col justify-between h-full ">
+    <div className=" flex flex-col justify-between h-full">
       <div className="flex justify-center mt-2">
         <Avatar
           round
