@@ -12,7 +12,7 @@ const EditProjectForm = (props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [team, setTeam] = useState([]);
-  const { projectId, handleCancelAddSaveFormBtn, getAllProjects } = props;
+  const { projectId, handleCancelAddSaveFormBtn} = props;
 
 
   const getProject = async (id) => {
@@ -40,17 +40,19 @@ const EditProjectForm = (props) => {
       team:team
     };
 
-    props.socket.emit("edit_project", body);
-    handleCancelAddSaveFormBtn(e);
+
+    // props.socket.emit("edit_project", body);
+    // // handleCancelAddSaveFormBtn(e);
 
 
-    // try {
-    //   await updateProjectService(projectId, body);
-    //   handleCancelAddSaveFormBtn(e);
-    //   getAllProjects();
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    try {
+      await updateProjectService(projectId, body);
+      props.socket.emit("edit_project", body);
+      handleCancelAddSaveFormBtn(e);
+      // getAllProjects();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

@@ -9,7 +9,7 @@ import ProjectCards from "./pages/TasksPage";
 import CalendarPage from "./pages/CalendarPage";
 import DayCalendarPage from "./pages/DayCalendarPage"
 import WeekCalendarPage from "./pages/WeekCalendarPage"
-
+import ProjectDetailsPage from "./pages/ProjectDetailsPage";
 import PrivateRoute from './components/routes/PrivateRoute'; 
 import AnonRoute from './components/routes/AnonRoute'; 
 // import UserList from "./pages/chat/userList";
@@ -24,6 +24,7 @@ function App() {
         <Route exact path="/signup" element={<AnonRoute><SignupPage /></AnonRoute>} />
         <Route exact path="/login" element={<AnonRoute><LoginPage /></AnonRoute>} />
         <Route exact path="/chat" element={<PrivateRoute><ChatPage /></PrivateRoute>} />
+        <Route exact path="/:projectId" element={<PrivateRoute><ProjectDetailsPage /></PrivateRoute>} />
         <Route exact path="/:projectId/tasks" element={<PrivateRoute><ProjectCards /></PrivateRoute>} />
         {/* <Route exact path="/chat/:chatId" element={<PrivateRoute><Chat /></PrivateRoute>} /> */}
         <Route exact path="/:projectId/monthCalendar" element={<PrivateRoute><CalendarPage /></PrivateRoute>} />

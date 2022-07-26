@@ -1,6 +1,5 @@
 import { useEffect, useState, useContext } from "react";
 
-import { useParams } from "react-router-dom";
 import { getAllMessagesService } from "../../services/chat.services";
 import { AuthContext } from "../../context/auth.context";
 import { ChevronDoubleRightIcon } from "@heroicons/react/solid";
@@ -12,7 +11,7 @@ let socket;
 const ChatBox = (props) => {
   const [allMessages, setAllMessages] = useState([]);
   const [text, setText] = useState("");
-  const { chatId, chatReceiver } = props;
+  const { chatId, chatReceiver, isProjectChat } = props;
   const { user } = useContext(AuthContext);
   // const { chatId } = useParams();
 
@@ -46,8 +45,11 @@ const ChatBox = (props) => {
   const getAllMessages = async () => {
     try {
       const response = await getAllMessagesService(chatId);
-      console.log("🚀 ~ file: ChatBox.js ~ line 53 ~ getAllMessages ~ chatId", chatId)
-      
+      console.log(
+        "🚀 ~ file: ChatBox.js ~ line 53 ~ getAllMessages ~ chatId",
+        chatId
+      );
+
       setAllMessages(response.data);
     } catch (err) {
       console.log(err);
@@ -56,12 +58,12 @@ const ChatBox = (props) => {
 
   const handleChange = (e) => {
     e.preventDefault();
-    console.log(e)
+    console.log(e);
     setText(e.target.value);
   };
 
   const handleKeyDown = (e) => {
-    if(e.key ==="Enter") sendMessage(e);
+    if (e.key === "Enter") sendMessage(e);
   };
 
   const sendMessage = (e) => {
@@ -77,7 +79,7 @@ const ChatBox = (props) => {
   };
 
   return (
-    <div className=" flex flex-col justify-between h-full">
+    <div className=" flex flex-col justify-between h-full ">
       <div className="flex justify-center mt-2">
         <Avatar
           round
@@ -89,8 +91,8 @@ const ChatBox = (props) => {
         <h2 className="text-lg font-medium ml-3 ">{chatReceiver}</h2>
       </div>
 
-      <div className=" flex flex-col justify-between h-full">
-        <div className=" space-y-10 grid grid-cols-1">
+      <div className=" flex flex-col-reverse justify-between h-full overflow-auto">
+        <div className=" space-y-10 grid grid-cols-1   ">
           {allMessages.map((message) => {
             return (
               <div
@@ -102,12 +104,15 @@ const ChatBox = (props) => {
                 key={message._id}
               >
                 <p
-                  className={` p-5 rounded-2xl truncate max-w-screen-md ${
+                  className={` py-2 px-3 rounded-2xl text-left ${
                     isMessageFromUser(message)
-                      ? "bg-green-200 rounded-tr-none"
+                      ? "bg-green-300 rounded-tr-none"
                       : "bg-gray-200 rounded-tl-none"
                   }`}
                 >
+                  {!isMessageFromUser(message) && isProjectChat && (
+                    <p className="text-sm font-bold">{message.sender.name}</p>
+                  )}
                   {message.text}
                   {/* {message.sender.name}: {message.text} */}
                 </p>
@@ -115,7 +120,9 @@ const ChatBox = (props) => {
             );
           })}
         </div>
-        <div className="mb-2 flex mx-2 border border-gray-200 h-10 items-center">
+
+      </div>
+      <div className="my-2 flex mx-2 border border-gray-200 h-10 items-center">
           <input
             className="mx-1 w-full focus:outline-none"
             type="text"
@@ -132,14 +139,7 @@ const ChatBox = (props) => {
               onClick={sendMessage}
             />
           </div>
-          {/* <button
-            className="bg-gray-200 border border-black w-14 h-8"
-            onClick={sendMessage}
-          >
-            Send
-          </button> */}
         </div>
-      </div>
     </div>
   );
 };

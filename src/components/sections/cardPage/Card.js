@@ -15,30 +15,26 @@ const taskStatColorChange = (stat) => {
 function Card(props) {
   const {
     title,
-    stat,
     cardLimitDate,
     color,
     cardId,
     setDeleteModalHasRender,
-    setOpenDeleteModal,
     setDeleteTaskId,
     getAllCards,
     setEditModalHasRender,
-    setOpenEditModal,
     setEditTaskId,
-    cardIndex
   } = props;
 
   const handleDeleteTaskBtn = (tastkId) => {
     setDeleteModalHasRender(true);
-    setOpenDeleteModal(true);
     setDeleteTaskId(cardId);
     getAllCards();
   };
 
   const handleEditTaskBtn = (taskId) => {
+    console.log("EDIIIT")
     setEditModalHasRender(true);
-    setOpenEditModal(true);
+    setDeleteModalHasRender(false);
     setEditTaskId(cardId);
   };
 

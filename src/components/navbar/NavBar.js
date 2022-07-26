@@ -18,12 +18,12 @@ const NavBar = (props) => {
     { name: "Your Profile", action: "#" },
     { name: "Sign out", action: logOutUser },
   ];
-  const { filterProjects } = props;
+  const { hasNewMessage, filterProjects } = props;
   const [search, setSearch] = useState("");
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
-    props.filterProjects(e.target.value);
+    filterProjects(e.target.value);
   };
   let location = useLocation();
 
@@ -70,8 +70,8 @@ const NavBar = (props) => {
                         to="/"
                         className={({ isActive }) =>
                           isActive
-                            ? "px-3 py-2 rounded-md text-md font-medium text-white bg-green-600 hover:text-white"
-                            : "px-3 py-2 rounded-md text-md font-medium text-white hover:text-e-100 hover:bg-green-600"
+                            ? "px-3 py-2 mx-1 rounded-md text-md font-small text-white bg-green-600 hover:text-white"
+                            : "px-3 py-2 mx-1 rounded-md text-md font-small text-white hover:bg-green-600"
                         }
                       >
                         PROJECTS  
@@ -81,23 +81,35 @@ const NavBar = (props) => {
                         to="/monthCalendar"
                         className={({ isActive }) =>
                           isActive
-                            ? "px-3 py-2 rounded-md text-md font-medium text-white bg-green-600 hover:text-white"
-                            : "px-3 py-2 rounded-md text-md font-medium text-white hover:text-e-100 hover:bg-green-600"
+                            ? "px-3 py-2 mx-1 rounded-md text-md font-small text-white bg-green-600 hover:text-white"
+                            : "px-3 py-2 mx-1 rounded-md text-md font-small text-white  hover:bg-green-600"
                         }
                       >
                         CALENDAR
                       </NavLink>
-                      <span className="px-3 py-2 rounded-md text-md font-medium text-white bg-green-700 ">|</span>
+
+
+                      <div className=" relative py-2">
+                      {hasNewMessage ? (
+                          <span class="flex h-3 w-3 absolute right-0">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-3 w-3 bg-amber-500"></span>
+                          </span>
+                        ) : (
+                          <></>
+                        )}
                       <NavLink
                         to="/chat"
                         className={({ isActive }) =>
                           isActive
-                          ? "px-3 py-2 rounded-md text-md font-medium text-white bg-green-600 hover:text-white"
-                          : "px-3 py-2 rounded-md text-md font-medium text-white hover:text-e-100 hover:bg-green-600"
+                            ? "px-3 py-2 rounded-md text-md font-small text-white bg-green-600 hover:text-white"
+                            : "px-3 py-2 rounded-md text-md font-small text-white hover:bg-green-600"
                         }
                       >
+ 
                         CHAT
                       </NavLink>
+                      </div>
                     </div>
                     {/* Profile dropdown */}
                     <Menu as="div" className="ml-4 relative flex-shrink-0 z-10">
@@ -149,8 +161,8 @@ const NavBar = (props) => {
                         to="/login"
                         className={({ isActive }) =>
                           isActive
-                            ? "px-3 py-2 rounded-md text-sm font-small text-white bg-green-700 hover:text-white"
-                            : "px-3 py-2 rounded-md text-sm font-small text-green-200 hover:text-e-100 hover:bg-green-600"
+                            ? "px-3 py-2 mx-1 rounded-md text-sm font-small text-white bg-green-600 hover:text-white"
+                            : "px-3 py-2 mx-1 rounded-md text-sm font-small text-white hover:text-e-100 hover:bg-green-600"
                         }
                       >
                         LOG IN
@@ -159,8 +171,8 @@ const NavBar = (props) => {
                         to="/signup"
                         className={({ isActive }) =>
                           isActive
-                            ? "px-3 py-2 rounded-md text-sm font-small text-white bg-green-700 hover:text-white"
-                            : "px-3 py-2 rounded-md text-sm font-small text-green-200 hover:text-e-100 hover:bg-green-600"
+                            ? "px-3 py-2 mx-1 rounded-md text-sm font-small text-white bg-green-600 hover:text-white"
+                            : "px-3 py-2 mx-1 rounded-md text-sm font-small text-white hover:text-e-100 hover:bg-green-600"
                         }
                       >
                         SIGN UP

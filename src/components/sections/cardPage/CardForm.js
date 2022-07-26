@@ -28,32 +28,34 @@ function CardForm (props) {
         };
         console.log("Body que viene del formulario: ", body)
 
-        props.socket.emit("new_task", props.projectId, body);
-        setCardTitle("");
-        setCardDescription("");
-        setCardForm(false);
-        setCardColor("white");
-        setCardStat("TODO");
-        setCardLimitDate("")
+        // props.socket.emit("new_task", props.projectId, body);
+        // setCardTitle("");
+        // setCardDescription("");
+        // setCardForm(false);
+        // setCardColor("white");
+        // setCardStat("TODO");
+        // setCardLimitDate("")
         
         // props.getAllCards()
         props.setCardForm(false)
 
-        //  axios
-        //      .post(`${API_URL}/colaborator-API/projects/${props.projectId}/card/new-card`, body)
-        //      .then((response) => {
-        //         props.setCards([...props.cards, response.data])
-        //         setCardTitle("");
-        //          setCardDescription("");
-        //          setCardForm(false);
-        //          setCardColor("white");
-        //          setCardStat("TODO");
-        //          setCardLimitDate("")
+         axios
+             .post(`${API_URL}/colaborator-API/projects/${props.projectId}/card/new-card`, body)
+             .then((response) => {
+                props.setCards([...props.cards, response.data])
+                props.socket.emit("new_task", props.projectId, body);
+
+                setCardTitle("");
+                 setCardDescription("");
+                 setCardForm(false);
+                 setCardColor("white");
+                 setCardStat("TODO");
+                 setCardLimitDate("")
               
-        //          props.getAllCards()
-        //          props.setCardForm(false)
-        //     })
-        //      .catch((error) => console.log(error));
+                //  props.getAllCards()
+                 props.setCardForm(false)
+            })
+             .catch((error) => console.log(error));
     };
 
     

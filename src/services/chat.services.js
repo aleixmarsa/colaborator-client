@@ -2,12 +2,16 @@ import service from "./service";
 
 const URL = "/colaborator-API/chat";
 
-const startChatService = (userId) => {
-  return service.post(`${URL}/start/${userId}`);
+const startDirectChatService = (userId) => {
+  return service.post(`${URL}/start/direct-chat/${userId}`);
+};
+
+const startProjectChatService = (projectId) => {
+  return service.post(`${URL}/start/project-chat/${projectId}`);
 };
 
 const getAllMessagesService = (chatId) => {
     return service.get(`${URL}/messages/${chatId}`)
 }
 
-export { startChatService, getAllMessagesService };
+export { startDirectChatService, startProjectChatService, getAllMessagesService };

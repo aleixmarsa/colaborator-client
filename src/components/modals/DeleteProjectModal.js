@@ -17,17 +17,17 @@ const DeletProjectModal = (props) => {
 
   const deleteProject = async (id) => {
 
-    props.socket.emit("delete_project", id);
-    setModalHasRender(false);
-    getAllProjects();
+    // props.socket.emit("delete_project", id);
+    // setModalHasRender(false);
 
-    // try {
-    //   await deleteProjectService(id);
-    //   setModalHasRender(false);
-    //   getAllProjects();
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    try {
+      await deleteProjectService(id);
+      props.socket.emit("delete_project", id);
+      setModalHasRender(false);
+      // getAllProjects();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
