@@ -14,6 +14,10 @@ const getProjectTeamsService = (id) => {
 const getAllCurrentProjectsService = (userId) => {
   return service.get(`${URL}/${userId}/current`);
 };
+
+const getAllCurrentProjectsIdService = (userId) => {
+  return service.get(`${URL}/${userId}/current/id`);
+};
 const getAllCompletedProjectsService = (userId) => {
   return service.get(`${URL}/${userId}/completed`);
 };
@@ -40,5 +44,6 @@ export {
   updateProjectService,
   getProjectDetailsService,
   deleteProjectService,
-  getProjectTeamsService
+  getProjectTeamsService,
+  getAllCurrentProjectsIdService
 };
