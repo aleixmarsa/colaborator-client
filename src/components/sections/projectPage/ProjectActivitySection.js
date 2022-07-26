@@ -24,22 +24,11 @@ const ProjectActivitySection = (props) => {
 
   useEffect(() => {
     getAllCurrentProjectsId();
-    getAllActivities();
   }, []);
 
-  const activityItems = [
-    {
-      project: "Workcation",
-      commit: "2d89f0c8",
-      environment: "production",
-      time: "1h",
-    },
-    // More items...
-  ];
-
-  const body = {
-    currentProjectsId: currentProjectsId,
-  };
+  useEffect(() => {
+    getAllActivities();
+  }, [currentProjectsId]);
 
   const getAllActivities = async () => {
     try {
@@ -57,51 +46,48 @@ const ProjectActivitySection = (props) => {
   return (
     <div>
       {/* Activity feed */}
-      <div className="drop-shadow-md  lg:min-w-0 lg:flex-1  mr-5 gap-6 mt-5 mb-10 ">
-        <div className="p-6 pt-2 bg-stone-50">
-          <div className=" flex items-center border-b-2 mb-5  pb-2  ">
-            <h2 className="flex-1 text-xl">ACTIVITY</h2>
+      <div className=" lg:min-w-0 lg:flex-1  mr-5 gap-6 mt-5 mb-10 ">
+        <div className="p-6 pt-4 bg-white">
+          <div className=" flex items-center border-b-2 mb-3 pb-2  ">
+            <h2 className="flex-1 text-xl">LAST ACTIVITY</h2>
           </div>
           <div>
             <ul role="list" className="divide-y divide-gray-200">
               {activity.map((item) => (
-                <li key={item._id} className="py-4">
-                  <div className="flex space-x-3">
-                  <Avatar
+                <li key={item._id} className="flex flex-col gap-2 py-4">
+                  <p className="text-sm text-black font-semibold">
+                    {item.project.title}
+                  </p>
+                  <p className="flex gap-2 text-sm text-left text-gray-500">
+                    {item.title} by:
+                    <div className="flex space-x-2">
+
+                      <div className="flex-1 space-y-1">
+                        <div className="flex items-center justify-between">
+                          <h3 className="text-sm font-medium">
+                            {item.user.name}
+                          </h3>
+                        </div>
+                      </div>
+                      <Avatar
                         key={item._id}
                         round
-                        size="25"
+                        size="18"
                         // color="gray"
-                        textSizeRatio={1.75}
+                        textSizeRatio={1.9}
                         name={item.user.name}
                       />
-                    <div className="flex-1 space-y-1">
-                      <div className="flex items-center justify-between">
-                        <h3 className="text-sm font-medium">
-                          {item.user.name}
-                        </h3>
-                        <p className="text-sm text-gray-500">
-                          {item.updatedAt
-                            .replace(/([^:]*$)/g, "")
-                            .replace("T", " ")
-                            .slice(0, -1)}
-                          
-                        </p>
-                      </div>
-                      <p className="text-sm text-gray-500"><span className=" font-bold">{item.project.title}: </span>{item.title}</p>
                     </div>
-                  </div>
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    {item.updatedAt
+                      .replace(/([^:]*$)/g, "")
+                      .replace("T", " ")
+                      .slice(0, -1)}
+                  </p>
                 </li>
               ))}
             </ul>
-            <div className="py-4 text-sm border-t border-gray-200">
-              <a
-                href="#"
-                className="text-green-600 font-semibold hover:text-green-900"
-              >
-                View all activity <span aria-hidden="true">&rarr;</span>
-              </a>
-            </div>
           </div>
         </div>
       </div>
