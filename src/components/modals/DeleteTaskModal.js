@@ -5,16 +5,15 @@ import { deleteTaskService } from "../../services/task.services";
 import { addNewActivityService } from "../../services/activity.services";
 import { AuthContext } from "../../context/auth.context";
 import { useContext } from "react";
-import axios from "axios";
-const API_URL = process.env.REACT_APP_API_URL;
+import { SocketContext } from "../../context/socket.context";
 
 const DeleteTaskModal = (props) => {
   const cancelButtonRef = useRef(null);
   const { user } = useContext(AuthContext);
-
+  const socket = useContext(SocketContext)
+  
   const deleteTask = async (id) => {
-    // props.socket.emit("delete_task", id);
-    // props.setOpenDeleteModal(false);
+
 
     const activity = {
       title: "Task deleted",
@@ -24,7 +23,7 @@ const DeleteTaskModal = (props) => {
 
     try {
       await deleteTaskService(id);
-      props.socket.emit("delete_task", id);
+      socket.emit("delete_task", id);
       await addNewActivityService(activity);
 
       props.setDeleteModalHasRender(false);

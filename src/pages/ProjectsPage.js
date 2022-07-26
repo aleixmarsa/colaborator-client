@@ -7,10 +7,11 @@ import ProjectActivitySection from "../components/sections/projectPage/ProjectAc
 import { getAllCurrentProjectsService } from "../services/project.services";
 import { AuthContext } from "../context/auth.context";
 import { useState, useEffect, useContext } from "react";
+import { SocketContext } from "../context/socket.context";
 
-import io from "socket.io-client";
+// import io from "socket.io-client";
 
-let socket;
+// let socket;
 const classNames = (...classes) => {
   return classes.filter(Boolean).join(" ");
 };
@@ -23,11 +24,12 @@ const ProjectsPage = () => {
   const [currentProjects, setCurrentProjects] = useState([]);
   const [filteredCurrentProjects, setFilteredCurrentProjects] = useState([]);
   const [hasNewMessage, setHasNewMessage] = useState(false);
-
-  const { user } = useContext(AuthContext);
-
   const [modalHasRender, setModalHasRender] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const { user } = useContext(AuthContext);
+  const socket = useContext(SocketContext)
+
 
   const filterProjects = (searchText) => {
     let projectsCopy = [...currentProjects];
@@ -52,12 +54,6 @@ const ProjectsPage = () => {
     }
   };
 
-  const socketConnection = () => {
-    const storedToken = localStorage.getItem("authToken");
-
-    socket = io.connect("http://localhost:5005", {
-      extraHeaders: { Authorization: `Bearer ${storedToken}` },
-    });
     socket.on("receive_new_project", (e) => {
       getAllProjects();
     });
@@ -71,11 +67,10 @@ const ProjectsPage = () => {
       console.log("MISSATGE REBUT");
       setHasNewMessage(true);
     });
-  };
+
 
   useEffect(() => {
     getAllProjects();
-    socketConnection();
   }, []);
 
   return (
@@ -86,7 +81,6 @@ const ProjectsPage = () => {
 
       {!loading && modalHasRender && (
         <DeletProjectModal
-          socket={socket}
           projectId={projectId}
           getAllProjects={getAllProjects}
           projectTitle={projectTitle}
@@ -102,7 +96,6 @@ const ProjectsPage = () => {
               <div className="h-full pl-4 pr-6 py-6 sm:pl-6 lg:pl-8 xl:pl-0 mr-4">
                 <div className="h-full relative" style={{ minHeight: "12rem" }}>
                   <ProjectManagementSection
-                    socket={socket}
                     newProjectForm={newProjectForm}
                     setNewProjectForm={setNewProjectForm}
                     projectId={projectId}

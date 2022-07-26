@@ -6,7 +6,7 @@ import { addNewActivityService } from "../../services/activity.services";
 import { updateTaskService } from "../../services/task.services";
 import { AuthContext } from "../../context/auth.context";
 import { useContext } from "react";
-const API_URL = process.env.REACT_APP_API_URL;
+import { SocketContext } from "../../context/socket.context";
 
 const EditTaskModal = (props) => {
   const [title, setTitle] = useState("");
@@ -14,6 +14,7 @@ const EditTaskModal = (props) => {
   const [color, setColor] = useState("");
   const { user } = useContext(AuthContext);
   const cancelButtonRef = useRef(null);
+  const socket = useContext(SocketContext)
 
   const getTask = async (editTaskId) => {
     try {
@@ -47,14 +48,11 @@ const EditTaskModal = (props) => {
     try {
       await updateTaskService(props.editTaskId, body);
       await addNewActivityService(activity);
-      props.socket.emit("edit_task", body);
+      socket.emit("edit_task", body);
       props.setEditModalHasRender(false);
     } catch (err) {
       console.log(err);
     }
-
-    // props.socket.emit("edit_task", body);
-    // props.setOpenEditModal(false);
   };
 
   return (

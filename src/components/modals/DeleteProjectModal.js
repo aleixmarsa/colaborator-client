@@ -1,19 +1,17 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useRef } from "react";
+import { Fragment, useContext } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationIcon } from "@heroicons/react/outline";
 import { deleteProjectService } from "../../services/project.services";
-
+import { SocketContext } from "../../context/socket.context";
 const DeletProjectModal = (props) => {
-  const cancelButtonRef = useRef(null);
   const {
-    socket,
     projectId,
-    getAllProjects,
     projectTitle,
     setModalHasRender,
     modalHasRender,
   } = props;
+  const socket = useContext(SocketContext)
 
   const deleteProject = async (id) => {
 
@@ -22,7 +20,7 @@ const DeletProjectModal = (props) => {
 
     try {
       await deleteProjectService(id);
-      props.socket.emit("delete_project", id);
+      socket.emit("delete_project", id);
       setModalHasRender(false);
       // getAllProjects();
     } catch (err) {
@@ -35,7 +33,6 @@ const DeletProjectModal = (props) => {
       <Dialog
         as="div"
         className="relative z-10"
-        initialFocus={cancelButtonRef}
         onClose={setModalHasRender}
       >
         <Transition.Child
@@ -100,7 +97,6 @@ const DeletProjectModal = (props) => {
                     type="button"
                     className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                     onClick={() => setModalHasRender(false)}
-                    ref={cancelButtonRef}
                   >
                     Cancel
                   </button>

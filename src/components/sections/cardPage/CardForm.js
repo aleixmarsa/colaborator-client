@@ -4,8 +4,8 @@ import { AuthContext } from "../../../context/auth.context";
 import { useContext } from "react";
 import { addNewTaskService } from "../../../services/task.services";
 import { addNewActivityService } from "../../../services/activity.services";
+import { SocketContext } from "../../../context/socket.context";
 
-const API_URL = "http://localhost:5005";
 
 function CardForm(props) {
   const [cardForm, setCardForm] = useState(false);
@@ -15,7 +15,9 @@ function CardForm(props) {
   const [cardStat, setCardStat] = useState("TODO");
   const [cardColor, setCardColor] = useState("white");
   const [cardLimitDate, setCardLimitDate] = useState("");
+
   const { user } = useContext(AuthContext);
+  const socket = useContext(SocketContext);
 
   const handleSubmitNewCard = async (e) => {
     e.preventDefault();
@@ -35,15 +37,6 @@ function CardForm(props) {
     };
     console.log("Body que viene del formulario: ", body);
 
-    // props.socket.emit("new_task", props.projectId, body);
-    // setCardTitle("");
-    // setCardDescription("");
-    // setCardForm(false);
-    // setCardColor("white");
-    // setCardStat("TODO");
-    // setCardLimitDate("")
-
-    // props.getAllCards()
     props.setCardForm(false);
 
     try {
@@ -51,7 +44,7 @@ function CardForm(props) {
       await addNewActivityService(activity);
 
       props.setCards([...props.cards, response.data]);
-      props.socket.emit("new_task", props.projectId, body);
+      socket.emit("new_task", props.projectId, body);
       setCardTitle("");
       setCardDescription("");
       setCardForm(false);

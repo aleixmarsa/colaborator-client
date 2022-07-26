@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 
 import { PlusSmIcon as PlusSmIconSolid } from "@heroicons/react/solid";
@@ -13,8 +13,7 @@ import EditTaskModal from "../components/modals/EditTaskModal";
 
 import LateralBar from "../components/sections/LateralBar";
 
-import io from "socket.io-client";
-let socket;
+import { SocketContext } from "../context/socket.context";
 
 const API_URL = "http://localhost:5005";
 
@@ -23,25 +22,17 @@ function ProjectCards(props) {
   const projectId = params.projectId;
 
   const [cardForm, setCardForm] = useState(false);
-
   const [deleteModalHasRender, setDeleteModalHasRender] = useState(false);
   const [editModalHasRender, setEditModalHasRender] = useState(false);
-
   const [openDeleteModal, setOpenDeleteModal] = useState(true);
-
   const [deleteTaskId, setDeleteTaskId] = useState("");
   const [editTaskId, seteditTaskId] = useState("");
 
   const [cards, setCards] = useState([]);
 
+  const socket = useContext(SocketContext);
+
   const updateCardStat = (cardId, destination) => {
-    console.log(
-      "🚀 ~ file: TasksPage.js ~ line 37 ~ updateCardStat ~ cardId",
-      cardId
-    );
-
-    // socket.emit("edit_task_state", cardId, destination);
-
     axios
       .put(
         `${API_URL}/colaborator-API/projects/card/updateCard/${cardId}/${destination}`
@@ -60,31 +51,24 @@ function ProjectCards(props) {
       .catch((error) => console.log(error));
   };
 
-  const socketConnection = () => {
-    const storedToken = localStorage.getItem("authToken");
-    socket = io.connect("http://localhost:5005", {
-      extraHeaders: { Authorization: `Bearer ${storedToken}` },
-    });
-    socket.on("receive_new_task", (e) => {
-      getAllCards();
-    });
-    socket.on("receive_edit_task", (e) => {
-      getAllCards();
-    });
+  socket.on("receive_new_task", (e) => {
+    getAllCards();
+  });
+  socket.on("receive_edit_task", (e) => {
+    getAllCards();
+  });
 
-    socket.on("receive_edit_task_state", (e) => {
-      console.log("rebut");
-      getAllCards();
-    });
+  socket.on("receive_edit_task_state", (e) => {
+    console.log("rebut");
+    getAllCards();
+  });
 
-    socket.on("receive_delete_task", (e) => {
-      getAllCards();
-    });
-  };
+  socket.on("receive_delete_task", (e) => {
+    getAllCards();
+  });
 
   useEffect(() => {
     getAllCards();
-    socketConnection();
   }, []);
 
   const reorder = (list, startIndex, endIndex) => {
@@ -134,7 +118,6 @@ function ProjectCards(props) {
       {deleteModalHasRender && (
         <DeleteTaskModal
           projectId={projectId}
-          socket={socket}
           setDeleteModalHasRender={setDeleteModalHasRender}
           deleteModalHasRender={deleteModalHasRender}
           deleteTaskId={deleteTaskId}
@@ -144,7 +127,6 @@ function ProjectCards(props) {
       {editModalHasRender && (
         <EditTaskModal
           projectId={projectId}
-          socket={socket}
           setEditModalHasRender={setEditModalHasRender}
           editModalHasRender={editModalHasRender}
           editTaskId={editTaskId}
@@ -228,7 +210,6 @@ function ProjectCards(props) {
                 </Droppable>
               ) : (
                 <CardForm
-                  socket={socket}
                   setCardForm={setCardForm}
                   setCards={setCards}
                   getAllCards={getAllCards}

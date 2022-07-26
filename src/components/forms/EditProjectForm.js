@@ -8,7 +8,7 @@ import {
 import { AuthContext } from "../../context/auth.context";
 import { useContext } from "react";
 import { addNewActivityService } from "../../services/activity.services";
-
+import { SocketContext } from "../../context/socket.context";
 
 const EditProjectForm = (props) => {
   const [title, setTitle] = useState("");
@@ -16,6 +16,7 @@ const EditProjectForm = (props) => {
   const [team, setTeam] = useState([]);
   const { projectId, handleCancelAddSaveFormBtn} = props;
   const { user } = useContext(AuthContext);
+  const socket = useContext(SocketContext)
 
   const getProject = async (id) => {
     try {
@@ -54,7 +55,7 @@ const EditProjectForm = (props) => {
     try {
       await updateProjectService(projectId, body);
       await addNewActivityService(activity);
-      props.socket.emit("edit_project", body);
+      socket.emit("edit_project", body);
       handleCancelAddSaveFormBtn(e);
       // getAllProjects();
     } catch (err) {

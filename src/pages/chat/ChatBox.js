@@ -4,52 +4,40 @@ import { getAllMessagesService } from "../../services/chat.services";
 import { AuthContext } from "../../context/auth.context";
 import { ChevronDoubleRightIcon } from "@heroicons/react/solid";
 import Avatar from "react-avatar";
-
-import io from "socket.io-client";
-let socket;
+import { SocketContext } from "../../context/socket.context";
 
 const ChatBox = (props) => {
   const [allMessages, setAllMessages] = useState([]);
   const [text, setText] = useState("");
   const { chatId, chatReceiver, isProjectChat } = props;
+
   const { user } = useContext(AuthContext);
-  // const { chatId } = useParams();
+  const socket = useContext(SocketContext);
 
   useEffect(() => {
     getAllMessages();
-    socketConnection();
-  }, [chatId]);
+    joinChat(socket);
+  }, []);
 
-  const socketConnection = () => {
-    const storedToken = localStorage.getItem("authToken");
-    socket = io.connect("http://localhost:5005", {
-      extraHeaders: { Authorization: `Bearer ${storedToken}` },
-    });
-
+  const joinChat = (socket) => {
     socket.emit("join_chat", chatId);
-    console.log("Joinning chat: ", chatId);
-
-    socket.on("receive_message", (newMessage) => {
-      console.log("Missatge rebut");
-      setAllMessages((previousState) => {
-        console.log(
-          "🚀 ~ file: chat.js ~ line 27 ~ setAllMessages ~ previousState",
-          previousState
-        );
-        const newState = [...previousState, newMessage];
-        return newState;
-      });
-    });
   };
+
+  socket.on("receive_message", (newMessage) => {
+    // setAllMessages((previousState) => {
+    //   console.log(
+    //     "🚀 ~ file: chat.js ~ line 27 ~ setAllMessages ~ previousState",
+    //     previousState
+    //   );
+    //   const newState = [...previousState, newMessage];
+    //   return newState;
+    // });
+    getAllMessages();
+  });
 
   const getAllMessages = async () => {
     try {
       const response = await getAllMessagesService(chatId);
-      console.log(
-        "🚀 ~ file: ChatBox.js ~ line 53 ~ getAllMessages ~ chatId",
-        chatId
-      );
-
       setAllMessages(response.data);
     } catch (err) {
       console.log(err);
@@ -96,12 +84,12 @@ const ChatBox = (props) => {
           {allMessages.map((message) => {
             return (
               <div
+                key={message._id}
                 className={`mx-5 ${
                   isMessageFromUser(message)
                     ? "place-self-end"
                     : "place-self-start"
                 }`}
-                key={message._id}
               >
                 <p
                   className={` py-2 px-3 rounded-2xl text-left ${
@@ -120,26 +108,25 @@ const ChatBox = (props) => {
             );
           })}
         </div>
-
       </div>
       <div className="my-2 flex mx-2 border border-gray-200 h-10 items-center">
-          <input
-            className="mx-1 w-full focus:outline-none"
-            type="text"
-            placeholder=" Type a message..."
-            name="text"
-            value={text}
-            onChange={handleChange}
-            onKeyDown={handleKeyDown}
-          />
+        <input
+          className="mx-1 w-full focus:outline-none"
+          type="text"
+          placeholder=" Type a message..."
+          name="text"
+          value={text}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+        />
 
-          <div>
-            <ChevronDoubleRightIcon
-              className="text-gray-300 hover:text-gray-400 h-8 w-8 cursor-pointer mr-1"
-              onClick={sendMessage}
-            />
-          </div>
+        <div>
+          <ChevronDoubleRightIcon
+            className="text-gray-300 hover:text-gray-400 h-8 w-8 cursor-pointer mr-1"
+            onClick={sendMessage}
+          />
         </div>
+      </div>
     </div>
   );
 };
