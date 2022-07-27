@@ -15,9 +15,9 @@ function LateralBar (props) {
     const navigation = [
         { name: 'Home', icon: HomeIcon, href: '#', current: false, keyLink: {projectId}, link: `/${projectId}` },
         { name: 'Tasks', icon: TagIcon, href: '#', current: false, keyLink: {projectId}, link: `/${projectId}/tasks` },
-        { name: 'Chats', icon: ChatIcon, href: '#', current: false, keyLink: {projectId}, link: `/${projectId}/chat`},
+        { name: 'Xats', icon: ChatIcon, href: '#', current: false, keyLink: {projectId}, link: `/${projectId}/xat`},
         { name: 'Calendar', icon: CalendarIcon, href: '#', current: false, keyLink: {projectId}, link: `/${projectId}/monthCalendar`  },
-        { name: 'Projects', icon: ArrowLeftIcon, href: '#', current: false, keyLink: "", link: "/"},
+        { name: 'Projects', icon: ArrowLeftIcon, href: '#', current: false, keyLink: "", link: "/"}
     ]
 
     console.log(navigation)

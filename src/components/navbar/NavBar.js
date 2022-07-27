@@ -219,7 +219,7 @@ const NavBar = (props) => {
                   as="a"
                   href="/chat"
                   className={classNames(
-                    location.pathname === "/global-calendar"
+                    location.pathname === "/chat"
                       ? "text-white bg-green-700"
                       : "text-green-200 hover:text-green-100 hover:bg-green-600",
                     "block px-3 py-2 rounded-md text-base font-medium"
