@@ -29,7 +29,7 @@ const ProjectDetailsPage = () => {
   }, [projectId]);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col bg-neutral-50">
       <NavBar />
       <div className="flex flex-row">
         <LateralBar projectId={projectId} />
@@ -65,7 +65,10 @@ const ProjectDetailsPage = () => {
               <Link to={`/${projectId}/tasks`}>
                 <img
                   className="mt-3"
-                  src="/images/tasks_image.jpg"
+                  src="/images/tasks_image.png"
+                  // onMouseOver={e => (e.currentTarget.src = "/images/tasks_image_hover.png")}
+                  // onMouseOut={e => (e.currentTarget.src = "/images/tasks_image.png")}
+
                   alt=""
                   width="300"
                   heigth="150"
@@ -77,7 +80,7 @@ const ProjectDetailsPage = () => {
             <div>
               <Link to={`/${projectId}/chat`}>
                 <img
-                  src="/images/xat_image.jpg"
+                  src="/images/chat_image.png"
                   alt=""
                   width="300"
                   heigth="150"
@@ -89,7 +92,7 @@ const ProjectDetailsPage = () => {
             <div>
               <Link to={`/${projectId}/monthCalendar`}>
                 <img
-                  src="/images/calendar_image.jpg"
+                  src="/images/calendar_image.png"
                   alt=""
                   width="300"
                   heigth="150"

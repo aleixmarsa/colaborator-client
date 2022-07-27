@@ -35,7 +35,7 @@ function SignupPage(props) {
   };
 
   return (
-    <div className="flex flex-col h-screen mb-auto">
+    <div className="flex bg-neutral-50  flex-col h-screen mb-auto">
       <NavBar />
       <SignUpForm
         handleSignupSubmit={handleSignupSubmit}
