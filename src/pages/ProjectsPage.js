@@ -7,7 +7,7 @@ import ProjectActivitySection from "../components/sections/projectPage/ProjectAc
 import { getAllCurrentProjectsService } from "../services/project.services";
 import { AuthContext } from "../context/auth.context";
 import { useState, useEffect, useContext } from "react";
-// import { SocketContext } from "../context/socket.context";
+import { SocketContext } from "../context/socket.context";
 
 // import io from "socket.io-client";
 
@@ -28,8 +28,8 @@ const ProjectsPage = () => {
   const [loading, setLoading] = useState(true);
 
   const { user } = useContext(AuthContext);
-  // const { socketConnect } = useContext(SocketContext);
-  // const socket = socketConnect();
+  const socket = useContext(SocketContext)
+
 
   const filterProjects = (searchText) => {
     let projectsCopy = [...currentProjects];
@@ -54,30 +54,18 @@ const ProjectsPage = () => {
     }
   };
 
+    socket.on("receive_render_projects", (e) => {
+      getAllProjects();
+    });
+
+    socket.on("receive_alert_message", (e) => {
+      setHasNewMessage(true);
+    });
+
+
   useEffect(() => {
     getAllProjects();
   }, []);
-
-  // useEffect(() => {
-  //   // as soon as the component is mounted, do the following tasks:
-
-  //   socket.on("receive_render_projects", (e) => {
-  //     console.log("NEW PROJECT");
-
-  //     getAllProjects();
-  //   });
-
-  //   socket.on("receive_alert_message", (e) => {
-  //     setHasNewMessage(true);
-  //   });
-
-  //   return () => {
-  //     // before the component is destroyed
-  //     // unbind all event handlers used in this component
-  //     socket.off("receive_render_projects");
-  //     socket.off("receive_alert_projects");
-  //   };
-  // }, [socket]);
 
   return (
     <div>

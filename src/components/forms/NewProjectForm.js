@@ -37,6 +37,7 @@ const NewProjectForm = (props) => {
       activity.project = responseProject.data._id;
       await addNewActivityService(activity);
       socket.emit("render_projects");
+
       setTitle("");
       setDescription("");
       setTeam([]);

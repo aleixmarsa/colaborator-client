@@ -10,35 +10,27 @@ const ProjectActivitySection = (props) => {
   const [currentProjectsId, setCurrentProjectsId] = useState([]);
   const [activity, setActivity] = useState([]);
   const { user } = useContext(AuthContext);
-  const {socketConnect} = useContext(SocketContext)
-  const socket = socketConnect();
+  const socket = useContext(SocketContext);
 
   useEffect(() => {
     getActivity();
   }, []);
 
-  useEffect(() => {
-    socket.on("receive_render_activity", () => {
-      console.log("REBUUUUUUUUUU")
-      getActivity();
-    });
-
-    return socket.off("receive_render_activity")
-  }, [socket]);
-
-
+  socket.on("receive_render_activity", () => {
+    getActivity();
+  });
 
   const getActivity = async () => {
-    // try {
-    //   const projectResponse = await getAllCurrentProjectsIdService(user._id);
-    //   const idArray = projectResponse.data.map((id) => {
-    //     return id._id;
-    //   });
-    //   const response = await getAllActivityService(idArray);
-    //   setActivity(response.data);
-    // } catch (err) {
-    //   console.log(err); 
-    // }
+    try {
+      const projectResponse = await getAllCurrentProjectsIdService(user._id);
+      const idArray = projectResponse.data.map((id) => {
+        return id._id;
+      });
+      const response = await getAllActivityService(idArray);
+      setActivity(response.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
