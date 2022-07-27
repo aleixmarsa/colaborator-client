@@ -9,10 +9,10 @@ export const socket = io.connect("http://localhost:5005", {
 
 export const SocketContext = React.createContext();
 
-export const SocketContextLayout = () => {
+export const SocketProviderWrapper = (props) => {
     return(
         <SocketContext.Provider value = {socket}>
-        <Outlet/>
+        {props.children}
         </SocketContext.Provider>
     )
 }

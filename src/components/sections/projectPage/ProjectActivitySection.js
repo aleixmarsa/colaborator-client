@@ -16,9 +16,14 @@ const ProjectActivitySection = (props) => {
     getActivity();
   }, []);
 
-  socket.on("receive_render_activity", () => {
-    getActivity();
-  });
+
+  useEffect(() => {
+    socket.on("receive_render_activity", () => {
+      getActivity();
+    });
+
+  }, [socket]);
+
 
   const getActivity = async () => {
     try {

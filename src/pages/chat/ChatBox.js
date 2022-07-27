@@ -38,19 +38,9 @@ const ChatBox = (props) => {
     console.log("Joinning chat: ", chatId);
 
     socket.on("receive_message", (newMessage) => {
-      // console.log("Missatge rebut");
-      // setAllMessages((previousState) => {
-      //   console.log(
-      //     "🚀 ~ file: chat.js ~ line 27 ~ setAllMessages ~ previousState",
-      //     previousState
-      //   );
-      //   const newState = [...previousState, newMessage];
-      //   return newState;
-      // });
       getAllMessages();
     });
   };
-
 
   const getAllMessages = async () => {
     try {

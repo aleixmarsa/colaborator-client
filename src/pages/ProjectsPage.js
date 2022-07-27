@@ -28,8 +28,7 @@ const ProjectsPage = () => {
   const [loading, setLoading] = useState(true);
 
   const { user } = useContext(AuthContext);
-  const socket = useContext(SocketContext)
-
+  const socket = useContext(SocketContext);
 
   const filterProjects = (searchText) => {
     let projectsCopy = [...currentProjects];
@@ -54,17 +53,21 @@ const ProjectsPage = () => {
     }
   };
 
+
+  useEffect(() => {
     socket.on("receive_render_projects", (e) => {
       getAllProjects();
     });
-
     socket.on("receive_alert_message", (e) => {
       setHasNewMessage(true);
     });
 
+  }, [socket]);
 
+  
   useEffect(() => {
     getAllProjects();
+
   }, []);
 
   return (

@@ -51,9 +51,15 @@ function ProjectCards(props) {
       .catch((error) => console.log(error));
   };
 
-  socket.on("receive_render_tasks", (e) => {
-    getAllCards();
-  });
+  useEffect(() => {
+    socket.on("receive_render_tasks", (e) => {
+      getAllCards();
+    });
+
+  }, [socket]);
+
+
+
 
   useEffect(() => {
     getAllCards();
