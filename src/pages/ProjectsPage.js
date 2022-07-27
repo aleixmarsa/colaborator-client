@@ -28,6 +28,7 @@ const ProjectsPage = () => {
   const [hasNewMessage, setHasNewMessage] = useState(false);
   const [modalHasRender, setModalHasRender] = useState(false);
   const [loading, setLoading] = useState(true);
+  const API_URL = process.env.REACT_APP_API_URL;
 
   const { user } = useContext(AuthContext);
   let socket = useContext(SocketContext);
@@ -75,7 +76,7 @@ const ProjectsPage = () => {
   }, []);
 
   const socketConnection = () => {
-    socket = io.connect("http://localhost:5005", {
+    socket = io.connect(API_URL, {
       extraHeaders: { Authorization: `Bearer ${storedToken}` },
     });
   }
