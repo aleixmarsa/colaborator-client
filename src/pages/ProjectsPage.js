@@ -104,7 +104,7 @@ const ProjectsPage = () => {
 
             <div className="bg-white lg:min-w-0 lg:flex-1">
               <div className="h-full py-6 px-2 sm:px-6 lg:px-8">
-                <div className="relative h-full" style={{ minHeight: "36rem" }}>
+                <div className="relative h-full">
                   <ProjectsListSection
                     title="Current Projects"
                     filteredProjects={filteredCurrentProjects}

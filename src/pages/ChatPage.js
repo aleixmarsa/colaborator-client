@@ -10,7 +10,6 @@ const ChatPage = () => {
     <div className="h-screen">
       <NavBar />
       <div className="flex flex-row h-full w-full">
-        <LateralBar projectId={projectId} />
         <Chat />
       </div>
     </div>

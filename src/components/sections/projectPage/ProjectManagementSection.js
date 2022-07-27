@@ -64,7 +64,7 @@ const ProjectManagementSection = (props) => {
 
 				{/*Rol del usuario */}
 				<div className="mt-2">
-					<p className="text-gray-400 text-left">Project Manager</p>
+					<p className="text-gray-400 text-left">{user.role}</p>
 				</div>
 
 				{/*Boton de crear proyecto */}

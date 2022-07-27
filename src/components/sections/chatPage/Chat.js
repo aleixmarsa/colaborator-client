@@ -100,19 +100,19 @@ const Chat = () => {
 
   console.log(showChat);
   return (
-    <div className="drop-shadow-md  h-5/6 w-full m-5">
-      <div className=" flex flex-col p-6 pt-2 h-full bg-stone-50 ">
+    <div className="drop-shadow-md h-5/6 w-full m-5 mt-3">
+      <div className=" flex flex-col p-6 pt-4 h-full bg-white drop-shadow-2xl border border-black">
         <div className="grid grid-cols-5 grid-rows-1 h-full">
           <div className="h-full col-span-1 mr-2">
             <h2 className=" flex justify-center text-2xl flex-1 border-b-2">CHATS</h2>
             <div>
-              <h1 className=" text-left mt-5">PROJECTS</h1>
+              <h1 className=" text-left mt-2">PROJECTS</h1>
 
               {projects.map((project) => {
                 return (
                   <div
                     key={project._id}
-                    className="flex justify-start gap-2 hover:bg-gray-300 mt-3 mr-3 cursor-pointer w-sm p-2 border-b-2"
+                    className="flex justify-start gap-2 hover:bg-gray-300 bg-white mt-3 mr-3 cursor-pointer w-sm p-2 border border-black drop-shadow-xl"
                     onClick={(e) => projectChatHandleClick(e, project)}
                   >
                     <Avatar
@@ -134,7 +134,7 @@ const Chat = () => {
                   return (
                     <div
                       key={chatUser._id}
-                      className="flex justify-start gap-2 hover:bg-gray-300 mt-3 mr-3 cursor-pointer w-sm p-2 border-b-2"
+                      className="flex justify-start gap-2 hover:bg-gray-300 bg-white mt-3 mr-3 cursor-pointer w-sm p-2 border border-black drop-shadow-xl"
                       onClick={(e) => directChathandleClick(e, chatUser)}
                     >
                       <Avatar
