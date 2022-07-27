@@ -82,7 +82,7 @@ const ProjectsPage = () => {
   }
 
   return (
-    <div className="bg-neutral-50">
+    <div className="bg-neutral-50 h-screen">
       <NavBar hasNewMessage={hasNewMessage} filterProjects={filterProjects} />
 
       {loading && <div>Loading...</div>}

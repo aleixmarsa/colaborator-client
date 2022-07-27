@@ -96,7 +96,7 @@ function CalendarPage() {
     <>
       <NavBar />
 
-      <div className="flex flex-row">
+      <div className="flex bg-neutral-50 flex-row">
         <LateralBar projectId={projectId} />
         <StyleWrapper>
           <div className="m-2">
