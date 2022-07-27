@@ -29,13 +29,13 @@ const ProjectDetailsPage = () => {
   }, [projectId]);
 
   return (
-    <>
+    <div className="flex flex-col">
       <NavBar />
       <div className="flex flex-row">
         <LateralBar projectId={projectId} />
 
-        <div className="flex flex-col flex-wrap w-screen mx-96 my-5">
-          <h1 className="flex font-normal text-4xl pb-4 border-b-2 b-color-gray-200">
+        <div className="flex flex-col flex-wrap w-screen mx-16 lg:mx-48 xl:mx-96 my-5">
+          <h1 className="flex font-normal text-2xl xl:text-4xl pb-4 border-b-2 b-color-gray-200">
             {title}
           </h1>
 
@@ -50,17 +50,17 @@ const ProjectDetailsPage = () => {
                     textSizeRatio={1.75}
                     name={member.name}
                   />
-                  <span className ="ml-1">{member.name}</span>
+                  <span className="ml-1">{member.name}</span>
                 </div>
               );
             })}
           </div>
 
-          <h6 className=" text-xl  text-justify text-left text-gray-600 max-w-full">
+          <h6 className=" text-xl  text-justify text-gray-600 max-w-full">
             {description}
           </h6>
 
-          <div className="flex flex-row justify-between  mt-28">
+          <div className="flex flex-col items-center lg:flex-row xl:flex-row justify-between  lg: mt-20 xl:mt-28">
             <div>
               <Link to={`/${projectId}/tasks`}>
                 <img
@@ -100,7 +100,7 @@ const ProjectDetailsPage = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
