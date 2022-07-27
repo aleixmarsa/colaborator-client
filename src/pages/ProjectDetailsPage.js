@@ -62,7 +62,7 @@ const ProjectDetailsPage = () => {
 
           <div className="flex flex-col items-center lg:flex-row xl:flex-row justify-between  lg: mt-20 xl:mt-28">
             <div>
-              <Link to={`/${projectId}/tasks`}>
+              <Link to={`/project/${projectId}/tasks`}>
                 <img
                   className="mt-3"
                   src="/images/tasks_image.png"
@@ -78,7 +78,7 @@ const ProjectDetailsPage = () => {
             </div>
 
             <div>
-              <Link to={`/${projectId}/chat`}>
+              <Link to={`/project/${projectId}/chat`}>
                 <img
                   src="/images/chat_image.png"
                   alt=""
@@ -90,7 +90,7 @@ const ProjectDetailsPage = () => {
             </div>
 
             <div>
-              <Link to={`/${projectId}/monthCalendar`}>
+              <Link to={`/project/${projectId}/monthCalendar`}>
                 <img
                   src="/images/calendar_image.png"
                   alt=""

@@ -102,9 +102,7 @@ const LogInForm = (props) => {
                 color="mainColor"
               />
 
-              <Link
-                to="/signup"
-              >
+              <Link to="/signup">
                 <Button
                   position="column"
                   type="submit"
