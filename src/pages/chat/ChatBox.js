@@ -4,7 +4,9 @@ import { getAllMessagesService } from "../../services/chat.services";
 import { AuthContext } from "../../context/auth.context";
 import { ChevronDoubleRightIcon } from "@heroicons/react/solid";
 import Avatar from "react-avatar";
-import { SocketContext } from "../../context/socket.context";
+
+import io from "socket.io-client";
+let socket;
 
 const ChatBox = (props) => {
   const [allMessages, setAllMessages] = useState([]);
@@ -12,28 +14,43 @@ const ChatBox = (props) => {
   const { chatId, chatReceiver, isProjectChat } = props;
 
   const { user } = useContext(AuthContext);
-  const socket = useContext(SocketContext);
+
+  // useEffect(() => {
+  //   getAllMessages();
+  //   joinChat(socket);
+  // }, []);
+
+  // const joinChat = (socket) => {
+  //   socket.emit("join_chat", chatId);
+  // };
 
   useEffect(() => {
     getAllMessages();
-    joinChat(socket);
-  }, []);
+    socketConnection();
+  }, [chatId]);
 
-  const joinChat = (socket) => {
+  const socketConnection = () => {
+    const storedToken = localStorage.getItem("authToken");
+    socket = io.connect("http://localhost:5005", {
+      extraHeaders: { Authorization: `Bearer ${storedToken}` },
+    });
     socket.emit("join_chat", chatId);
+    console.log("Joinning chat: ", chatId);
+
+    socket.on("receive_message", (newMessage) => {
+      // console.log("Missatge rebut");
+      // setAllMessages((previousState) => {
+      //   console.log(
+      //     "🚀 ~ file: chat.js ~ line 27 ~ setAllMessages ~ previousState",
+      //     previousState
+      //   );
+      //   const newState = [...previousState, newMessage];
+      //   return newState;
+      // });
+      getAllMessages();
+    });
   };
 
-  socket.on("receive_message", (newMessage) => {
-    // setAllMessages((previousState) => {
-    //   console.log(
-    //     "🚀 ~ file: chat.js ~ line 27 ~ setAllMessages ~ previousState",
-    //     previousState
-    //   );
-    //   const newState = [...previousState, newMessage];
-    //   return newState;
-    // });
-    getAllMessages();
-  });
 
   const getAllMessages = async () => {
     try {
@@ -74,7 +91,7 @@ const ChatBox = (props) => {
           size="25"
           // color="gray"
           textSizeRatio={1.9}
-          name={user.name}
+          name={chatReceiver}
         />
         <h2 className="text-lg font-medium ml-3 ">{chatReceiver}</h2>
       </div>
