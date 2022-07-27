@@ -37,7 +37,7 @@ function AnonRoute(props) {
     );
   }
   // If the user is already logged in, redirect him to home page
-  if (isLoggedIn) return <Navigate to="/" replace />;
+  if (isLoggedIn) return <Navigate to="/projects" replace />;
 
   // If the user is not logged in yet, allow him to see the page
   return props.children;

@@ -1,30 +1,37 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-
 import axios from "axios";
-
-const API_URL = process.env.REACT_APP_API_URL;
+import { getTaskDetailsService } from "../../services/task.services";
+import { addNewActivityService } from "../../services/activity.services";
+import { updateTaskService } from "../../services/task.services";
+import { AuthContext } from "../../context/auth.context";
+import { useContext } from "react";
+import { SocketContext } from "../../context/socket.context";
 
 const EditTaskModal = (props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [color, setColor] = useState("");
-
+  const { user } = useContext(AuthContext);
   const cancelButtonRef = useRef(null);
+  const socket = useContext(SocketContext)
+
+  const getTask = async (editTaskId) => {
+    try {
+      const response = await getTaskDetailsService(editTaskId);
+      setTitle(response.data.title);
+      setDescription(response.data.description);
+      setColor(response.data.color);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
-    axios
-      .get(`${API_URL}/colaborator-API/projects/card/edit/${props.editTaskId}`)
-      .then((response) => {
-        console.log("GET para la editcion de la tarjeta: ", response.data);
-        setTitle(response.data.title);
-        setDescription(response.data.description);
-        setColor(response.data.color);
-      })
-      .catch((err) => console.log(err));
+    getTask(props.editTaskId);
   }, [props.editTaskId]);
 
-  const handleSubmitEditForm = (e) => {
+  const handleSubmitEditForm = async (e) => {
     const body = {
       taskId: props.editTaskId,
       title: title,
@@ -32,20 +39,20 @@ const EditTaskModal = (props) => {
       color: color,
     };
 
-    // props.socket.emit("edit_task", body);
-    // props.setOpenEditModal(false);
+    const activity = {
+      title: "Task info edited",
+      project: props.projectId,
+      user: user._id,
+    };
 
-    axios
-      .put(
-        `${API_URL}/colaborator-API/projects/card/updateCard/${props.editTaskId}`,
-        body
-      )
-      .then((response) => {
-        props.socket.emit("edit_task", body);
-
-        props.setEditModalHasRender(false);
-        // props.getAllCards();
-      });
+    try {
+      await updateTaskService(props.editTaskId, body);
+      await addNewActivityService(activity);
+      socket.emit("render_tasks");
+      props.setEditModalHasRender(false);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

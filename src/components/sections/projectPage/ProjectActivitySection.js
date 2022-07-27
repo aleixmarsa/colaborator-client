@@ -4,44 +4,37 @@ import { useState, useEffect } from "react";
 import { AuthContext } from "../../../context/auth.context";
 import { useContext } from "react";
 import Avatar from "react-avatar";
+import { SocketContext } from "../../../context/socket.context";
 
 const ProjectActivitySection = (props) => {
   const [currentProjectsId, setCurrentProjectsId] = useState([]);
   const [activity, setActivity] = useState([]);
   const { user } = useContext(AuthContext);
+  const socket = useContext(SocketContext)
 
-  const getAllCurrentProjectsId = async () => {
+
+  useEffect(() => {
+    getActivity();
+  }, []);
+
+  socket.on("receive_render_activity", () => {
+    getActivity();
+  });
+
+  const getActivity = async () => {
     try {
-      const response = await getAllCurrentProjectsIdService(user._id);
-      const idArray = response.data.map((id) => {
+      const projectResponse = await getAllCurrentProjectsIdService(user._id);
+      const idArray = projectResponse.data.map((id) => {
         return id._id;
       });
-      setCurrentProjectsId(idArray);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    getAllCurrentProjectsId();
-  }, []);
-
-  useEffect(() => {
-    getAllActivities();
-  }, [currentProjectsId]);
-
-  const getAllActivities = async () => {
-    try {
-      const response = await getAllActivityService(currentProjectsId);
+      const response = await getAllActivityService(idArray);
       setActivity(response.data);
+      
     } catch (err) {
       console.log(err);
     }
   };
 
-  useEffect(() => {
-    getAllCurrentProjectsId();
-  }, []);
 
   return (
     <div>
@@ -49,12 +42,12 @@ const ProjectActivitySection = (props) => {
       <div className=" lg:min-w-0 lg:flex-1 mr-5 gap-6">
         <div className="p-6 pt-4 bg-white">
           <div className=" flex items-center border-b-2 mb-3 pb-2  ">
-            <h2 className="flex-1 text-xl">LAST ACTIVITY</h2>
+            <h2 className="flex-1 text-xl">RECENT ACTIVITY</h2>
           </div>
           <div>
             <ul role="list" className="divide-y divide-gray-200">
               {activity.map((item) => (
-                <li key={item._id} className="flex flex-col gap-2 py-4">
+                <li key={item._id} className="flex flex-col text-left gap-2 py-4">
                   <p className="text-sm text-black font-semibold">
                     {item.project.title}
                   </p>

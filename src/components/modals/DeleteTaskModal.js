@@ -1,25 +1,36 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationIcon } from "@heroicons/react/outline";
-import axios from "axios";
-const API_URL = process.env.REACT_APP_API_URL;
+import { deleteTaskService } from "../../services/task.services";
+import { addNewActivityService } from "../../services/activity.services";
+import { AuthContext } from "../../context/auth.context";
+import { useContext } from "react";
+import { SocketContext } from "../../context/socket.context";
 
 const DeleteTaskModal = (props) => {
   const cancelButtonRef = useRef(null);
+  const { user } = useContext(AuthContext);
+  const socket = useContext(SocketContext)
 
-  const deleteTask = (id) => {
-    // props.socket.emit("delete_task", id);
-    // props.setOpenDeleteModal(false);
+  const deleteTask = async (id) => {
 
-    axios
-      .delete(`${API_URL}/colaborator-API/projects/card/delete/${id}`)
-      .then((response) => {
-        props.socket.emit("delete_task", id);
 
-        props.setDeleteModalHasRender(false);
-        // props.getAllCards()
-      })
-      .catch((err) => console.log(err));
+    const activity = {
+      title: "Task deleted",
+      project: props.projectId,
+      user: user._id,
+    };
+
+    try {
+      await deleteTaskService(id);
+      socket.emit("render_tasks");
+      await addNewActivityService(activity);
+
+      props.setDeleteModalHasRender(false);
+    } catch (err) {
+      console.log(err);
+    }
+
   };
 
   return (
