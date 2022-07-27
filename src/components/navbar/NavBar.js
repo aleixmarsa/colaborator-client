@@ -1,12 +1,12 @@
 import { Fragment, useContext, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { SearchIcon, UserCircleIcon } from "@heroicons/react/solid";
 import { MenuAlt1Icon, XIcon } from "@heroicons/react/outline";
-import icon from "../../assets/icon.png";
 import { AuthContext } from "../../context/auth.context";
+
 import Avatar from "react-avatar";
 import SearchMenu from "../menus/SearchMenu";
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -24,19 +24,13 @@ const NavBar = (props) => {
   };
   let location = useLocation();
   return (
-    <Disclosure as="nav" className="flex-shrink-0 bg-green-700">
+    <Disclosure as="nav" className="flex-shrink-0 bg-mainColor">
       {({ open }) => (
         <>
           <div className="max-w-9xl mx-auto px-3 sm:px-4 lg:px-8">
             <div className="relative flex items-center justify-between h-16">
               {/* Logo section */}
               <div className="flex items-center lg:px-0 xl:w-64">
-                {/* <div className="flex-shrink-0">
-                  <img className="h-8 w-auto" src={icon} alt="Erlenmeyer" />
-                </div>
-                <h1 className="ml-3 text-3xl font-small text-white">
-                  co<span className="font-extrabold">lab</span>orator
-                </h1> */}
                 <img  className =" w-32 xl:w-52"src="/images/logo.png" alt=""></img>
               </div>
               {location.pathname === "/projects" ? (
@@ -50,7 +44,7 @@ const NavBar = (props) => {
               )}
               <div className="flex lg:hidden">
                 {/* Mobile menu button */}
-                <Disclosure.Button className="bg-green-600 inline-flex items-center justify-center p-2 rounded-md text-green-400 hover:text-white hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-600 focus:ring-white">
+                <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-buttonHover hover:text-white hover:secundaryButton focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-secundaryColor focus:ring-white">
                   <span className="sr-only">Open main menu</span>
                   {open ? (
                     <XIcon className="block h-6 w-6" aria-hidden="true" />
@@ -71,22 +65,13 @@ const NavBar = (props) => {
                         to="/projects"
                         className={({ isActive }) =>
                           isActive
-                            ? "px-3 py-2 mx-1 rounded-md text-md font-small text-white bg-green-600 hover:text-white"
-                            : "px-3 py-2 mx-1 rounded-md text-md font-small text-white hover:bg-green-600"
+                            ? "px-3 py-2 mx-1 text-md font-small text-buttonHover bg-mainColor hover:text-buttonHover"
+                            : "px-3 py-2 mx-1 text-md font-small text-white bg-mainColor hover:text-buttonHover"
                         }
                       >
-                        PROJECTS
+                        <span className="hover:text-buttonHover">PROJECTS</span>
                       </NavLink>
-                      <NavLink
-                        to="/monthCalendar"
-                        className={({ isActive }) =>
-                          isActive
-                            ? "px-3 py-2 mx-1 rounded-md text-md font-small text-white bg-green-600 hover:text-white"
-                            : "px-3 py-2 mx-1 rounded-md text-md font-small text-white  hover:bg-green-600"
-                        }
-                      >
-                        CALENDAR
-                      </NavLink>
+
                       <div className=" relative py-2">
                         {hasNewMessage ? (
                           <span className="flex h-3 w-3 absolute right-0">
@@ -100,11 +85,11 @@ const NavBar = (props) => {
                           to="/chat"
                           className={({ isActive }) =>
                             isActive
-                              ? "px-3 py-2 rounded-md text-md font-small text-white bg-green-600 hover:text-white"
-                              : "px-3 py-2 rounded-md text-md font-small text-white hover:bg-green-600"
+                              ? "px-3 py-2 mx-1 text-md font-small text-buttonHover bg-mainColor hover:text-buttonHover"
+                              : "px-3 py-2 mx-1 text-md font-small text-white bg-mainColor hover:text-buttonHover"
                           }
                         >
-                          CHAT
+                          <span className="hover:text-buttonHover">CHAT</span>
                         </NavLink>
                       </div>
                     </div>

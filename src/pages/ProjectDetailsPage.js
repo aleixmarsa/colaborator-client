@@ -34,7 +34,7 @@ const ProjectDetailsPage = () => {
       <div className="flex flex-row">
         <LateralBar projectId={projectId} />
 
-        <div className="flex flex-col flex-wrap w-screen mx-16 lg:mx-48 xl:mx-96 my-5">
+        <div className="flex flex-col flex-wrap w-screen mx-16 lg:mx-48 xl:mx-40 my-5">
           <h1 className="flex font-normal text-2xl xl:text-4xl pb-4 border-b-2 b-color-gray-200">
             {title}
           </h1>

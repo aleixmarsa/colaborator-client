@@ -1,6 +1,5 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import axios from "axios";
 import { getTaskDetailsService } from "../../services/task.services";
 import { addNewActivityService } from "../../services/activity.services";
 import { updateTaskService } from "../../services/task.services";
@@ -9,51 +8,55 @@ import { useContext } from "react";
 import { SocketContext } from "../../context/socket.context";
 
 const EditTaskModal = (props) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [color, setColor] = useState("");
-  const { user } = useContext(AuthContext);
-  const cancelButtonRef = useRef(null);
-  const socket = useContext(SocketContext)
 
-  const getTask = async (editTaskId) => {
-    try {
-      const response = await getTaskDetailsService(editTaskId);
-      setTitle(response.data.title);
-      setDescription(response.data.description);
-      setColor(response.data.color);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [color, setColor] = useState("");
+    const [cardLimitDate, setCardLimitDate] = useState("")
+    const { user } = useContext(AuthContext);
+    const cancelButtonRef = useRef(null);
+    const socket = useContext(SocketContext)
 
-  useEffect(() => {
-    getTask(props.editTaskId);
-  }, [props.editTaskId]);
-
-  const handleSubmitEditForm = async (e) => {
-    const body = {
-      taskId: props.editTaskId,
-      title: title,
-      description: description,
-      color: color,
+    const getTask = async (editTaskId) => {
+        try {
+            const response = await getTaskDetailsService(editTaskId);
+            setTitle(response.data.title);
+            setDescription(response.data.description);
+            setColor(response.data.color);
+            setCardLimitDate(response.data.limitDate)
+        } catch (err) {
+            console.log(err);
+        }
     };
 
-    const activity = {
-      title: "Task info edited",
-      project: props.projectId,
-      user: user._id,
-    };
+    useEffect(() => {
+        getTask(props.editTaskId);
+    }, [props.editTaskId]);
 
-    try {
-      await updateTaskService(props.editTaskId, body);
-      await addNewActivityService(activity);
-      socket.emit("render_tasks");
-      props.setEditModalHasRender(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    const handleSubmitEditForm = async (e) => {
+        const body = {
+            taskId: props.editTaskId,
+            title: title,
+            description: description,
+            color: color,
+            limitDate: cardLimitDate
+        };
+
+        const activity = {
+            title: "Task info edited",
+            project: props.projectId,
+            user: user._id,
+        };
+
+        try {
+            await updateTaskService(props.editTaskId, body);
+            await addNewActivityService(activity);
+            socket.emit("render_tasks");
+            props.setEditModalHasRender(false);
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
   return (
     <Transition.Root show={props.editModalHasRender} as={Fragment}>
@@ -110,30 +113,11 @@ const EditTaskModal = (props) => {
                             autoComplete="given-name"
                             onChange={(e) => setTitle(e.target.value)}
                             value={title}
-                            className="max-w-lg block w-full h-8 border-2 shadow-xl focus:ring-green-500 focus:border-green-500 sm:max-w-xs sm:text-sm border-green-300 rounded-md"
+                            className="max-w-lg block w-full h-8 border-2 shadow-xl sm:max-w-xs sm:text-sm rounded-md"
                           />
                         </div>
-                      </div>
-                      <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                        <label
-                          htmlFor="description"
-                          className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-                        >
-                          Description
-                        </label>
-                        <div className="mt-1 sm:mt-0 sm:col-span-2">
-                          <textarea
-                            id="description"
-                            name="description"
-                            onChange={(e) => setDescription(e.target.value)}
-                            value={description}
-                            rows={3}
-                            // onChange={(e) => setCardDescription(e.target.value)}
-                            // value={cardDescription}
-                            className="max-w-lg shadow-sm block w-full focus:ring focus:outline-none focus:ring-green-600 focus:border sm:text-sm border border-gray-300 rounded-md"
-                          />
-                        </div>
-                      </div>
+
+                      
                     </div>
 
                     <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -162,13 +146,32 @@ const EditTaskModal = (props) => {
                         </select>
                       </div>
                     </div>
+
+                    <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                          <label
+                            htmlFor="country"
+                            className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                          >
+                            Date Limit:
+                          </label>
+                          <div className="mt-1 sm:mt-0 sm:col-span-2">
+                            <input
+                              type="date"
+                              name="limitDate"
+                              className="max-w-lg block focus:ring-green-500 focus:border-green-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+                              onChange={(e) => setCardLimitDate(e.target.value)}
+                            ></input>
+                          </div>
+                        </div>
+                      </div>
+
                   </div>
                 </div>
 
                 <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                   <button
                     type="button"
-                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-500 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-mainColor text-base font-medium text-white hover:bg-secundaryColor focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
                     onClick={() => handleSubmitEditForm(props.EditTaskId)}
                   >
                     Edit

@@ -111,7 +111,7 @@ const ChatBox = (props) => {
                 <p
                   className={` py-2 px-3 rounded-2xl text-left ${
                     isMessageFromUser(message)
-                      ? "bg-green-300 rounded-tr-none"
+                      ? "bg-secundaryLowColor rounded-tr-none"
                       : "bg-gray-200 rounded-tl-none"
                   }`}
                 >
@@ -139,7 +139,7 @@ const ChatBox = (props) => {
 
         <div>
           <ChevronDoubleRightIcon
-            className="text-gray-300 hover:text-gray-400 h-8 w-8 cursor-pointer mr-1"
+            className="text-buttonHover hover:text-gray-400 h-8 w-8 cursor-pointer mr-1"
             onClick={sendMessage}
           />
         </div>

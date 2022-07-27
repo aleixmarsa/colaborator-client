@@ -10,19 +10,19 @@ const Button = (props) => {
   let xlWidth = "";
   let sm= ""
 
-  if (color === "green") {
+  if (color === "mainColor") {
     textColor = "white";
     borderColor = "transparent";
-    bgColor = "bg-green-700";
-    hoverBgColor = "hover:bg-green-600";
-    focusRingColor = "green-500";
+    bgColor = "bg-mainColor";
+    hoverBgColor = "hover:bg-secundaryColor";
+    focusRingColor = "mainColor";
 
   } else if (color === "white") {
     textColor = "gray-700";
     borderColor = "gray-300";
     bgColor = "bg-white";
     hoverBgColor = "hover:bg-gray-50";
-    focusRingColor = "green-500";
+    focusRingColor = "mainColor";
   }
   if (position === "column") {
     margin = "mt-3";
@@ -38,7 +38,7 @@ const Button = (props) => {
       className={`${margin} inline-flex items-center justify-center px-4 py-2 border border-${borderColor} shadow-sm text-sm font-medium rounded-md text-${textColor} ${bgColor} ${hoverBgColor} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-${focusRingColor} md:${sm} ${xlWidth}`}
       onClick={action}
     >
-      {text}
+      <span className="hover:text-hoverButton">{text}</span>
     </button>
   );
 };
