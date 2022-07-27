@@ -5,7 +5,6 @@ import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
 import { getAllUsersService } from "../../services/user.services";
 import Avatar from "react-avatar";
 
-const API_URL = process.env.REACT_APP_API_URL;
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");

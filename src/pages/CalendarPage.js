@@ -17,7 +17,7 @@ import styled from "@emotion/styled";
 import { useParams } from "react-router-dom";
 import { SocketContext } from "../context/socket.context";
 
-const API_URL = "http://localhost:5005";
+const API_URL = process.env.REACT_APP_API_URL;
 
 export const StyleWrapper = styled.div`
   .fc-dayGridMonth-button, .fc-button, .fc-button-primary, .fc-button-active {

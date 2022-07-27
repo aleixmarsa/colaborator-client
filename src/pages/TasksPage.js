@@ -15,7 +15,7 @@ import LateralBar from "../components/sections/LateralBar";
 
 import { SocketContext } from "../context/socket.context";
 
-const API_URL = "http://localhost:5005";
+const API_URL = process.env.REACT_APP_API_URL;
 
 function ProjectCards(props) {
   const params = useParams();
