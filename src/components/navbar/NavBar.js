@@ -7,11 +7,9 @@ import icon from "../../assets/icon.png";
 import { AuthContext } from "../../context/auth.context";
 import Avatar from "react-avatar";
 import SearchMenu from "../menus/SearchMenu";
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-
 const NavBar = (props) => {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
   const userNavigation = [
@@ -20,13 +18,11 @@ const NavBar = (props) => {
   ];
   const { hasNewMessage, filterProjects } = props;
   const [search, setSearch] = useState("");
-
   const handleSearch = (e) => {
     setSearch(e.target.value);
     filterProjects(e.target.value);
   };
   let location = useLocation();
-
   return (
     <Disclosure as="nav" className="flex-shrink-0 bg-green-700">
       {({ open }) => (
@@ -81,7 +77,6 @@ const NavBar = (props) => {
                       >
                         PROJECTS
                       </NavLink>
-
                       <NavLink
                         to="/monthCalendar"
                         className={({ isActive }) =>
@@ -92,7 +87,6 @@ const NavBar = (props) => {
                       >
                         CALENDAR
                       </NavLink>
-
                       <div className=" relative py-2">
                         {hasNewMessage ? (
                           <span className="flex h-3 w-3 absolute right-0">
@@ -219,7 +213,7 @@ const NavBar = (props) => {
                   as="a"
                   href="/chat"
                   className={classNames(
-                    location.pathname === "/chat"
+                    location.pathname === "/global-calendar"
                       ? "text-white bg-green-700"
                       : "text-green-200 hover:text-green-100 hover:bg-green-600",
                     "block px-3 py-2 rounded-md text-base font-medium"
@@ -281,5 +275,4 @@ const NavBar = (props) => {
     </Disclosure>
   );
 };
-
 export default NavBar;

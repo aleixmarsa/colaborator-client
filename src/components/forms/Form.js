@@ -17,7 +17,7 @@ const Form = (props) => {
   } = props;
 
   return (
-    <div className="h-full  py-6 sm:pl-6 lg:pl-8 xl:pl-0">
+    <div className="h-full py-6 sm:pl-6 lg:pl-8 xl:pl-0">
       <div className="pl-4 pr-6 py-6 sm:pl-6 lg:pl-8 xl:pl-0">
         <div className="flex items-center justify-between">
           <div className="flex-1 space-y-8">

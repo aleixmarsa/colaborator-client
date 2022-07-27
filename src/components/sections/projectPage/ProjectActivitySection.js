@@ -36,7 +36,7 @@ const ProjectActivitySection = (props) => {
   return (
     <div>
       {/* Activity feed */}
-      <div className=" lg:min-w-0 lg:flex-1 mr-5 gap-6">
+      <div className=" lg:min-w-0 lg:flex-1 mr-5 gap-6 pt-0 ">
         <div className="p-6 pt-4 bg-white">
           <div className=" flex items-center border-b-2 mb-3 pb-2  ">
             <h2 className="flex-1 text-xl">RECENT ACTIVITY</h2>
