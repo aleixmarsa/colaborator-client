@@ -45,53 +45,6 @@ export const StyleWrapper = styled.div`
 
 `
 
-function CalendarPage () {
-
-    const {projectId} = useParams();
-
-    const [events, setEvents] = useState([])
-    const socket = useContext(SocketContext);
-
-    const getAllEvents = () => {
-
-        axios
-        .get(`${API_URL}/colaborator-API/projects/card/get-cards`)
-        .then((allCards) => {
-
-            let array = [];
-            allCards.data.map((event) => {
-
-                console.log("Id del evento: ", event)
-                console.log("Id del proyecto: ", projectId)
-
-                if(event.project === projectId) {
-                
-                let startDate = event.limitDate + 'T07:00:00';
-                let endDate = event.limitDate + 'T08:00:00';
-    
-                let eventObject = {
-                    id: event._id,
-                    title: event.title,
-                    start: startDate,
-                    end: endDate,
-                    color: event.color
-                }
-
-                array.push(eventObject)
-                } 
-            })
-            setEvents(array)           
-        })
-        .catch((error) => console.log(error));
-    }
-
-    
-    useEffect(() => {
-        getAllEvents()
-    }, [])
-
-
-
 
 function CalendarPage() {
   const { projectId } = useParams();
