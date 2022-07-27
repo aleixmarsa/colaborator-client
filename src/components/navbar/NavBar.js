@@ -31,17 +31,17 @@ const NavBar = (props) => {
     <Disclosure as="nav" className="flex-shrink-0 bg-green-700">
       {({ open }) => (
         <>
-          <div className="max-w-9xl mx-auto px-4 sm:px-4 lg:px-8">
+          <div className="max-w-9xl mx-auto px-3 sm:px-4 lg:px-8">
             <div className="relative flex items-center justify-between h-16">
               {/* Logo section */}
-              <div className="flex items-center px-2 lg:px-0 xl:w-64">
+              <div className="flex items-center lg:px-0 xl:w-64">
                 {/* <div className="flex-shrink-0">
                   <img className="h-8 w-auto" src={icon} alt="Erlenmeyer" />
                 </div>
                 <h1 className="ml-3 text-3xl font-small text-white">
                   co<span className="font-extrabold">lab</span>orator
                 </h1> */}
-                <img src="/images/logo.png" alt=""></img>
+                <img  className =" w-32 xl:w-52"src="/images/logo.png" alt=""></img>
               </div>
               {location.pathname === "/projects" ? (
                 <SearchMenu

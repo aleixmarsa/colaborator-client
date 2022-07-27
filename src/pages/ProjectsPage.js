@@ -87,8 +87,8 @@ const ProjectsPage = () => {
         <div className="flex-grow w-full max-w-10xl mx-auto xl:px-6 lg:flex">
           <div className="flex-1 min-w-0 bg-white xl:flex">
             <div className="border-b border-gray-200 xl:border-b-0 xl:flex-shrink-0 xl:w-64 xl:border-r xl:border-gray-200 bg-white">
-              <div className="h-full pl-4 pr-6 py-6 sm:pl-6 lg:pl-8 xl:pl-0 mr-4">
-                <div className="h-full relative" style={{ minHeight: "12rem" }}>
+              <div className="pl-4 pr-6 py-6 sm:pl-6 lg:pl-8 xl:pl-0 mr-4">
+                <div className=" relative" style={{ minHeight: "12rem" }}>
                   <ProjectManagementSection
                     newProjectForm={newProjectForm}
                     setNewProjectForm={setNewProjectForm}
@@ -104,7 +104,7 @@ const ProjectsPage = () => {
 
             <div className="bg-white lg:min-w-0 lg:flex-1">
               <div className="h-full py-6 px-2 sm:px-6 lg:px-8">
-                <div className="relative h-full" style={{ minHeight: "36rem" }}>
+                <div className="relative h-full">
                   <ProjectsListSection
                     title="Current Projects"
                     filteredProjects={filteredCurrentProjects}
@@ -125,7 +125,7 @@ const ProjectsPage = () => {
 
           <div className="bg-white pr-4 sm:pr-6 lg:pr-8 lg:flex-shrink-0 lg:border-l lg:border-gray-200 xl:pr-0">
             <div className="h-full pl-6 py-6 lg:w-80">
-              <div className="h-full relative" style={{ minHeight: "16rem" }}>
+              <div className="h-full relative">
                 <ProjectActivitySection currentProjects={currentProjects} />
               </div>
             </div>

@@ -18,11 +18,6 @@ const ProjectManagementSection = (props) => {
 
   const { user } = useContext(AuthContext);
 
-  console.log(
-    "🚀 ~ file: ProjectManagementSection.js ~ line 22 ~ ProjectManagementSection ~ user",
-    user
-  );
-
   const handleNewProjectBtn = (e) => {
     e.preventDefault();
     setEditProjectForm(false);
@@ -37,52 +32,44 @@ const ProjectManagementSection = (props) => {
     <>
       {newProjectForm ? (
         <NewProjectForm
-			handleNewProjectBtn={handleNewProjectBtn}
-			handleCancelAddSaveFormBtn={handleCancelAddSaveFormBtn}
-			getAllProjects={getAllProjects}
+          handleNewProjectBtn={handleNewProjectBtn}
+          handleCancelAddSaveFormBtn={handleCancelAddSaveFormBtn}
+          getAllProjects={getAllProjects}
         />
       ) : editProjectForm ? (
         <EditProjectForm
-			projectId={projectId}
-			handleCancelAddSaveFormBtn={handleCancelAddSaveFormBtn}
-			getAllProjects={getAllProjects}
+          projectId={projectId}
+          handleCancelAddSaveFormBtn={handleCancelAddSaveFormBtn}
+          getAllProjects={getAllProjects}
         />
       ) : (
-			<>	
-				{/*Avatar con el nombre*/ }
-				<div className="flex flex-row">
-					<Avatar
-						round
-						size="40"
-						textSizeRatio={1.9}
-						name={user.name}
-					/>
+        <>
+          {/*Avatar con el nombre*/}
+          <div className="flex flex-row">
+            <Avatar round size="40" textSizeRatio={1.9} name={user.name} />
 
-					<h3 className="ml-2 mt-3">{user.name}</h3>     
+            <h3 className="ml-2 mt-3">{user.name}</h3>
+          </div>
 
-				</div>
+          {/*Rol del usuario */}
+          <div className="mt-2">
+            <p className="text-gray-400 text-left">{user.role}</p>
+          </div>
 
-				{/*Rol del usuario */}
-				<div className="mt-2">
-					<p className="text-gray-400 text-left">Project Manager</p>
-				</div>
-
-				{/*Boton de crear proyecto */}
-				<div className="mt-6 w-40">
-					<Button
-						position="column"
-						type="button"
-						action={handleNewProjectBtn}
-						text="New Project"
-						color="green"
-					/>
-				</div>
-			</>
+          {/*Boton de crear proyecto */}
+          <div className="mt-6 w-40">
+            <Button
+              position="column"
+              type="button"
+              action={handleNewProjectBtn}
+              text="New Project"
+              color="green"
+            />
+          </div>
+        </>
       )}
     </>
   );
 };
 
 export default ProjectManagementSection;
-
-
