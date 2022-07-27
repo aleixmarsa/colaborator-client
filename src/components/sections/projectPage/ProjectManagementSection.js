@@ -63,7 +63,7 @@ const ProjectManagementSection = (props) => {
               type="button"
               action={handleNewProjectBtn}
               text="New Project"
-              color="green"
+              color="mainColor"
             />
           </div>
         </>

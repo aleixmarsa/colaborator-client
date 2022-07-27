@@ -5,7 +5,7 @@ import axios from "axios";
 
 import "../index.css";
 
-import NavBar from "../components/navbar/NavBar";
+import NavBar from '../components/navbar/NavBar';
 import LateralBar from "../components/sections/LateralBar";
 
 import FullCalendar from "@fullcalendar/react";
@@ -20,12 +20,9 @@ import { SocketContext } from "../context/socket.context";
 const API_URL = "http://localhost:5005";
 
 export const StyleWrapper = styled.div`
-  .fc-dayGridMonth-button,
-  .fc-button,
-  .fc-button-primary,
-  .fc-button-active {
-    background-color: #15803d;
-    border: #16b34a;
+  .fc-dayGridMonth-button, .fc-button, .fc-button-primary, .fc-button-active {
+    background-color: #265b6a;
+    border: #265b6a;
   }
 
   .fc-button-active {
@@ -33,21 +30,68 @@ export const StyleWrapper = styled.div`
     border: #15803d;
   }
 
-  .fc-dayGridMonth-button:hover,
-  .fc-button:hover,
-  .fc-button-primary:hover {
-    background-color: #16a34a;
-    border: #15803d;
+  .fc-dayGridMonth-button:hover, .fc-button:hover, .fc-button-primary:hover{
+    background-color: #5b8d9d;
+    border: #5b8d9d
   }
 
   .fc-daygrid-day-number {
-    color: #16a34a;
+    color: #f89235;
   }
 
   .fc-col-header-cell-cushion {
-    color: #16a34a;
+    color: #265b6a;
   }
-`;
+
+`
+
+function CalendarPage () {
+
+    const {projectId} = useParams();
+
+    const [events, setEvents] = useState([])
+    const socket = useContext(SocketContext);
+
+    const getAllEvents = () => {
+
+        axios
+        .get(`${API_URL}/colaborator-API/projects/card/get-cards`)
+        .then((allCards) => {
+
+            let array = [];
+            allCards.data.map((event) => {
+
+                console.log("Id del evento: ", event)
+                console.log("Id del proyecto: ", projectId)
+
+                if(event.project === projectId) {
+                
+                let startDate = event.limitDate + 'T07:00:00';
+                let endDate = event.limitDate + 'T08:00:00';
+    
+                let eventObject = {
+                    id: event._id,
+                    title: event.title,
+                    start: startDate,
+                    end: endDate,
+                    color: event.color
+                }
+
+                array.push(eventObject)
+                } 
+            })
+            setEvents(array)           
+        })
+        .catch((error) => console.log(error));
+    }
+
+    
+    useEffect(() => {
+        getAllEvents()
+    }, [])
+
+
+
 
 function CalendarPage() {
   const { projectId } = useParams();

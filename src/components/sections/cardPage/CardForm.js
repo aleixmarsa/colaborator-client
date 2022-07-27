@@ -1,5 +1,4 @@
 import { useState } from "react";
-import axios from "axios";
 import { AuthContext } from "../../../context/auth.context";
 import { useContext } from "react";
 import { addNewTaskService } from "../../../services/task.services";
@@ -73,7 +72,7 @@ function CardForm(props) {
                   htmlFor="title"
                   className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                 >
-                  Title
+                  Title:
                 </label>
 
                 <div className="mt-1 sm:mt-0 sm:col-span-2">
@@ -84,27 +83,9 @@ function CardForm(props) {
                       id="title"
                       onChange={(e) => setCardTitle(e.target.value)}
                       value={cardTitle}
-                      className="flex-1 block w-full focus:ring focus:outline-none focus:ring-green-600 focus:border min-w-0 rounded-r-md sm:text-sm border border-gray-300 rounded-md"
+                      className="flex-1 block w-full focus:ring focus:outline-none focus:border min-w-0 rounded-r-md sm:text-sm border border-gray-300 rounded-md"
                     />
                   </div>
-                </div>
-              </div>
-              <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                <label
-                  htmlFor="description"
-                  className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-                >
-                  Description
-                </label>
-                <div className="mt-1 sm:mt-0 sm:col-span-2">
-                  <textarea
-                    id="description"
-                    name="description"
-                    rows={3}
-                    onChange={(e) => setCardDescription(e.target.value)}
-                    value={cardDescription}
-                    className="max-w-lg shadow-sm block w-full focus:ring focus:outline-none focus:ring-green-600 focus:border sm:text-sm border border-gray-300 rounded-md"
-                  />
                 </div>
               </div>
               <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -112,7 +93,7 @@ function CardForm(props) {
                   htmlFor="country"
                   className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                 >
-                  Color
+                  Color:
                 </label>
                 <div className="mt-1 sm:mt-0 sm:col-span-2">
                   <select
@@ -137,7 +118,7 @@ function CardForm(props) {
                   htmlFor="country"
                   className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                 >
-                  Date Limit
+                  Date Limit:
                 </label>
                 <div className="mt-1 sm:mt-0 sm:col-span-2">
                   <input
@@ -162,7 +143,7 @@ function CardForm(props) {
             </button>
             <button
               type="submit"
-              className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-700 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+              className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-mainColor hover:bg-secundaryColor  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
               //onClick={() => props.setCardForm(false)}
             >
               Add Project

@@ -14,14 +14,18 @@ module.exports = {
           400: "#28b75a80"
         },
         'mainColor': {
-          DEFAULT: '#029102'
+          DEFAULT: '#265b6a'
         },
-        'buttonColor': {
-          'DEFAULT': '#005a00'
+        'buttonHover': {
+          'DEFAULT': '#f89235'
         },
-        'buttonHoverColor': {
-          'DEFAULT': '#8aa38a'
+        'secundaryColor': {
+          'DEFAULT': '#5b8d9d'
+        },
+        'secundaryLowColor': {
+          'DEFAULT': '#b0cdd6'
         }
+
         
 
       },
@@ -33,7 +37,4 @@ module.exports = {
   },
   plugins: [],
 
-  // safelist: [
-  //   "hover:bg-green-700"
-  //   ]
 }

@@ -148,7 +148,7 @@ function ProjectCards(props) {
                         <button
                           onClick={() => setCardForm(true)}
                           type="button"
-                          className="inline-flex items-center p-1 border border-transparent rounded-full shadow-sm text-white bg-green-700 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                          className="inline-flex items-center p-1 border border-transparent rounded-full shadow-sm text-white bg-mainColor hover:bg-secundaryColor focus:outline-none focus:ring-2 focus:ring-offset-2"
                         >
                           <PlusSmIconSolid
                             className="h-5 w-5"
