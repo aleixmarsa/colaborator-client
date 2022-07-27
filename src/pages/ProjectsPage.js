@@ -8,6 +8,8 @@ import { getAllCurrentProjectsService } from "../services/project.services";
 import { AuthContext } from "../context/auth.context";
 import { useState, useEffect, useContext } from "react";
 import { SocketContext } from "../context/socket.context";
+import io from "socket.io-client";
+
 
 // import io from "socket.io-client";
 
@@ -28,7 +30,8 @@ const ProjectsPage = () => {
   const [loading, setLoading] = useState(true);
 
   const { user } = useContext(AuthContext);
-  const socket = useContext(SocketContext);
+  let socket = useContext(SocketContext);
+  const storedToken = localStorage.getItem("authToken");
 
   const filterProjects = (searchText) => {
     let projectsCopy = [...currentProjects];
@@ -67,8 +70,15 @@ const ProjectsPage = () => {
   
   useEffect(() => {
     getAllProjects();
-
+    socketConnection();
+  
   }, []);
+
+  const socketConnection = () => {
+    socket = io.connect("http://localhost:5005", {
+      extraHeaders: { Authorization: `Bearer ${storedToken}` },
+    });
+  }
 
   return (
     <div>
