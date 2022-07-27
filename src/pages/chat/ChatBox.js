@@ -14,7 +14,7 @@ const ChatBox = (props) => {
   const { chatId, chatReceiver, isProjectChat } = props;
 
   const { user } = useContext(AuthContext);
-
+  const API_URL = process.env.REACT_APP_API_URL;
   // useEffect(() => {
   //   getAllMessages();
   //   joinChat(socket);
@@ -31,7 +31,7 @@ const ChatBox = (props) => {
 
   const socketConnection = () => {
     const storedToken = localStorage.getItem("authToken");
-    socket = io.connect("http://localhost:5005", {
+    socket = io.connect(API_URL, {
       extraHeaders: { Authorization: `Bearer ${storedToken}` },
     });
     socket.emit("join_chat", chatId);
