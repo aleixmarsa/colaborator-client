@@ -46,15 +46,15 @@ const Form = (props) => {
                                   type="text"
                                   name="title"
                                   id="title"
-                                  onChange={(e) => setTitle(e.target.value)}
+                                  onChange={(e) => setTitle(e.target.value)} 
                                   value={projectTitle}
-                                  className="flex-1 block w-full focus:ring focus:outline-none focus:ring-green-600 focus:border sm:text-sm border border-gray-300 rounded-md w-32"
+                                  className="flex-1 block w-full focus:ring focus:outline-none focus:ring-secundaryColor focus:border sm:text-sm border border-gray-300 rounded-md w-32"
                                 />
                               </div>
                             </div>
                           </div>
 
-                          <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                          <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start  sm:border-t sm:border-gray-200 sm:pt-5">
                             <label
                               htmlFor="description"
                               className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
@@ -69,7 +69,7 @@ const Form = (props) => {
                                 rows={3}
                                 onChange={(e) => setDescription(e.target.value)}
                                 value={projectDescription}
-                                className="max-w-lg shadow-sm block w-full focus:ring focus:outline-none focus:ring-green-600 focus:border sm:text-sm border border-gray-300 rounded-md"
+                                className="max-w-lg shadow-sm block w-full focus:ring focus:outline-none focus:ring-secundaryColor focus:border sm:text-sm border border-gray-300 rounded-md"
                               />
                             </div>
                           </div>

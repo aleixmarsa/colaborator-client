@@ -133,7 +133,7 @@ const SignUpForm = (props) => {
                 type="submit"
                 // action={handleNewProjectBtn}
                 text="Sign Up"
-                color="green"
+                color="mainColor"
               />
             </div>
           </form>

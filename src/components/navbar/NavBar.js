@@ -14,7 +14,7 @@ const NavBar = (props) => {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
   const userNavigation = [
     { name: "Your Profile", action: "#" },
-    { name: "Sign out", action: logOutUser },
+    { name: "Log out", action: logOutUser },
   ];
   const { hasNewMessage, filterProjects } = props;
   const [search, setSearch] = useState("");
@@ -31,7 +31,11 @@ const NavBar = (props) => {
             <div className="relative flex items-center justify-between h-16">
               {/* Logo section */}
               <div className="flex items-center lg:px-0 xl:w-64">
-                <img  className =" w-32 xl:w-52"src="/images/logo.png" alt=""></img>
+                <img
+                  className=" w-32 xl:w-52"
+                  src="/images/logo.png"
+                  alt=""
+                ></img>
               </div>
               {location.pathname === "/projects" ? (
                 <SearchMenu
@@ -143,8 +147,8 @@ const NavBar = (props) => {
                         to="/login"
                         className={({ isActive }) =>
                           isActive
-                            ? "px-3 py-2 mx-1 rounded-md text-sm font-small text-white bg-green-600 hover:text-white"
-                            : "px-3 py-2 mx-1 rounded-md text-sm font-small text-white hover:text-e-100 hover:bg-green-600"
+                            ? "px-3 py-2 mx-1 text-md font-small text-buttonHover bg-mainColor hover:text-buttonHover"
+                            : "px-3 py-2 mx-1 text-md font-small hover:text-buttonHover text-white bg-mainColor "
                         }
                       >
                         LOG IN
@@ -153,8 +157,8 @@ const NavBar = (props) => {
                         to="/signup"
                         className={({ isActive }) =>
                           isActive
-                            ? "px-3 py-2 mx-1 rounded-md text-sm font-small text-white bg-green-600 hover:text-white"
-                            : "px-3 py-2 mx-1 rounded-md text-sm font-small text-white hover:text-e-100 hover:bg-green-600"
+                            ? "px-3 py-2 mx-1 rounded-md text-md font-small text-mainColor bg-buttonOrange hover: hover:text-mainColor"
+                            : "px-3 py-2 mx-1 rounded-md text-md font-small text-white bg-buttonOrange hover:bg-buttonOrange-low hover:text-mainColor"
                         }
                       >
                         SIGN UP

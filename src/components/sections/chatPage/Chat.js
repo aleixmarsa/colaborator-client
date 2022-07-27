@@ -103,7 +103,7 @@ const Chat = () => {
     <div className="drop-shadow-md h-5/6 w-full m-5 mt-3">
       <div className=" flex flex-col p-6 pt-4 h-full bg-white drop-shadow-2xl border border-black">
         <div className="grid grid-cols-5 grid-rows-1 h-full">
-          <div className="h-full col-span-1 mr-2">
+          <div className="h-full col-span-2 xl:col-span-1 lg:col-span-1 mr-2">
             <h2 className=" flex justify-center text-2xl flex-1 border-b-2 pb-2">CHATS</h2>
             <div>
               <h1 className=" text-left mt-2">PROJECTS</h1>
@@ -121,7 +121,7 @@ const Chat = () => {
                       textSizeRatio={1.9}
                       name={project.title}
                     />
-                    <p className="text-left">{project.title}</p>
+                    <p className="text-left truncate">{project.title}</p>
                     <hr className="mt-3" />
                   </div>
                 );
@@ -152,7 +152,7 @@ const Chat = () => {
               })}
             </div>
           </div>
-          <div className="col-span-4 flex h-full flex-col bg-white rounded  shadow-xl divide-y border list-none ml-2">
+          <div className="col-span-3 xl:col-span-4 lg:col-span-4 flex h-full flex-col bg-white rounded  shadow-xl divide-y border list-none ml-2">
               {showChat && (
                 <ChatBox chatId={showChat} chatReceiver={chatReceiver} isProjectChat={isProjectChat}/>
               )}

@@ -15,7 +15,7 @@ import LateralBar from "../components/sections/LateralBar";
 
 import { SocketContext } from "../context/socket.context";
 
-const API_URL = "http://localhost:5005";
+const API_URL = process.env.REACT_APP_API_URL;
 
 function ProjectCards(props) {
   const params = useParams();
@@ -51,9 +51,15 @@ function ProjectCards(props) {
       .catch((error) => console.log(error));
   };
 
-  socket.on("receive_render_tasks", (e) => {
-    getAllCards();
-  });
+  useEffect(() => {
+    socket.on("receive_render_tasks", (e) => {
+      getAllCards();
+    });
+
+  }, [socket]);
+
+
+
 
   useEffect(() => {
     getAllCards();
@@ -124,8 +130,8 @@ function ProjectCards(props) {
       <div className="flex flex-row h-full">
         <LateralBar projectId={projectId} />
         <DragDropContext onDragEnd={(result) => updateCards(result)}>
-          <div className=" container mx-auto mt-2">
-            <div className="drop-shadow-md grid grid-cols-1 ml-5 mr-5 md:grid-cols-1 lg:grid-cols-3 gap-6 mt-5 mb-10 ">
+          <div className=" container bg-neutral-50 mx-auto mt-2">
+            <div className="drop-shadow-md grid  grid-cols-1 ml-5 mr-5 md:grid-cols-1 lg:grid-cols-3 gap-6 mt-5 mb-10 ">
               {!cardForm ? (
                 <Droppable droppableId="todo">
                   {(droppableProvided) => (

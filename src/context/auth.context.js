@@ -64,14 +64,6 @@ function AuthProviderWrapper(props) {
 		verifyStoredToken();
 	}, []);
 
-	// useEffect(
-	// 	() => {
-	// 		if (error) {
-	// 			alert(error);
-	// 		}
-	// 	},
-	// 	[ error ]
-	// );
 
 	return (
 		<AuthContext.Provider value={{ isLoggedIn, isLoading, user, logInUser, logOutUser }}>

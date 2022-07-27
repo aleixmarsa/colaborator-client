@@ -16,9 +16,14 @@ const ProjectActivitySection = (props) => {
     getActivity();
   }, []);
 
-  socket.on("receive_render_activity", () => {
-    getActivity();
-  });
+
+  useEffect(() => {
+    socket.on("receive_render_activity", () => {
+      getActivity();
+    });
+
+  }, [socket]);
+
 
   const getActivity = async () => {
     try {
@@ -37,7 +42,7 @@ const ProjectActivitySection = (props) => {
     <div>
       {/* Activity feed */}
       <div className=" lg:min-w-0 lg:flex-1 mr-5 gap-6 pt-0 ">
-        <div className="p-6 pt-4 bg-white">
+        <div className="p-6 pt-4 bg-neutral-50">
           <div className=" flex items-center border-b-2 mb-3 pb-2  ">
             <h2 className="flex-1 text-xl">RECENT ACTIVITY</h2>
           </div>

@@ -99,7 +99,7 @@ const LogInForm = (props) => {
                 type="submit"
                 // action={handleNewProjectBtn}
                 text="Log In"
-                color="green"
+                color="mainColor"
               />
 
               <Link
