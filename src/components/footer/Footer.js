@@ -59,7 +59,7 @@ const Footer = () => {
       <div className="flex flex-col max-w-2xl mx-auto py-6 px-4 sm:px-6 md:flex md:items-center md:justify-between lg:px-8">
         <div className="mt-8 md:mt-0">
           <p className="text-center text-lg text-white">
-            &copy; 2022 co<span className="font-extrabold">lab</span>orator,
+            &copy; 2022 co<span className="font-extrabold text-buttonOrange">lab</span>orator,
             Inc. All rights reserved.
           </p>
         </div>
