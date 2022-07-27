@@ -122,8 +122,8 @@ const HomePage = () => {
                             </span>
                             </h1>
                             <p className="text-base text-gray-300 sm:text-xl lg:text-lg xl:text-xl">
-                            Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui Lorem cupidatat commodo. Elit
-                            sunt amet fugiat veniam occaecat fugiat.
+                            Collaborate, manage projects, and reach new productivity peaks. 
+                            From high rises to the home office, the way your team works is unique-accomplish it all.
                             </p>
                             
                         </div>
@@ -142,8 +142,8 @@ const HomePage = () => {
                 </div>
 
                 {/* Feature section with screenshot */}
-                <div className="relative bg-gray-50 pt-16 sm:pt-24 lg:pt-32">
-                    <div className="mx-auto max-w-md px-4 text-center sm:px-6 sm:max-w-3xl lg:px-8 lg:max-w-7xl">
+                <div className="relative bg-gray-50 pt-16 sm:pt-24 lg:pt-24">
+                    <div className="mx-auto max-w-xl px-4 text-center sm:px-6 sm:max-w-3xl lg:px-8 lg:max-w-7xl">
                     <div>
                         <h2 className="text-base font-semibold tracking-wider text-cyan-600 uppercase">Serverless</h2>
                         <p className="mt-2 text-3xl font-extrabold text-gray-900 tracking-tight sm:text-4xl">
@@ -157,7 +157,7 @@ const HomePage = () => {
                     <div className="mt-12 -mb-10 sm:-mb-24 lg:-mb-80">
                         <img
                         className="rounded-lg shadow-xl ring-1 ring-black ring-opacity-5"
-                        src="https://tailwindui.com/img/component-images/green-project-app-screenshot.jpg"
+                        src="/images/landingPage-colaborator-example.png"
                         alt=""
                         />
                     </div>
@@ -167,13 +167,13 @@ const HomePage = () => {
                 {/* Feature section with grid */}
                 <div className="relative bg-white py-16 sm:py-24 lg:py-32">
                     <div className="mx-auto max-w-md px-4 text-center sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl">
-                    <h2 className="text-base font-semibold tracking-wider text-cyan-600 uppercase">Deploy faster</h2>
+                    <h2 className="text-base font-semibold tracking-wider text-cyan-600 uppercase">Work faster</h2>
                     <p className="mt-2 text-3xl font-extrabold text-gray-900 tracking-tight sm:text-4xl">
-                        Everything you need to deploy your app
+                        Everything you need to optimize your projects
                     </p>
                     <p className="mt-5 max-w-prose mx-auto text-xl text-gray-500">
-                        Phasellus lorem quam molestie id quisque diam aenean nulla in. Accumsan in quis quis nunc, ullamcorper
-                        malesuada. Eleifend condimentum id viverra nulla.
+                    Powering a productive team means using a powerful tool (and plenty of snacks). From meetings and projects to events and goal setting, 
+                    Colaborator’s intuitive features give any team the ability to quickly set up and customize workflows for just about anything.
                     </p>
                     <div className="mt-12">
                         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -225,13 +225,12 @@ const HomePage = () => {
                                 <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
                             </svg>
                             <p className="mt-6 text-2xl font-medium text-white">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed urna nulla vitae laoreet augue.
-                                Amet feugiat est integer dolor auctor adipiscing nunc urna, sit.
+                                The best tool to work on projects. Fast and intuitive.
                             </p>
                             </div>
                             <footer className="mt-6">
                             <p className="text-base font-medium text-white">Judith Black</p>
-                            <p className="text-base font-medium text-cyan-100">CEO at PureInsights</p>
+                            <p className="text-base font-medium text-cyan-100">CTO at Bicinyap</p>
                             </footer>
                         </blockquote>
                         </div>
@@ -239,60 +238,15 @@ const HomePage = () => {
                     </div>
                 </div>
 
-                {/* Blog section */}
                 <div className="relative bg-gray-50 py-16 sm:py-24 lg:py-32">
                     <div className="relative">
-                    <div className="text-center mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl">
-                        <h2 className="text-base font-semibold tracking-wider text-cyan-600 uppercase">Learn</h2>
-                        <p className="mt-2 text-3xl font-extrabold text-gray-900 tracking-tight sm:text-4xl">
-                        Helpful Resources
-                        </p>
-                        <p className="mt-5 mx-auto max-w-prose text-xl text-gray-500">
-                        Phasellus lorem quam molestie id quisque diam aenean nulla in. Accumsan in quis quis nunc, ullamcorper
-                        malesuada. Eleifend condimentum id viverra nulla.
-                        </p>
-                    </div>
-                    <div className="mt-12 mx-auto max-w-md px-4 grid gap-8 sm:max-w-lg sm:px-6 lg:px-8 lg:grid-cols-3 lg:max-w-7xl">
-                        {blogPosts.map((post) => (
-                        <div key={post.id} className="flex flex-col rounded-lg shadow-lg overflow-hidden">
-                            <div className="flex-shrink-0">
-                            <img className="h-48 w-full object-cover" src={post.imageUrl} alt="" />
-                            </div>
-                            <div className="flex-1 bg-white p-6 flex flex-col justify-between">
-                            <div className="flex-1">
-                                <p className="text-sm font-medium text-cyan-600">
-                                <a href={post.category.href} className="hover:underline">
-                                    {post.category.name}
-                                </a>
-                                </p>
-                                <a href={post.href} className="block mt-2">
-                                <p className="text-xl font-semibold text-gray-900">{post.title}</p>
-                                <p className="mt-3 text-base text-gray-500">{post.preview}</p>
-                                </a>
-                            </div>
-                            <div className="mt-6 flex items-center">
-                                <div className="flex-shrink-0">
-                                <a href={post.author.href}>
-                                    <img className="h-10 w-10 rounded-full" src={post.author.imageUrl} alt={post.author.name} />
-                                </a>
-                                </div>
-                                <div className="ml-3">
-                                <p className="text-sm font-medium text-gray-900">
-                                    <a href={post.author.href} className="hover:underline">
-                                    {post.author.name}
-                                    </a>
-                                </p>
-                                <div className="flex space-x-1 text-sm text-gray-500">
-                                    <time dateTime={post.datetime}>{post.date}</time>
-                                    <span aria-hidden="true">&middot;</span>
-                                    <span>{post.readingLength} read</span>
-                                </div>
-                                </div>
-                            </div>
-                            </div>
+                        <div className="text-center mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl">
+                            <p className="mt-2 text-3xl font-extrabold text-gray-900 tracking-tight sm:text-4xl">
+                            Join Now!
+                            </p>
+
                         </div>
-                        ))}
-                    </div>
+
                     </div>
                 </div>
 
