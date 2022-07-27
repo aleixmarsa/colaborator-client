@@ -7,10 +7,6 @@ const addNewActivityService = (activity) => {
 };
 
 const getAllActivityService = (currentProjectsId) => {
-  console.log(
-    "🚀 ~ file: activity.services.js ~ line 11 ~ getAllActivityService ~ currentProjectsId",
-    currentProjectsId
-  );
   return service.get(`${URL}`, { params: { currentProjects: currentProjectsId } }); 
 };
 
