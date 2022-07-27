@@ -40,7 +40,7 @@ const Form = (props) => {
                               Title
                             </label>
                             <br/>
-                            <div className="sm:mt-0 sm:col-span-2">
+                            <div className="sm:mt-0 sm:col-span-3">
                               <div className="max-w-lg flex rounded-md shadow-sm ">
                                 <input
                                   type="text"
@@ -62,7 +62,7 @@ const Form = (props) => {
                               Description
                             </label>
                             <br/>
-                            <div className="mt-1 sm:mt-0 sm:col-span-2">
+                            <div className="mt-1 sm:mt-0 sm:col-span-3">
                               <textarea
                                 id="description"
                                 name="description"

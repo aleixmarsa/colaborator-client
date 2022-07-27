@@ -58,6 +58,10 @@ function CalendarPage () {
             let array = [];
             allCards.data.map((event) => {
 
+                console.log("Id del evento: ", event)
+                console.log("Id del proyecto: ", projectId)
+
+                if(event.project === projectId) {
                 
                 let startDate = event.limitDate + 'T07:00:00';
                 let endDate = event.limitDate + 'T08:00:00';
@@ -70,7 +74,8 @@ function CalendarPage () {
                     color: event.color
                 }
 
-                array.push(eventObject)  
+                array.push(eventObject)
+                } 
             })
             setEvents(array)           
         })

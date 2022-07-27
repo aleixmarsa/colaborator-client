@@ -100,7 +100,7 @@ const Chat = () => {
 
   console.log(showChat);
   return (
-    <div className="drop-shadow-md  h-5/6  m-5">
+    <div className="drop-shadow-md  h-5/6 w-full m-5">
       <div className=" flex flex-col p-6 pt-2 h-full bg-stone-50 ">
         <div className="grid grid-cols-5 grid-rows-1 h-full">
           <div className="h-full col-span-1 mr-2">
