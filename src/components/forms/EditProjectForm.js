@@ -24,7 +24,7 @@ const EditProjectForm = (props) => {
       const oneProject = response.data;
       setTitle(oneProject.title);
       setDescription(oneProject.description);
-      setTeam(oneProject.team);
+      setTeam([]);
     } catch (err) {
       console.log(err);
     }
