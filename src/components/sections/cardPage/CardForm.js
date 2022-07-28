@@ -49,7 +49,7 @@ function CardForm(props) {
       setCardColor("white");
       setCardStat("TODO");
       setCardLimitDate("");
-      handleCancelAddSaveFormBtn(e);
+      // handleCancelAddSaveFormBtn(e);
       setCardForm(false);
     } catch (err) {
       console.log(err);

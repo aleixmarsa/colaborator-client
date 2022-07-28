@@ -5,13 +5,11 @@ import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
 import { getAllUsersService } from "../../services/user.services";
 import Avatar from "react-avatar";
 
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 const SelectMenu = (props) => {
-  
   const [users, setUsers] = useState([]);
   const { team, setTeam } = props;
 
@@ -38,13 +36,8 @@ const SelectMenu = (props) => {
           <div className="mt-1 relative">
             <Listbox.Button className="relative min-h-42px w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline focus:outline-buttonHover sm:text-sm">
               {team.map((user) => (
-                <span className="flex items-center mt-1">
-                  <Avatar
-                    round
-                    size="20"
-                    textSizeRatio={2}
-                    name={user.name}
-                  />
+                <span key={user._id} className="flex items-center mt-1">
+                  <Avatar round size="20" textSizeRatio={2} name={user.name} />
                   <span className="ml-3 block truncate">{user.name}</span>
                 </span>
               ))}
@@ -69,7 +62,9 @@ const SelectMenu = (props) => {
                     key={person.id}
                     className={({ active }) =>
                       classNames(
-                        active ? "text-white bg-secundaryColor" : "text-gray-900",
+                        active
+                          ? "text-white bg-secundaryColor"
+                          : "text-gray-900",
                         "cursor-default select-none relative py-2 pl-3 pr-9"
                       )
                     }

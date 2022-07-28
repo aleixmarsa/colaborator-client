@@ -66,7 +66,7 @@ function LateralBar(props) {
       <div className="mt-1 flex-grow flex flex-col xl:mr-16">
         <nav className="flex-1 space-y-1" aria-label="Sidebar">
           {navigation.map((item) => (
-            <div className="flex flex-row ml-2 mt-2">
+            <div key={item.name}className="flex flex-row ml-2 mt-2">
               <item.icon
                 className={classNames(
                   item.current
@@ -79,7 +79,6 @@ function LateralBar(props) {
 
               <NavLink
                 to={`${item.link}`}
-                exact
                 className={() =>
                   [`${item.link}`].includes(pathname)
                     ? "flex flex-col px-3 py-2 mx-1 text-md font-medium text-buttonHover bg-neutral-50 hover:text-buttonHover"
