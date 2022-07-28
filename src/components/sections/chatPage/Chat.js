@@ -24,8 +24,8 @@ const Chat = () => {
   const [showChat, setShowChat] = useState("");
   const [chatReceiver, setChatReceiver] = useState("");
   const [isProjectChat, setIsProjectChat] = useState(false);
-
-
+  const [chatActive, setChatActive] = useState (null)
+ 
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
@@ -81,6 +81,7 @@ const Chat = () => {
       setShowChat(response.data._id);
       setChatReceiver(projectChat.title);
       setIsProjectChat(true);
+      setChatActive(projectChat._id);
 
     } catch (err) {
       console.log(err);
