@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   startDirectChatService,
   startProjectChatService,
 } from "../../../services/chat.services";
-import {
-  getProjectTeamsService,
-  getAllCurrentProjectsService,
-} from "../../../services/project.services";
+import { getAllCurrentProjectsService } from "../../../services/project.services";
 import { getAllUsersService } from "../../../services/user.services";
 
 import Avatar from "react-avatar";
@@ -16,19 +12,15 @@ import { useContext } from "react";
 import ChatBox from "../../../pages/chat/ChatBox";
 
 const Chat = () => {
+  
   const { user } = useContext(AuthContext);
 
   const [users, setUsers] = useState(null);
-  const [team, setTeam] = useState(null);
   const [projects, setProjects] = useState([]);
   const [showChat, setShowChat] = useState("");
   const [chatReceiver, setChatReceiver] = useState("");
   const [isProjectChat, setIsProjectChat] = useState(false);
 
-
-  function classNames(...classes) {
-    return classes.filter(Boolean).join(" ");
-  }
 
   useEffect(() => {
     getUsers();
@@ -64,7 +56,6 @@ const Chat = () => {
       setShowChat(response.data._id);
       setChatReceiver(userChat.name);
       setIsProjectChat(false);
-      setChatActive(userChat._id);
 
 
     } catch (err) {
@@ -97,9 +88,7 @@ const Chat = () => {
       <div className=" flex flex-col p-6 pt-4 h-full bg-white drop-shadow-2xl border border-black">
         <div className="grid grid-cols-5 grid-rows-1 h-full">
           <div className="h-full col-span-2 xl:col-span-1 lg:col-span-1 mr-2">
-            <h2 className=" flex justify-center text-2xl flex-1 border-b-2 pb-2">
-              CHATS
-            </h2>
+            <h2 className=" flex justify-center text-2xl flex-1 border-b-2 pb-2">CHATS</h2>
             <div>
               <h1 className=" text-left mt-2">PROJECTS</h1>
 
@@ -107,12 +96,7 @@ const Chat = () => {
                 return (
                   <div
                     key={project._id}
-                    className={classNames(
-                      chatActive === project._id
-                        ? "outline outline-buttonHover"
-                        : "",
-                      "flex justify-start gap-2 hover:bg-gray-300 bg-white mt-3 mr-3 cursor-pointer w-sm p-2 border-mainColor drop-shadow-xl text-mainColor"
-                    )}
+                    className="flex justify-start gap-2 hover:bg-gray-300 bg-white mt-3 mr-3 cursor-pointer w-sm p-2 border-1 border-mainColor drop-shadow-xl text-mainColor"
                     onClick={(e) => projectChatHandleClick(e, project)}
                   >
                     <Avatar
@@ -134,12 +118,7 @@ const Chat = () => {
                   return (
                     <div
                       key={chatUser._id}
-                      className={classNames(
-                        chatActive === chatUser._id
-                        ? "outline outline-buttonHover"
-                        : "",
-                      "flex justify-start gap-2 hover:bg-gray-300 bg-white mt-3 mr-3 cursor-pointer w-sm p-2 border-mainColor drop-shadow-xl text-mainColor"
-                    )}
+                      className="flex justify-start gap-2 hover:bg-gray-300 bg-white mt-3 mr-3 cursor-pointer w-sm p-2 border-1 border-mainColor drop-shadow-xl text-mainColor"
                       onClick={(e) => directChathandleClick(e, chatUser)}
                     >
                       <Avatar
@@ -157,13 +136,9 @@ const Chat = () => {
             </div>
           </div>
           <div className="col-span-3 xl:col-span-4 lg:col-span-4 flex h-full flex-col bg-white rounded  shadow-xl divide-y border list-none ml-2">
-            {showChat && (
-              <ChatBox
-                chatId={showChat}
-                chatReceiver={chatReceiver}
-                isProjectChat={isProjectChat}
-              />
-            )}
+              {showChat && (
+                <ChatBox chatId={showChat} chatReceiver={chatReceiver} isProjectChat={isProjectChat}/>
+              )}
           </div>
         </div>
       </div>
