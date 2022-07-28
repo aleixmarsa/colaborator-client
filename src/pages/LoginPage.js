@@ -2,20 +2,23 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "./../context/auth.context";
 import { loginService } from "../services/auth.services";
-import { useFormik, FormikProvider } from "formik";
 
 import LogInForm from "../components/forms/LogInForm";
 import NavBar from "../components/navbar/NavBar";
 import Footer from "../components/footer/Footer";
 
 function LoginPage(props, location) {
+
+  const [email, setEmail] = useState("admin@admin.com");
+  const [password, setPassword] = useState("Admin123!");
   const [errorMessage, setErrorMessage] = useState(undefined);
   const navigate = useNavigate();
   const { logInUser } = useContext(AuthContext);
+  const handleEmail = (e) => setEmail(e.target.value);
+  const handlePassword = (e) => setPassword(e.target.value);
 
-  const handleLoginSubmit = async (values) => {
-    const email = values.email;
-    const password = values.password;
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
     const requestBody = { email, password };
 
     try {
@@ -30,34 +33,19 @@ function LoginPage(props, location) {
     }
   };
 
-  const formik = useFormik({
-    initialValues: {
-      email: "admin@admin.com",
-      password: "Admin123!",
-    },
-    onSubmit: (values) => {
-      handleLoginSubmit(values);
-    },
-    validate: (values) => {
-      let errors = {};
-      if (values.email === "") {
-        errors.email = "Email is required";
-      }
-      if (values.password === "") {
-        errors.password = "Password is required";
-      }
-      return errors;
-    },
-  });
-
   return (
+    
     <div className="flex bg-neutral-50 flex-col h-screen mb-auto">
       <NavBar />
-      <FormikProvider value={formik}>
-        <LogInForm formik={formik} handleLoginSubmit={handleLoginSubmit} />
-        {errorMessage && <p className="error-message">{errorMessage}</p>}
-        <Footer />
-      </FormikProvider>
+      <LogInForm
+        handleLoginSubmit={handleLoginSubmit}
+        email={email}
+        handleEmail={handleEmail}
+        password={password}
+        handlePassword={handlePassword}
+      />
+			{errorMessage && <p className="error-message">{errorMessage}</p>}
+      <Footer />
     </div>
   );
 }

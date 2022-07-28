@@ -146,16 +146,6 @@ const NavBar = (props) => {
                 ) : (
                   <div className="flex items-center justify-end">
                     <div className="flex">
-                    <NavLink
-                        to="/"
-                        className={({ isActive }) =>
-                          isActive
-                            ? "px-3 py-2 mx-1 text-md font-small text-buttonHover bg-mainColor hover:text-buttonHover"
-                            : "px-3 py-2 mx-1 text-md font-small hover:text-buttonHover text-white bg-mainColor "
-                        }
-                      >
-                        <span className="hover:text-buttonHover">HOME</span>
-                      </NavLink>
                       <NavLink
                         to="/login"
                         className={({ isActive }) =>
@@ -190,7 +180,7 @@ const NavBar = (props) => {
                   href="/projects"
                   className={classNames(
                     location.pathname === "/projects"
-                      ? "text-buttonOrange bg-mainColor hover:text-buttonOrange"
+                    ? "text-buttonOrange bg-mainColor hover:text-buttonOrange"
                       : "text-white hover:text-white hover:bg-secundaryColor",
                     "block px-3 py-2 rounded-md text-base font-medium"
                   )}
@@ -228,18 +218,6 @@ const NavBar = (props) => {
           ) : (
             <Disclosure.Panel className="lg:hidden">
               <div className="px-2 pt-2 pb-3 space-y-1">
-              <Disclosure.Button
-                  as="a"
-                  href="/"
-                  className={classNames(
-                    location.pathname === "/"
-                      ? "text-buttonOrange bg-mainColor hover:text-buttonOrange"
-                      : "text-white hover:text-white hover:bg-secundaryColor",
-                    "block px-3 py-2 rounded-md text-base font-medium"
-                  )}
-                >
-                  HOME
-                </Disclosure.Button>
                 <Disclosure.Button
                   as="a"
                   href="/login"
