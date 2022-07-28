@@ -60,6 +60,7 @@ const Chat = () => {
       setShowChat(response.data._id);
       setChatReceiver(userChat.name);
       setIsProjectChat(false);
+      setChatActive(userChat._id);
 
 
     } catch (err) {
