@@ -57,11 +57,7 @@ function ProjectCards(props) {
     socket.on("receive_render_tasks", (e) => {
       getAllCards();
     });
-
   }, [socket]);
-
-
-
 
   useEffect(() => {
     getAllCards();
@@ -325,34 +321,34 @@ function ProjectCards(props) {
                                   draggableProvided.draggableProps.style.top =
                                     undefined;
                                 }
-                                return(
-                                <div
-                                  {...draggableProvided.draggableProps}
-                                  ref={draggableProvided.innerRef}
-                                  {...draggableProvided.dragHandleProps}
-                                >
-                                  <Card
-                                    title={card.title}
-                                    description={card.description}
-                                    stat={card.stat}
-                                    color={card.color}
-                                    cardId={card._id}
-                                    cardLimitDate={card.limitDate}
-                                    setDeleteModalHasRender={
-                                      setDeleteModalHasRender
-                                    }
-                                    setOpenDeleteModal={setOpenDeleteModal}
-                                    setDeleteTaskId={setDeleteTaskId}
-                                    setEditModalHasRender={
-                                      setEditModalHasRender
-                                    }
-                                    setOpenEditModal={setOpenDeleteModal}
-                                    setEditTaskId={seteditTaskId}
-                                    getAllCards={getAllCards}
-                                  />
-                                </div>
-                                
-                              )}}
+                                return (
+                                  <div
+                                    {...draggableProvided.draggableProps}
+                                    ref={draggableProvided.innerRef}
+                                    {...draggableProvided.dragHandleProps}
+                                  >
+                                    <Card
+                                      title={card.title}
+                                      description={card.description}
+                                      stat={card.stat}
+                                      color={card.color}
+                                      cardId={card._id}
+                                      cardLimitDate={card.limitDate}
+                                      setDeleteModalHasRender={
+                                        setDeleteModalHasRender
+                                      }
+                                      setOpenDeleteModal={setOpenDeleteModal}
+                                      setDeleteTaskId={setDeleteTaskId}
+                                      setEditModalHasRender={
+                                        setEditModalHasRender
+                                      }
+                                      setOpenEditModal={setOpenDeleteModal}
+                                      setEditTaskId={seteditTaskId}
+                                      getAllCards={getAllCards}
+                                    />
+                                  </div>
+                                );
+                              }}
                             </Draggable>
                           );
                         }

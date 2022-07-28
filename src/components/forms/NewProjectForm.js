@@ -41,6 +41,7 @@ const NewProjectForm = (props) => {
       setTitle("");
       setDescription("");
       setTeam([]);
+      props.getAllProjects();
       props.handleCancelAddSaveFormBtn(e);
     } catch (err) {
       console.log(err);

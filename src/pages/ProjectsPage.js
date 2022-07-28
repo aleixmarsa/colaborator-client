@@ -71,7 +71,6 @@ const ProjectsPage = () => {
   useEffect(() => {
     getAllProjects();
     socketConnection();
-  
   }, []);
 
   const socketConnection = () => {
