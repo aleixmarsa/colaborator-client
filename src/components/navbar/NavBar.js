@@ -151,7 +151,7 @@ const NavBar = (props) => {
                             : "px-3 py-2 mx-1 text-md font-small hover:text-buttonHover text-white bg-mainColor "
                         }
                       >
-                        LOG IN
+                        <span className="hover:text-buttonHover">LOG IN</span>
                       </NavLink>
                       <NavLink
                         to="/signup"
