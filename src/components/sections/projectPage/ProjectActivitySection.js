@@ -1,13 +1,16 @@
-import { getAllCurrentProjectsIdService } from "../../../services/project.services";
-import { getAllActivityService } from "../../../services/activity.services";
+/* eslint-disable jsx-a11y/no-redundant-roles */
 import { useState, useEffect } from "react";
-import { AuthContext } from "../../../context/auth.context";
 import { useContext } from "react";
 import Avatar from "react-avatar";
+
+import { getAllCurrentProjectsIdService } from "../../../services/project.services";
+import { getAllActivityService } from "../../../services/activity.services";
+
+import { AuthContext } from "../../../context/auth.context";
 import { SocketContext } from "../../../context/socket.context";
 
 const ProjectActivitySection = (props) => {
-  const [currentProjectsId, setCurrentProjectsId] = useState([]);
+
   const [activity, setActivity] = useState([]);
   const { user } = useContext(AuthContext);
   const socket = useContext(SocketContext);
@@ -18,6 +21,7 @@ const ProjectActivitySection = (props) => {
 
 
   useEffect(() => {
+
     socket.on("receive_render_activity", () => {
       getActivity();
     });
@@ -40,7 +44,6 @@ const ProjectActivitySection = (props) => {
 
   return (
     <div>
-      {/* Activity feed */}
       <div className=" lg:min-w-0 lg:flex-1 mr-5 gap-6 pt-0 ">
         <div className="p-6 pt-4 bg-neutral-50">
           <div className=" flex items-center border-b-2 mb-3 pb-2  ">
@@ -71,7 +74,6 @@ const ProjectActivitySection = (props) => {
                           key={item._id}
                           round
                           size="18"
-                          // color="gray"
                           textSizeRatio={1.9}
                           name={item.user.name}
                         />
@@ -92,21 +94,6 @@ const ProjectActivitySection = (props) => {
           </div>
         </div>
       </div>
-      {/* Activity feed */}
-      {/* <ProjectsListSection
-            title="Completed Projects"
-            filteredProjects={filteredCompletedProjects}
-            setFilteredProjects={setFilteredCompletedProjects}
-            classNames={classNames}
-            editProject={editProject}
-            setEditProject={setEditProject}
-            setNewProject={setNewProject}
-            setId={setId}
-            setModalHasRender={setModalHasRender}
-            setOpenDeleteModal={setOpenDeleteModal}
-            setProjectTitle={setProjectTitle}
-            getAllProjects={getAllProjects}
-          /> */}
     </div>
   );
 };

@@ -10,7 +10,7 @@ function PrivateRoute(props) {
     return (
       <button
         type="button"
-        className="absolute left-0 right-0 top-0 bottom-0 m-auto w-52 h-16 inline-flex items-center justify-center px-5 py-5 font-normal text-2xl shadow rounded-md text-white bg-green-700 transition ease-in-out duration-150 cursor-not-allowed"
+        className="absolute left-0 right-0 top-0 bottom-0 m-auto w-52 h-16 inline-flex items-center justify-center px-5 py-5 font-normal text-2xl shadow rounded-md text-white bg-mainColor transition ease-in-out duration-150 cursor-not-allowed"
         disabled=""
       >
         <svg

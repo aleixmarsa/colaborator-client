@@ -1,10 +1,11 @@
 import { SearchIcon} from "@heroicons/react/solid";
 
 const SearchMenu = (props) => {
-    const { search, handleSearch} = props
+
+    const { search, handleSearch} = props;
+    
     return (
         <>
-          {/* Search section */}
             <div className="flex-1 flex justify-center">
               <div className="w-2/3 px-2 ">
                 <label htmlFor="search" className="sr-only">

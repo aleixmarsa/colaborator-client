@@ -1,20 +1,20 @@
 import { useState, useEffect } from "react";
-import SortMenu from "../menus/SortMenu";
-import Form from "./Form";
-import {
-  getProjectDetailsService,
-  updateProjectService,
-} from "../../services/project.services";
-import { AuthContext } from "../../context/auth.context";
 import { useContext } from "react";
+
+import Form from "./Form";
+import { getProjectDetailsService, updateProjectService } from "../../services/project.services";
+import { AuthContext } from "../../context/auth.context";
 import { addNewActivityService } from "../../services/activity.services";
 import { SocketContext } from "../../context/socket.context";
 
 const EditProjectForm = (props) => {
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [team, setTeam] = useState([]);
+
   const { projectId, handleCancelAddSaveFormBtn} = props;
+
   const { user } = useContext(AuthContext);
   const socket = useContext(SocketContext)
 
@@ -24,7 +24,7 @@ const EditProjectForm = (props) => {
       const oneProject = response.data;
       setTitle(oneProject.title);
       setDescription(oneProject.description);
-      setTeam(oneProject.team);
+      setTeam([]);
     } catch (err) {
       console.log(err);
     }
@@ -56,7 +56,6 @@ const EditProjectForm = (props) => {
       socket.emit("render_projects");
 
       handleCancelAddSaveFormBtn(e);
-      // getAllProjects();
     } catch (err) {
       console.log(err);
     }
@@ -68,7 +67,7 @@ const EditProjectForm = (props) => {
       onSubmit={handleSubmit}
       cancelBtntext="Cancel"
       cancelBtnAction={handleCancelAddSaveFormBtn}
-      acceptBtnText="Save Changes"
+      acceptBtnText="Save"
       projectTitle={title}
       projectDescription={description}
       setTitle={setTitle}

@@ -2,9 +2,11 @@ import { Menu } from "@headlessui/react";
 import { ChevronDownIcon, SortAscendingIcon } from "@heroicons/react/solid";
 
 const SortMenu = (props) => {
+
   const { classNames, filteredProjects, setFilteredProjects } = props;
 
   const sortProjects = (type) => {
+    
     let filteredProjectsCopy = [...filteredProjects];
 
 
@@ -16,7 +18,6 @@ const SortMenu = (props) => {
         if (a.title < b.title) {
           return -1;
         }
-        // a must be equal to b
         return 0;
       });
     }else if(type === "dateCreated"){
@@ -27,7 +28,6 @@ const SortMenu = (props) => {
         if (a.createdAt < b.createdAt) {
           return 1;
         }
-        // a must be equal to b
         return 0;
       });
     }else if(type === "lastUpdate"){
@@ -38,7 +38,6 @@ const SortMenu = (props) => {
         if (a.updatedAt < b.updatedAt) {
           return 1;
         }
-        // a must be equal to b
         return 0;
       });
     }
@@ -47,7 +46,7 @@ const SortMenu = (props) => {
 
   return (
     <Menu as="div" className="relative">
-      <Menu.Button className="w-full bg-white border border-gray-300 rounded-md shadow-sm px-4 py-2 inline-flex justify-center text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+      <Menu.Button className="w-full bg-white border border-gray-300 rounded-md shadow-sm px-4 py-2 inline-flex justify-center text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline focus:outline-buttonHover ">
         <SortAscendingIcon
           className="mr-3 h-5 w-5 text-gray-400"
           aria-hidden="true"
@@ -65,7 +64,7 @@ const SortMenu = (props) => {
               <button
                 onClick={() => sortProjects("name")}
                 className={classNames(
-                  active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                  active ? "bg-secundaryColor text-white" : "text-black",
                   "block px-4 py-2 text-sm w-full"
                 )}
               >
@@ -78,7 +77,7 @@ const SortMenu = (props) => {
               <button
                 onClick={() => sortProjects("lastUpdate")}
                 className={classNames(
-                  active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                  active ? "bg-secundaryColor text-white" : "text-black",
                   "block px-4 py-2 text-sm w-full"
                 )}
               >
@@ -91,7 +90,7 @@ const SortMenu = (props) => {
               <button
                 onClick={() => sortProjects("dateCreated")}
                 className={classNames(
-                  active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                  active ? "bg-secundaryColor text-white" : "text-gray-700",
                   "block px-4 py-2 text-sm w-full"
                 )}
               >

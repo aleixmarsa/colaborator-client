@@ -11,6 +11,7 @@ function classNames(...classes) {
 }
 
 const SelectMenu = (props) => {
+  
   const [users, setUsers] = useState([]);
   const { team, setTeam } = props;
 
@@ -35,18 +36,12 @@ const SelectMenu = (props) => {
             Invite team
           </Listbox.Label>
           <div className="mt-1 relative">
-            <Listbox.Button className="relative min-h-42px w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500 sm:text-sm">
+            <Listbox.Button className="relative min-h-42px w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline focus:outline-buttonHover sm:text-sm">
               {team.map((user) => (
                 <span className="flex items-center mt-1">
-                  {/* <img
-                    src={user.avatar}
-                    alt=""
-                    className="flex-shrink-0 h-6 w-6 rounded-full"
-                  /> */}
                   <Avatar
                     round
                     size="20"
-                    // color="gray"
                     textSizeRatio={2}
                     name={user.name}
                   />
@@ -74,7 +69,7 @@ const SelectMenu = (props) => {
                     key={person.id}
                     className={({ active }) =>
                       classNames(
-                        active ? "text-white bg-green-600" : "text-gray-900",
+                        active ? "text-white bg-secundaryColor" : "text-gray-900",
                         "cursor-default select-none relative py-2 pl-3 pr-9"
                       )
                     }
@@ -90,11 +85,6 @@ const SelectMenu = (props) => {
                             textSizeRatio={1.75}
                             name={person.name}
                           />
-                          {/* <img
-                            src={person.avatar}
-                            alt=""
-                            className="flex-shrink-0 h-6 w-6 rounded-full"
-                          /> */}
                           <span
                             className={classNames(
                               selected ? "font-semibold" : "font-normal",
@@ -108,7 +98,7 @@ const SelectMenu = (props) => {
                         {selected ? (
                           <span
                             className={classNames(
-                              active ? "text-white" : "text-green-600",
+                              active ? "text-white" : "text-buttonHover",
                               "absolute inset-y-0 right-0 flex items-center pr-4"
                             )}
                           >

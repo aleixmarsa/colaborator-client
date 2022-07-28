@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   startDirectChatService,
   startProjectChatService,
 } from "../../../services/chat.services";
-import {
-  getProjectTeamsService,
-  getAllCurrentProjectsService,
-} from "../../../services/project.services";
+import { getAllCurrentProjectsService } from "../../../services/project.services";
 import { getAllUsersService } from "../../../services/user.services";
 
 import Avatar from "react-avatar";
@@ -16,16 +12,19 @@ import { useContext } from "react";
 import ChatBox from "../../../pages/chat/ChatBox";
 
 const Chat = () => {
+  
   const { user } = useContext(AuthContext);
 
   const [users, setUsers] = useState(null);
-  const [team, setTeam] = useState(null);
   const [projects, setProjects] = useState([]);
   const [showChat, setShowChat] = useState("");
   const [chatReceiver, setChatReceiver] = useState("");
   const [isProjectChat, setIsProjectChat] = useState(false);
-
-  const navigate = useNavigate();
+  const [chatActive, setChatActive] = useState (null)
+ 
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(" ");
+  }
 
   useEffect(() => {
     getUsers();
@@ -45,50 +44,41 @@ const Chat = () => {
     try {
       const response = await getAllCurrentProjectsService(user._id);
       setProjects(response.data);
-      console.log(
-        "🚀 ~ file: Chat.js ~ line 43 ~ getProjects ~ projects",
-        projects
-      );
+
     } catch (err) {
       console.log(err);
     }
   };
 
-  const getTeam = async () => {
-    try {
-      const response = await getProjectTeamsService();
-      setTeam(response.data);
-      console.log("TEAM: ", team);
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const directChathandleClick = async (e, userChat) => {
+
     e.preventDefault();
-    console.log(`Trying to start chat with ${userChat.name}`);
+
     try {
       const response = await startDirectChatService(userChat._id);
       setShowChat(response.data._id);
       setChatReceiver(userChat.name);
       setIsProjectChat(false);
+      setChatActive(userChat._id);
 
-      //   navigate(`/chat/${response.data._id}`);
+
     } catch (err) {
       console.log(err);
     }
   };
 
   const projectChatHandleClick = async (e, projectChat) => {
+
     e.preventDefault();
-    console.log(`Trying to start chat with ${projectChat.title}`);
+
     try {
       const response = await startProjectChatService(projectChat._id);
       setShowChat(response.data._id);
       setChatReceiver(projectChat.title);
       setIsProjectChat(true);
+      setChatActive(projectChat._id);
 
-      //   navigate(`/chat/${response.data._id}`);
     } catch (err) {
       console.log(err);
     }
@@ -112,7 +102,12 @@ const Chat = () => {
                 return (
                   <div
                     key={project._id}
-                    className="flex justify-start gap-2 hover:bg-gray-300 bg-white mt-3 mr-3 cursor-pointer w-sm p-2 border-1 border-mainColor drop-shadow-xl text-mainColor"
+                    className={classNames(
+                      chatActive === project._id
+                        ? "outline outline-buttonHover"
+                        : "",
+                      "flex justify-start gap-2 bg-white mt-3 mr-3 cursor-pointer w-sm p-2 border-mainColor drop-shadow-xl text-mainColor"
+                    )}
                     onClick={(e) => projectChatHandleClick(e, project)}
                   >
                     <Avatar
@@ -134,13 +129,17 @@ const Chat = () => {
                   return (
                     <div
                       key={chatUser._id}
-                      className="flex justify-start gap-2 hover:bg-gray-300 bg-white mt-3 mr-3 cursor-pointer w-sm p-2 border-1 border-mainColor drop-shadow-xl text-mainColor"
+                      className={classNames(
+                        chatActive === chatUser._id
+                          ? "outline outline-buttonHover"
+                          : "",
+                        "flex justify-start gap-2 hover:bg-gray-300 bg-white mt-3 mr-3 cursor-pointer w-sm p-2 border-mainColor drop-shadow-xl text-mainColor"
+                      )}
                       onClick={(e) => directChathandleClick(e, chatUser)}
                     >
                       <Avatar
                         round
                         size="25"
-                        //   color="gray"
                         textSizeRatio={1.9}
                         name={chatUser.name}
                       />

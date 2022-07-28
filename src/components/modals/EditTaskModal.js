@@ -1,10 +1,13 @@
 import { Fragment, useEffect, useRef, useState } from "react";
+import { useContext } from "react";
+
 import { Dialog, Transition } from "@headlessui/react";
+
 import { getTaskDetailsService } from "../../services/task.services";
 import { addNewActivityService } from "../../services/activity.services";
 import { updateTaskService } from "../../services/task.services";
 import { AuthContext } from "../../context/auth.context";
-import { useContext } from "react";
+
 import { SocketContext } from "../../context/socket.context";
 
 const EditTaskModal = (props) => {
@@ -16,7 +19,7 @@ const EditTaskModal = (props) => {
     const { user } = useContext(AuthContext);
     const cancelButtonRef = useRef(null);
     const socket = useContext(SocketContext)
-
+    const {editTaskId, projectId, setEditModalHasRender, editModalHasRender} = props
     const getTask = async (editTaskId) => {
         try {
             const response = await getTaskDetailsService(editTaskId);
@@ -30,12 +33,12 @@ const EditTaskModal = (props) => {
     };
 
     useEffect(() => {
-        getTask(props.editTaskId);
-    }, [props.editTaskId]);
+        getTask(editTaskId);
+    }, [editTaskId]);
 
     const handleSubmitEditForm = async (e) => {
         const body = {
-            taskId: props.editTaskId,
+            taskId: editTaskId,
             title: title,
             description: description,
             color: color,
@@ -44,27 +47,27 @@ const EditTaskModal = (props) => {
 
         const activity = {
             title: "Task info edited",
-            project: props.projectId,
+            project: projectId,
             user: user._id,
         };
 
         try {
-            await updateTaskService(props.editTaskId, body);
+            await updateTaskService(editTaskId, body);
             await addNewActivityService(activity);
             socket.emit("render_tasks");
-            props.setEditModalHasRender(false);
+            setEditModalHasRender(false);
         } catch (err) {
             console.log(err);
         }
     };
 
   return (
-    <Transition.Root show={props.editModalHasRender} as={Fragment}>
+    <Transition.Root show={editModalHasRender} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-10"
         initialFocus={cancelButtonRef}
-        onClose={props.setEditModalHasRender}
+        onClose={setEditModalHasRender}
       >
         <Transition.Child
           as={Fragment}
@@ -113,11 +116,9 @@ const EditTaskModal = (props) => {
                             autoComplete="given-name"
                             onChange={(e) => setTitle(e.target.value)}
                             value={title}
-                            className="max-w-lg block w-full h-8 border-2 shadow-xl sm:max-w-xs sm:text-sm rounded-md"
+                            className="max-w-lg block w-full h-8 focus:outline focus:outline-buttonHover shadow-xl sm:max-w-xs sm:text-sm rounded-md"
                           />
                         </div>
-
-                      
                     </div>
 
                     <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -134,7 +135,7 @@ const EditTaskModal = (props) => {
                           autoComplete="country-name"
                           value={color}
                           onChange={(e) => setColor(e.target.value)}
-                          className="max-w-lg block focus:ring-green-500 focus:border-green-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+                          className="max-w-lg block focus:outline focus:outline-buttonHover w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
                         >
                           <option value="white">White</option>
                           <option value="yellow">Yellow</option>
@@ -158,13 +159,12 @@ const EditTaskModal = (props) => {
                             <input
                               type="date"
                               name="limitDate"
-                              className="max-w-lg block focus:ring-green-500 focus:border-green-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+                              className="max-w-lg blockfocus:outline focus:outline-buttonHover w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
                               onChange={(e) => setCardLimitDate(e.target.value)}
                             ></input>
                           </div>
                         </div>
                       </div>
-
                   </div>
                 </div>
 
@@ -172,14 +172,14 @@ const EditTaskModal = (props) => {
                   <button
                     type="button"
                     className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-mainColor text-base font-medium text-white hover:bg-secundaryColor focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
-                    onClick={() => handleSubmitEditForm(props.EditTaskId)}
+                    onClick={() => handleSubmitEditForm(editTaskId)}
                   >
-                    Edit
+                    Save
                   </button>
                   <button
                     type="button"
-                    className="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                    onClick={() => props.setEditModalHasRender(false)}
+                    className="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline focus:outline-buttonHover sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                    onClick={() => setEditModalHasRender(false)}
                     ref={cancelButtonRef}
                   >
                     Cancel

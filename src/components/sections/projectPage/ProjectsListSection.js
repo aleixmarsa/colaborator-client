@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { updateProjectService } from "../../../services/project.services";
+
 
 import SortMenu from "../../menus/SortMenu";
 import Project from "./Project";
@@ -7,8 +7,8 @@ import Project from "./Project";
 const ProjectsListSection = (props) => {
 
   const {
-    title,
     filteredProjects,
+    getAllProjects,
     setFilteredProjects,
     classNames,
     editProjectForm,
@@ -19,32 +19,9 @@ const ProjectsListSection = (props) => {
     setProjectTitle,
   } = props;
 
-  let bgColor = "";
-  if (title === "Current Projects") {
-    bgColor = "bg-white";
-  } else if (title === "Completed Projects") {
-    bgColor = "bg-gray-100";
-  }
-
-  const handleMoveBtn = async (e, id) => {
-    let isActive = false;
-    if (title === "Completed Projects") {
-      isActive = true;
-    }
-    e.preventDefault();
-    const body = {
-      active: isActive,
-    };
-
-    try {
-      await updateProjectService(id, body);
-      props.getAllProjects();
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   return (
+
     <div className="drop-shadow-xl lg:min-w-0 lg:flex-1 ml-5 mr-5 gap-6 mt-5 mb-10 ">
       <div className="p-2 bg-white border border-black">
         <div className=" flex items-center border-b-2 mb-5 pb-4">

@@ -1,4 +1,4 @@
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationIcon } from "@heroicons/react/outline";
 import { deleteTaskService } from "../../services/task.services";
@@ -8,16 +8,16 @@ import { useContext } from "react";
 import { SocketContext } from "../../context/socket.context";
 
 const DeleteTaskModal = (props) => {
+
   const cancelButtonRef = useRef(null);
+
   const { user } = useContext(AuthContext);
-  const socket = useContext(SocketContext)
-
+  const socket = useContext(SocketContext);
+  const {title, projectId, deleteTaskId, deleteModalHasRender,  setDeleteModalHasRender} = props
   const deleteTask = async (id) => {
-
-
     const activity = {
       title: "Task deleted",
-      project: props.projectId,
+      project: projectId,
       user: user._id,
     };
 
@@ -26,20 +26,19 @@ const DeleteTaskModal = (props) => {
       socket.emit("render_tasks");
       await addNewActivityService(activity);
 
-      props.setDeleteModalHasRender(false);
+      setDeleteModalHasRender(false);
     } catch (err) {
       console.log(err);
     }
-
   };
 
   return (
-    <Transition.Root show={props.deleteModalHasRender} as={Fragment}>
+    <Transition.Root show={deleteModalHasRender} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-10"
         initialFocus={cancelButtonRef}
-        onClose={props.setDeleteModalHasRender}
+        onClose={setDeleteModalHasRender}
       >
         <Transition.Child
           as={Fragment}
@@ -78,12 +77,14 @@ const DeleteTaskModal = (props) => {
                         as="h3"
                         className="text-lg leading-6 font-medium text-gray-900"
                       >
-                        Delete task:{" "}
-                        <span className="text-gray-400">{props.title}</span>
+                        Delete task{" "}
+                        <span className="text-gray-400">{title}</span>
                       </Dialog.Title>
                       <div className="mt-2">
                         <p className="text-sm text-gray-500">
-                          Are you sure you want to delete this task?
+                          Are you sure you want to delete this task? All of its
+                          data will be permanently removed. This action cannot
+                          be undone.
                         </p>
                       </div>
                     </div>
@@ -93,14 +94,14 @@ const DeleteTaskModal = (props) => {
                   <button
                     type="button"
                     className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
-                    onClick={() => deleteTask(props.deleteTaskId)}
+                    onClick={() => deleteTask(deleteTaskId)}
                   >
                     Delete Task
                   </button>
                   <button
                     type="button"
                     className="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                    onClick={() => props.setDeleteModalHasRender(false)}
+                    onClick={() => setDeleteModalHasRender(false)}
                     ref={cancelButtonRef}
                   >
                     Cancel

@@ -1,5 +1,7 @@
-import React, { useState, useEffect,useNavigate } from 'react';
+import React, { useState, useEffect } from 'react';
+
 import axios from 'axios';
+
 const API_URL = process.env.REACT_APP_API_URL;
 
 const AuthContext = React.createContext();
@@ -8,7 +10,6 @@ function AuthProviderWrapper(props) {
 	const [ isLoggedIn, setIsLoggedIn ] = useState(false);
 	const [ isLoading, setIsLoading ] = useState(true);
 	const [ user, setUser ] = useState(null);
-	// const [ error, setError ] = useState();
 
 	const verifyStoredToken = () => {
 		// Get the stored token from the localStorage
@@ -43,11 +44,11 @@ function AuthProviderWrapper(props) {
 		verifyStoredToken();
 
 		/* 
-      After saving the token in the localStorage we call the
-      function `verifyStoredToken` which sends a new request to the
-      server to verify the token. Upon receiving the response the function 
-      `verifyStoredToken` updates the state variables `isLoggedIn`, `user` and `isLoading`
-    */
+		*	After saving the token in the localStorage we call the
+		*	function `verifyStoredToken` which sends a new request to the
+		*	server to verify the token. Upon receiving the response the function 
+		*	`verifyStoredToken` updates the state variables `isLoggedIn`, `user` and `isLoading`
+    	*/
 	};
 
 	const logOutUser = () => {

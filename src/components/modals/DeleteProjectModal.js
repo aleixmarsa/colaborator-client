@@ -5,17 +5,10 @@ import { ExclamationIcon } from "@heroicons/react/outline";
 import { deleteProjectService } from "../../services/project.services";
 import { SocketContext } from "../../context/socket.context";
 const DeletProjectModal = (props) => {
-  const {
-    projectId,
-    projectTitle,
-    setModalHasRender,
-    modalHasRender,
-  } = props;
-  const socket = useContext(SocketContext)
+  const { projectId, projectTitle, setModalHasRender, modalHasRender } = props;
+  const socket = useContext(SocketContext);
 
   const deleteProject = async (id) => {
-
-
     try {
       await deleteProjectService(id);
       socket.emit("render_projects");
@@ -27,12 +20,9 @@ const DeletProjectModal = (props) => {
   };
 
   return (
+    
     <Transition.Root show={modalHasRender} as={Fragment}>
-      <Dialog
-        as="div"
-        className="relative z-10"
-        onClose={setModalHasRender}
-      >
+      <Dialog as="div" className="relative z-10" onClose={setModalHasRender}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -86,14 +76,14 @@ const DeletProjectModal = (props) => {
                 <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                   <button
                     type="button"
-                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                    className="mt-3 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
                     onClick={() => deleteProject(projectId)}
                   >
                     Delete Project
                   </button>
                   <button
                     type="button"
-                    className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                    className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700  sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                     onClick={() => setModalHasRender(false)}
                   >
                     Cancel

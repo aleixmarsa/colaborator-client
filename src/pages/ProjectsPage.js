@@ -4,21 +4,20 @@ import DeletProjectModal from "../components/modals/DeleteProjectModal";
 import ProjectManagementSection from "../components/sections/projectPage/ProjectManagementSection";
 import ProjectsListSection from "../components/sections/projectPage/ProjectsListSection";
 import ProjectActivitySection from "../components/sections/projectPage/ProjectActivitySection";
+
 import { getAllCurrentProjectsService } from "../services/project.services";
 import { AuthContext } from "../context/auth.context";
 import { useState, useEffect, useContext } from "react";
 import { SocketContext } from "../context/socket.context";
+
 import io from "socket.io-client";
 
-
-// import io from "socket.io-client";
-
-// let socket;
 const classNames = (...classes) => {
   return classes.filter(Boolean).join(" ");
 };
 
 const ProjectsPage = () => {
+  
   const [projectId, setProjectId] = useState(0);
   const [projectTitle, setProjectTitle] = useState("");
   const [newProjectForm, setNewProjectForm] = useState(false);
@@ -72,7 +71,6 @@ const ProjectsPage = () => {
   useEffect(() => {
     getAllProjects();
     socketConnection();
-  
   }, []);
 
   const socketConnection = () => {

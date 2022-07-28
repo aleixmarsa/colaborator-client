@@ -1,19 +1,12 @@
 import NavBar from "../components/navbar/NavBar";
 import { Link } from "react-router-dom";
 
-/* This example requires Tailwind CSS v2.0+ */
 const ErrorPage = () => {
   return (
     <div>
+
       <NavBar />
-      {/*
-          This example requires updating your template:
-  
-          ```
-          <html class="h-full">
-          <body class="h-full">
-          ```
-        */}
+
       <div className="min-h-full pt-16 pb-12 flex flex-col bg-white">
         <main className="flex-grow flex flex-col justify-center max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
           <div className="py-16">

@@ -1,8 +1,9 @@
 import io from "socket.io-client";
 import React from 'react';
-import { Outlet } from "react-router-dom";
+
 const storedToken = localStorage.getItem("authToken");
 const API_URL = process.env.REACT_APP_API_URL;
+
 export const socket = io.connect(API_URL, {
     extraHeaders: { Authorization: `Bearer ${storedToken}` },
   });
