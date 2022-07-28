@@ -1,14 +1,10 @@
 import Button from "../buttons/Button";
 import SelectMenu from "../menus/SelectMenu";
-import { Field, ErrorMessage } from "formik";
-import { ExclamationCircleIcon } from "@heroicons/react/solid";
 
 const Form = (props) => {
   const {
     formTitle,
-    formik,
     onSubmit,
-    teamError,
     cancelBtntext,
     cancelBtnAction,
     acceptBtnText,
@@ -17,12 +13,8 @@ const Form = (props) => {
     setTitle,
     setDescription,
     team,
-    setTeam,
+    setTeam
   } = props;
-
-  function classNames(...classes) {
-    return classes.filter(Boolean).join(" ");
-  }
 
   return (
     <div className="h-full py-6 sm:pl-6 lg:pl-8 xl:pl-0">
@@ -35,7 +27,7 @@ const Form = (props) => {
                   <h1 className="flex-1 text-lg font-medium">{formTitle}</h1>
                   <form
                     className="space-y-8 divide-y divide-gray-200 "
-                    onSubmit={formik.handleSubmit}
+                    onSubmit={onSubmit}
                   >
                     <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
                       <div>
@@ -47,39 +39,18 @@ const Form = (props) => {
                             >
                               Title
                             </label>
-                            <br />
+                            <br/>
                             <div className="sm:mt-0 sm:col-span-3">
-                              <div className="max-w-lg relative  flex rounded-md shadow-sm ">
-                                <Field
+                              <div className="max-w-lg flex rounded-md shadow-sm ">
+                                <input
                                   type="text"
                                   name="title"
                                   id="title"
-                                  onChange={formik.handleChange}
-                                  onBlur={formik.handleBlur}
-                                  value={formik.values.title}
-                                  className={classNames(
-                                    formik.errors.title
-                                      ? "focus:outline-red-500"
-                                      : "focus:outline-buttonHover",
-                                    "flex-1 block w-full focus:outline  focus:border sm:text-sm border border-gray-300 rounded-md w-32"
-                                  )}
+                                  onChange={(e) => setTitle(e.target.value)} 
+                                  value={projectTitle}
+                                  className="flex-1 block w-full focus:outline focus:outline-buttonHover focus:border sm:text-sm border border-gray-300 rounded-md w-32"
                                 />
-                                {formik.errors.title ? (
-                                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                    <ExclamationCircleIcon
-                                      className="h-5 w-5 text-red-500"
-                                      aria-hidden="true"
-                                    />
-                                  </div>
-                                ) : (
-                                  <p></p>
-                                )}
                               </div>
-                              <ErrorMessage
-                                component="div"
-                                name="title"
-                                className="mt-2 text-sm text-red-600"
-                              />
                             </div>
                           </div>
 
@@ -90,45 +61,21 @@ const Form = (props) => {
                             >
                               Description
                             </label>
-                            <br />
-                            <div className="sm:mt-0 sm:col-span-3">
-                              <div className="max-w-lg relative  flex rounded-md shadow-sm ">
-                                <Field
-                                  as="textarea"
-                                  id="description"
-                                  name="description"
-                                  rows={3}
-                                  onChange={formik.handleChange}
-                                  onBlur={formik.handleBlur}
-                                  value={formik.values.description}
-                                  className={classNames(
-                                    formik.errors.title
-                                      ? "focus:outline-red-500"
-                                      : "focus:outline-buttonHover",
-                                    "max-w-lg shadow-sm block w-full focus:outline focus:border sm:text-sm border border-gray-300 rounded-md"
-                                  )}
-                                />
-                                {formik.errors.description ? (
-                                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                    <ExclamationCircleIcon
-                                      className="h-5 w-5 text-red-500"
-                                      aria-hidden="true"
-                                    />
-                                  </div>
-                                ) : (
-                                  <p></p>
-                                )}
-                              </div>
-                              <ErrorMessage
-                                component="div"
+                            <br/>
+                            <div className="mt-1 sm:mt-0 sm:col-span-3">
+                              <textarea
+                                id="description"
                                 name="description"
-                                className="mt-2 w-full text-sm text-red-600"
+                                rows={3}
+                                onChange={(e) => setDescription(e.target.value)}
+                                value={projectDescription}
+                                className="max-w-lg shadow-sm block w-full focus:outline focus:outline-buttonHover focus:border sm:text-sm border border-gray-300 rounded-md"
                               />
                             </div>
                           </div>
                         </div>
                       </div>
-                      <SelectMenu team={team} setTeam={setTeam} teamError={teamError}/>
+                      <SelectMenu team={team} setTeam={setTeam}/>
                     </div>
 
                     <div className="pt-5">

@@ -4,15 +4,16 @@ import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
 import { getAllUsersService } from "../../services/user.services";
 import Avatar from "react-avatar";
-import { ExclamationCircleIcon } from "@heroicons/react/solid";
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 const SelectMenu = (props) => {
+  
   const [users, setUsers] = useState([]);
-  const { team, setTeam, teamError } = props;
+  const { team, setTeam } = props;
 
   const getAllUsers = async () => {
     try {
@@ -35,28 +36,15 @@ const SelectMenu = (props) => {
             Invite team
           </Listbox.Label>
           <div className="mt-1 relative">
-            <Listbox.Button
-              className={classNames(
-                teamError
-                  ? "focus:outline-red-500"
-                  : "focus:outline-buttonHover",
-                "relative min-h-42px w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline focus:outline-buttonHover sm:text-sm"
-              )}
-            >
-              {teamError ? (
-                <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                  <ExclamationCircleIcon
-                    className="h-5 w-5 text-red-500"
-                    aria-hidden="true"
-                  />
-                </div>
-              ) : (
-                <p></p>
-              )}
-
+            <Listbox.Button className="relative min-h-42px w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline focus:outline-buttonHover sm:text-sm">
               {team.map((user) => (
                 <span className="flex items-center mt-1">
-                  <Avatar round size="20" textSizeRatio={2} name={user.name} />
+                  <Avatar
+                    round
+                    size="20"
+                    textSizeRatio={2}
+                    name={user.name}
+                  />
                   <span className="ml-3 block truncate">{user.name}</span>
                 </span>
               ))}
@@ -81,9 +69,7 @@ const SelectMenu = (props) => {
                     key={person.id}
                     className={({ active }) =>
                       classNames(
-                        active
-                          ? "text-white bg-secundaryColor"
-                          : "text-gray-900",
+                        active ? "text-white bg-secundaryColor" : "text-gray-900",
                         "cursor-default select-none relative py-2 pl-3 pr-9"
                       )
                     }
