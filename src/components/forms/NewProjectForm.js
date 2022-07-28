@@ -10,7 +10,7 @@ const NewProjectForm = (props) => {
   const [description, setDescription] = useState("");
   const [team, setTeam] = useState([]);
   const [isActive, setIsActive] = useState(true);
-
+  const {getAllProjects, handleCancelAddSaveFormBtn} = props;
   const { user } = useContext(AuthContext);
   const socket = useContext(SocketContext)
 
@@ -41,8 +41,8 @@ const NewProjectForm = (props) => {
       setTitle("");
       setDescription("");
       setTeam([]);
-      props.getAllProjects();
-      props.handleCancelAddSaveFormBtn(e);
+      getAllProjects();
+      handleCancelAddSaveFormBtn(e);
     } catch (err) {
       console.log(err);
     }
@@ -53,7 +53,7 @@ const NewProjectForm = (props) => {
       formTitle="Create a new Project"
       onSubmit={handleSubmit}
       cancelBtntext="Cancel"
-      cancelBtnAction={props.handleCancelAddSaveFormBtn}
+      cancelBtnAction={handleCancelAddSaveFormBtn}
       acceptBtnText="Create"
       projectTitle={title}
       projectDescription={description}

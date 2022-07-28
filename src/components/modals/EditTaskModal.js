@@ -16,7 +16,7 @@ const EditTaskModal = (props) => {
     const { user } = useContext(AuthContext);
     const cancelButtonRef = useRef(null);
     const socket = useContext(SocketContext)
-
+    const {editTaskId, projectId, setEditModalHasRender, editModalHasRender} = props
     const getTask = async (editTaskId) => {
         try {
             const response = await getTaskDetailsService(editTaskId);
@@ -30,12 +30,12 @@ const EditTaskModal = (props) => {
     };
 
     useEffect(() => {
-        getTask(props.editTaskId);
-    }, [props.editTaskId]);
+        getTask(editTaskId);
+    }, [editTaskId]);
 
     const handleSubmitEditForm = async (e) => {
         const body = {
-            taskId: props.editTaskId,
+            taskId: editTaskId,
             title: title,
             description: description,
             color: color,
@@ -44,27 +44,27 @@ const EditTaskModal = (props) => {
 
         const activity = {
             title: "Task info edited",
-            project: props.projectId,
+            project: projectId,
             user: user._id,
         };
 
         try {
-            await updateTaskService(props.editTaskId, body);
+            await updateTaskService(editTaskId, body);
             await addNewActivityService(activity);
             socket.emit("render_tasks");
-            props.setEditModalHasRender(false);
+            setEditModalHasRender(false);
         } catch (err) {
             console.log(err);
         }
     };
 
   return (
-    <Transition.Root show={props.editModalHasRender} as={Fragment}>
+    <Transition.Root show={editModalHasRender} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-10"
         initialFocus={cancelButtonRef}
-        onClose={props.setEditModalHasRender}
+        onClose={setEditModalHasRender}
       >
         <Transition.Child
           as={Fragment}
@@ -172,14 +172,14 @@ const EditTaskModal = (props) => {
                   <button
                     type="button"
                     className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-mainColor text-base font-medium text-white hover:bg-secundaryColor focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
-                    onClick={() => handleSubmitEditForm(props.EditTaskId)}
+                    onClick={() => handleSubmitEditForm(editTaskId)}
                   >
                     Save
                   </button>
                   <button
                     type="button"
                     className="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline focus:outline-buttonHover sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                    onClick={() => props.setEditModalHasRender(false)}
+                    onClick={() => setEditModalHasRender(false)}
                     ref={cancelButtonRef}
                   >
                     Cancel

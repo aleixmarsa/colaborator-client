@@ -9,6 +9,7 @@ const ProjectsListSection = (props) => {
   const {
     title,
     filteredProjects,
+    getAllProjects,
     setFilteredProjects,
     classNames,
     editProjectForm,
@@ -38,7 +39,7 @@ const ProjectsListSection = (props) => {
 
     try {
       await updateProjectService(id, body);
-      props.getAllProjects();
+      getAllProjects();
     } catch (err) {
       console.log(err);
     }

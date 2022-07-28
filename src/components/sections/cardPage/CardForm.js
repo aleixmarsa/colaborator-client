@@ -7,7 +7,6 @@ import { SocketContext } from "../../../context/socket.context";
 
 
 function CardForm(props) {
-  const [cardForm, setCardForm] = useState(false);
 
   const [cardTitle, setCardTitle] = useState("");
   const [cardDescription, setCardDescription] = useState("");
@@ -17,10 +16,10 @@ function CardForm(props) {
 
   const { user } = useContext(AuthContext);
   const socket = useContext(SocketContext);
+    const {projectId, cards,setCardForm,setCards, handleCancelAddSaveFormBtn} = props
 
   const handleSubmitNewCard = async (e) => {
     e.preventDefault();
-
     const body = {
       title: cardTitle,
       description: cardDescription,
@@ -31,18 +30,18 @@ function CardForm(props) {
 
     const activity = {
       title: "Task created",
-      project: props.projectId,
+      project: projectId,
       user: user._id,
     };
     console.log("Body que viene del formulario: ", body);
 
-    props.setCardForm(false);
+    setCardForm(false);
 
     try {
-      const response = await addNewTaskService(props.projectId, body);
+      const response = await addNewTaskService(projectId, body);
       await addNewActivityService(activity);
 
-      props.setCards([...props.cards, response.data]);
+      setCards([...cards, response.data]);
       socket.emit("render_tasks");
       setCardTitle("");
       setCardDescription("");
@@ -50,8 +49,8 @@ function CardForm(props) {
       setCardColor("white");
       setCardStat("TODO");
       setCardLimitDate("");
-      props.handleCancelAddSaveFormBtn(e);
-      props.setCardForm(false);
+      handleCancelAddSaveFormBtn(e);
+      setCardForm(false);
     } catch (err) {
       console.log(err);
     }
@@ -137,16 +136,15 @@ function CardForm(props) {
             <button
               type="button"
               className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 focus:outline-none focus:outline focus:outline-buttonHover"
-              onClick={() => props.setCardForm(false)}
+              onClick={() => setCardForm(false)}
             >
               Cancel
             </button>
             <button
               type="submit"
               className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-mainColor hover:bg-secundaryColor focus:outline focus:outline-buttonHover"
-              //onClick={() => props.setCardForm(false)}
             >
-              Add Project
+              Add Task
             </button>
           </div>
         </div>
