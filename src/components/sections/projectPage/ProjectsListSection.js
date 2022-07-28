@@ -19,30 +19,6 @@ const ProjectsListSection = (props) => {
     setProjectTitle,
   } = props;
 
-  let bgColor = "";
-  if (title === "Current Projects") {
-    bgColor = "bg-white";
-  } else if (title === "Completed Projects") {
-    bgColor = "bg-gray-100";
-  }
-
-  const handleMoveBtn = async (e, id) => {
-    let isActive = false;
-    if (title === "Completed Projects") {
-      isActive = true;
-    }
-    e.preventDefault();
-    const body = {
-      active: isActive,
-    };
-
-    try {
-      await updateProjectService(id, body);
-      getAllProjects();
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   return (
 
