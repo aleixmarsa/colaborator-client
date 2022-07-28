@@ -96,7 +96,12 @@ const Chat = () => {
                 return (
                   <div
                     key={project._id}
-                    className="flex justify-start gap-2 hover:bg-gray-300 bg-white mt-3 mr-3 cursor-pointer w-sm p-2 border-1 border-mainColor drop-shadow-xl text-mainColor"
+                    className={classNames(
+                      chatActive === project._id
+                        ? "outline outline-buttonHover"
+                        : "",
+                      "flex justify-start gap-2 bg-white mt-3 mr-3 cursor-pointer w-sm p-2 border-mainColor drop-shadow-xl text-mainColor"
+                    )}
                     onClick={(e) => projectChatHandleClick(e, project)}
                   >
                     <Avatar
@@ -118,7 +123,12 @@ const Chat = () => {
                   return (
                     <div
                       key={chatUser._id}
-                      className="flex justify-start gap-2 hover:bg-gray-300 bg-white mt-3 mr-3 cursor-pointer w-sm p-2 border-1 border-mainColor drop-shadow-xl text-mainColor"
+                      className={classNames(
+                        chatActive === chatUser._id
+                          ? "outline outline-buttonHover"
+                          : "",
+                        "flex justify-start gap-2 hover:bg-gray-300 bg-white mt-3 mr-3 cursor-pointer w-sm p-2 border-mainColor drop-shadow-xl text-mainColor"
+                      )}
                       onClick={(e) => directChathandleClick(e, chatUser)}
                     >
                       <Avatar
