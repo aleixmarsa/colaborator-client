@@ -1,5 +1,0 @@
-[-] Loading ?
-[-] Validacions login formik
-[-] Quan s'edita projecte, els membres de l'equip no es poden canviar
-[-] Canviar card per task
-[-] A la col·lecció de projectes falta la relació amb les tasques

@@ -7,7 +7,8 @@ import { SocketContext } from "../../../context/socket.context";
 
 
 function CardForm(props) {
-  const [cardForm, setCardForm] = useState(false);
+
+  const [setCardForm] = useState(false);
 
   const [cardTitle, setCardTitle] = useState("");
   const [cardDescription, setCardDescription] = useState("");
@@ -144,7 +145,6 @@ function CardForm(props) {
             <button
               type="submit"
               className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-mainColor hover:bg-secundaryColor  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-              //onClick={() => props.setCardForm(false)}
             >
               Add Project
             </button>

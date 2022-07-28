@@ -27,7 +27,6 @@ function App() {
         <Route exact path="/project/:projectId/chat" element={<PrivateRoute><ChatPageWBar /></PrivateRoute>} />
         <Route exact path="/project/:projectId" element={<PrivateRoute><ProjectDetailsPage /></PrivateRoute>} />
         <Route exact path="/project/:projectId/tasks" element={<PrivateRoute><ProjectCards /></PrivateRoute>} />
-        {/* <Route exact path="/chat/:chatId" element={<PrivateRoute><Chat /></PrivateRoute>} /> */}
         <Route exact path="/project/:projectId/monthCalendar" element={<PrivateRoute><CalendarPage /></PrivateRoute>} />
         <Route exact path="/*" element={<ErrorPage />} />
 

@@ -8,6 +8,7 @@ import NavBar from "../components/navbar/NavBar";
 import LateralBar from "../components/sections/LateralBar";
 
 const ProjectDetailsPage = () => {
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [team, setTeam] = useState([]);
@@ -66,9 +67,6 @@ const ProjectDetailsPage = () => {
                 <img
                   className="mt-3"
                   src="/images/tasks_image.png"
-                  // onMouseOver={e => (e.currentTarget.src = "/images/tasks_image_hover.png")}
-                  // onMouseOut={e => (e.currentTarget.src = "/images/tasks_image.png")}
-
                   alt=""
                   width="300"
                   heigth="150"
@@ -106,59 +104,5 @@ const ProjectDetailsPage = () => {
     </div>
   );
 };
-
-{
-  /* <div className="felx flex-column">
-
-<div className=" my-12 mx-5 inline-block align-middle mx-auto lg:min-w-0 lg:flex-1 xl:w-3/6 gap-6 xl:my-32 ">
-    <h1 className=" font-normal text-2xl underline underline-offset-2">
-            {title}
-    </h1>
-    <div className=" flex flex-col gap-6 items-center p-6 pt-2 ">
-        
-        <div className="flex gap-10">
-            
-            <p className=" font-light text-justify max-w-2xl">{description}</p>
-            
-            
-            
-        </div>
-        <div className="flex w-full justify-evenly">
-            {/*<Link to={`/${projectId}/tasks`}>
-             <PencilAltIcon
-                className="text-green-700 hover:text-green-600 h-32 w-32"
-                aria-hidden="true"
-            />
-            </Link>
-            <CalendarIcon
-                className="text-green-700 hover:text-green-600 h-32 w-32"
-                aria-hidden="true"
-            />
-            <Link to="/chat">
-            <ChatIcon
-                className="text-green-700 hover:text-green-600 h-32 w-32"
-                aria-hidden="true"
-            /> 
-            </Link>*/
-}
-//         </div>
-//     </div>
-// </div>
-// </div> */}
-
-// {team.map((member) => {
-//     return (
-//     <div>
-//         <Avatar
-//         round
-//         size="30"
-//         // color="gray"
-//         textSizeRatio={1.75}
-//         name={member.name}
-//         />
-//         <span className="ml-2">{member.name}</span>
-//     </div>
-//     );
-// })}
 
 export default ProjectDetailsPage;

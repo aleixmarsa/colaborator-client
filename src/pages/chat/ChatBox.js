@@ -6,23 +6,17 @@ import { ChevronDoubleRightIcon } from "@heroicons/react/solid";
 import Avatar from "react-avatar";
 
 import io from "socket.io-client";
+
 let socket;
 
 const ChatBox = (props) => {
+
   const [allMessages, setAllMessages] = useState([]);
   const [text, setText] = useState("");
   const { chatId, chatReceiver, isProjectChat } = props;
 
   const { user } = useContext(AuthContext);
   const API_URL = process.env.REACT_APP_API_URL;
-  // useEffect(() => {
-  //   getAllMessages();
-  //   joinChat(socket);
-  // }, []);
-
-  // const joinChat = (socket) => {
-  //   socket.emit("join_chat", chatId);
-  // };
 
   useEffect(() => {
     getAllMessages();
@@ -79,7 +73,6 @@ const ChatBox = (props) => {
         <Avatar
           round
           size="25"
-          // color="gray"
           textSizeRatio={1.9}
           name={chatReceiver}
         />
@@ -109,7 +102,6 @@ const ChatBox = (props) => {
                     <p className="text-sm font-bold">{message.sender.name}</p>
                   )}
                   {message.text}
-                  {/* {message.sender.name}: {message.text} */}
                 </p>
               </div>
             );

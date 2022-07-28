@@ -9,7 +9,7 @@ const NewProjectForm = (props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [team, setTeam] = useState([]);
-  const [isActive, setIsActive] = useState(true);
+  const [isActive] = useState(true);
 
   const { user } = useContext(AuthContext);
   const socket = useContext(SocketContext)

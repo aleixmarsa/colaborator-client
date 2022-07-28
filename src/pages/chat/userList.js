@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
+
 import { useNavigate } from "react-router-dom";
+
 import { startChatService } from "../../services/chat.services";
 import { getAllUsersService } from "../../services/user.services";
 
 const UserList = () => {
+
   const [users, setUsers] = useState(null);
   const navigate = useNavigate();
 

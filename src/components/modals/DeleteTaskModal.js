@@ -1,4 +1,4 @@
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationIcon } from "@heroicons/react/outline";
 import { deleteTaskService } from "../../services/task.services";
@@ -8,7 +8,9 @@ import { useContext } from "react";
 import { SocketContext } from "../../context/socket.context";
 
 const DeleteTaskModal = (props) => {
+
   const cancelButtonRef = useRef(null);
+
   const { user } = useContext(AuthContext);
   const socket = useContext(SocketContext)
 

@@ -5,8 +5,8 @@ import {
   TagIcon,
   HomeIcon,
 } from "@heroicons/react/outline";
-import { useLocation } from "react-router-dom";
 
+import { useLocation } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 
 function classNames(...classes) {
@@ -14,12 +14,10 @@ function classNames(...classes) {
 }
 
 function LateralBar(props) {
+
   const { projectId } = props;
   const { pathname } = useLocation();
-  console.log(
-    "🚀 ~ file: LateralBar.js ~ line 19 ~ LateralBar ~ pathname",
-    pathname
-  );
+
   const navigation = [
     {
       name: "Home",
@@ -62,8 +60,6 @@ function LateralBar(props) {
       link: "/",
     },
   ];
-
-  console.log(navigation);
 
   return (
     <div className=" hidden xl:flex lg:flex flex-col flex-grow h-screen border-r border-gray-200 pb-4 bg-neutral-50">

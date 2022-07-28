@@ -5,6 +5,7 @@ import { ExclamationIcon } from "@heroicons/react/outline";
 import { deleteProjectService } from "../../services/project.services";
 import { SocketContext } from "../../context/socket.context";
 const DeletProjectModal = (props) => {
+
   const {
     projectId,
     projectTitle,
@@ -14,7 +15,6 @@ const DeletProjectModal = (props) => {
   const socket = useContext(SocketContext)
 
   const deleteProject = async (id) => {
-
 
     try {
       await deleteProjectService(id);
@@ -27,6 +27,7 @@ const DeletProjectModal = (props) => {
   };
 
   return (
+    
     <Transition.Root show={modalHasRender} as={Fragment}>
       <Dialog
         as="div"

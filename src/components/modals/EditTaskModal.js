@@ -1,10 +1,13 @@
 import { Fragment, useEffect, useRef, useState } from "react";
+import { useContext } from "react";
+
 import { Dialog, Transition } from "@headlessui/react";
+
 import { getTaskDetailsService } from "../../services/task.services";
 import { addNewActivityService } from "../../services/activity.services";
 import { updateTaskService } from "../../services/task.services";
 import { AuthContext } from "../../context/auth.context";
-import { useContext } from "react";
+
 import { SocketContext } from "../../context/socket.context";
 
 const EditTaskModal = (props) => {
@@ -59,6 +62,7 @@ const EditTaskModal = (props) => {
     };
 
   return (
+
     <Transition.Root show={props.editModalHasRender} as={Fragment}>
       <Dialog
         as="div"
@@ -116,8 +120,6 @@ const EditTaskModal = (props) => {
                             className="max-w-lg block w-full h-8 border-2 shadow-xl sm:max-w-xs sm:text-sm rounded-md"
                           />
                         </div>
-
-                      
                     </div>
 
                     <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -164,7 +166,6 @@ const EditTaskModal = (props) => {
                           </div>
                         </div>
                       </div>
-
                   </div>
                 </div>
 

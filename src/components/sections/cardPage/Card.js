@@ -1,18 +1,7 @@
 import { TrashIcon, PencilIcon } from "@heroicons/react/solid";
-import { MailIcon, PhoneIcon } from "@heroicons/react/solid";
-
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-
-
-import { useState, useEffect } from "react";
-
-const taskStatColorChange = (stat) => {
-  if (stat === "TODO") return "bg-blue-200";
-  if (stat === "PROGRESS") return "bg-amber-200";
-  if (stat === "DONE") return "bg-green-200";
-};
 
 function Card(props) {
+
   const {
     title,
     cardLimitDate,

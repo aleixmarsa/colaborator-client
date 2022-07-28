@@ -25,7 +25,6 @@ const Chat = () => {
   const [chatReceiver, setChatReceiver] = useState("");
   const [isProjectChat, setIsProjectChat] = useState(false);
 
-  const navigate = useNavigate();
 
   useEffect(() => {
     getUsers();
@@ -45,50 +44,39 @@ const Chat = () => {
     try {
       const response = await getAllCurrentProjectsService(user._id);
       setProjects(response.data);
-      console.log(
-        "🚀 ~ file: Chat.js ~ line 43 ~ getProjects ~ projects",
-        projects
-      );
+
     } catch (err) {
       console.log(err);
     }
   };
 
-  const getTeam = async () => {
-    try {
-      const response = await getProjectTeamsService();
-      setTeam(response.data);
-      console.log("TEAM: ", team);
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const directChathandleClick = async (e, userChat) => {
+
     e.preventDefault();
-    console.log(`Trying to start chat with ${userChat.name}`);
+
     try {
       const response = await startDirectChatService(userChat._id);
       setShowChat(response.data._id);
       setChatReceiver(userChat.name);
       setIsProjectChat(false);
 
-      //   navigate(`/chat/${response.data._id}`);
+
     } catch (err) {
       console.log(err);
     }
   };
 
   const projectChatHandleClick = async (e, projectChat) => {
+
     e.preventDefault();
-    console.log(`Trying to start chat with ${projectChat.title}`);
+
     try {
       const response = await startProjectChatService(projectChat._id);
       setShowChat(response.data._id);
       setChatReceiver(projectChat.title);
       setIsProjectChat(true);
 
-      //   navigate(`/chat/${response.data._id}`);
     } catch (err) {
       console.log(err);
     }
@@ -140,7 +128,6 @@ const Chat = () => {
                       <Avatar
                         round
                         size="25"
-                        //   color="gray"
                         textSizeRatio={1.9}
                         name={chatUser.name}
                       />

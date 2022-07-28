@@ -20,6 +20,7 @@ import { SocketContext } from "../context/socket.context";
 const API_URL = process.env.REACT_APP_API_URL;
 
 export const StyleWrapper = styled.div`
+
   .fc-dayGridMonth-button, .fc-button, .fc-button-primary, .fc-button-active {
     background-color: #265b6a;
     border: #265b6a;
@@ -58,8 +59,6 @@ function CalendarPage() {
       .then((allCards) => {
         let array = [];
         allCards.data.map((event) => {
-          console.log("Id del evento: ", event);
-          console.log("Id del proyecto: ", projectId);
 
           if (event.project === projectId) {
             let startDate = event.limitDate + "T07:00:00";
@@ -94,6 +93,7 @@ function CalendarPage() {
 
   return (
     <>
+
       <NavBar />
 
       <div className="flex bg-neutral-50 flex-row">
