@@ -79,7 +79,7 @@ const HomePage = () => {
                             Don't like Trello? No problem
                             </p>
                             <p className="mt-5 max-w-prose mx-auto text-xl text-gray-500">
-                            Start with a Trello board, lists, and cards. Customize and expand with more features as your teamwork grows. 
+                            Start with a paroject board, lists, and cards. Customize and expand with more features as your teamwork grows. 
                             Manage projects, organize tasks, chat and build team spirit-all in one place.
                             </p>
                         </div>
