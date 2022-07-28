@@ -60,14 +60,14 @@ const ProjectActivitySection = (props) => {
                     <p className="text-sm text-black font-semibold">
                       {item.project.title}
                     </p>
-                    <p className="flex gap-2 text-sm text-left text-gray-500">
+                    <div className="flex gap-2 text-sm text-left text-gray-500">
                       {item.title} by:
                       <div className="flex space-x-2">
                         <div className="flex-1 space-y-1">
                           <div className="flex items-center justify-between">
-                            <h3 className="text-sm font-medium">
+                            <p className="text-sm font-medium">
                               {item.user.name}
-                            </h3>
+                            </p>
                           </div>
                         </div>
                         <Avatar
@@ -78,7 +78,7 @@ const ProjectActivitySection = (props) => {
                           name={item.user.name}
                         />
                       </div>
-                    </p>
+                    </div>
                     <p className="text-sm text-gray-500">
                       {item.updatedAt
                         .replace(/([^:]*$)/g, "")
