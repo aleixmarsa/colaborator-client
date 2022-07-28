@@ -1,7 +1,6 @@
 import { TrashIcon, PencilIcon } from "@heroicons/react/solid";
+
 import Avatar from "react-avatar";
-
-
 
 function Project(props) {
 
@@ -46,13 +45,13 @@ function Project(props) {
                                 <span>Team:</span>
                                 <div className="flex flex-shrink-0 -space-x-1 ">
                                     {project.team.map((member) => {
-                                    return <Avatar
-                                        key={member._id}
-                                        round
-                                        size="25"
-                                        textSizeRatio={1.75}
-                                        name={member.name}
-                                    />
+                                        return <Avatar
+                                            key={member._id}
+                                            round
+                                            size="25"
+                                            textSizeRatio={1.75}
+                                            name={member.name}
+                                        />
                                     }
 
                                     )}

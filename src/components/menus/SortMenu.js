@@ -2,9 +2,11 @@ import { Menu } from "@headlessui/react";
 import { ChevronDownIcon, SortAscendingIcon } from "@heroicons/react/solid";
 
 const SortMenu = (props) => {
+
   const { classNames, filteredProjects, setFilteredProjects } = props;
 
   const sortProjects = (type) => {
+    
     let filteredProjectsCopy = [...filteredProjects];
 
 
@@ -16,7 +18,6 @@ const SortMenu = (props) => {
         if (a.title < b.title) {
           return -1;
         }
-        // a must be equal to b
         return 0;
       });
     }else if(type === "dateCreated"){
@@ -27,7 +28,6 @@ const SortMenu = (props) => {
         if (a.createdAt < b.createdAt) {
           return 1;
         }
-        // a must be equal to b
         return 0;
       });
     }else if(type === "lastUpdate"){
@@ -38,7 +38,6 @@ const SortMenu = (props) => {
         if (a.updatedAt < b.updatedAt) {
           return 1;
         }
-        // a must be equal to b
         return 0;
       });
     }

@@ -1,10 +1,7 @@
-import { useParams } from "react-router-dom";
 import NavBar from "../components/navbar/NavBar";
 import Chat from "../components/sections/chatPage/Chat";
-import LateralBar from "../components/sections/LateralBar";
 
 const ChatPage = () => {
-  const { projectId } = useParams();
 
   return (
     <div className="h-screen">

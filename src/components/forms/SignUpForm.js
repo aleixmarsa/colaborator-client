@@ -2,6 +2,7 @@ import Button from "../buttons/Button";
 import { Link } from "react-router-dom";
 
 const SignUpForm = (props) => {
+
   const {
     handleSignupSubmit,
     email,
@@ -131,7 +132,6 @@ const SignUpForm = (props) => {
               <Button
                 position="column"
                 type="submit"
-                // action={handleNewProjectBtn}
                 text="Sign Up"
                 color="mainColor"
               />

@@ -7,7 +7,8 @@ import { SocketContext } from "../../../context/socket.context";
 
 
 function CardForm(props) {
-  const [cardForm, setCardForm] = useState(false);
+
+  const [setCardForm] = useState(false);
 
   const [cardTitle, setCardTitle] = useState("");
   const [cardDescription, setCardDescription] = useState("");

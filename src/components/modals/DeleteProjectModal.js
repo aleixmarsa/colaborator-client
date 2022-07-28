@@ -20,6 +20,7 @@ const DeletProjectModal = (props) => {
   };
 
   return (
+    
     <Transition.Root show={modalHasRender} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setModalHasRender}>
         <Transition.Child

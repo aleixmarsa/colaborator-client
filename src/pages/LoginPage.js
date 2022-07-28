@@ -1,13 +1,13 @@
 import { useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "./../context/auth.context";
 import { loginService } from "../services/auth.services";
+
 import LogInForm from "../components/forms/LogInForm";
 import NavBar from "../components/navbar/NavBar";
 import Footer from "../components/footer/Footer";
 
 function LoginPage(props, location) {
-  // const { email2 = 'defaultValue', password2="defaultValue" } = location.state || ""
 
   const [email, setEmail] = useState("admin@admin.com");
   const [password, setPassword] = useState("Admin123!");
@@ -34,6 +34,7 @@ function LoginPage(props, location) {
   };
 
   return (
+    
     <div className="flex bg-neutral-50 flex-col h-screen mb-auto">
       <NavBar />
       <LogInForm
