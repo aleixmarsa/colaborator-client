@@ -1,19 +1,14 @@
 import Button from "../buttons/Button";
 import { Link } from "react-router-dom";
+import { Field, ErrorMessage } from "formik";
+import { ExclamationCircleIcon } from "@heroicons/react/solid";
 
 const SignUpForm = (props) => {
+  const { formik } = props;
 
-  const {
-    handleSignupSubmit,
-    email,
-    handleEmail,
-    handleRole,
-    role,
-    name,
-    handleName,
-    password,
-    handlePassword,
-  } = props;
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(" ");
+  }
 
   return (
     <div className="flex-grow flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -30,7 +25,12 @@ const SignUpForm = (props) => {
       </div>
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 drop-shadow-xl rounded-md sm:px-10">
-          <form onSubmit={handleSignupSubmit} className="space-y-6" action="#" method="POST">
+          <form
+            onSubmit={formik.handleSubmit}
+            className="space-y-6"
+            action="#"
+            method="POST"
+          >
             <div>
               <label
                 htmlFor="email"
@@ -38,18 +38,38 @@ const SignUpForm = (props) => {
               >
                 Email address
               </label>
-              <div className="mt-1">
-                <input
+              <div className="mt-1 relative">
+                <Field
                   id="email"
                   name="email"
                   type="email"
-                  value={email}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.email}
                   autoComplete="email"
-                  onChange={handleEmail}
-                  required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline focus:outline-buttonHover  sm:text-sm"
+                  className={classNames(
+                    formik.errors.email
+                      ? "focus:outline-red-500"
+                      : "focus:outline-buttonHover",
+                    "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline sm:text-sm"
+                  )}
                 />
+                {formik.errors.email ? (
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    <ExclamationCircleIcon
+                      className="h-5 w-5 text-red-500"
+                      aria-hidden="true"
+                    />
+                  </div>
+                ) : (
+                  <p></p>
+                )}
               </div>
+              <ErrorMessage
+                component="div"
+                name="email"
+                className="mt-2 text-sm text-red-600"
+              />
             </div>
 
             <div>
@@ -59,18 +79,39 @@ const SignUpForm = (props) => {
               >
                 User
               </label>
-              <div className="mt-1">
+              <div className="mt-1 relative">
                 <input
                   id="name"
                   name="name"
                   type="name"
-                  value={name}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.name}
                   autoComplete="name"
-                  onChange={handleName}
                   required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline focus:outline-buttonHover sm:text-sm"
+                  className={classNames(
+                    formik.errors.name
+                      ? "focus:outline-red-500"
+                      : "focus:outline-buttonHover",
+                    "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline sm:text-sm"
+                  )}
                 />
+                {formik.errors.name ? (
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    <ExclamationCircleIcon
+                      className="h-5 w-5 text-red-500"
+                      aria-hidden="true"
+                    />
+                  </div>
+                ) : (
+                  <p></p>
+                )}
               </div>
+              <ErrorMessage
+                component="div"
+                name="name"
+                className="mt-2 text-sm text-red-600"
+              />
             </div>
 
             <div>
@@ -80,19 +121,39 @@ const SignUpForm = (props) => {
               >
                 Role
               </label>
-              <div className="mt-1">
+              <div className="mt-1 relative">
                 <input
                   id="role"
                   name="role"
-                  type="role"
-                  value={role}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.role}
                   autoComplete="role"
                   placeholder="e.g. Full Stack Web Developer"
-                  onChange={handleRole}
                   required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline focus:outline-buttonHover sm:text-sm"
+                  className={classNames(
+                    formik.errors.role
+                      ? "focus:outline-red-500"
+                      : "focus:outline-buttonHover",
+                    "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline sm:text-sm"
+                  )}
                 />
+                {formik.errors.role ? (
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    <ExclamationCircleIcon
+                      className="h-5 w-5 text-red-500"
+                      aria-hidden="true"
+                    />
+                  </div>
+                ) : (
+                  <p></p>
+                )}
               </div>
+              <ErrorMessage
+                component="div"
+                name="role"
+                className="mt-2 text-sm text-red-600"
+              />
             </div>
 
             <div>
@@ -102,18 +163,39 @@ const SignUpForm = (props) => {
               >
                 Password
               </label>
-              <div className="mt-1">
+              <div className="mt-1 relative">
                 <input
                   id="password"
                   name="password"
                   type="password"
-                  value={password}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.password}
                   autoComplete="current-password"
-                  onChange={handlePassword}
                   required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline focus:outline-buttonHover sm:text-sm"
+                  className={classNames(
+                    formik.errors.password
+                      ? "focus:outline-red-500"
+                      : "focus:outline-buttonHover",
+                    "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline sm:text-sm"
+                  )}
                 />
+                {formik.errors.password ? (
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    <ExclamationCircleIcon
+                      className="h-5 w-5 text-red-500"
+                      aria-hidden="true"
+                    />
+                  </div>
+                ) : (
+                  <p></p>
+                )}
               </div>
+              <ErrorMessage
+                component="div"
+                name="password"
+                className="mt-2 text-sm text-red-600"
+              />
             </div>
 
             <div className="flex justify-end">
