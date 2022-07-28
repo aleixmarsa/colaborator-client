@@ -10,11 +10,9 @@ import { SocketContext } from "../../context/socket.context";
 const DeleteTaskModal = (props) => {
   const cancelButtonRef = useRef(null);
   const { user } = useContext(AuthContext);
-  const socket = useContext(SocketContext)
+  const socket = useContext(SocketContext);
 
   const deleteTask = async (id) => {
-
-
     const activity = {
       title: "Task deleted",
       project: props.projectId,
@@ -30,7 +28,6 @@ const DeleteTaskModal = (props) => {
     } catch (err) {
       console.log(err);
     }
-
   };
 
   return (
@@ -78,12 +75,14 @@ const DeleteTaskModal = (props) => {
                         as="h3"
                         className="text-lg leading-6 font-medium text-gray-900"
                       >
-                        Delete task:{" "}
+                        Delete task{" "}
                         <span className="text-gray-400">{props.title}</span>
                       </Dialog.Title>
                       <div className="mt-2">
                         <p className="text-sm text-gray-500">
-                          Are you sure you want to delete this task?
+                          Are you sure you want to delete this task? All of its
+                          data will be permanently removed. This action cannot
+                          be undone.
                         </p>
                       </div>
                     </div>

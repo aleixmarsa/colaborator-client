@@ -65,7 +65,7 @@ function Card(props) {
                             onClick={() => handleEditTaskBtn(cardId)}
                             >
                             <PencilIcon
-                                className="text-gray-300 hover:text-gray-400 h-5 w-5"
+                                className="text-buttonOrange hover:text-buttonOrange-low h-5 w-5"
                                 aria-hidden="true"
                             />
                             </button>
@@ -75,7 +75,7 @@ function Card(props) {
                             onClick={() => handleDeleteTaskBtn(cardId)}
                             >
                             <TrashIcon
-                                className="text-gray-300 hover:text-gray-400 h-5 w-5"
+                                className="text-buttonOrange hover:text-buttonOrange-low h-5 w-5"
                                 aria-hidden="true"
                             />
                             </button>

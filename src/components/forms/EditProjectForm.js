@@ -68,7 +68,7 @@ const EditProjectForm = (props) => {
       onSubmit={handleSubmit}
       cancelBtntext="Cancel"
       cancelBtnAction={handleCancelAddSaveFormBtn}
-      acceptBtnText="Save Changes"
+      acceptBtnText="Save"
       projectTitle={title}
       projectDescription={description}
       setTitle={setTitle}
