@@ -46,7 +46,7 @@ const SignUpForm = (props) => {
                   autoComplete="email"
                   onChange={handleEmail}
                   required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-600 focus:border-green-600 sm:text-sm"
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline focus:outline-buttonHover  sm:text-sm"
                 />
               </div>
             </div>
@@ -67,7 +67,7 @@ const SignUpForm = (props) => {
                   autoComplete="name"
                   onChange={handleName}
                   required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-600 focus:border-green-600 sm:text-sm"
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline focus:outline-buttonHover sm:text-sm"
                 />
               </div>
             </div>
@@ -89,7 +89,7 @@ const SignUpForm = (props) => {
                   placeholder="e.g. Full Stack Web Developer"
                   onChange={handleRole}
                   required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-600 focus:border-green-600 sm:text-sm"
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline focus:outline-buttonHover sm:text-sm"
                 />
               </div>
             </div>
@@ -110,7 +110,7 @@ const SignUpForm = (props) => {
                   autoComplete="current-password"
                   onChange={handlePassword}
                   required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-600 focus:border-green-600 sm:text-sm"
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline focus:outline-buttonHover sm:text-sm"
                 />
               </div>
             </div>

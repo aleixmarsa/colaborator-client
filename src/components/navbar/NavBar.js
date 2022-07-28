@@ -191,7 +191,7 @@ const NavBar = (props) => {
                   className={classNames(
                     location.pathname === "/global-calendar"
                       ? "text-buttonOrange bg-secundaryColor"
-                      : "text-white hover:text-green-100 hover:bg-secundaryColor",
+                      : "text-white hover:bg-secundaryColor",
                     "block px-3 py-2 rounded-md text-base font-medium"
                   )}
                   // aria-current={item.current ? "page" : undefined}
@@ -206,7 +206,7 @@ const NavBar = (props) => {
                       key={item.name}
                       as="a"
                       onClick={item.action}
-                      className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-green-100 hover:bg-secundaryColor"
+                      className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-secundaryColor"
                     >
                       {item.name}
                     </Disclosure.Button>
