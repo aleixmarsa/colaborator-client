@@ -90,7 +90,7 @@ function Project(props) {
                         <div className="flex flex-row justify-end items-center w-1/8 pr-5">
                             <button
                                 type="button"
-                                className="relative bg-white rounded-full focus:outline-none focus:ring-2 mr-1"
+                                className="relative bg-white rounded-full focus:outline-none mr-1"
                                 onClick={(e) => handleEditProjectBtn(e, project._id)}
                             >
                                 <PencilIcon
@@ -100,7 +100,7 @@ function Project(props) {
                             </button>
                             <button
                                 type="button"
-                                className="relative bg-white rounded-full focus:outline-none focus:ring-2"
+                                className="relative bg-white rounded-full focus:outline-none"
                                 onClick={(e) =>
                                 handleDeleteProjectBtn(e, project.title, project._id)
                                 }
