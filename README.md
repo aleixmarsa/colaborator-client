@@ -1,70 +1,219 @@
-# Getting Started with Create React App
+## Link
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+https://project3-colaborator-app.herokuapp.com/
 
-## Available Scripts
+<br>
 
-In the project directory, you can run:
+### Instructiones
 
-### `npm start`
+#### Instala dependencias
+- npm i --force
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+#### Lanza el backend
+- npm start (Lanzamiento normal)
+- npm run dev (Lanzamiento con Nodemon)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+#### Agregar archivo .env con:
+- TOKEN_SECRET = super-secret-password
+- MONGODB_URI=mongodb+srv://user:password.@redone.w7gjz.mongodb.net/?retryWrites=true&w=majority 
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### API Documentation
 
-### `npm run build`
+We will start our project by first documenting all of the routes and data models for our API. Following best practices we will use _verbs_ to specify the type of operation being done and _nouns_ when naming endpoints.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<br>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# Client / Frontend
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Routes
 
-### `npm run eject`
+| Path                                 | Component                      | Permisions       | Behavior                |
+| -------------------------------------| -------------------------------| ---------------- | ----------------------- |
+| '/'                                  | `HomePage`                     | `<AnonRoute>`    | Home Page               |
+| '/signup'                            | `SignupPage`                   | `<AnonRoute>`    | Sign Up Page            |
+| '/login'                             | `LoginPage`                    | `<AnonRoute>`    | Login Page              |
+| '/projects'                          | `ProjectsPage`                 | `<AnonRoute>`    | Projects Page           |
+| '/chat'                              | `ChatPage`                     | `<PrivateRoute>` | General Chat Page       |
+| '/project/:projectId/chat'           | `ChatPageWBar`                 | `<PrivateRoute>` | Project Chat Page       |
+| '/project/:projectId'                | `ProjectDetailsPage`           | `<PrivateRoute>` | Project Info Page       |
+| '/project/:projectId/tasks'          | `ProjectCards`                 | `<PrivateRoute>` | Project Task Page       |
+| '/project/:projectId/monthCalendar'  | `CalendarPage`                 | `<PrivateRoute>` | Project Calendar Page   |
+| '/*'                                 | `ErrorPage`                    | `<Route>`        | Error Page              |
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<br>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+# Server / Backend
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Routes
 
-## Learn More
+##### Project routes
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+| HTTP verb | URL                                              | Action                        |
+| --------- | ------------------------------------------------ | ----------------------------- |
+| GET       | `/colaborator-API/projects`                      | Gets all the projects         |
+| POST      | `/colaborator-API/projects`                      | Adds a new project            |
+| PUT       | `/colaborator-API/projects/:projectId`           | Updates a specific project    |
+| DELETE    | `/colaborator-API/projects/:projectId`           | Deletes a specified project   |
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+##### Task routes
 
-### Code Splitting
+| HTTP verb | URL                                                    | Action                     |
+| --------- | ------------------------------------------------------ | -------------------------- |
+| GET       | `/colaborator-API/projects/card/get-cards`             | Gets all the Tasks         |
+| POST      | `/colaborator-API/projects/:projectId/card/new-card`   | Create a new Task          |
+| PUT       | `/colaborator-API/projects/card/updateCard/:id/:stat`  | Edits the specified task   |
+| DELETE    | `/colaborator-API/projects/card/delete/:id`            | Deletes the specified task |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+##### Chat routes
 
-### Analyzing the Bundle Size
+| HTTP verb | URL                                                    | Action                                |
+| --------- | ------------------------------------------------------ | --------------------------            |
+| POST      | `/colaborator-API/chat/start/direct-chat/:userId`      | Creates a chat for a specific User    |
+| POST      | `/colaborator-API/chat/start/project-chat/:projectId`  | Creates a chat for a specific Project |
+| POST      | `/colaborator-API/chat/start/:userId`                  | Creates a chat                        |
+| GET       | `/colaborator-API/chat/messages/:chatId`               | Gets the chats                        |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+##### Auth routes
 
-### Making a Progressive Web App
+| HTTP verb | URL                                                    | Action                     |
+| --------- | ------------------------------------------------------ | -------------------------- |
+| POST      | `/colaborator-API/auth/signup`                         | SignUp User                |
+| POST      | `/colaborator-API/auth/login`                          | Login User                 |
+| GET       | `/colaborator-API/auth/verify`                         | User verification          |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+<br>
 
-### Advanced Configuration
+<hr>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+#### Models
 
-### Deployment
+##### Activity Model
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```js
+  {
+    title: {
+      type: String,
+      required: true,
+    },
 
-### `npm run build` fails to minify
+    project: {
+      type: Schema.Types.ObjectId,
+      ref: "Project",
+      required: true,
+    },
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+  }
+```
+
+##### Task Model
+
+```js
+  {
+    title: {
+        type: String,
+        required: true
+    },
+
+    description: {
+        type: String
+    },
+
+    stat: {
+        type: String,
+        enum: ['TODO', 'PROGRESS', 'DONE']
+    },
+
+    color: {
+        type: String,
+        enum:['white', 'blue', 'red', 'yellow', 'gray', 'orange', 'green']
+    },
+
+    limitDate: {
+        type: String
+    },
+
+    project: { type: Schema.Types.ObjectId, ref: "Project" }  
+  }
+```
+
+##### Chat Model
+
+```js
+  {
+    participants: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  }
+```
+
+##### Message Model
+
+```js
+  {
+    sender: { type: Schema.Types.ObjectId, ref: "User" },
+    text: String,
+    chatId: { type: Schema.Types.ObjectId, ref: "Chat" },
+  }
+```
+
+##### Project Model
+
+```js
+  {
+    title: {
+      type: String,
+      required: true
+    },
+    active: {
+      type: Boolean,
+      default: false
+    },
+
+    description: String,
+
+    tech: String,
+
+    endAt: Date,
+
+    admin:{ type: Schema.Types.ObjectId, ref: "User" },
+
+    team: [{ type: Schema.Types.ObjectId, ref: "User" }],
+
+    cards: [{ type: Schema.Types.ObjectId, ref: "Card" }]
+  }
+```
+
+#### User Model
+
+  ```js
+  {
+
+      email: { 
+          type: String, 
+          unique: true, 
+          required: true 
+      },
+
+      password: { 
+          type: String, 
+          required: true 
+      },
+      
+      name: { 
+          type: String, 
+          required: true 
+      },
+
+      role: {
+          type: String,
+          required: true
+      }
+  }
+```
+
