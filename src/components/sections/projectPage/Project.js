@@ -42,7 +42,7 @@ function Project(props) {
                             </h3>  
                         </div>
                             <div className=" hidden xl:flex lg:flex flex-row items-center w-1/3">
-                                <div className="flex items-center space-x-2 text-gray-500 text-sm ">
+                                <div className="flex items-center space-x-2 text-black text-sm ">
                                 <span>Team:</span>
                                 <div className="flex flex-shrink-0 -space-x-1 ">
                                     {project.team.map((member) => {
@@ -61,11 +61,11 @@ function Project(props) {
                             </div>
 
                             <div className="hidden xl:flex flex-row items-center justify-center w-1/3 ">
-                                <div className="flex flex-col justify-center items-end  text-gray-500 text-sm space-x-2">
+                                <div className="flex flex-col justify-center items-end  text-black text-sm space-x-2">
                                     <div>
                                     <span>
                                         <span>Created at: </span>
-                                        <span className="ml-2">
+                                        <span className="ml-2 text-gray-500">
                                         {project.createdAt
                                             .replace(/([^:]*$)/g, "")
                                             .replace("T", " ")
@@ -76,10 +76,12 @@ function Project(props) {
                                     <div>
                                     <span>
                                         Last update:{" "}
+                                        <span className="text-gray-500">
                                         {project.updatedAt
                                         .replace(/([^:]*$)/g, "")
                                         .replace("T", " ")
                                         .slice(0, -1)}
+                                        </span>
                                     </span>
                                     </div>
                                 </div>
@@ -92,7 +94,7 @@ function Project(props) {
                                 onClick={(e) => handleEditProjectBtn(e, project._id)}
                             >
                                 <PencilIcon
-                                className="text-gray-300 hover:text-gray-400 h-5 w-5"
+                                className="text-buttonOrange hover:text-buttonOrange-low h-5 w-5"
                                 aria-hidden="true"
                                 />
                             </button>
@@ -104,7 +106,7 @@ function Project(props) {
                                 }
                             >
                                 <TrashIcon
-                                className="text-gray-300 hover:text-gray-400 h-5 w-5"
+                                className="text-buttonOrange hover:text-buttonOrange-low h-5 w-5"
                                 aria-hidden="true"
                                 />
                             </button>
