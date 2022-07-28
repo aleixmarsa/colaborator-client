@@ -74,7 +74,7 @@ const SelectMenu = (props) => {
                     key={person.id}
                     className={({ active }) =>
                       classNames(
-                        active ? "text-white bg-secundaryLowColor cursor-pointer" : "text-gray-900",
+                        active ? "text-white bg-green-600" : "text-gray-900",
                         "cursor-default select-none relative py-2 pl-3 pr-9"
                       )
                     }
