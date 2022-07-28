@@ -100,7 +100,7 @@ const NavBar = (props) => {
                     {/* Profile dropdown */}
                     <Menu as="div" className="ml-4 relative flex-shrink-0 z-10">
                       <div>
-                        <Menu.Button className="bg-green-700 flex text-sm rounded-full text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-700 focus:ring-white">
+                        <Menu.Button className="bg-mainColor flex text-sm rounded-full text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-mainColor focus:ring-secundaryColor">
                           <span className="sr-only">Open user menu</span>
                           <Avatar
                             round
@@ -127,8 +127,8 @@ const NavBar = (props) => {
                                 <button
                                   onClick={item.action}
                                   className={classNames(
-                                    active ? "bg-gray-100" : "",
-                                    "block w-full px-4 py-2 text-sm text-gray-700"
+                                    active ? "bg-gray-100 " : "",
+                                    "block w-full px-4 py-2 text-sm cursor-pointer text-gray-700"
                                   )}
                                 >
                                   {item.name}
@@ -176,9 +176,9 @@ const NavBar = (props) => {
                   as="a"
                   href="/projects"
                   className={classNames(
-                    location.pathname === "/"
-                      ? "text-white bg-green-700"
-                      : "text-green-200 hover:text-green-100 hover:bg-green-600",
+                    location.pathname === "/projects"
+                    ? "text-buttonOrange bg-mainColor hover:text-buttonOrange"
+                      : "text-white hover:text-white hover:bg-secundaryColor",
                     "block px-3 py-2 rounded-md text-base font-medium"
                   )}
                   // aria-current={item.current ? "page" : undefined}
@@ -187,24 +187,11 @@ const NavBar = (props) => {
                 </Disclosure.Button>
                 <Disclosure.Button
                   as="a"
-                  href="/global-calendar"
-                  className={classNames(
-                    location.pathname === "/global-calendar"
-                      ? "text-white bg-green-700"
-                      : "text-green-200 hover:text-green-100 hover:bg-green-600",
-                    "block px-3 py-2 rounded-md text-base font-medium"
-                  )}
-                  // aria-current={item.current ? "page" : undefined}
-                >
-                  CALENDAR
-                </Disclosure.Button>
-                <Disclosure.Button
-                  as="a"
                   href="/chat"
                   className={classNames(
                     location.pathname === "/global-calendar"
-                      ? "text-white bg-green-700"
-                      : "text-green-200 hover:text-green-100 hover:bg-green-600",
+                      ? "text-buttonOrange bg-secundaryColor"
+                      : "text-white hover:text-green-100 hover:bg-secundaryColor",
                     "block px-3 py-2 rounded-md text-base font-medium"
                   )}
                   // aria-current={item.current ? "page" : undefined}
@@ -212,14 +199,14 @@ const NavBar = (props) => {
                   CHAT
                 </Disclosure.Button>
               </div>
-              <div className="pt-4 pb-3 border-t border-green-800">
+              <div className="pt-4 pb-3 border-t border-mainColor">
                 <div className="px-2 space-y-1">
                   {userNavigation.map((item) => (
                     <Disclosure.Button
                       key={item.name}
                       as="a"
                       onClick={item.action}
-                      className="block px-3 py-2 rounded-md text-base font-medium text-green-200 hover:text-green-100 hover:bg-green-600"
+                      className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-green-100 hover:bg-secundaryColor"
                     >
                       {item.name}
                     </Disclosure.Button>
@@ -232,11 +219,11 @@ const NavBar = (props) => {
               <div className="px-2 pt-2 pb-3 space-y-1">
                 <Disclosure.Button
                   as="a"
-                  href="/"
+                  href="/login"
                   className={classNames(
                     location.pathname === "/login"
-                      ? "text-white bg-green-700"
-                      : "text-green-200 hover:text-green-100 hover:bg-green-600",
+                      ? "text-buttonOrange bg-mainColor hover:text-buttonOrange"
+                      : "text-white hover:text-white hover:bg-secundaryColor",
                     "block px-3 py-2 rounded-md text-base font-medium"
                   )}
                   // aria-current={item.current ? "page" : undefined}
@@ -245,11 +232,11 @@ const NavBar = (props) => {
                 </Disclosure.Button>
                 <Disclosure.Button
                   as="a"
-                  href="/global-calendar"
+                  href="/signup"
                   className={classNames(
                     location.pathname === "/signup"
-                      ? "text-white bg-green-700"
-                      : "text-green-200 hover:text-green-100 hover:bg-green-600",
+                      ? "text-buttonOrange bg-mainColor hover:text-buttonOrange"
+                      : "text-white hover:text-white hover:bg-secundaryColor",
                     "block px-3 py-2 rounded-md text-base font-medium"
                   )}
                   // aria-current={item.current ? "page" : undefined}
