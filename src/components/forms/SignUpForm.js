@@ -13,6 +13,7 @@ const SignUpForm = (props) => {
     handleName,
     password,
     handlePassword,
+    errorMessage
   } = props;
 
   return (
@@ -137,6 +138,7 @@ const SignUpForm = (props) => {
               />
             </div>
           </form>
+          {errorMessage && <p className="mt-2 text-sm text-red-600">{errorMessage}</p>}
         </div>
       </div>
     </div>
