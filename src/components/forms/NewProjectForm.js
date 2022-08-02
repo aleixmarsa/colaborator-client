@@ -12,7 +12,7 @@ const NewProjectForm = (props) => {
   const [isActive, setIsActive] = useState(true);
   const {getAllProjects, handleCancelAddSaveFormBtn} = props;
   const { user } = useContext(AuthContext);
-  const socket = useContext(SocketContext)
+  const {socket} = useContext(SocketContext)
 
   const handleSubmit = async (e) => {
     const teamIds = team.map((user) => user._id);

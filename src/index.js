@@ -8,15 +8,13 @@ import { AuthProviderWrapper } from "./context/auth.context";
 import { SocketProviderWrapper } from "./context/socket.context";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-
   <Router>
-    <AuthProviderWrapper>
-      <SocketProviderWrapper>
+    <SocketProviderWrapper>
+      <AuthProviderWrapper>
         <App />
-      </SocketProviderWrapper>
-    </AuthProviderWrapper>
+      </AuthProviderWrapper>
+    </SocketProviderWrapper>
   </Router>
-
 );
 
 // If you want to start measuring performance in your app, pass a function

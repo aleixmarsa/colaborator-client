@@ -6,7 +6,7 @@ import { deleteProjectService } from "../../services/project.services";
 import { SocketContext } from "../../context/socket.context";
 const DeletProjectModal = (props) => {
   const { projectId, projectTitle, setModalHasRender, modalHasRender } = props;
-  const socket = useContext(SocketContext);
+  const {socket} = useContext(SocketContext);
 
   const deleteProject = async (id) => {
     try {
