@@ -15,8 +15,8 @@ const NavBar = (props) => {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
 
   const userNavigation = [
-    { name: "Your Profile", action: "#" },
-    { name: "Log out", action: logOutUser },
+    { name: "Your Profile", action: "#" , state: 'disabled'},
+    { name: "Log out", action: logOutUser, state: '' },
   ];
 
   const { hasNewMessage, filterProjects } = props;

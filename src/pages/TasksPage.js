@@ -32,7 +32,7 @@ function ProjectCards(props) {
 
   const [cards, setCards] = useState([]);
 
-  const socket = useContext(SocketContext);
+  const {socket} = useContext(SocketContext);
 
   const updateCardStat = (cardId, destination) => {
     axios

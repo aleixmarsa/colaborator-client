@@ -51,7 +51,7 @@ function CalendarPage() {
   const { projectId } = useParams();
 
   const [events, setEvents] = useState([]);
-  const socket = useContext(SocketContext);
+  const {socket} = useContext(SocketContext);
 
   const getAllEvents = () => {
     axios

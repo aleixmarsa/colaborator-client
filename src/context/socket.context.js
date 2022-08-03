@@ -1,7 +1,6 @@
 import io from "socket.io-client";
 import React, { useState} from "react";
 
-const storedToken = localStorage.getItem("authToken");
 const API_URL = process.env.REACT_APP_API_URL;
 
 // export const socket = io.connect(API_URL, {
@@ -15,6 +14,7 @@ export const SocketProviderWrapper = (props) => {
 
   const socketConnection = () => {
     console.log('HEREEEEEEE')
+    const storedToken = localStorage.getItem('authToken');
 
     setSocket(
       io.connect(API_URL, {
@@ -23,7 +23,7 @@ export const SocketProviderWrapper = (props) => {
     );
   };
   return (
-    <SocketContext.Provider value={{socketConnection, socket}}>
+    <SocketContext.Provider value={{socketConnection, socket, setSocket}}>
       {props.children}
     </SocketContext.Provider>
   );
