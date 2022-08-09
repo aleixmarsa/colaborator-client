@@ -13,9 +13,7 @@ export const SocketProviderWrapper = (props) => {
   const [socket, setSocket] = useState(null);
 
   const socketConnection = () => {
-    console.log('HEREEEEEEE')
     const storedToken = localStorage.getItem('authToken');
-
     setSocket(
       io.connect(API_URL, {
         extraHeaders: { Authorization: `Bearer ${storedToken}` },

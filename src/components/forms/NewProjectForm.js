@@ -13,6 +13,7 @@ const NewProjectForm = (props) => {
   const {getAllProjects, handleCancelAddSaveFormBtn} = props;
   const { user } = useContext(AuthContext);
   const {socket} = useContext(SocketContext)
+  const [errorMessage, setErrorMessage] = useState(undefined);
 
   const handleSubmit = async (e) => {
     const teamIds = team.map((user) => user._id);
@@ -44,7 +45,9 @@ const NewProjectForm = (props) => {
       getAllProjects();
       handleCancelAddSaveFormBtn(e);
     } catch (err) {
-      console.log(err);
+      if (err.response?.status === 400) {
+        setErrorMessage(err.response.data.message);
+      }
     }
   };
 
@@ -61,6 +64,7 @@ const NewProjectForm = (props) => {
       setDescription={setDescription}
       team={team}
       setTeam={setTeam}
+      errorMessage={errorMessage}
     />
   );
 };

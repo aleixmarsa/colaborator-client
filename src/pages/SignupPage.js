@@ -30,8 +30,8 @@ function SignupPage(props) {
       await signupService(requestBody);
       navigate("/login");
     } catch (err) {
-      if (err.response?.status === 400) {
-        setErrorMessage(err.response.data.errorMessage);
+      if (err.response?.status === 400) {        
+        setErrorMessage(err.response.data.message);
       }
     }
   };
@@ -50,10 +50,9 @@ function SignupPage(props) {
         handleName={handleName}
         password={password}
         handlePassword={handlePassword}
+        errorMessage={errorMessage}
       />
-      
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
-      <Footer />
+            <Footer />
     </div>
   );
 }
