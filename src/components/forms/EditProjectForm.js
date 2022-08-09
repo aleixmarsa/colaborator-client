@@ -13,10 +13,10 @@ const EditProjectForm = (props) => {
   const [description, setDescription] = useState("");
   const [team, setTeam] = useState([]);
 
-  const { projectId, handleCancelAddSaveFormBtn} = props;
+  const { getAllProjects,projectId, handleCancelAddSaveFormBtn} = props;
 
   const { user } = useContext(AuthContext);
-  const socket = useContext(SocketContext)
+  const {socket} = useContext(SocketContext)
 
   const getProject = async (id) => {
     try {
@@ -24,7 +24,7 @@ const EditProjectForm = (props) => {
       const oneProject = response.data;
       setTitle(oneProject.title);
       setDescription(oneProject.description);
-      setTeam([]);
+      setTeam(oneProject.team);
     } catch (err) {
       console.log(err);
     }
@@ -54,7 +54,7 @@ const EditProjectForm = (props) => {
       await updateProjectService(projectId, body);
       await addNewActivityService(activity);
       socket.emit("render_projects");
-
+      debugger;
       handleCancelAddSaveFormBtn(e);
     } catch (err) {
       console.log(err);

@@ -1,19 +1,28 @@
 import io from "socket.io-client";
-import React from 'react';
+import React, { useState} from "react";
 
-const storedToken = localStorage.getItem("authToken");
 const API_URL = process.env.REACT_APP_API_URL;
 
-export const socket = io.connect(API_URL, {
-    extraHeaders: { Authorization: `Bearer ${storedToken}` },
-  });
+// export const socket = io.connect(API_URL, {
+//   extraHeaders: { Authorization: `Bearer ${storedToken}` },
+// });
 
 export const SocketContext = React.createContext();
 
 export const SocketProviderWrapper = (props) => {
-    return(
-        <SocketContext.Provider value = {socket}>
-        {props.children}
-        </SocketContext.Provider>
-    )
-}
+  const [socket, setSocket] = useState(null);
+
+  const socketConnection = () => {
+    const storedToken = localStorage.getItem('authToken');
+    setSocket(
+      io.connect(API_URL, {
+        extraHeaders: { Authorization: `Bearer ${storedToken}` },
+      })
+    );
+  };
+  return (
+    <SocketContext.Provider value={{socketConnection, socket, setSocket}}>
+      {props.children}
+    </SocketContext.Provider>
+  );
+};

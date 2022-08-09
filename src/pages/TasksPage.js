@@ -2,10 +2,11 @@
 /* eslint-disable array-callback-return */
 import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 
 import { PlusSmIcon as PlusSmIconSolid } from "@heroicons/react/solid";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+
+import { getAllTasksService, updateTaskStateService } from "../services/task.services";
 
 import Card from "../components/sections/cardPage/Card";
 import CardForm from "../components/sections/cardPage/CardForm";
@@ -32,25 +33,24 @@ function ProjectCards(props) {
 
   const [cards, setCards] = useState([]);
 
-  const socket = useContext(SocketContext);
+  const { socket } = useContext(SocketContext);
 
-  const updateCardStat = (cardId, destination) => {
-    axios
-      .put(
-        `${API_URL}/colaborator-API/projects/card/updateCard/${cardId}/${destination}`
-      )
-      .then((response) => {
-        socket.emit("render_tasks");
-      });
+  const updateCardState = async (cardId, destination) => {
+    try {
+      await updateTaskStateService(cardId, destination);
+      socket.emit("render_tasks");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const getAllCards = () => {
-    axios
-      .get(`${API_URL}/colaborator-API/projects/card/get-cards`)
-      .then((allCards) => {
-        setCards(allCards.data);
-      })
-      .catch((error) => console.log(error));
+  const getAllCards = async () => {
+    try {
+      const allTasks = await getAllTasksService();
+      setCards(allTasks.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
@@ -96,7 +96,7 @@ function ProjectCards(props) {
       });
 
       setCards(newSetCards);
-      updateCardStat(result.draggableId, destination.droppableId);
+      updateCardState(result.draggableId, destination.droppableId);
     }
 
     setCards((prevTasks) =>

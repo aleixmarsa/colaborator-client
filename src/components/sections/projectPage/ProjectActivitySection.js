@@ -13,7 +13,7 @@ const ProjectActivitySection = (props) => {
 
   const [activity, setActivity] = useState([]);
   const { user } = useContext(AuthContext);
-  const socket = useContext(SocketContext);
+  const {socket} = useContext(SocketContext);
 
   useEffect(() => {
     getActivity();

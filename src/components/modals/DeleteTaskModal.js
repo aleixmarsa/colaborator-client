@@ -12,7 +12,7 @@ const DeleteTaskModal = (props) => {
   const cancelButtonRef = useRef(null);
 
   const { user } = useContext(AuthContext);
-  const socket = useContext(SocketContext);
+  const {socket} = useContext(SocketContext);
   const {title, projectId, deleteTaskId, deleteModalHasRender,  setDeleteModalHasRender} = props
   const deleteTask = async (id) => {
     const activity = {

@@ -15,7 +15,7 @@ function CardForm(props) {
   const [cardLimitDate, setCardLimitDate] = useState("");
 
   const { user } = useContext(AuthContext);
-  const socket = useContext(SocketContext);
+  const {socket} = useContext(SocketContext);
     const {projectId, cards,setCardForm,setCards, handleCancelAddSaveFormBtn} = props
 
   const handleSubmitNewCard = async (e) => {

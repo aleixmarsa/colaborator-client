@@ -18,7 +18,7 @@ const EditTaskModal = (props) => {
     const [cardLimitDate, setCardLimitDate] = useState("")
     const { user } = useContext(AuthContext);
     const cancelButtonRef = useRef(null);
-    const socket = useContext(SocketContext)
+    const {socket} = useContext(SocketContext)
     const {editTaskId, projectId, setEditModalHasRender, editModalHasRender} = props
     const getTask = async (editTaskId) => {
         try {

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import { SocketContext } from './socket.context';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -10,11 +10,12 @@ function AuthProviderWrapper(props) {
 	const [ isLoggedIn, setIsLoggedIn ] = useState(false);
 	const [ isLoading, setIsLoading ] = useState(true);
 	const [ user, setUser ] = useState(null);
+	const {socketConnection, socket, setSocket} = useContext(SocketContext);
 
 	const verifyStoredToken = () => {
 		// Get the stored token from the localStorage
 		const storedToken = localStorage.getItem('authToken');
-
+		
 		// If the token exists in the localStorage
 		if (storedToken) {
 			// We must send the JWT token in the request's "Authorization" Headers
@@ -26,6 +27,9 @@ function AuthProviderWrapper(props) {
 					setUser(user);
 					setIsLoggedIn(true);
 					setIsLoading(false);
+					if(!socket){
+						socketConnection();
+					}
 				})
 				.catch((error) => {
 					// If the server sends an error response (invalid token) ❌
@@ -41,8 +45,8 @@ function AuthProviderWrapper(props) {
 
 	const logInUser = (token) => {
 		localStorage.setItem('authToken', token);
+		debugger;
 		verifyStoredToken();
-
 		/* 
 		*	After saving the token in the localStorage we call the
 		*	function `verifyStoredToken` which sends a new request to the
@@ -52,13 +56,16 @@ function AuthProviderWrapper(props) {
 	};
 
 	const logOutUser = () => {
-		
+		console.log("Disconnecting socket")
+		socket.emit("socket_dcn");
 		// Upon logout, remove the token from the localStorage
 		localStorage.removeItem('authToken');
 
 		// Update the state variables
 		setIsLoggedIn(false);
 		setUser(null);
+		setSocket(null)
+
 	};
 
 	useEffect(() => {

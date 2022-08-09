@@ -13,7 +13,8 @@ const Form = (props) => {
     setTitle,
     setDescription,
     team,
-    setTeam
+    setTeam,
+    errorMessage,
   } = props;
 
   return (
@@ -39,14 +40,14 @@ const Form = (props) => {
                             >
                               Title
                             </label>
-                            <br/>
+                            <br />
                             <div className="sm:mt-0 sm:col-span-3">
                               <div className="max-w-lg flex rounded-md shadow-sm ">
                                 <input
                                   type="text"
                                   name="title"
                                   id="title"
-                                  onChange={(e) => setTitle(e.target.value)} 
+                                  onChange={(e) => setTitle(e.target.value)}
                                   value={projectTitle}
                                   className="flex-1 block w-full focus:outline focus:outline-buttonHover focus:border sm:text-sm border border-gray-300 rounded-md w-32"
                                 />
@@ -61,7 +62,7 @@ const Form = (props) => {
                             >
                               Description
                             </label>
-                            <br/>
+                            <br />
                             <div className="mt-1 sm:mt-0 sm:col-span-3">
                               <textarea
                                 id="description"
@@ -75,7 +76,7 @@ const Form = (props) => {
                           </div>
                         </div>
                       </div>
-                      <SelectMenu team={team} setTeam={setTeam}/>
+                      <SelectMenu team={team} setTeam={setTeam} />
                     </div>
 
                     <div className="pt-5">
@@ -97,6 +98,9 @@ const Form = (props) => {
                       </div>
                     </div>
                   </form>
+                  {errorMessage && (
+                    <p className="mt-2 text-sm text-red-600">{errorMessage}</p>
+                  )}
                 </div>
               </div>
             </div>
