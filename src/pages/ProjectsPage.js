@@ -17,7 +17,6 @@ const classNames = (...classes) => {
 };
 
 const ProjectsPage = () => {
-  
   const [projectId, setProjectId] = useState(0);
   const [projectTitle, setProjectTitle] = useState("");
   const [newProjectForm, setNewProjectForm] = useState(false);
@@ -29,7 +28,7 @@ const ProjectsPage = () => {
   const [loading, setLoading] = useState(true);
 
   const { user } = useContext(AuthContext);
-  const {socket} = useContext(SocketContext);
+  const { socket } = useContext(SocketContext);
 
   const filterProjects = (searchText) => {
     let projectsCopy = [...currentProjects];
@@ -54,21 +53,24 @@ const ProjectsPage = () => {
     }
   };
 
+  socket.on("fetchCurrentProjects", (allCurrentProjects) => {
+    const allCurrentProjectsCopy = [...allCurrentProjects]
+      setFilteredCurrentProjects([...allCurrentProjectsCopy]);
+      setCurrentProjects([...allCurrentProjectsCopy])
+
+    console.log("🚀 ~ file: ProjectsPage.js ~ line 64 ~ socket.on ~ allCurrentProjects", allCurrentProjects)
+
+    
+  } )
 
   useEffect(() => {
-    socket.on("receive_render_projects", (e) => {
-      getAllProjects();
-    });
     socket.on("receive_alert_message", (e) => {
       setHasNewMessage(true);
     });
-
   }, [socket]);
 
-  
   useEffect(() => {
-    getAllProjects();
-    // socketConnection();
+    socket.emit("currentProjects")
   }, []);
 
   // const socketConnection = () => {

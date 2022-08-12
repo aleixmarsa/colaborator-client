@@ -17,6 +17,7 @@ const NewProjectForm = (props) => {
 
   const handleSubmit = async (e) => {
     const teamIds = team.map((user) => user._id);
+
     e.preventDefault();
     const body = {
       title: title,
@@ -26,6 +27,9 @@ const NewProjectForm = (props) => {
       active: isActive,
     };
 
+    socket.emit("newProject", body)
+
+
     const activity = {
       title: "Project created",
       project: null,
@@ -33,22 +37,21 @@ const NewProjectForm = (props) => {
     };
 
 
-    try {
-      const responseProject = await addNewProjectService(body);
-      activity.project = responseProject.data._id;
-      await addNewActivityService(activity);
-      socket.emit("render_projects");
-
-      setTitle("");
-      setDescription("");
-      setTeam([]);
-      getAllProjects();
-      handleCancelAddSaveFormBtn(e);
-    } catch (err) {
-      if (err.response?.status === 400) {
-        setErrorMessage(err.response.data.message);
-      }
-    }
+    // try {
+    //   const responseProject = await addNewProjectService(body);
+    //   activity.project = responseProject.data._id;
+    //   await addNewActivityService(activity);
+    //   socket.emit("render_projects");
+    //   setTitle("");
+    //   setDescription("");
+    //   setTeam([]);
+    //   getAllProjects();
+    //   handleCancelAddSaveFormBtn(e);
+    // } catch (err) {
+    //   if (err.response?.status === 400) {
+    //     setErrorMessage(err.response.data.message);
+    //   }
+    // }
   };
 
   return (
