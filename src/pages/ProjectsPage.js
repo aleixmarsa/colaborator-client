@@ -54,23 +54,28 @@ const ProjectsPage = () => {
   };
 
   socket.on("fetchCurrentProjects", (allCurrentProjects) => {
-    const allCurrentProjectsCopy = [...allCurrentProjects]
-      setFilteredCurrentProjects([...allCurrentProjectsCopy]);
-      setCurrentProjects([...allCurrentProjectsCopy])
+    const allCurrentProjectsCopy = [...allCurrentProjects];
+    setFilteredCurrentProjects([...allCurrentProjectsCopy]);
+    setCurrentProjects([...allCurrentProjectsCopy]);
 
-    console.log("🚀 ~ file: ProjectsPage.js ~ line 64 ~ socket.on ~ allCurrentProjects", allCurrentProjects)
-
-    
-  } )
+    console.log(
+      "🚀 ~ file: ProjectsPage.js ~ line 64 ~ socket.on ~ allCurrentProjects",
+      allCurrentProjects
+    );
+  });
 
   socket.on("newProjectCreated", (project) => {
-    console.log("🚀 ~ file: ProjectsPage.js ~ line 67 ~ socket.on ~ project", project)
-    const allCurrentProjectsCopy = [...filteredCurrentProjects, project]
-      setFilteredCurrentProjects([...allCurrentProjectsCopy]);
-      setCurrentProjects([...allCurrentProjectsCopy])
-      socket.emit("joinProjectRoom", project._id )
-    
-  } )
+    console.log(
+      "🚀 ~ file: ProjectsPage.js ~ line 67 ~ socket.on ~ project",
+      project
+    );
+    setEditProjectForm(false);
+    setNewProjectForm(false);
+    const allCurrentProjectsCopy = [...filteredCurrentProjects, project];
+    setFilteredCurrentProjects([...allCurrentProjectsCopy]);
+    setCurrentProjects([...allCurrentProjectsCopy]);
+    socket.emit("joinProjectRoom", project._id);
+  });
 
   useEffect(() => {
     socket.on("receive_alert_message", (e) => {
@@ -79,7 +84,7 @@ const ProjectsPage = () => {
   }, [socket]);
 
   useEffect(() => {
-    socket.emit("currentProjects")
+    socket.emit("currentProjects");
   }, []);
 
   // const socketConnection = () => {
