@@ -53,11 +53,11 @@ const ProjectsPage = () => {
     }
   };
 
-  socket.on("fetchCurrentProjects", (allCurrentProjects) => {
+  socket.on("getCurrentProjects", (allCurrentProjects) => {
     const allCurrentProjectsCopy = [...allCurrentProjects];
     setFilteredCurrentProjects([...allCurrentProjectsCopy]);
     setCurrentProjects([...allCurrentProjectsCopy]);
-
+    setLoading(false);
     console.log(
       "🚀 ~ file: ProjectsPage.js ~ line 64 ~ socket.on ~ allCurrentProjects",
       allCurrentProjects
@@ -84,7 +84,7 @@ const ProjectsPage = () => {
   }, [socket]);
 
   useEffect(() => {
-    socket.emit("currentProjects");
+    socket.emit("getCurrentProjects");
   }, []);
 
   // const socketConnection = () => {
