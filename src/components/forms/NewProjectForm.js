@@ -10,7 +10,7 @@ const NewProjectForm = (props) => {
   const [description, setDescription] = useState("");
   const [team, setTeam] = useState([]);
   const [isActive, setIsActive] = useState(true);
-  const {getAllProjects, handleCancelAddSaveFormBtn} = props;
+  const {handleCancelAddSaveFormBtn} = props;
   const { user } = useContext(AuthContext);
   const {socket} = useContext(SocketContext)
   const [errorMessage, setErrorMessage] = useState(undefined);

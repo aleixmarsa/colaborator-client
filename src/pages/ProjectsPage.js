@@ -42,16 +42,16 @@ const ProjectsPage = () => {
       : setFilteredCurrentProjects(currentProjects);
   };
 
-  const getAllProjects = async () => {
-    try {
-      const response = await getAllCurrentProjectsService(user._id);
-      setCurrentProjects(response.data);
-      setFilteredCurrentProjects(response.data);
-      setLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const getAllProjects = async () => {
+  //   try {
+  //     const response = await getAllCurrentProjectsService(user._id);
+  //     setCurrentProjects(response.data);
+  //     setFilteredCurrentProjects(response.data);
+  //     setLoading(false);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   socket.on("getCurrentProjects", (allCurrentProjects) => {
     const allCurrentProjectsCopy = [...allCurrentProjects];
@@ -102,7 +102,6 @@ const ProjectsPage = () => {
       {!loading && modalHasRender && (
         <DeletProjectModal
           projectId={projectId}
-          getAllProjects={getAllProjects}
           projectTitle={projectTitle}
           setModalHasRender={setModalHasRender}
           modalHasRender={modalHasRender}
@@ -122,7 +121,6 @@ const ProjectsPage = () => {
                     projectsInProgress={currentProjects}
                     editProjectForm={editProjectForm}
                     setEditProjectForm={setEditProjectForm}
-                    getAllProjects={getAllProjects}
                   />
                 </div>
               </div>
@@ -142,7 +140,6 @@ const ProjectsPage = () => {
                     setProjectId={setProjectId}
                     setModalHasRender={setModalHasRender}
                     setProjectTitle={setProjectTitle}
-                    getAllProjects={getAllProjects}
                   />
                 </div>
               </div>

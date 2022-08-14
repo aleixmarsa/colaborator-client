@@ -13,7 +13,7 @@ const EditProjectForm = (props) => {
   const [description, setDescription] = useState("");
   const [team, setTeam] = useState([]);
 
-  const { getAllProjects,projectId, handleCancelAddSaveFormBtn} = props;
+  const {projectId, handleCancelAddSaveFormBtn} = props;
 
   const { user } = useContext(AuthContext);
   const {socket} = useContext(SocketContext)
