@@ -63,6 +63,15 @@ const ProjectsPage = () => {
     
   } )
 
+  socket.on("newProjectCreated", (project) => {
+    console.log("🚀 ~ file: ProjectsPage.js ~ line 67 ~ socket.on ~ project", project)
+    const allCurrentProjectsCopy = [...filteredCurrentProjects, project]
+      setFilteredCurrentProjects([...allCurrentProjectsCopy]);
+      setCurrentProjects([...allCurrentProjectsCopy])
+
+    
+  } )
+
   useEffect(() => {
     socket.on("receive_alert_message", (e) => {
       setHasNewMessage(true);

@@ -19,6 +19,9 @@ export const SocketProviderWrapper = (props) => {
         extraHeaders: { Authorization: `Bearer ${storedToken}` },
       })
     );
+    socket.on('connect', function (data) {
+      socket.emit('storeClientInfo', { customId:"000CustomIdHere0000" });
+  });
   };
   return (
     <SocketContext.Provider value={{socketConnection, socket, setSocket}}>
