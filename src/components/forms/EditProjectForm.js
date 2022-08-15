@@ -2,21 +2,23 @@ import { useState, useEffect } from "react";
 import { useContext } from "react";
 
 import Form from "./Form";
-import { getProjectDetailsService, updateProjectService } from "../../services/project.services";
+import {
+  getProjectDetailsService,
+  updateProjectService,
+} from "../../services/project.services";
 import { AuthContext } from "../../context/auth.context";
 import { addNewActivityService } from "../../services/activity.services";
 import { SocketContext } from "../../context/socket.context";
 
 const EditProjectForm = (props) => {
-
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [team, setTeam] = useState([]);
 
-  const {projectId, handleCancelAddSaveFormBtn} = props;
+  const { projectId, handleCancelAddSaveFormBtn } = props;
 
   const { user } = useContext(AuthContext);
-  const {socket} = useContext(SocketContext)
+  const { socket } = useContext(SocketContext);
 
   const getProject = async (id) => {
     try {
@@ -34,13 +36,17 @@ const EditProjectForm = (props) => {
     getProject(projectId);
   }, [projectId]);
 
+  socket.on("updatedProject", () => {
+    socket.emit("getCurrentProjects", user._id);
+  });
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const body = {
-      projectId:projectId,
+    const projectBody = {
+      projectId: projectId,
       title: title,
       description: description,
-      team:team
+      team: team,
     };
 
     const activity = {
@@ -49,17 +55,22 @@ const EditProjectForm = (props) => {
       user: user._id,
     };
 
+    socket.emit("updateProject", projectBody);
 
-    try {
-      await updateProjectService(projectId, body);
-      await addNewActivityService(activity);
-      socket.emit("render_projects");
-      debugger;
-      handleCancelAddSaveFormBtn(e);
-    } catch (err) {
-      console.log(err);
-    }
+    //   try {
+    //     await updateProjectService(projectId, body);
+    //     await addNewActivityService(activity);
+    //     socket.emit("render_projects");
+    //     handleCancelAddSaveFormBtn(e);
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
   };
+
+  socket.on("projectUpdated", (updatedProject)=>{
+    console.log("ASDASDADS")
+    console.log("USER: ", user.name, " Project updated: ", updatedProject.name)
+  })
 
   return (
     <Form

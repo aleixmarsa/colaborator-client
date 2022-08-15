@@ -71,9 +71,7 @@ const ProjectsPage = () => {
     );
     setEditProjectForm(false);
     setNewProjectForm(false);
-    const allCurrentProjectsCopy = [...filteredCurrentProjects, project];
-    setFilteredCurrentProjects([...allCurrentProjectsCopy]);
-    setCurrentProjects([...allCurrentProjectsCopy]);
+    socket.emit("getCurrentProjects");
     socket.emit("joinProjectRoom", project._id);
   });
 
