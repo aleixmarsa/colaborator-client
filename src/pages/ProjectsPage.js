@@ -66,7 +66,7 @@ const ProjectsPage = () => {
       setEditProjectForm(false);
       setNewProjectForm(false);
       socket.emit("getCurrentProjects");
-      socket.emit("joinProjectRoom", project._id.toString());
+      // socket.emit("joinProjectRoom", project._id.toString());
     });
 
     socket.on("getCurrentProjects", (allCurrentProjects) => {
@@ -82,18 +82,18 @@ const ProjectsPage = () => {
       setNewProjectForm(false);
       socket.emit("getCurrentProjects");
       socket.emit("leaveProjectRoom", projectRoom)
-      updatedProject.team.forEach((member) => {
-        if (member._id === user._id) {
-          console.log("USER: ", member.name, "IS A MEMBER");
-          socket.emit("joinProjectRoom", projectRoom);
-        }
-      });
+      // updatedProject.team.forEach((member) => {
+      //   if (member._id === user._id) {
+      //     console.log("USER: ", member.name, "IS A MEMBER");
+      //     socket.emit("joinProjectRoom", projectRoom);
+      //   }
+      // });
     });
 
-    socket.on("projectDeleted", (projectId)=>{
-      console.log("🚀 ~ file: ProjectsPage.js ~ line 94 ~ socket.on ~ projectId", projectId)
+    socket.on("projectDeleted", (deletedProject)=>{
+      console.log("🚀 ~ file: ProjectsPage.js ~ line 94 ~ socket.on ~ projectId", deletedProject)
       setModalHasRender(false);
-      socket.emit("leaveProjectRoom", projectId)
+      socket.emit("leaveProjectRoom", deletedProject._id.toString())
       socket.emit("getCurrentProjects");
       
     })
@@ -103,7 +103,7 @@ const ProjectsPage = () => {
 
   useEffect(() => {
     socket.emit("getCurrentProjects");
-    socket.emit("joinAllProjectsRoom");
+    // socket.emit("joinAllProjectsRoom");
   }, []);
 
   // const socketConnection = () => {
