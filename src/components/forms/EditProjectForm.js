@@ -36,9 +36,6 @@ const EditProjectForm = (props) => {
     getProject(projectId);
   }, [projectId]);
 
-  socket.on("updatedProject", () => {
-    socket.emit("getCurrentProjects", user._id);
-  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -67,10 +64,7 @@ const EditProjectForm = (props) => {
     //   }
   };
 
-  socket.on("projectUpdated", (updatedProject)=>{
-    console.log("ASDASDADS")
-    console.log("USER: ", user.name, " Project updated: ", updatedProject.name)
-  })
+
 
   return (
     <Form

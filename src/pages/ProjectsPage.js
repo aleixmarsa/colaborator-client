@@ -61,6 +61,7 @@ const ProjectsPage = () => {
     socket.on("receive_alert_message", (e) => {
       setHasNewMessage(true);
     });
+
     socket.on("newProjectCreated", (project) => {
       console.log(
         "🚀 ~ file: ProjectsPage.js ~ line 67 ~ socket.on ~ project",
@@ -69,8 +70,9 @@ const ProjectsPage = () => {
       setEditProjectForm(false);
       setNewProjectForm(false);
       socket.emit("getCurrentProjects");
-      socket.emit("joinProjectRoom", project._id);
+      socket.emit("joinProjectRoom", project._id.toString());
     });
+
     socket.on("getCurrentProjects", (allCurrentProjects) => {
       const allCurrentProjectsCopy = [...allCurrentProjects];
       setFilteredCurrentProjects([...allCurrentProjectsCopy]);
@@ -78,6 +80,16 @@ const ProjectsPage = () => {
       setLoading(false);
   
     });
+    socket.on("projectUpdated", (updatedProject)=>{
+      console.log("ASDASDADS")
+      setEditProjectForm(false);
+      setNewProjectForm(false);
+      socket.emit("getCurrentProjects");
+      socket.emit("joinProjectRoom", updatedProject._id.toString());
+
+      console.log("USER: ", user.name, " Project updated: ", updatedProject.name)
+    })
+
   }, [socket]);
 
   useEffect(() => {
