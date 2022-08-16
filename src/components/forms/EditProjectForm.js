@@ -37,7 +37,7 @@ const EditProjectForm = (props) => {
   }, [projectId]);
 
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const projectBody = {
       projectId: projectId,
