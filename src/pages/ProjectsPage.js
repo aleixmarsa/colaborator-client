@@ -53,36 +53,36 @@ const ProjectsPage = () => {
   //   }
   // };
 
-  socket.on("getCurrentProjects", (allCurrentProjects) => {
-    const allCurrentProjectsCopy = [...allCurrentProjects];
-    setFilteredCurrentProjects([...allCurrentProjectsCopy]);
-    setCurrentProjects([...allCurrentProjectsCopy]);
-    setLoading(false);
-    console.log(
-      "🚀 ~ file: ProjectsPage.js ~ line 64 ~ socket.on ~ allCurrentProjects",
-      allCurrentProjects
-    );
-  });
 
-  socket.on("newProjectCreated", (project) => {
-    console.log(
-      "🚀 ~ file: ProjectsPage.js ~ line 67 ~ socket.on ~ project",
-      project
-    );
-    setEditProjectForm(false);
-    setNewProjectForm(false);
-    socket.emit("getCurrentProjects");
-    socket.emit("joinProjectRoom", project._id);
-  });
+
+
 
   useEffect(() => {
     socket.on("receive_alert_message", (e) => {
       setHasNewMessage(true);
     });
+    socket.on("newProjectCreated", (project) => {
+      console.log(
+        "🚀 ~ file: ProjectsPage.js ~ line 67 ~ socket.on ~ project",
+        project
+      );
+      setEditProjectForm(false);
+      setNewProjectForm(false);
+      socket.emit("getCurrentProjects");
+      socket.emit("joinProjectRoom", project._id);
+    });
+    socket.on("getCurrentProjects", (allCurrentProjects) => {
+      const allCurrentProjectsCopy = [...allCurrentProjects];
+      setFilteredCurrentProjects([...allCurrentProjectsCopy]);
+      setCurrentProjects([...allCurrentProjectsCopy]);
+      setLoading(false);
+  
+    });
   }, [socket]);
 
   useEffect(() => {
     socket.emit("getCurrentProjects");
+    socket.emit("joinAllProjectsRoom")
   }, []);
 
   // const socketConnection = () => {
