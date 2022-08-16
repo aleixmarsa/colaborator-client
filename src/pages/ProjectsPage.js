@@ -53,10 +53,6 @@ const ProjectsPage = () => {
   //   }
   // };
 
-
-
-
-
   useEffect(() => {
     socket.on("receive_alert_message", (e) => {
       setHasNewMessage(true);
@@ -78,23 +74,26 @@ const ProjectsPage = () => {
       setFilteredCurrentProjects([...allCurrentProjectsCopy]);
       setCurrentProjects([...allCurrentProjectsCopy]);
       setLoading(false);
-  
     });
-    socket.on("projectUpdated", (updatedProject)=>{
-      console.log("ASDASDADS")
+
+    socket.on("projectUpdated", (updatedProject) => {
+      const projectRoom = updatedProject._id.toString()
       setEditProjectForm(false);
       setNewProjectForm(false);
       socket.emit("getCurrentProjects");
-      socket.emit("joinProjectRoom", updatedProject._id.toString());
-
-      console.log("USER: ", user.name, " Project updated: ", updatedProject.name)
-    })
-
+      socket.emit("leaveProjectRoom", projectRoom)
+      updatedProject.team.forEach((member) => {
+        if (member._id === user._id) {
+          console.log("USER: ", member.name, "IS A MEMBER");
+          socket.emit("joinProjectRoom", projectRoom);
+        }
+      });
+    });
   }, [socket]);
 
   useEffect(() => {
     socket.emit("getCurrentProjects");
-    socket.emit("joinAllProjectsRoom")
+    socket.emit("joinAllProjectsRoom");
   }, []);
 
   // const socketConnection = () => {

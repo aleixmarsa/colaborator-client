@@ -45,7 +45,6 @@ function AuthProviderWrapper(props) {
 
 	const logInUser = (token) => {
 		localStorage.setItem('authToken', token);
-		debugger;
 		verifyStoredToken();
 		/* 
 		*	After saving the token in the localStorage we call the
