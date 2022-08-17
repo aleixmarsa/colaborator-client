@@ -46,12 +46,13 @@ const EditProjectForm = (props) => {
       team: team,
     };
 
-    const activity = {
+    const activityBody = {
       title: "Project info edited",
       project: projectId,
       user: user._id,
     };
-
+    socket.emit("newActivity", activityBody);
+    
     socket.emit("updateProject", projectBody);
   };
   socket.on("errorMessage", setErrorMessage)

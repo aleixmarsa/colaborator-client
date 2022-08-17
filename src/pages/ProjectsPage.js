@@ -42,17 +42,27 @@ const ProjectsPage = () => {
       : setFilteredCurrentProjects(currentProjects);
   };
 
-
   useEffect(() => {
     socket.on("receive_alert_message", (e) => {
       setHasNewMessage(true);
     });
 
     socket.on("newProjectCreated", (project) => {
+
+      const activityBody = {
+        title: "Project created",
+        project: project._id,
+        user: user._id,
+      };
       setEditProjectForm(false);
       setNewProjectForm(false);
       socket.emit("getCurrentProjects");
       socket.emit("joinProjectRoom", project._id.toString());
+      console.log("🚀 ~ file: ProjectsPage.js ~ line 62 ~ socket.on ~ project.admin", project.admin)
+
+      if(project.admin === user._id){
+        socket.emit("newActivity", activityBody);
+      }
     });
 
     socket.on("getCurrentProjects", (allCurrentProjects) => {
@@ -63,11 +73,11 @@ const ProjectsPage = () => {
     });
 
     socket.on("projectUpdated", (updatedProject) => {
-      const projectRoom = updatedProject._id.toString()
+      const projectRoom = updatedProject._id.toString();
       setEditProjectForm(false);
       setNewProjectForm(false);
       socket.emit("getCurrentProjects");
-      socket.emit("leaveProjectRoom", projectRoom)
+      socket.emit("leaveProjectRoom", projectRoom);
       updatedProject.team.forEach((member) => {
         if (member._id === user._id) {
           console.log("USER: ", member.name, "IS A MEMBER");
@@ -76,27 +86,21 @@ const ProjectsPage = () => {
       });
     });
 
-    socket.on("projectDeleted", (projectId)=>{
-      console.log("🚀 ~ file: ProjectsPage.js ~ line 94 ~ socket.on ~ projectId", projectId)
+    socket.on("projectDeleted", (projectId) => {
+      console.log(
+        "🚀 ~ file: ProjectsPage.js ~ line 94 ~ socket.on ~ projectId",
+        projectId
+      );
       setModalHasRender(false);
-      socket.emit("leaveProjectRoom", projectId)
+      socket.emit("leaveProjectRoom", projectId);
       socket.emit("getCurrentProjects");
-      
-    })
-
-    
+    });
   }, [socket]);
 
   useEffect(() => {
     socket.emit("getCurrentProjects");
     socket.emit("joinAllProjectsRoom");
   }, []);
-
-  // const socketConnection = () => {
-  //   socket = io.connect(API_URL, {
-  //     extraHeaders: { Authorization: `Bearer ${storedToken}` },
-  //   });
-  // }
 
   return (
     <div className="bg-neutral-50 h-screen">

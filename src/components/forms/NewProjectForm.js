@@ -19,6 +19,7 @@ const NewProjectForm = (props) => {
     const teamIds = team.map((user) => user._id);
 
     e.preventDefault();
+
     const body = {
       title: title,
       description: description,
@@ -26,16 +27,13 @@ const NewProjectForm = (props) => {
       team: teamIds,
       active: isActive,
     };
-
     socket.emit("newProject", body)
-
-
-    const activity = {
-      title: "Project created",
-      project: null,
-      user: user._id,
-    };
+    
   };
+
+
+
+
 
   socket.on("errorMessage", setErrorMessage)
 
