@@ -20,10 +20,11 @@ function CardForm(props) {
 
   const handleSubmitNewCard = async (e) => {
     e.preventDefault();
-    const body = {
+    const taskBody = {
       title: cardTitle,
       description: cardDescription,
       stat: cardStat,
+      project: projectId,
       color: cardColor,
       limitDate: cardLimitDate,
     };
@@ -33,27 +34,31 @@ function CardForm(props) {
       project: projectId,
       user: user._id,
     };
-    console.log("Body que viene del formulario: ", body);
 
     setCardForm(false);
 
-    try {
-      const response = await addNewTaskService(projectId, body);
-      await addNewActivityService(activity);
+    socket.emit("newTask", taskBody)
 
-      setCards([...cards, response.data]);
-      socket.emit("render_tasks");
-      setCardTitle("");
-      setCardDescription("");
-      setCardForm(false);
-      setCardColor("white");
-      setCardStat("TODO");
-      setCardLimitDate("");
-      // handleCancelAddSaveFormBtn(e);
-      setCardForm(false);
-    } catch (err) {
-      console.log(err);
-    }
+
+   
+
+    // try {
+    //   const response = await addNewTaskService(projectId, body);
+    //   await addNewActivityService(activity);
+
+    //   setCards([...cards, response.data]);
+    //   socket.emit("render_tasks");
+    //   setCardTitle("");
+    //   setCardDescription("");
+    //   setCardForm(false);
+    //   setCardColor("white");
+    //   setCardStat("TODO");
+    //   setCardLimitDate("");
+    //   // handleCancelAddSaveFormBtn(e);
+    //   setCardForm(false);
+    // } catch (err) {
+    //   console.log(err);
+    // }
   };
 
   return (

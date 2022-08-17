@@ -6,7 +6,10 @@ import { useParams } from "react-router-dom";
 import { PlusSmIcon as PlusSmIconSolid } from "@heroicons/react/solid";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
-import { getAllTasksService, updateTaskStateService } from "../services/task.services";
+import {
+  getAllTasksService,
+  updateTaskStateService,
+} from "../services/task.services";
 
 import Card from "../components/sections/cardPage/Card";
 import CardForm from "../components/sections/cardPage/CardForm";
@@ -48,19 +51,30 @@ function ProjectCards(props) {
     try {
       const allTasks = await getAllTasksService();
       setCards(allTasks.data);
+      console.log(
+        "🚀 ~ file: TasksPage.js ~ line 53 ~ getAllCards ~ allTasks.data)",
+        allTasks.data
+      );
     } catch (err) {
       console.log(err);
     }
   };
 
+
+
   useEffect(() => {
-    socket.on("receive_render_tasks", (e) => {
-      getAllCards();
+    socket.on("getTasksByProject", (allTasks) => {
+      setCards([...allTasks]);
+    });
+    socket.on("newTaskCreated", (task) => {
+      console.log("🚀 ~ file: TasksPage.js ~ line 72 ~ socket.on ~ task", task)
+      socket.emit("getTasksByProject", projectId);
+      setCardForm(false);
     });
   }, [socket]);
 
   useEffect(() => {
-    getAllCards();
+    socket.emit("getTasksByProject", projectId);
   }, []);
 
   const reorder = (list, startIndex, endIndex) => {

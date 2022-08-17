@@ -49,10 +49,6 @@ const ProjectsPage = () => {
     });
 
     socket.on("newProjectCreated", (project) => {
-      console.log(
-        "🚀 ~ file: ProjectsPage.js ~ line 67 ~ socket.on ~ project",
-        project
-      );
       setEditProjectForm(false);
       setNewProjectForm(false);
       socket.emit("getCurrentProjects");
