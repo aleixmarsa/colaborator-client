@@ -24,15 +24,6 @@ const DeleteTaskModal = (props) => {
 
     socket.emit("deleteTask", taskId, projectId)
 
-    // try {
-    //   await deleteTaskService(id);
-    //   socket.emit("render_tasks");
-    //   await addNewActivityService(activity);
-
-    //   setDeleteModalHasRender(false);
-    // } catch (err) {
-    //   console.log(err);
-    // }
   };
 
   return (

@@ -38,13 +38,14 @@ function ProjectCards(props) {
 
   const { socket } = useContext(SocketContext);
 
-  const updateCardState = async (cardId, destination) => {
-    try {
-      await updateTaskStateService(cardId, destination);
-      socket.emit("render_tasks");
-    } catch (err) {
-      console.log(err);
-    }
+  const updateTaskState = async (cardId, destination) => {
+    const taskBody = {
+      taskId: cardId,
+      state: destination,
+      project: projectId
+  };
+    socket.emit("updateTaskState", taskBody)
+    
   };
 
   useEffect(() => {
@@ -96,8 +97,8 @@ function ProjectCards(props) {
 
     if (source.droppableId !== destination.droppableId) {
       let upCard = cards.find((card) => card._id === result.draggableId);
-      const stat = destination.droppableId.toUpperCase();
-      const cardCopy = { ...upCard, stat };
+      const state = destination.droppableId.toUpperCase();
+      const cardCopy = { ...upCard, state };
 
       const newSetCards = cards.map((card) => {
         if (card._id === cardCopy._id) {
@@ -108,7 +109,7 @@ function ProjectCards(props) {
       });
 
       setCards(newSetCards);
-      updateCardState(result.draggableId, destination.droppableId);
+      updateTaskState(result.draggableId, destination.droppableId);
     }
 
     setCards((prevTasks) =>
@@ -165,7 +166,7 @@ function ProjectCards(props) {
                         </button>
                         {cards.map((card, index) => {
                           if (
-                            card.stat === "TODO" &&
+                            card.state === "TODO" &&
                             card.project === projectId
                           ) {
                             return (
@@ -192,7 +193,7 @@ function ProjectCards(props) {
                                       <Card
                                         title={card.title}
                                         description={card.description}
-                                        stat={card.stat}
+                                        state={card.state}
                                         color={card.color}
                                         cardId={card._id}
                                         cardLimitDate={card.limitDate}
@@ -244,7 +245,7 @@ function ProjectCards(props) {
                     >
                       {cards.map((card, index) => {
                         if (
-                          card.stat === "PROGRESS" &&
+                          card.state === "PROGRESS" &&
                           card.project === projectId
                         ) {
                           return (
@@ -269,7 +270,7 @@ function ProjectCards(props) {
                                     <Card
                                       title={card.title}
                                       description={card.description}
-                                      stat={card.stat}
+                                      state={card.state}
                                       color={card.color}
                                       cardId={card._id}
                                       cardLimitDate={card.limitDate}
@@ -312,7 +313,7 @@ function ProjectCards(props) {
                     >
                       {cards.map((card, index) => {
                         if (
-                          card.stat === "DONE" &&
+                          card.state === "DONE" &&
                           card.project === projectId
                         ) {
                           return (
@@ -337,7 +338,7 @@ function ProjectCards(props) {
                                     <Card
                                       title={card.title}
                                       description={card.description}
-                                      stat={card.stat}
+                                      state={card.state}
                                       color={card.color}
                                       cardId={card._id}
                                       cardLimitDate={card.limitDate}

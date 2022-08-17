@@ -54,14 +54,6 @@ const EditTaskModal = (props) => {
 
         socket.emit("updateTask", taskBody)
 
-        // try {
-        //     await updateTaskService(editTaskId, body);
-        //     await addNewActivityService(activity);
-        //     socket.emit("render_tasks");
-        //     setEditModalHasRender(false);
-        // } catch (err) {
-        //     console.log(err);
-        // }
     };
 
   return (

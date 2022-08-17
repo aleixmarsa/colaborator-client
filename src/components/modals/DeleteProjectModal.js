@@ -12,16 +12,6 @@ const DeletProjectModal = (props) => {
   const handleDelete = (ProjecId) => {
     socket.emit("deleteProject", ProjecId.toString())
   }
-  // const deleteProject = async (id) => {
-  //   try {
-  //     await deleteProjectService(id);
-  //     socket.emit("render_projects");
-  //     setModalHasRender(false);
-  //     // getAllProjects();
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
 
   return (
     

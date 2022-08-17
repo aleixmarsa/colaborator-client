@@ -10,7 +10,7 @@ function CardForm(props) {
 
   const [cardTitle, setCardTitle] = useState("");
   const [cardDescription, setCardDescription] = useState("");
-  const [cardStat, setCardStat] = useState("TODO");
+  const [cardState, setCardState] = useState("TODO");
   const [cardColor, setCardColor] = useState("white");
   const [cardLimitDate, setCardLimitDate] = useState("");
 
@@ -23,7 +23,7 @@ function CardForm(props) {
     const taskBody = {
       title: cardTitle,
       description: cardDescription,
-      stat: cardStat,
+      state: cardState,
       project: projectId,
       color: cardColor,
       limitDate: cardLimitDate,
@@ -38,27 +38,6 @@ function CardForm(props) {
     setCardForm(false);
 
     socket.emit("newTask", taskBody)
-
-
-   
-
-    // try {
-    //   const response = await addNewTaskService(projectId, body);
-    //   await addNewActivityService(activity);
-
-    //   setCards([...cards, response.data]);
-    //   socket.emit("render_tasks");
-    //   setCardTitle("");
-    //   setCardDescription("");
-    //   setCardForm(false);
-    //   setCardColor("white");
-    //   setCardStat("TODO");
-    //   setCardLimitDate("");
-    //   // handleCancelAddSaveFormBtn(e);
-    //   setCardForm(false);
-    // } catch (err) {
-    //   console.log(err);
-    // }
   };
 
   return (

@@ -35,23 +35,6 @@ const NewProjectForm = (props) => {
       project: null,
       user: user._id,
     };
-
-
-    // try {
-    //   const responseProject = await addNewProjectService(body);
-    //   activity.project = responseProject.data._id;
-    //   await addNewActivityService(activity);
-    //   socket.emit("render_projects");
-    //   setTitle("");
-    //   setDescription("");
-    //   setTeam([]);
-    //   getAllProjects();
-    //   handleCancelAddSaveFormBtn(e);
-    // } catch (err) {
-    //   if (err.response?.status === 400) {
-    //     setErrorMessage(err.response.data.message);
-    //   }
-    // }
   };
 
   socket.on("errorMessage", setErrorMessage)
