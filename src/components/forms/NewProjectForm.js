@@ -54,6 +54,8 @@ const NewProjectForm = (props) => {
     // }
   };
 
+  socket.on("errorMessage", setErrorMessage)
+
   return (
     <Form
       formTitle="Create a new Project"

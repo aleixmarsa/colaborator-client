@@ -42,16 +42,6 @@ const ProjectsPage = () => {
       : setFilteredCurrentProjects(currentProjects);
   };
 
-  // const getAllProjects = async () => {
-  //   try {
-  //     const response = await getAllCurrentProjectsService(user._id);
-  //     setCurrentProjects(response.data);
-  //     setFilteredCurrentProjects(response.data);
-  //     setLoading(false);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
 
   useEffect(() => {
     socket.on("receive_alert_message", (e) => {

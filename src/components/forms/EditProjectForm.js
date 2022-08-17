@@ -14,7 +14,7 @@ const EditProjectForm = (props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [team, setTeam] = useState([]);
-
+  const [errorMessage, setErrorMessage] = useState(undefined);
   const { projectId, handleCancelAddSaveFormBtn } = props;
 
   const { user } = useContext(AuthContext);
@@ -53,16 +53,8 @@ const EditProjectForm = (props) => {
     };
 
     socket.emit("updateProject", projectBody);
-
-    //   try {
-    //     await updateProjectService(projectId, body);
-    //     await addNewActivityService(activity);
-    //     socket.emit("render_projects");
-    //     handleCancelAddSaveFormBtn(e);
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
   };
+  socket.on("errorMessage", setErrorMessage)
 
 
 
@@ -79,6 +71,8 @@ const EditProjectForm = (props) => {
       setDescription={setDescription}
       team={team}
       setTeam={setTeam}
+      errorMessage={errorMessage}
+
     />
   );
 };
