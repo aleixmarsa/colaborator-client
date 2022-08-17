@@ -15,12 +15,15 @@ const DeleteTaskModal = (props) => {
   const {socket} = useContext(SocketContext);
   const {title, projectId, deleteTaskId, deleteModalHasRender,  setDeleteModalHasRender} = props
 
-  const deleteTask = async (taskId) => {
-    const activity = {
+  const deleteTask = (taskId) => {
+
+
+    const activityBody = {
       title: "Task deleted",
       project: projectId,
       user: user._id,
     };
+    socket.emit("newActivity", activityBody);
 
     socket.emit("deleteTask", taskId, projectId)
 

@@ -46,11 +46,14 @@ const EditTaskModal = (props) => {
             project: projectId
         };
 
-        const activity = {
+        const activityBody = {
             title: "Task info edited",
             project: projectId,
             user: user._id,
         };
+
+    socket.emit("newActivity", activityBody);
+
 
         socket.emit("updateTask", taskBody)
 

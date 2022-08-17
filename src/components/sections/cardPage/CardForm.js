@@ -29,11 +29,12 @@ function CardForm(props) {
       limitDate: cardLimitDate,
     };
 
-    const activity = {
+    const activityBody = {
       title: "Task created",
       project: projectId,
       user: user._id,
     };
+    socket.emit("newActivity", activityBody);
 
     setCardForm(false);
 
