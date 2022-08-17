@@ -87,10 +87,6 @@ const ProjectsPage = () => {
     });
 
     socket.on("projectDeleted", (projectId) => {
-      console.log(
-        "🚀 ~ file: ProjectsPage.js ~ line 94 ~ socket.on ~ projectId",
-        projectId
-      );
       setModalHasRender(false);
       socket.emit("leaveProjectRoom", projectId);
       socket.emit("getCurrentProjects");

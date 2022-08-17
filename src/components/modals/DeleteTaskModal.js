@@ -24,8 +24,9 @@ const DeleteTaskModal = (props) => {
       user: user._id,
     };
     socket.emit("newActivity", activityBody);
-
     socket.emit("deleteTask", taskId, projectId)
+    socket.emit("getEvents", projectId)
+
 
   };
 
