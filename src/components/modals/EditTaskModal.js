@@ -37,12 +37,13 @@ const EditTaskModal = (props) => {
     }, [editTaskId]);
 
     const handleSubmitEditForm = async (e) => {
-        const body = {
+        const taskBody = {
             taskId: editTaskId,
             title: title,
             description: description,
             color: color,
-            limitDate: cardLimitDate
+            limitDate: cardLimitDate,
+            project: projectId
         };
 
         const activity = {
@@ -51,14 +52,16 @@ const EditTaskModal = (props) => {
             user: user._id,
         };
 
-        try {
-            await updateTaskService(editTaskId, body);
-            await addNewActivityService(activity);
-            socket.emit("render_tasks");
-            setEditModalHasRender(false);
-        } catch (err) {
-            console.log(err);
-        }
+        socket.emit("updateTask", taskBody)
+
+        // try {
+        //     await updateTaskService(editTaskId, body);
+        //     await addNewActivityService(activity);
+        //     socket.emit("render_tasks");
+        //     setEditModalHasRender(false);
+        // } catch (err) {
+        //     console.log(err);
+        // }
     };
 
   return (

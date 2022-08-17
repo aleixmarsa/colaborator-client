@@ -67,11 +67,17 @@ function ProjectCards(props) {
       setCards([...allTasks]);
     });
     socket.on("newTaskCreated", (task) => {
-      console.log("🚀 ~ file: TasksPage.js ~ line 72 ~ socket.on ~ task", task)
       socket.emit("getTasksByProject", projectId);
       setCardForm(false);
     });
+
+    socket.on("taskUpdated", (updatedTask) => {
+      console.log("🚀 ~ file: TasksPage.js ~ line 75 ~ socket.on ~ updatedTask", updatedTask)
+      setEditModalHasRender(false)
+      socket.emit("getTasksByProject", projectId);
+    });
   }, [socket]);
+
 
   useEffect(() => {
     socket.emit("getTasksByProject", projectId);
