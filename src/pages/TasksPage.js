@@ -47,21 +47,6 @@ function ProjectCards(props) {
     }
   };
 
-  const getAllCards = async () => {
-    try {
-      const allTasks = await getAllTasksService();
-      setCards(allTasks.data);
-      console.log(
-        "🚀 ~ file: TasksPage.js ~ line 53 ~ getAllCards ~ allTasks.data)",
-        allTasks.data
-      );
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-
-
   useEffect(() => {
     socket.on("getTasksByProject", (allTasks) => {
       setCards([...allTasks]);
@@ -76,6 +61,13 @@ function ProjectCards(props) {
       setEditModalHasRender(false)
       socket.emit("getTasksByProject", projectId);
     });
+
+    socket.on("taskDeleted", (taskId)=>{
+      setDeleteModalHasRender(false);
+      socket.emit("getTasksByProject", projectId);
+      
+  })
+
   }, [socket]);
 
 
@@ -133,7 +125,6 @@ function ProjectCards(props) {
           setDeleteModalHasRender={setDeleteModalHasRender}
           deleteModalHasRender={deleteModalHasRender}
           deleteTaskId={deleteTaskId}
-          getAllCards={getAllCards}
         />
       )}
       {editModalHasRender && (
@@ -142,7 +133,6 @@ function ProjectCards(props) {
           setEditModalHasRender={setEditModalHasRender}
           editModalHasRender={editModalHasRender}
           editTaskId={editTaskId}
-          getAllCards={getAllCards}
         />
       )}
       <div className="flex flex-row h-full">
@@ -214,7 +204,6 @@ function ProjectCards(props) {
                                           setEditModalHasRender
                                         }
                                         setEditTaskId={seteditTaskId}
-                                        getAllCards={getAllCards}
                                         cardIndex={index}
                                       />
                                     </div>
@@ -234,7 +223,6 @@ function ProjectCards(props) {
                 <CardForm
                   setCardForm={setCardForm}
                   setCards={setCards}
-                  getAllCards={getAllCards}
                   cards={cards}
                   projectId={projectId}
                 />
@@ -295,7 +283,6 @@ function ProjectCards(props) {
                                       }
                                       setOpenEditModal={setOpenDeleteModal}
                                       setEditTaskId={seteditTaskId}
-                                      getAllCards={getAllCards}
                                     />
                                   </div>
                                 );
@@ -364,7 +351,6 @@ function ProjectCards(props) {
                                       }
                                       setOpenEditModal={setOpenDeleteModal}
                                       setEditTaskId={seteditTaskId}
-                                      getAllCards={getAllCards}
                                     />
                                   </div>
                                 );

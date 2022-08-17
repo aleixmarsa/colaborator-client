@@ -14,22 +14,25 @@ const DeleteTaskModal = (props) => {
   const { user } = useContext(AuthContext);
   const {socket} = useContext(SocketContext);
   const {title, projectId, deleteTaskId, deleteModalHasRender,  setDeleteModalHasRender} = props
-  const deleteTask = async (id) => {
+
+  const deleteTask = async (taskId) => {
     const activity = {
       title: "Task deleted",
       project: projectId,
       user: user._id,
     };
 
-    try {
-      await deleteTaskService(id);
-      socket.emit("render_tasks");
-      await addNewActivityService(activity);
+    socket.emit("deleteTask", taskId, projectId)
 
-      setDeleteModalHasRender(false);
-    } catch (err) {
-      console.log(err);
-    }
+    // try {
+    //   await deleteTaskService(id);
+    //   socket.emit("render_tasks");
+    //   await addNewActivityService(activity);
+
+    //   setDeleteModalHasRender(false);
+    // } catch (err) {
+    //   console.log(err);
+    // }
   };
 
   return (
