@@ -75,7 +75,7 @@ function CalendarPage() {
       <div className="flex bg-neutral-50 flex-row">
         <LateralBar projectId={projectId} />
         <StyleWrapper>
-          <div className="m-2">
+          <div className="m-5 mt-3">
             <FullCalendar
               plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
               height="auto"
