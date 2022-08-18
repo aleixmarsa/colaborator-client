@@ -47,7 +47,7 @@ const LogInForm = () => {
           .min(6, "Password is too short - should be 6 chars minimum.")
           .matches(
             /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/,
-            "Password must contain at least one number, one lowercase and one uppercase letter."
+            "Password must contain a number, a lowercase and a uppercase letter."
           ),
       })}
     >
@@ -72,7 +72,7 @@ const LogInForm = () => {
                 <div>
                   <label
                     htmlFor="email"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-gray-700  text-left"
                   >
                     Email address
                   </label>
@@ -108,14 +108,14 @@ const LogInForm = () => {
                   <ErrorMessage
                     component="div"
                     name="email"
-                    className="mt-2 text-sm text-red-600"
+                    className="absolute left-1/2 w-full transform -translate-x-1/2 mt-2 text-xs text-red-600"
                   />
                 </div>
 
-                <div>
+                <div className="relative">
                   <label
                     htmlFor="password"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-gray-700  text-left"
                   >
                     Password
                   </label>
@@ -150,7 +150,7 @@ const LogInForm = () => {
                   <ErrorMessage
                     component="div"
                     name="password"
-                    className="mt-2 text-sm text-red-600"
+                    className="absolute left-1/2 w-full transform -translate-x-1/2 mt-2 text-xs text-red-600"
                   />
                 </div>
 
@@ -180,7 +180,7 @@ const LogInForm = () => {
               </div>
             </div> */}
                 {errorMessage && !errors.email && !errors.password && (
-                  <p className="mt-2 text-sm text-red-600">{errorMessage}</p>
+                  <p className="absolute left-1/2 w-full transform -translate-x-1/2 mt-2 text-xs text-red-600">{errorMessage}</p>
                 )}
 
                 <div className="flex flex-col">
