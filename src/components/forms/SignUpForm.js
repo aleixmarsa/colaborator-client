@@ -2,21 +2,28 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { signupService } from "../../services/auth.services";
 import * as Yup from "yup";
-import { ExclamationCircleIcon } from "@heroicons/react/solid";
+import {
+  ExclamationCircleIcon,
+  EyeIcon,
+  EyeOffIcon,
+} from "@heroicons/react/solid";
 import { Formik, ErrorMessage } from "formik";
 
 import Button from "../buttons/Button";
 import { Link } from "react-router-dom";
 
 const SignUpForm = (props) => {
-
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState(undefined);
+  const [passwordShown, setPasswordShown] = useState(false);
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
 
+  const handleShowPassord = (e) => {
+    setPasswordShown(!passwordShown);
+  };
 
   return (
     <Formik
@@ -128,6 +135,7 @@ const SignUpForm = (props) => {
                         "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline sm:text-sm"
                       )}
                     />
+
                     {errors.name ? (
                       <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                         <ExclamationCircleIcon
@@ -200,7 +208,7 @@ const SignUpForm = (props) => {
                     <input
                       id="password"
                       name="password"
-                      type="password"
+                      type={passwordShown ? "text" : "password"}
                       value={values.password}
                       onChange={handleChange}
                       onBlur={handleBlur}
@@ -213,6 +221,25 @@ const SignUpForm = (props) => {
                         "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline sm:text-sm"
                       )}
                     />
+
+                    {passwordShown ? (
+                      <EyeOffIcon
+                        className={`absolute h-5 w-5 text-gray-400 cursor-pointer top-2 z-10 ${
+                          errors.password ? " right-10 " : "right-4"
+                        } `}
+                        aria-hidden="true"
+                        onClick={() => handleShowPassord()}
+                      />
+                    ) : (
+                      <EyeIcon
+                        className={`absolute h-5 w-5 text-gray-400 cursor-pointer top-2 z-10 ${
+                          errors.password ? " right-10 " : "right-4"
+                        } `}
+                        aria-hidden="true"
+                        onClick={() => handleShowPassord()}
+                      />
+                    )}
+
                     {errors.password ? (
                       <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                         <ExclamationCircleIcon
