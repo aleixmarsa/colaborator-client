@@ -17,7 +17,6 @@ const classNames = (...classes) => {
 };
 
 const ProjectsPage = () => {
-  
   const [projectId, setProjectId] = useState(0);
   const [projectTitle, setProjectTitle] = useState("");
   const [newProjectForm, setNewProjectForm] = useState(false);
@@ -29,7 +28,7 @@ const ProjectsPage = () => {
   const [loading, setLoading] = useState(true);
 
   const { user } = useContext(AuthContext);
-  const {socket} = useContext(SocketContext);
+  const { socket } = useContext(SocketContext);
 
   const filterProjects = (searchText) => {
     let projectsCopy = [...currentProjects];
@@ -43,39 +42,61 @@ const ProjectsPage = () => {
       : setFilteredCurrentProjects(currentProjects);
   };
 
-  const getAllProjects = async () => {
-    try {
-      const response = await getAllCurrentProjectsService(user._id);
-      setCurrentProjects(response.data);
-      setFilteredCurrentProjects(response.data);
-      setLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-
   useEffect(() => {
-    socket.on("receive_render_projects", (e) => {
-      getAllProjects();
-    });
     socket.on("receive_alert_message", (e) => {
       setHasNewMessage(true);
     });
 
+    socket.on("newProjectCreated", (project) => {
+
+      const activityBody = {
+        title: "Project created",
+        project: project._id,
+        user: user._id,
+      };
+      setEditProjectForm(false);
+      setNewProjectForm(false);
+      socket.emit("getCurrentProjects");
+      socket.emit("joinProjectRoom", project._id.toString());
+      console.log("🚀 ~ file: ProjectsPage.js ~ line 62 ~ socket.on ~ project.admin", project.admin)
+
+      if(project.admin === user._id){
+        socket.emit("newActivity", activityBody);
+      }
+    });
+
+    socket.on("getCurrentProjects", (allCurrentProjects) => {
+      const allCurrentProjectsCopy = [...allCurrentProjects];
+      setFilteredCurrentProjects([...allCurrentProjectsCopy]);
+      setCurrentProjects([...allCurrentProjectsCopy]);
+      setLoading(false);
+    });
+
+    socket.on("projectUpdated", (updatedProject) => {
+      const projectRoom = updatedProject._id.toString();
+      setEditProjectForm(false);
+      setNewProjectForm(false);
+      socket.emit("getCurrentProjects");
+      socket.emit("leaveProjectRoom", projectRoom);
+      updatedProject.team.forEach((member) => {
+        if (member._id === user._id) {
+          console.log("USER: ", member.name, "IS A MEMBER");
+          socket.emit("joinProjectRoom", projectRoom);
+        }
+      });
+    });
+
+    socket.on("projectDeleted", (projectId) => {
+      setModalHasRender(false);
+      socket.emit("leaveProjectRoom", projectId);
+      socket.emit("getCurrentProjects");
+    });
   }, [socket]);
 
-  
   useEffect(() => {
-    getAllProjects();
-    // socketConnection();
+    socket.emit("getCurrentProjects");
+    socket.emit("joinAllProjectsRoom");
   }, []);
-
-  // const socketConnection = () => {
-  //   socket = io.connect(API_URL, {
-  //     extraHeaders: { Authorization: `Bearer ${storedToken}` },
-  //   });
-  // }
 
   return (
     <div className="bg-neutral-50 h-screen">
@@ -86,7 +107,6 @@ const ProjectsPage = () => {
       {!loading && modalHasRender && (
         <DeletProjectModal
           projectId={projectId}
-          getAllProjects={getAllProjects}
           projectTitle={projectTitle}
           setModalHasRender={setModalHasRender}
           modalHasRender={modalHasRender}
@@ -106,7 +126,6 @@ const ProjectsPage = () => {
                     projectsInProgress={currentProjects}
                     editProjectForm={editProjectForm}
                     setEditProjectForm={setEditProjectForm}
-                    getAllProjects={getAllProjects}
                   />
                 </div>
               </div>
@@ -126,7 +145,6 @@ const ProjectsPage = () => {
                     setProjectId={setProjectId}
                     setModalHasRender={setModalHasRender}
                     setProjectTitle={setProjectTitle}
-                    getAllProjects={getAllProjects}
                   />
                 </div>
               </div>

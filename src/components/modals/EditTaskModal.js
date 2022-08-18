@@ -11,55 +11,50 @@ import { AuthContext } from "../../context/auth.context";
 import { SocketContext } from "../../context/socket.context";
 
 const EditTaskModal = (props) => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [color, setColor] = useState("");
+  const [cardLimitDate, setCardLimitDate] = useState("");
+  const { user } = useContext(AuthContext);
+  const cancelButtonRef = useRef(null);
+  const { socket } = useContext(SocketContext);
+  const { editTaskId, projectId, setEditModalHasRender, editModalHasRender } =
+    props;
+  const getTask = async (editTaskId) => {
+    try {
+      const response = await getTaskDetailsService(editTaskId);
+      setTitle(response.data.title);
+      setDescription(response.data.description);
+      setColor(response.data.color);
+      setCardLimitDate(response.data.limitDate);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [color, setColor] = useState("");
-    const [cardLimitDate, setCardLimitDate] = useState("")
-    const { user } = useContext(AuthContext);
-    const cancelButtonRef = useRef(null);
-    const {socket} = useContext(SocketContext)
-    const {editTaskId, projectId, setEditModalHasRender, editModalHasRender} = props
-    const getTask = async (editTaskId) => {
-        try {
-            const response = await getTaskDetailsService(editTaskId);
-            setTitle(response.data.title);
-            setDescription(response.data.description);
-            setColor(response.data.color);
-            setCardLimitDate(response.data.limitDate)
-        } catch (err) {
-            console.log(err);
-        }
+  useEffect(() => {
+    getTask(editTaskId);
+  }, [editTaskId]);
+
+  const handleSubmitEditForm = async (e) => {
+    const taskBody = {
+      taskId: editTaskId,
+      title: title,
+      description: description,
+      color: color,
+      limitDate: cardLimitDate,
+      project: projectId,
     };
 
-    useEffect(() => {
-        getTask(editTaskId);
-    }, [editTaskId]);
-
-    const handleSubmitEditForm = async (e) => {
-        const body = {
-            taskId: editTaskId,
-            title: title,
-            description: description,
-            color: color,
-            limitDate: cardLimitDate
-        };
-
-        const activity = {
-            title: "Task info edited",
-            project: projectId,
-            user: user._id,
-        };
-
-        try {
-            await updateTaskService(editTaskId, body);
-            await addNewActivityService(activity);
-            socket.emit("render_tasks");
-            setEditModalHasRender(false);
-        } catch (err) {
-            console.log(err);
-        }
+    const activityBody = {
+      title: "Task info edited",
+      project: projectId,
+      user: user._id,
     };
+
+    socket.emit("newActivity", activityBody);
+    socket.emit("updateTask", taskBody);
+  };
 
   return (
     <Transition.Root show={editModalHasRender} as={Fragment}>
@@ -119,52 +114,52 @@ const EditTaskModal = (props) => {
                             className="max-w-lg block w-full h-8 focus:outline focus:outline-buttonHover shadow-xl sm:max-w-xs sm:text-sm rounded-md"
                           />
                         </div>
-                    </div>
-
-                    <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                      <label
-                        htmlFor="country"
-                        className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-                      >
-                        Color
-                      </label>
-                      <div className="mt-1 sm:mt-0 sm:col-span-2">
-                        <select
-                          id="country"
-                          name="country"
-                          autoComplete="country-name"
-                          value={color}
-                          onChange={(e) => setColor(e.target.value)}
-                          className="max-w-lg block focus:outline focus:outline-buttonHover w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-                        >
-                          <option value="white">White</option>
-                          <option value="yellow">Yellow</option>
-                          <option value="green">Green</option>
-                          <option value="red">Red</option>
-                          <option value="orange">Orange</option>
-                          <option value="blue">Blue</option>
-                          <option value="gray">Gray</option>
-                        </select>
                       </div>
-                    </div>
 
-                    <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                          <label
-                            htmlFor="country"
-                            className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                      <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                        <label
+                          htmlFor="country"
+                          className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                        >
+                          Color
+                        </label>
+                        <div className="mt-1 sm:mt-0 sm:col-span-2">
+                          <select
+                            id="country"
+                            name="country"
+                            autoComplete="country-name"
+                            value={color}
+                            onChange={(e) => setColor(e.target.value)}
+                            className="max-w-lg block focus:outline focus:outline-buttonHover w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
                           >
-                            Date Limit:
-                          </label>
-                          <div className="mt-1 sm:mt-0 sm:col-span-2">
-                            <input
-                              type="date"
-                              name="limitDate"
-                              className="max-w-lg blockfocus:outline focus:outline-buttonHover w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-                              onChange={(e) => setCardLimitDate(e.target.value)}
-                            ></input>
-                          </div>
+                            <option value="white">White</option>
+                            <option value="yellow">Yellow</option>
+                            <option value="green">Green</option>
+                            <option value="red">Red</option>
+                            <option value="orange">Orange</option>
+                            <option value="blue">Blue</option>
+                            <option value="gray">Gray</option>
+                          </select>
                         </div>
                       </div>
+
+                      <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                        <label
+                          htmlFor="country"
+                          className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                        >
+                          Date Limit:
+                        </label>
+                        <div className="mt-1 sm:mt-0 sm:col-span-2">
+                          <input
+                            type="date"
+                            name="limitDate"
+                            className="max-w-lg blockfocus:outline focus:outline-buttonHover w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+                            onChange={(e) => setCardLimitDate(e.target.value)}
+                          ></input>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
 

@@ -21,8 +21,11 @@ const ProjectActivitySection = (props) => {
 
 
   useEffect(() => {
+    socket.on("getActivities", (allActivities) => {
+      setActivity(allActivities);
 
-    socket.on("receive_render_activity", () => {
+    })
+    socket.on("newActivityCreated", () => {
       getActivity();
     });
 
@@ -35,8 +38,7 @@ const ProjectActivitySection = (props) => {
       const idArray = projectResponse.data.map((id) => {
         return id._id;
       });
-      const response = await getAllActivityService(idArray);
-      setActivity(response.data);
+      socket.emit("getActivities",idArray)
     } catch (err) {
       console.log(err);
     }

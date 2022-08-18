@@ -8,7 +8,6 @@ const ProjectsListSection = (props) => {
 
   const {
     filteredProjects,
-    getAllProjects,
     setFilteredProjects,
     classNames,
     editProjectForm,

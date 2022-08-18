@@ -13,7 +13,6 @@ const ProjectManagementSection = (props) => {
     setNewProjectForm,
     editProjectForm,
     setEditProjectForm,
-    getAllProjects,
   } = props;
 
   const { user } = useContext(AuthContext);
@@ -34,13 +33,11 @@ const ProjectManagementSection = (props) => {
         <NewProjectForm
           handleNewProjectBtn={handleNewProjectBtn}
           handleCancelAddSaveFormBtn={handleCancelAddSaveFormBtn}
-          getAllProjects={getAllProjects}
         />
       ) : editProjectForm ? (
         <EditProjectForm
           projectId={projectId}
           handleCancelAddSaveFormBtn={handleCancelAddSaveFormBtn}
-          getAllProjects={getAllProjects}
         />
       ) : (
         <>

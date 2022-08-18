@@ -9,7 +9,6 @@ function Card(props) {
     cardId,
     setDeleteModalHasRender,
     setDeleteTaskId,
-    getAllCards,
     setEditModalHasRender,
     setEditTaskId,
   } = props;
@@ -17,11 +16,9 @@ function Card(props) {
   const handleDeleteTaskBtn = (tastkId) => {
     setDeleteModalHasRender(true);
     setDeleteTaskId(cardId);
-    getAllCards();
   };
 
   const handleEditTaskBtn = (taskId) => {
-    console.log("EDIIIT")
     setEditModalHasRender(true);
     setDeleteModalHasRender(false);
     setEditTaskId(cardId);

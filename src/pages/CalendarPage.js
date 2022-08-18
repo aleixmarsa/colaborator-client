@@ -5,7 +5,7 @@ import axios from "axios";
 
 import "../index.css";
 
-import NavBar from '../components/navbar/NavBar';
+import NavBar from "../components/navbar/NavBar";
 import LateralBar from "../components/sections/LateralBar";
 
 import FullCalendar from "@fullcalendar/react";
@@ -20,8 +20,10 @@ import { SocketContext } from "../context/socket.context";
 const API_URL = process.env.REACT_APP_API_URL;
 
 export const StyleWrapper = styled.div`
-
-  .fc-dayGridMonth-button, .fc-button, .fc-button-primary, .fc-button-active {
+  .fc-dayGridMonth-button,
+  .fc-button,
+  .fc-button-primary,
+  .fc-button-active {
     background-color: #265b6a;
     border: #265b6a;
   }
@@ -31,9 +33,11 @@ export const StyleWrapper = styled.div`
     border: #15803d;
   }
 
-  .fc-dayGridMonth-button:hover, .fc-button:hover, .fc-button-primary:hover{
+  .fc-dayGridMonth-button:hover,
+  .fc-button:hover,
+  .fc-button-primary:hover {
     background-color: #5b8d9d;
-    border: #5b8d9d
+    border: #5b8d9d;
   }
 
   .fc-daygrid-day-number {
@@ -43,57 +47,29 @@ export const StyleWrapper = styled.div`
   .fc-col-header-cell-cushion {
     color: #265b6a;
   }
-
-`
-
+`;
 
 function CalendarPage() {
   const { projectId } = useParams();
 
   const [events, setEvents] = useState([]);
-  const {socket} = useContext(SocketContext);
-
-  const getAllEvents = () => {
-    axios
-      .get(`${API_URL}/colaborator-API/projects/card/get-cards`)
-      .then((allCards) => {
-        let array = [];
-        allCards.data.map((event) => {
-
-          if (event.project === projectId) {
-            let startDate = event.limitDate + "T07:00:00";
-            let endDate = event.limitDate + "T08:00:00";
-
-            let eventObject = {
-              id: event._id,
-              title: event.title,
-              start: startDate,
-              end: endDate,
-              color: event.color,
-            };
-
-            array.push(eventObject);
-          }
-        });
-        setEvents(array);
-      })
-      .catch((error) => console.log(error));
-  };
+  const { socket } = useContext(SocketContext);
 
   useEffect(() => {
-    getAllEvents();
+    socket.emit("getEvents", projectId);
   }, []);
 
   useEffect(() => {
-    socket.on("receive_render_calendar", () => {
-      console.log("hola");
-      getAllEvents();
+    socket.on("getEvents", (events) => {
+      setEvents([...events]);
+    });
+    socket.on("updateCalendar", () => {
+      socket.emit("getEvents", projectId);
     });
   }, [socket]);
 
   return (
     <>
-
       <NavBar />
 
       <div className="flex bg-neutral-50 flex-row">

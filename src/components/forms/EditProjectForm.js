@@ -2,21 +2,23 @@ import { useState, useEffect } from "react";
 import { useContext } from "react";
 
 import Form from "./Form";
-import { getProjectDetailsService, updateProjectService } from "../../services/project.services";
+import {
+  getProjectDetailsService,
+  updateProjectService,
+} from "../../services/project.services";
 import { AuthContext } from "../../context/auth.context";
 import { addNewActivityService } from "../../services/activity.services";
 import { SocketContext } from "../../context/socket.context";
 
 const EditProjectForm = (props) => {
-
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [team, setTeam] = useState([]);
-
-  const { getAllProjects,projectId, handleCancelAddSaveFormBtn} = props;
+  const [errorMessage, setErrorMessage] = useState(undefined);
+  const { projectId, handleCancelAddSaveFormBtn } = props;
 
   const { user } = useContext(AuthContext);
-  const {socket} = useContext(SocketContext)
+  const { socket } = useContext(SocketContext);
 
   const getProject = async (id) => {
     try {
@@ -34,32 +36,28 @@ const EditProjectForm = (props) => {
     getProject(projectId);
   }, [projectId]);
 
-  const handleSubmit = async (e) => {
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const body = {
-      projectId:projectId,
+    const projectBody = {
+      projectId: projectId,
       title: title,
       description: description,
-      team:team
+      team: team,
     };
 
-    const activity = {
+    const activityBody = {
       title: "Project info edited",
       project: projectId,
       user: user._id,
     };
-
-
-    try {
-      await updateProjectService(projectId, body);
-      await addNewActivityService(activity);
-      socket.emit("render_projects");
-      debugger;
-      handleCancelAddSaveFormBtn(e);
-    } catch (err) {
-      console.log(err);
-    }
+    socket.emit("newActivity", activityBody);
+    
+    socket.emit("updateProject", projectBody);
   };
+  socket.on("errorMessage", setErrorMessage)
+
+
 
   return (
     <Form
@@ -74,6 +72,8 @@ const EditProjectForm = (props) => {
       setDescription={setDescription}
       team={team}
       setTeam={setTeam}
+      errorMessage={errorMessage}
+
     />
   );
 };

@@ -6,7 +6,10 @@ import { useParams } from "react-router-dom";
 import { PlusSmIcon as PlusSmIconSolid } from "@heroicons/react/solid";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
-import { getAllTasksService, updateTaskStateService } from "../services/task.services";
+import {
+  getAllTasksService,
+  updateTaskStateService,
+} from "../services/task.services";
 
 import Card from "../components/sections/cardPage/Card";
 import CardForm from "../components/sections/cardPage/CardForm";
@@ -35,32 +38,42 @@ function ProjectCards(props) {
 
   const { socket } = useContext(SocketContext);
 
-  const updateCardState = async (cardId, destination) => {
-    try {
-      await updateTaskStateService(cardId, destination);
-      socket.emit("render_tasks");
-    } catch (err) {
-      console.log(err);
-    }
+  const updateTaskState = async (cardId, destination) => {
+    const taskBody = {
+      taskId: cardId,
+      state: destination,
+      project: projectId
   };
-
-  const getAllCards = async () => {
-    try {
-      const allTasks = await getAllTasksService();
-      setCards(allTasks.data);
-    } catch (err) {
-      console.log(err);
-    }
+    socket.emit("updateTaskState", taskBody)
+    
   };
 
   useEffect(() => {
-    socket.on("receive_render_tasks", (e) => {
-      getAllCards();
+    socket.on("getTasksByProject", (allTasks) => {
+      setCards([...allTasks]);
     });
+    socket.on("newTaskCreated", (task) => {
+      socket.emit("getTasksByProject", projectId);
+      setCardForm(false);
+    });
+
+    socket.on("taskUpdated", (updatedTask) => {
+      console.log("🚀 ~ file: TasksPage.js ~ line 75 ~ socket.on ~ updatedTask", updatedTask)
+      setEditModalHasRender(false)
+      socket.emit("getTasksByProject", projectId);
+    });
+
+    socket.on("taskDeleted", (taskId)=>{
+      setDeleteModalHasRender(false);
+      socket.emit("getTasksByProject", projectId);
+      
+  })
+
   }, [socket]);
 
+
   useEffect(() => {
-    getAllCards();
+    socket.emit("getTasksByProject", projectId);
   }, []);
 
   const reorder = (list, startIndex, endIndex) => {
@@ -84,8 +97,8 @@ function ProjectCards(props) {
 
     if (source.droppableId !== destination.droppableId) {
       let upCard = cards.find((card) => card._id === result.draggableId);
-      const stat = destination.droppableId.toUpperCase();
-      const cardCopy = { ...upCard, stat };
+      const state = destination.droppableId.toUpperCase();
+      const cardCopy = { ...upCard, state };
 
       const newSetCards = cards.map((card) => {
         if (card._id === cardCopy._id) {
@@ -96,7 +109,7 @@ function ProjectCards(props) {
       });
 
       setCards(newSetCards);
-      updateCardState(result.draggableId, destination.droppableId);
+      updateTaskState(result.draggableId, destination.droppableId);
     }
 
     setCards((prevTasks) =>
@@ -113,7 +126,6 @@ function ProjectCards(props) {
           setDeleteModalHasRender={setDeleteModalHasRender}
           deleteModalHasRender={deleteModalHasRender}
           deleteTaskId={deleteTaskId}
-          getAllCards={getAllCards}
         />
       )}
       {editModalHasRender && (
@@ -122,7 +134,6 @@ function ProjectCards(props) {
           setEditModalHasRender={setEditModalHasRender}
           editModalHasRender={editModalHasRender}
           editTaskId={editTaskId}
-          getAllCards={getAllCards}
         />
       )}
       <div className="flex flex-row h-full">
@@ -155,7 +166,7 @@ function ProjectCards(props) {
                         </button>
                         {cards.map((card, index) => {
                           if (
-                            card.stat === "TODO" &&
+                            card.state === "TODO" &&
                             card.project === projectId
                           ) {
                             return (
@@ -182,7 +193,7 @@ function ProjectCards(props) {
                                       <Card
                                         title={card.title}
                                         description={card.description}
-                                        stat={card.stat}
+                                        state={card.state}
                                         color={card.color}
                                         cardId={card._id}
                                         cardLimitDate={card.limitDate}
@@ -194,7 +205,6 @@ function ProjectCards(props) {
                                           setEditModalHasRender
                                         }
                                         setEditTaskId={seteditTaskId}
-                                        getAllCards={getAllCards}
                                         cardIndex={index}
                                       />
                                     </div>
@@ -214,7 +224,6 @@ function ProjectCards(props) {
                 <CardForm
                   setCardForm={setCardForm}
                   setCards={setCards}
-                  getAllCards={getAllCards}
                   cards={cards}
                   projectId={projectId}
                 />
@@ -236,7 +245,7 @@ function ProjectCards(props) {
                     >
                       {cards.map((card, index) => {
                         if (
-                          card.stat === "PROGRESS" &&
+                          card.state === "PROGRESS" &&
                           card.project === projectId
                         ) {
                           return (
@@ -261,7 +270,7 @@ function ProjectCards(props) {
                                     <Card
                                       title={card.title}
                                       description={card.description}
-                                      stat={card.stat}
+                                      state={card.state}
                                       color={card.color}
                                       cardId={card._id}
                                       cardLimitDate={card.limitDate}
@@ -275,7 +284,6 @@ function ProjectCards(props) {
                                       }
                                       setOpenEditModal={setOpenDeleteModal}
                                       setEditTaskId={seteditTaskId}
-                                      getAllCards={getAllCards}
                                     />
                                   </div>
                                 );
@@ -305,7 +313,7 @@ function ProjectCards(props) {
                     >
                       {cards.map((card, index) => {
                         if (
-                          card.stat === "DONE" &&
+                          card.state === "DONE" &&
                           card.project === projectId
                         ) {
                           return (
@@ -330,7 +338,7 @@ function ProjectCards(props) {
                                     <Card
                                       title={card.title}
                                       description={card.description}
-                                      stat={card.stat}
+                                      state={card.state}
                                       color={card.color}
                                       cardId={card._id}
                                       cardLimitDate={card.limitDate}
@@ -344,7 +352,6 @@ function ProjectCards(props) {
                                       }
                                       setOpenEditModal={setOpenDeleteModal}
                                       setEditTaskId={seteditTaskId}
-                                      getAllCards={getAllCards}
                                     />
                                   </div>
                                 );
