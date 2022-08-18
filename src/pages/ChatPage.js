@@ -6,7 +6,7 @@ const ChatPage = () => {
   return (
     <div className="h-screen">
       <NavBar />
-      <div className="flex flex-row h-full w-full">
+      <div className="flex flex-grow flex-row h-full w-full">
         <Chat />
       </div>
     </div>

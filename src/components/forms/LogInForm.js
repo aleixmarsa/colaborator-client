@@ -1,5 +1,4 @@
-
-import {useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "./../../context/auth.context";
 import { loginService } from "../../services/auth.services";
@@ -9,76 +8,65 @@ import Button from "../buttons/Button";
 import { Link } from "react-router-dom";
 import { ErrorMessage } from "formik";
 import { ExclamationCircleIcon } from "@heroicons/react/solid";
-
 const LogInForm = () => {
   //   const { handleLoginSubmit, email, handleEmail, password, handlePassword } =
   //     props;
 
-//   const [email, setEmail] = useState("admin@admin.com");
-//   const [password, setPassword] = useState("Admin123!");
+  //   const [email, setEmail] = useState("admin@admin.com");
+  //   const [password, setPassword] = useState("Admin123!");
   const [errorMessage, setErrorMessage] = useState(undefined);
   const navigate = useNavigate();
   const { logInUser } = useContext(AuthContext);
-//   const handleEmail = (e) => setEmail(e.target.value);
-//   const handlePassword = (e) => setPassword(e.target.value);
+  //   const handleEmail = (e) => setEmail(e.target.value);
+  //   const handlePassword = (e) => setPassword(e.target.value);
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
 
-  return (<Formik
-    initialValues={{ email: "", password: "" }}
-    onSubmit={async (values) => {
-      const email = values.email;
-      const password = values.password;
-      const requestBody = { email, password };
+  return (
+    <Formik
+      initialValues={{ email: "", password: "" }}
+      onSubmit={async (values) => {
+        const email = values.email;
+        const password = values.password;
+        const requestBody = { email, password };
 
-      try {
-        const response = await loginService(requestBody);
-        const token = response.data.authToken;
-        logInUser(token);
-        navigate("/projects");
-      } catch (err) {
-        if (err.response?.status === 400) {
-        console.log("ERROR ", err.response.data.message)
-        setErrorMessage(err.response.data.message);
-      }
-        // setErrorMessage(errorDescription);
-      }
-    }}
-    validationSchema={Yup.object().shape({
-      email: Yup.string().email().required("Required"),
-      password: Yup.string()
-        .required("No password provided.")
-        .min(6, "Password is too short - should be 6 chars minimum.")
-        .matches(
-          /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/,
-          "Password must contain at least one number, one lowercase and one uppercase letter."
-        ),
-    })}
-  >
-    {props => {
-      const {
-        values,
-        touched,
-        errors,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-      } = props;
+        try {
+          const response = await loginService(requestBody);
+          const token = response.data.authToken;
+          logInUser(token);
+          navigate("/projects");
+        } catch (err) {
+          if (err.response?.status === 400) {
+            console.log("ERROR ", err.response.data.message);
+            setErrorMessage(err.response.data.message);
+          }
+          // setErrorMessage(errorDescription);
+        }
+      }}
+      validationSchema={Yup.object().shape({
+        email: Yup.string().email().required("Required"),
+        password: Yup.string()
+          .required("No password provided.")
+          .min(6, "Password is too short - should be 6 chars minimum.")
+          .matches(
+            /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/,
+            "Password must contain at least one number, one lowercase and one uppercase letter."
+          ),
+      })}
+    >
+      {(props) => {
+        const {
+          values,
+          touched,
+          errors,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+        } = props;
 
-      return (
-        <div className="flex-grow flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-          <div className="sm:mx-auto sm:w-full sm:max-w-md">
-            <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
-              Log in to your account
-            </h2>
-            <p className="mt-2 text-center text-sm text-gray-600">
-              Or try it using{" "}
-              <span className="font-bold"> admin@admin.com//Admin123!</span>
-            </p>
-          </div>
-
+        return (
           <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
             <div className="bg-white py-8 px-4 drop-shadow-xl sm:rounded-md sm:px-10">
               <form
@@ -122,6 +110,7 @@ const LogInForm = () => {
                       <p></p>
                     )}
                   </div>
+
                   <ErrorMessage
                     component="div"
                     name="email"
@@ -196,7 +185,9 @@ const LogInForm = () => {
                 </a>
               </div>
             </div> */}
-			{errorMessage && !errors.email && !errors.password && <p className="mt-2 text-sm text-red-600">{errorMessage}</p>}
+                {errorMessage && !errors.email && !errors.password && (
+                  <p className="mt-2 text-sm text-red-600">{errorMessage}</p>
+                )}
 
                 <div className="flex flex-col">
                   <Button
@@ -218,10 +209,10 @@ const LogInForm = () => {
               </form>
             </div>
           </div>
-        </div>
-      );
-    }}
-  </Formik>)
+        );
+      }}
+    </Formik>
+  );
 };
 
 export default LogInForm;
