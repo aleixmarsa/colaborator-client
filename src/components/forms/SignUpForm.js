@@ -1,34 +1,43 @@
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { signupService } from "../../services/auth.services";
+
 import Button from "../buttons/Button";
 import { Link } from "react-router-dom";
 
 const SignUpForm = (props) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [role, setRole] = useState("");
 
-  const {
-    handleSignupSubmit,
-    email,
-    handleEmail,
-    handleRole,
-    role,
-    name,
-    handleName,
-    password,
-    handlePassword,
-    errorMessage
-  } = props;
+  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState(undefined);
+
+  const handleEmail = (e) => setEmail(e.target.value);
+  const handlePassword = (e) => setPassword(e.target.value);
+  const handleName = (e) => setName(e.target.value);
+  const handleRole = (e) => setRole(e.target.value);
+
+  const handleSignupSubmit = async (e) => {
+    e.preventDefault();
+
+    const requestBody = { email, password, name, role };
+    
+    try {
+      await signupService(requestBody);
+      navigate("/login");
+    } catch (err) {
+
+      if (err.response?.status === 400) {
+        console.log("ERROR ", err.response.data.message)
+        setErrorMessage(err.response.data.message);
+      }
+    }
+  };
 
   return (
-    <div className="flex-grow flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
-          Sign Up
-        </h2>
-        <Link className="mt-2 text-center text-sm text-gray-600" to="/login">
-          Or try it using{" "}
-          <span className="font-bold text-gray-600 hover:text-gray-500 underline">
-            admin@admin.com//Admin123!
-          </span>
-        </Link>
-      </div>
+
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 drop-shadow-xl rounded-md sm:px-10">
           <form onSubmit={handleSignupSubmit} className="space-y-6" action="#" method="POST">
@@ -141,7 +150,6 @@ const SignUpForm = (props) => {
           {errorMessage && <p className="mt-2 text-sm text-red-600">{errorMessage}</p>}
         </div>
       </div>
-    </div>
   );
 };
 

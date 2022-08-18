@@ -53,7 +53,7 @@ function LogInTitle(props) {
             {password}
             <span
               className={`transition-opacity ${
-                isPasswordCopy ? "opacity-80": "opacity-0"
+                isPasswordCopy ? "opacity-80" : "opacity-0"
               } duration-1000 ease-in-out absolute -left-16 top-14 z-10 -translate-y-full w-48 px-2 py-1 bg-mainColor rounded-lg text-center text-white text-sm after:content-[''] after:absolute after:left-1/2 after:top-[-53%] after:-translate-x-1/2 after:rotate-180 after:border-8 after:border-x-transparent after:border-b-transparent after:border-t-mainColor`}
             >
               Copied to clipboard

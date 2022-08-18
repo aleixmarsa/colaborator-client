@@ -8,17 +8,13 @@ import Button from "../buttons/Button";
 import { Link } from "react-router-dom";
 import { ErrorMessage } from "formik";
 import { ExclamationCircleIcon } from "@heroicons/react/solid";
-const LogInForm = () => {
-  //   const { handleLoginSubmit, email, handleEmail, password, handlePassword } =
-  //     props;
 
-  //   const [email, setEmail] = useState("admin@admin.com");
-  //   const [password, setPassword] = useState("Admin123!");
+const LogInForm = () => {
+
   const [errorMessage, setErrorMessage] = useState(undefined);
   const navigate = useNavigate();
   const { logInUser } = useContext(AuthContext);
-  //   const handleEmail = (e) => setEmail(e.target.value);
-  //   const handlePassword = (e) => setPassword(e.target.value);
+
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");

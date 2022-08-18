@@ -9,13 +9,6 @@ function LoginPage(props, location) {
       <LogInTitle>
         <LogInForm />
       </LogInTitle>
-      {/* <LogInForm
-        handleLoginSubmit={handleLoginSubmit}
-        email={email}
-        handleEmail={handleEmail}
-        password={password}
-        handlePassword={handlePassword}
-      /> */}
       <Footer />
     </div>
   );
