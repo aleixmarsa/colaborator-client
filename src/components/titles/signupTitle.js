@@ -10,7 +10,7 @@ function SignUpTitle(props) {
           <Link className="mt-2 text-center text-sm text-gray-600 hover:text-gray-600"  to="/login">
             Or try it using{" "}
             <span className="font-bold text-gray-600 hover:text-gray-500 underline">
-              admin@admin.com//Admin123!
+              admin@admin.com // Admin123!
             </span>
           </Link>
         </div>
