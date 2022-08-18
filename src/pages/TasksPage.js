@@ -136,10 +136,10 @@ function ProjectCards(props) {
           editTaskId={editTaskId}
         />
       )}
-      <div className="flex flex-row h-full">
+      <div className="flex flex-row h-full bg-neutral-50">
         <LateralBar projectId={projectId} />
         <DragDropContext onDragEnd={(result) => updateCards(result)}>
-          <div className=" container bg-neutral-50 mx-auto mt-2">
+          <div className=" container  mx-auto mt-2">
             <div className="drop-shadow-md grid  grid-cols-1 ml-5 mr-5 md:grid-cols-1 lg:grid-cols-3 gap-6 mt-5 mb-10 ">
               {!cardForm ? (
                 <Droppable droppableId="todo">
