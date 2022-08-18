@@ -1,7 +1,7 @@
 import {
   CalendarIcon,
   ChatIcon,
-  ArrowLeftIcon,
+  ArrowCircleLeftIcon,
   TagIcon,
   HomeIcon,
   BookOpenIcon,
@@ -65,8 +65,8 @@ function LateralBar(props) {
 
   return (
     <div className={`flex flex-col  h-screen border-r border-gray-200 pb-4 bg-neutral-50 relative ${open ? "w-48" : "w-fit"} duration-300`} >
-      <ArrowLeftIcon
-        className={`w-6 h-6 text-white bg-mainColor absolute -right-3 top-6 rounded-full border-1 border-mainColor cursor-pointer ${!open && "rotate-180"} duration-300`}
+      <ArrowCircleLeftIcon
+        className={`w-8 h-8 bg-neutral-50 text-mainColor absolute -right-4 top-6 rounded-full  cursor-pointer ${!open && "rotate-180"} duration-300`}
         onClick={() => setOpen(!open)}
       />
       <div className="mt-1 flex-grow flex flex-col ">

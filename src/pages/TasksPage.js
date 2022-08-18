@@ -3,7 +3,7 @@
 import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 
-import { PlusSmIcon as PlusSmIconSolid } from "@heroicons/react/solid";
+import { PlusSmIcon as PlusSmIconSolid } from "@heroicons/react/outline";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 import {
@@ -157,7 +157,7 @@ function ProjectCards(props) {
                         <button
                           onClick={() => setCardForm(true)}
                           type="button"
-                          className="inline-flex items-center p-1 border border-transparent rounded-full shadow-sm text-white bg-mainColor hover:bg-secundaryColor focus:outline-none focus:ring-2 focus:ring-offset-2"
+                          className="inline-flex items-center p-1 border-2 border-mainColor rounded-full shadow-sm text-mainColor hover:bg-mainColor hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2"
                         >
                           <PlusSmIconSolid
                             className="h-5 w-5"
