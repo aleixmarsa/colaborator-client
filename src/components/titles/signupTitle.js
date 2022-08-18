@@ -7,7 +7,7 @@ function SignUpTitle(props) {
           <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
             Sign Up
           </h2>
-          <Link className="mt-2 text-center text-sm text-gray-600" to="/login">
+          <Link className="mt-2 text-center text-sm text-gray-600 hover:text-gray-600"  to="/login">
             Or try it using{" "}
             <span className="font-bold text-gray-600 hover:text-gray-500 underline">
               admin@admin.com//Admin123!
