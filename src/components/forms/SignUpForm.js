@@ -1,155 +1,264 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { signupService } from "../../services/auth.services";
+import * as Yup from "yup";
+import { ExclamationCircleIcon } from "@heroicons/react/solid";
+import { Formik, ErrorMessage } from "formik";
 
 import Button from "../buttons/Button";
 import { Link } from "react-router-dom";
 
 const SignUpForm = (props) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [role, setRole] = useState("");
 
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState(undefined);
 
-  const handleEmail = (e) => setEmail(e.target.value);
-  const handlePassword = (e) => setPassword(e.target.value);
-  const handleName = (e) => setName(e.target.value);
-  const handleRole = (e) => setRole(e.target.value);
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(" ");
+  }
 
-  const handleSignupSubmit = async (e) => {
-    e.preventDefault();
-
-    const requestBody = { email, password, name, role };
-    
-    try {
-      await signupService(requestBody);
-      navigate("/login");
-    } catch (err) {
-
-      if (err.response?.status === 400) {
-        console.log("ERROR ", err.response.data.message)
-        setErrorMessage(err.response.data.message);
-      }
-    }
-  };
 
   return (
+    <Formik
+      initialValues={{ email: "", password: "", name: "", role: "" }}
+      onSubmit={async (values) => {
+        const email = values.email;
+        const name = values.name;
+        const role = values.role;
+        const password = values.password;
+        const requestBody = { email, password, name, role };
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 drop-shadow-xl rounded-md sm:px-10">
-          <form onSubmit={handleSignupSubmit} className="space-y-6" action="#" method="POST">
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
+        try {
+          await signupService(requestBody);
+          navigate("/login");
+        } catch (err) {
+          if (err.response?.status === 400) {
+            console.log("ERROR ", err.response.data.message);
+            setErrorMessage(err.response.data.message);
+          }
+        }
+      }}
+      validationSchema={Yup.object().shape({
+        email: Yup.string().email().required("Required"),
+        name: Yup.string().required("Required"),
+        role: Yup.string().required("Required"),
+        password: Yup.string()
+          .required("No password provided.")
+          .min(6, "Password is too short - should be 6 chars minimum.")
+          .matches(
+            /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/,
+            "Password must contain at least one number, one lowercase and one uppercase letter."
+          ),
+      })}
+    >
+      {(props) => {
+        const { values, errors, handleChange, handleBlur, handleSubmit } =
+          props;
+
+        return (
+          <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+            <div className="bg-white py-8 px-4 drop-shadow-xl rounded-md sm:px-10">
+              <form
+                onSubmit={handleSubmit}
+                className="space-y-6"
+                action="#"
+                method="POST"
               >
-                Email address
-              </label>
-              <div className="mt-1">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={email}
-                  autoComplete="email"
-                  onChange={handleEmail}
-                  required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline focus:outline-buttonHover  sm:text-sm"
-                />
-              </div>
-            </div>
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Email address
+                  </label>
+                  <div className="mt-1 relative">
+                    <input
+                      id="email"
+                      name="email"
+                      type="email"
+                      value={values.email}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      required
+                      className={classNames(
+                        errors.email
+                          ? "focus:outline-red-500"
+                          : "focus:outline-buttonHover",
+                        "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline sm:text-sm"
+                      )}
+                    />
+                    {errors.email ? (
+                      <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <ExclamationCircleIcon
+                          className="h-5 w-5 text-red-500"
+                          aria-hidden="true"
+                        />
+                      </div>
+                    ) : (
+                      <p></p>
+                    )}
+                  </div>
+                  <ErrorMessage
+                    component="div"
+                    name="email"
+                    className="mt-2 text-sm text-red-600"
+                  />
+                </div>
 
-            <div>
-              <label
-                htmlFor="user"
-                className="block text-sm font-medium text-gray-700"
-              >
-                User
-              </label>
-              <div className="mt-1">
-                <input
-                  id="name"
-                  name="name"
-                  type="name"
-                  value={name}
-                  autoComplete="name"
-                  onChange={handleName}
-                  required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline focus:outline-buttonHover sm:text-sm"
-                />
-              </div>
-            </div>
+                <div>
+                  <label
+                    htmlFor="user"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Name
+                  </label>
+                  <div className="mt-1 relative">
+                    <input
+                      id="name"
+                      name="name"
+                      type="name"
+                      value={values.name}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      required
+                      className={classNames(
+                        errors.name
+                          ? "focus:outline-red-500"
+                          : "focus:outline-buttonHover",
+                        "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline sm:text-sm"
+                      )}
+                    />
+                    {errors.name ? (
+                      <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <ExclamationCircleIcon
+                          className="h-5 w-5 text-red-500"
+                          aria-hidden="true"
+                        />
+                      </div>
+                    ) : (
+                      <p></p>
+                    )}
+                  </div>
+                  <ErrorMessage
+                    component="div"
+                    name="name"
+                    className="mt-2 text-sm text-red-600"
+                  />
+                </div>
 
-            <div>
-              <label
-                htmlFor="role"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Role
-              </label>
-              <div className="mt-1">
-                <input
-                  id="role"
-                  name="role"
-                  type="role"
-                  value={role}
-                  autoComplete="role"
-                  placeholder="e.g. Full Stack Web Developer"
-                  onChange={handleRole}
-                  required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline focus:outline-buttonHover sm:text-sm"
-                />
-              </div>
-            </div>
+                <div>
+                  <label
+                    htmlFor="role"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Role
+                  </label>
+                  <div className="mt-1 relative">
+                    <input
+                      id="role"
+                      name="role"
+                      type="role"
+                      value={values.role}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      autoComplete="role"
+                      placeholder="e.g. Full Stack Web Developer"
+                      required
+                      className={classNames(
+                        errors.role
+                          ? "focus:outline-red-500"
+                          : "focus:outline-buttonHover",
+                        "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline sm:text-sm"
+                      )}
+                    />
+                    {errors.role ? (
+                      <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <ExclamationCircleIcon
+                          className="h-5 w-5 text-red-500"
+                          aria-hidden="true"
+                        />
+                      </div>
+                    ) : (
+                      <p></p>
+                    )}
+                  </div>
+                  <ErrorMessage
+                    component="div"
+                    name="role"
+                    className="mt-2 text-sm text-red-600"
+                  />
+                </div>
 
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Password
-              </label>
-              <div className="mt-1">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  value={password}
-                  autoComplete="current-password"
-                  onChange={handlePassword}
-                  required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline focus:outline-buttonHover sm:text-sm"
-                />
-              </div>
-            </div>
+                <div>
+                  <label
+                    htmlFor="password"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Password
+                  </label>
+                  <div className="mt-1 relative">
+                    <input
+                      id="password"
+                      name="password"
+                      type="password"
+                      value={values.password}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      autoComplete="current-password"
+                      required
+                      className={classNames(
+                        errors.password
+                          ? "focus:outline-red-500"
+                          : "focus:outline-buttonHover",
+                        "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline sm:text-sm"
+                      )}
+                    />
+                    {errors.password ? (
+                      <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <ExclamationCircleIcon
+                          className="h-5 w-5 text-red-500"
+                          aria-hidden="true"
+                        />
+                      </div>
+                    ) : (
+                      <p></p>
+                    )}
+                  </div>
+                  <ErrorMessage
+                    component="div"
+                    name="password"
+                    className="mt-2 text-sm text-red-600"
+                  />
+                </div>
+                {errorMessage && !errors.email && !errors.password && (
+                  <p className="mt-2 text-sm text-red-600">{errorMessage}</p>
+                )}
+                <div className="flex justify-end">
+                  <div className="text-sm">
+                    <span className="font-medium">Already registered </span>
+                    <Link
+                      className="font-bold text-gray-600 hover:text-gray-500 underline"
+                      to="/login"
+                    >
+                      log in?
+                    </Link>
+                  </div>
+                </div>
 
-            <div className="flex justify-end">
-              <div className="text-sm">
-                <span className="font-medium">Already registered </span>
-                <Link
-                  className="font-bold text-gray-600 hover:text-gray-500 underline"
-                  to="/login"
-                >
-                  log in?
-                </Link>
-              </div>
+                <div>
+                  <Button
+                    position="column"
+                    type="submit"
+                    text="Sign Up"
+                    color="mainColor"
+                  />
+                </div>
+              </form>
             </div>
-
-            <div>
-              <Button
-                position="column"
-                type="submit"
-                text="Sign Up"
-                color="mainColor"
-              />
-            </div>
-          </form>
-          {errorMessage && <p className="mt-2 text-sm text-red-600">{errorMessage}</p>}
-        </div>
-      </div>
+          </div>
+        );
+      }}
+    </Formik>
   );
 };
 

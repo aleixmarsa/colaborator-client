@@ -2,11 +2,10 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "./../../context/auth.context";
 import { loginService } from "../../services/auth.services";
-import { Formik } from "formik";
+import { Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Button from "../buttons/Button";
 import { Link } from "react-router-dom";
-import { ErrorMessage } from "formik";
 import { ExclamationCircleIcon } from "@heroicons/react/solid";
 
 const LogInForm = () => {
@@ -55,7 +54,6 @@ const LogInForm = () => {
       {(props) => {
         const {
           values,
-          touched,
           errors,
           handleChange,
           handleBlur,
