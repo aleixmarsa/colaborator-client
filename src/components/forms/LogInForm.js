@@ -1,5 +1,5 @@
 
-import {useContext } from "react";
+import {useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "./../../context/auth.context";
 import { loginService } from "../../services/auth.services";
@@ -16,7 +16,7 @@ const LogInForm = () => {
 
 //   const [email, setEmail] = useState("admin@admin.com");
 //   const [password, setPassword] = useState("Admin123!");
-//   const [errorMessage, setErrorMessage] = useState(undefined);
+  const [errorMessage, setErrorMessage] = useState(undefined);
   const navigate = useNavigate();
   const { logInUser } = useContext(AuthContext);
 //   const handleEmail = (e) => setEmail(e.target.value);
@@ -39,7 +39,10 @@ const LogInForm = () => {
         logInUser(token);
         navigate("/projects");
       } catch (err) {
-        // const errorDescription = err?.response?.data?.message;
+        if (err.response?.status === 400) {
+        console.log("ERROR ", err.response.data.message)
+        setErrorMessage(err.response.data.message);
+      }
         // setErrorMessage(errorDescription);
       }
     }}
@@ -193,6 +196,7 @@ const LogInForm = () => {
                 </a>
               </div>
             </div> */}
+			{errorMessage && !errors.email && !errors.password && <p className="mt-2 text-sm text-red-600">{errorMessage}</p>}
 
                 <div className="flex flex-col">
                   <Button
