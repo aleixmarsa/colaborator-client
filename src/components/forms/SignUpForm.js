@@ -6,7 +6,11 @@ import {
   ExclamationCircleIcon,
   EyeIcon,
   EyeOffIcon,
-} from "@heroicons/react/solid";
+  MailIcon,
+  LockClosedIcon,
+  UserIcon,
+  CogIcon
+} from "@heroicons/react/outline";
 import { Formik, ErrorMessage } from "formik";
 
 import Button from "../buttons/Button";
@@ -91,9 +95,11 @@ const SignUpForm = (props) => {
                         errors.email
                           ? "focus:outline-red-500"
                           : "focus:outline-buttonHover",
-                        "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline sm:text-sm"
+                        "appearance-none block w-full px-8 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline sm:text-sm"
                       )}
                     />
+                    <MailIcon className="absolute h-5 top-2.5 left-2 pr-3 flex items-center pointer-events-none text-mainColor" />
+
                     {errors.email ? (
                       <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                         <ExclamationCircleIcon
@@ -132,9 +138,10 @@ const SignUpForm = (props) => {
                         errors.name
                           ? "focus:outline-red-500"
                           : "focus:outline-buttonHover",
-                        "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline sm:text-sm"
+                        "appearance-none block w-full px-8 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline sm:text-sm"
                       )}
                     />
+                    <UserIcon className="absolute h-5 top-2.5 left-2 pr-3 flex items-center pointer-events-none text-mainColor" />
 
                     {errors.name ? (
                       <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -176,9 +183,11 @@ const SignUpForm = (props) => {
                         errors.role
                           ? "focus:outline-red-500"
                           : "focus:outline-buttonHover",
-                        "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline sm:text-sm"
+                        "appearance-none block w-full px-8 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline sm:text-sm"
                       )}
                     />
+                    <CogIcon className="absolute h-5 top-2.5 left-2 pr-3 flex items-center pointer-events-none text-mainColor" />
+
                     {errors.role ? (
                       <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                         <ExclamationCircleIcon
@@ -218,7 +227,7 @@ const SignUpForm = (props) => {
                         errors.password
                           ? "focus:outline-red-500"
                           : "focus:outline-buttonHover",
-                        "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline sm:text-sm"
+                        "appearance-none block w-full px-8 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline sm:text-sm"
                       )}
                     />
 
@@ -232,13 +241,14 @@ const SignUpForm = (props) => {
                       />
                     ) : (
                       <EyeIcon
-                        className={`absolute h-5 w-5 text-gray-400 cursor-pointer top-2 z-10 ${
+                        className={`absolute h-5 w-5 right-3 text-gray-400 cursor-pointer top-2 z-10 ${
                           errors.password ? " right-10 " : "right-4"
                         } `}
                         aria-hidden="true"
                         onClick={() => handleShowPassord()}
                       />
                     )}
+                    <LockClosedIcon className="absolute h-5 top-2.5 left-2 pr-3 flex items-center pointer-events-none text-mainColor" />
 
                     {errors.password ? (
                       <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -258,7 +268,9 @@ const SignUpForm = (props) => {
                   />
                 </div>
                 {errorMessage && !errors.email && !errors.password && (
-                  <p className="absolute left-1/2 w-full transform -translate-x-1/2 mt-2 text-xs text-red-600">{errorMessage}</p>
+                  <p className="absolute left-1/2 w-full transform -translate-x-1/2 mt-2 text-xs text-red-600">
+                    {errorMessage}
+                  </p>
                 )}
                 <div className="flex justify-end">
                   <div className="text-sm">

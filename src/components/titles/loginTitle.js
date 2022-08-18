@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ClipboardCopyIcon } from "@heroicons/react/outline";
 
 function LogInTitle(props) {
   const [isEmailCopy, setIsEmailCopy] = useState(false);
@@ -33,10 +34,10 @@ function LogInTitle(props) {
         <p className="mt-2 text-center text-sm text-gray-600">
           Or try it using{" "}
           <span
-            className="font-bold cursor-pointer relative "
+            className="font-bold cursor-pointer relative  hover:text-gray-500"
             onClick={(e) => handleEmailCopy(e, email)}
           >
-            {email}{" "}
+            {email} <ClipboardCopyIcon className="h-5 w-5 inline mb-1" />
             <span
               className={`transition-opacity ${
                 isEmailCopy ? "opacity-80" : "opacity-0"
@@ -45,12 +46,12 @@ function LogInTitle(props) {
               Copied to clipboard
             </span>
           </span>
-          <span className="font-bold"> // </span>
           <span
-            className="font-bold cursor-pointer relative"
+            className="font-bold cursor-pointer relative ml-1 hover:text-gray-500"
             onClick={(e) => handlePaswordCopy(e, password)}
           >
-            {password}
+            {" "}
+            {password} <ClipboardCopyIcon className="h-5 w-5 inline mb-1" />
             <span
               className={`transition-opacity ${
                 isPasswordCopy ? "opacity-80" : "opacity-0"

@@ -1,5 +1,5 @@
 import { Menu } from "@headlessui/react";
-import { ChevronDownIcon, SortAscendingIcon } from "@heroicons/react/solid";
+import { ChevronDownIcon, SortAscendingIcon } from "@heroicons/react/outline";
 
 const SortMenu = (props) => {
 

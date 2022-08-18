@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react";
 
 import { getAllMessagesService } from "../../services/chat.services";
 import { AuthContext } from "../../context/auth.context";
-import { ChevronDoubleRightIcon } from "@heroicons/react/solid";
+import { ChevronDoubleRightIcon } from "@heroicons/react/outline";
 import Avatar from "react-avatar";
 
 import io from "socket.io-client";

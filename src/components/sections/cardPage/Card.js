@@ -1,4 +1,4 @@
-import { TrashIcon, PencilIcon } from "@heroicons/react/solid";
+import { TrashIcon, PencilIcon } from "@heroicons/react/outline";
 
 function Card(props) {
 

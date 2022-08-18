@@ -6,7 +6,7 @@ import { Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Button from "../buttons/Button";
 import { Link } from "react-router-dom";
-import { ExclamationCircleIcon } from "@heroicons/react/solid";
+import { ExclamationCircleIcon, MailIcon, LockClosedIcon } from "@heroicons/react/outline";
 
 const LogInForm = () => {
 
@@ -74,7 +74,7 @@ const LogInForm = () => {
                     htmlFor="email"
                     className="block text-sm font-medium text-gray-700  text-left"
                   >
-                    Email address
+                    Email address 
                   </label>
                   <div className="mt-1 relative">
                     <input
@@ -90,9 +90,10 @@ const LogInForm = () => {
                         errors.email
                           ? "focus:outline-red-500"
                           : "focus:outline-buttonHover",
-                        "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline sm:text-sm"
+                        "appearance-none block w-full px-8 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline sm:text-sm"
                       )}
                     />
+                    <MailIcon className="absolute h-5 top-2.5 left-2 pr-3 flex items-center pointer-events-none text-mainColor"/>
                     {errors.email ? (
                       <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                         <ExclamationCircleIcon
@@ -133,9 +134,11 @@ const LogInForm = () => {
                         errors.password
                           ? "focus:outline-red-500"
                           : "focus:outline-buttonHover",
-                        "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline sm:text-sm"
+                        "appearance-none block w-full px-8 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline sm:text-sm"
                       )}
                     />
+                    <LockClosedIcon className="absolute h-5 top-2.5 left-2 pr-3 flex items-center pointer-events-none text-mainColor"/>
+
                     {errors.password ? (
                       <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                         <ExclamationCircleIcon
