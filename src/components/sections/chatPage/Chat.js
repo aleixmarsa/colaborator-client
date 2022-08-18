@@ -106,7 +106,7 @@ const Chat = () => {
                       chatActive === project._id
                         ? "outline outline-buttonHover"
                         : "",
-                      "flex justify-start gap-2 bg-white mt-3 mr-3 cursor-pointer w-sm p-2 border-mainColor drop-shadow-xl text-mainColor"
+                      "flex justify-start gap-2 bg-white mt-3 mr-3 cursor-pointer w-sm p-2 border-mainColor drop-shadow-lg text-mainColor"
                     )}
                     onClick={(e) => projectChatHandleClick(e, project)}
                   >
@@ -133,7 +133,7 @@ const Chat = () => {
                         chatActive === chatUser._id
                           ? "outline outline-buttonHover"
                           : "",
-                        "flex justify-start gap-2 hover:bg-gray-300 bg-white mt-3 mr-3 cursor-pointer w-sm p-2 border-mainColor drop-shadow-xl text-mainColor"
+                        "flex justify-start gap-2 hover:bg-gray-300 bg-white mt-3 mr-3 cursor-pointer w-sm p-2 border-mainColor drop-shadow-lg text-mainColor"
                       )}
                       onClick={(e) => directChathandleClick(e, chatUser)}
                     >
@@ -151,7 +151,7 @@ const Chat = () => {
               })}
             </div>
           </div>
-          <div className="col-span-3 xl:col-span-4 lg:col-span-4 flex h-full flex-col bg-white rounded  shadow-xl divide-y border list-none ml-2">
+          <div className="col-span-3 xl:col-span-4 lg:col-span-4 flex h-full flex-col bg-white rounded  drop-shadow-lg divide-y border list-none ml-2">
               {showChat && (
                 <ChatBox chatId={showChat} chatReceiver={chatReceiver} isProjectChat={isProjectChat}/>
               )}

@@ -37,7 +37,7 @@ function LogInTitle(props) {
             className="font-bold cursor-pointer relative  hover:text-gray-500"
             onClick={(e) => handleEmailCopy(e, email)}
           >
-            {email} <ClipboardCopyIcon className="h-5 w-5 inline mb-1" />
+            {email} <ClipboardCopyIcon className="h-5 w-5 absolute -right-4 bottom-0" />
             <span
               className={`transition-opacity ${
                 isEmailCopy ? "opacity-80" : "opacity-0"
@@ -47,11 +47,11 @@ function LogInTitle(props) {
             </span>
           </span>
           <span
-            className="font-bold cursor-pointer relative ml-1 hover:text-gray-500"
+            className="font-bold cursor-pointer relative ml-5 hover:text-gray-500"
             onClick={(e) => handlePaswordCopy(e, password)}
           >
             {" "}
-            {password} <ClipboardCopyIcon className="h-5 w-5 inline mb-1" />
+            {password} <ClipboardCopyIcon className="h-5 w-5 absolute -right-5 bottom-0" />
             <span
               className={`transition-opacity ${
                 isPasswordCopy ? "opacity-80" : "opacity-0"

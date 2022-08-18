@@ -6,14 +6,16 @@ import { Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Button from "../buttons/Button";
 import { Link } from "react-router-dom";
-import { ExclamationCircleIcon, MailIcon, LockClosedIcon } from "@heroicons/react/outline";
+import {
+  ExclamationCircleIcon,
+  MailIcon,
+  LockClosedIcon,
+} from "@heroicons/react/outline";
 
 const LogInForm = () => {
-
   const [errorMessage, setErrorMessage] = useState(undefined);
   const navigate = useNavigate();
   const { logInUser } = useContext(AuthContext);
-
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
@@ -52,17 +54,12 @@ const LogInForm = () => {
       })}
     >
       {(props) => {
-        const {
-          values,
-          errors,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-        } = props;
+        const { values, errors, handleChange, handleBlur, handleSubmit } =
+          props;
 
         return (
           <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-            <div className="bg-white py-8 px-4 drop-shadow-xl sm:rounded-md sm:px-10">
+            <div className="bg-white py-8 px-4 drop-shadow-lg sm:rounded-md sm:px-10">
               <form
                 onSubmit={handleSubmit}
                 className="space-y-6"
@@ -74,7 +71,7 @@ const LogInForm = () => {
                     htmlFor="email"
                     className="block text-sm font-medium text-gray-700  text-left"
                   >
-                    Email address 
+                    Email address
                   </label>
                   <div className="mt-1 relative">
                     <input
@@ -93,7 +90,7 @@ const LogInForm = () => {
                         "appearance-none block w-full px-8 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline sm:text-sm"
                       )}
                     />
-                    <MailIcon className="absolute h-5 top-2.5 left-2 pr-3 flex items-center pointer-events-none text-mainColor"/>
+                    <MailIcon className="absolute h-5 top-2.5 left-2 pr-3 flex items-center pointer-events-none text-mainColor" />
                     {errors.email ? (
                       <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                         <ExclamationCircleIcon
@@ -137,7 +134,7 @@ const LogInForm = () => {
                         "appearance-none block w-full px-8 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline sm:text-sm"
                       )}
                     />
-                    <LockClosedIcon className="absolute h-5 top-2.5 left-2 pr-3 flex items-center pointer-events-none text-mainColor"/>
+                    <LockClosedIcon className="absolute h-5 top-2.5 left-2 pr-3 flex items-center pointer-events-none text-mainColor" />
 
                     {errors.password ? (
                       <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -183,7 +180,9 @@ const LogInForm = () => {
               </div>
             </div> */}
                 {errorMessage && !errors.email && !errors.password && (
-                  <p className="absolute left-1/2 w-full transform -translate-x-1/2 mt-2 text-xs text-red-600">{errorMessage}</p>
+                  <p className="absolute left-1/2 w-full transform -translate-x-1/2 mt-2 text-xs text-red-600">
+                    {errorMessage}
+                  </p>
                 )}
 
                 <div className="flex flex-col">

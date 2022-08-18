@@ -68,7 +68,7 @@ const SignUpForm = (props) => {
 
         return (
           <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-            <div className="bg-white py-8 px-4 drop-shadow-xl rounded-md sm:px-10">
+            <div className="bg-white py-8 px-4 drop-shadow-lg rounded-md sm:px-10">
               <form
                 onSubmit={handleSubmit}
                 className="space-y-6"

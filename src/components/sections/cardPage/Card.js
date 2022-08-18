@@ -36,7 +36,7 @@ function Card(props) {
 
     return (
 
-        <li className={`col-span-1 bg-white rounded shadow-xl divide-y divide-gray-200 list-none m-2 border-2 ${setColorBorder()}`}>
+        <li className={`col-span-1 bg-white rounded drop-shadow-lg divide-y divide-gray-200 list-none m-2 border-2 ${setColorBorder()}`}>
             <div className="w-full flex items-center justify-between p-2 space-x-6 m-1">
                 <div className="flex-1 truncate">
                     <div className="flex flex-row justify-between items-center space-x-3">

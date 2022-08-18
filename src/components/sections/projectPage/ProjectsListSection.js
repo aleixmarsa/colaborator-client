@@ -21,7 +21,7 @@ const ProjectsListSection = (props) => {
 
   return (
 
-    <div className="drop-shadow-xl lg:min-w-0 lg:flex-1 ml-5 mr-5 gap-6 mt-5 mb-10 ">
+    <div className="drop-shadow-lg lg:min-w-0 lg:flex-1 ml-5 mr-5 gap-6 mt-5 mb-10 ">
       <div className="p-2 bg-white border border-black">
         <div className=" flex items-center border-b-2 mb-5 pb-4">
           <h2 className="flex-1 xl:pl-24 text-xl">PROJECTS</h2>
