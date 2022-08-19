@@ -233,8 +233,8 @@ const SignUpForm = (props) => {
 
                     {passwordShown ? (
                       <EyeOffIcon
-                        className={`absolute h-5 w-5 right-3 text-gray-400 cursor-pointer top-2.5 z-10 ${
-                          errors.password ? " right-10 " : "right-4"
+                        className={`absolute h-5 w-5  text-gray-400 cursor-pointer top-2.5 z-10 ${
+                          errors.password ? " right-10 " : "right-3"
                         } `}
                         aria-hidden="true"
                         onClick={() => handleShowPassord()}
