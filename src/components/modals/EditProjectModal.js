@@ -18,6 +18,8 @@ const EditProjectModal = (props) => {
     const [description, setDescription] = useState("");
     const [team, setTeam] = useState([]);
 
+    const [errorMessage, setErrorMessage] = useState(undefined);
+
     const cancelButtonRef = useRef(null);
 
     const { 
@@ -52,32 +54,26 @@ const EditProjectModal = (props) => {
 
     const handleSubmitEditProject = async (e) => {
 
-        e.preventDefault();
+      e.preventDefault();
+      const projectBody = {
+        projectId: projectId,
+        title: title,
+        description: description,
+        team: team,
+      };
+  
+      const activityBody = {
+        title: "Project info edited",
+        project: projectId,
+        user: user._id,
+      };
+      socket.emit("newActivity", activityBody);
+      
+      socket.emit("updateProject", projectBody);
 
-        const body = {
-            projectId:projectId,
-            title: title,
-            description: description,
-            team:team
-        };
-
-        const activity = {
-            title: "Project info edited",
-            project: projectId,
-            user: user._id,
-        };
-
-        try {
-            await updateProjectService(projectId, body);
-            await addNewActivityService(activity);
-            socket.emit("render_projects");
-            handleCancelAddSaveFormBtn(e);
-        } catch (err) {
-            console.log(err);
-        }
-
-        setEditModalHasRender(false)
+      setEditModalHasRender(false);
     };
+    socket.on("errorMessage", setErrorMessage)
 
   return (
     <Transition.Root show={editModalHasRender} as={Fragment}>

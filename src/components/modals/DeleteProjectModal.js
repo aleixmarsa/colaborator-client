@@ -5,6 +5,11 @@ import { ExclamationIcon } from "@heroicons/react/outline";
 import { deleteProjectService } from "../../services/project.services";
 import { SocketContext } from "../../context/socket.context";
 
+const DeletProjectModal = (props) => {
+  
+  const { projectId, projectTitle, setModalHasRender, modalHasRender } = props;
+  const {socket} = useContext(SocketContext);
+
 
   const handleDelete = (ProjecId) => {
     socket.emit("deleteProject", ProjecId.toString())

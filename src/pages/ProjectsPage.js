@@ -5,7 +5,6 @@ import ProjectManagementSection from "../components/sections/projectPage/Project
 import ProjectsListSection from "../components/sections/projectPage/ProjectsListSection";
 import ProjectActivitySection from "../components/sections/projectPage/ProjectActivitySection";
 
-
 import { getAllCurrentProjectsService } from "../services/project.services";
 import { AuthContext } from "../context/auth.context";
 import { useState, useEffect, useContext } from "react";
@@ -31,6 +30,9 @@ const ProjectsPage = () => {
   const [modalHasRender, setModalHasRender] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  const [editModalHasRender, setEditModalHasRender] = useState(false);
+  const [createModalHasRender, setCreateModalHasRender] = useState(false);
+
   const { user } = useContext(AuthContext);
   const { socket } = useContext(SocketContext);
 
@@ -52,7 +54,6 @@ const ProjectsPage = () => {
     });
 
     socket.on("newProjectCreated", (project) => {
-
       const activityBody = {
         title: "Project created",
         project: project._id,
@@ -62,9 +63,12 @@ const ProjectsPage = () => {
       setNewProjectForm(false);
       socket.emit("getCurrentProjects");
       socket.emit("joinProjectRoom", project._id.toString());
-      console.log("🚀 ~ file: ProjectsPage.js ~ line 62 ~ socket.on ~ project.admin", project.admin)
+      console.log(
+        "🚀 ~ file: ProjectsPage.js ~ line 62 ~ socket.on ~ project.admin",
+        project.admin
+      );
 
-      if(project.admin === user._id){
+      if (project.admin === user._id) {
         socket.emit("newActivity", activityBody);
       }
     });
@@ -80,6 +84,7 @@ const ProjectsPage = () => {
       const projectRoom = updatedProject._id.toString();
       setEditProjectForm(false);
       setNewProjectForm(false);
+      setEditModalHasRender(false);
       socket.emit("getCurrentProjects");
       socket.emit("leaveProjectRoom", projectRoom);
       updatedProject.team.forEach((member) => {
@@ -106,36 +111,29 @@ const ProjectsPage = () => {
     <div className="bg-neutral-50 h-screen">
       <NavBar hasNewMessage={hasNewMessage} filterProjects={filterProjects} />
 
-            {
-                !loading && modalHasRender && (
-                    <DeletProjectModal
-                        projectId={projectId}
-                        getAllProjects={getAllProjects}
-                        projectTitle={projectTitle}
-                        setModalHasRender={setModalHasRender}
-                        modalHasRender={modalHasRender}
-                    />
-                )
-            }
-            {
-                !loading && editModalHasRender && (
-                    <EditProjectModal
-                        getAllProjects={getAllProjects}
-                        projectId={projectId}
-                        handleCancelAddSaveFormBtn={handleCancelAddSaveFormBtn}
-                        setEditModalHasRender={setEditModalHasRender}
-                        editModalHasRender={editModalHasRender}
-                    />
-                )
-            }
-            {
-                !loading && createModalHasRender && (
-                    <CreateProjectModal 
-                        setCreateModalHasRender={setCreateModalHasRender}
-                        createModalHasRender={createModalHasRender}
-                    />
-                )
-            }
+      {!loading && modalHasRender && (
+        <DeletProjectModal
+          projectId={projectId}
+          projectTitle={projectTitle}
+          setModalHasRender={setModalHasRender}
+          modalHasRender={modalHasRender}
+        />
+      )}
+      {!loading && editModalHasRender && (
+        <EditProjectModal
+          //getAllProjects={getAllProjects}
+          projectId={projectId}
+          //handleCancelAddSaveFormBtn={handleCancelAddSaveFormBtn}
+          setEditModalHasRender={setEditModalHasRender}
+          editModalHasRender={editModalHasRender}
+        />
+      )}
+      {!loading && createModalHasRender && (
+        <CreateProjectModal
+          setCreateModalHasRender={setCreateModalHasRender}
+          createModalHasRender={createModalHasRender}
+        />
+      )}
 
       {!loading && modalHasRender && (
         <DeletProjectModal
@@ -159,8 +157,11 @@ const ProjectsPage = () => {
                     projectsInProgress={currentProjects}
                     editProjectForm={editProjectForm}
                     setEditProjectForm={setEditProjectForm}
+                    setCreateModalHasRender={setCreateModalHasRender}
                   />
                 </div>
+              </div>
+            </div>
 
             <div className="bg-neutral-50 lg:min-w-0 lg:flex-1">
               <div className="h-full py-6 px-2 sm:px-6 lg:px-8">
@@ -176,12 +177,24 @@ const ProjectsPage = () => {
                     setProjectId={setProjectId}
                     setModalHasRender={setModalHasRender}
                     setProjectTitle={setProjectTitle}
+                    setEditModalHasRender={setEditModalHasRender}
                   />
                 </div>
+              </div>
             </div>
-        }
+          </div>
+
+          <div className="bg-neutral-50 pr-4 sm:pr-6 lg:pr-8 lg:flex-shrink-0 lg:border-l lg:border-gray-200 xl:pr-0">
+            <div className="h-full pl-6 py-6 lg:w-80">
+              <div className="h-full  relative">
+                <ProjectActivitySection currentProjects={currentProjects} />
+              </div>
+            </div>
+          </div>
         </div>
-    );
+      }
+    </div>
+  );
 };
 
 export default ProjectsPage;

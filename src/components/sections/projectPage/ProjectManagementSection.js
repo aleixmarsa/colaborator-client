@@ -22,6 +22,7 @@ const ProjectManagementSection = (props) => {
     const { user } = useContext(AuthContext);
 
     const handleNewProjectBtn = (e) => {
+        console.log("ENTRAAAAA")
         e.preventDefault()
         setCreateModalHasRender(true)
         setModalHasRender(false)
