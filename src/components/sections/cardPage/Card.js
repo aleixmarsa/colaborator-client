@@ -21,7 +21,6 @@ function Card(props) {
   };
 
   const handleEditTaskBtn = (taskId) => {
-    console.log("EDIIIT")
     setEditModalHasRender(true);
     setDeleteModalHasRender(false);
     setEditTaskId(cardId);

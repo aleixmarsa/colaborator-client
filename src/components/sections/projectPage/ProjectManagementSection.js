@@ -7,67 +7,77 @@ import { AuthContext } from "../../../context/auth.context";
 import { useContext } from "react";
 
 const ProjectManagementSection = (props) => {
-  const {
-    projectId,
-    newProjectForm,
-    setNewProjectForm,
-    editProjectForm,
-    setEditProjectForm,
-    getAllProjects,
-  } = props;
+    const {
+        projectId,
+        newProjectForm,
+        setNewProjectForm,
+        editProjectForm,
+        setEditProjectForm,
+        getAllProjects,
+        createModalHasRender,
+        setCreateModalHasRender,
+        setModalHasRender
+    } = props;
 
-  const { user } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
 
-  const handleNewProjectBtn = (e) => {
-    e.preventDefault();
-    setEditProjectForm(false);
-    setNewProjectForm(true);
-  };
+    const handleNewProjectBtn = (e) => {
+        e.preventDefault()
+        setCreateModalHasRender(true)
+        setModalHasRender(false)
+    };
 
-  const handleCancelAddSaveFormBtn = () => {
-    setEditProjectForm(false);
-    setNewProjectForm(false);
-  };
+    const handleCancelAddSaveFormBtn = () => {
+        setEditProjectForm(false);
+        setNewProjectForm(false);
+    };
+
   return (
     <>
-      {newProjectForm ? (
-        <NewProjectForm
-          handleNewProjectBtn={handleNewProjectBtn}
-          handleCancelAddSaveFormBtn={handleCancelAddSaveFormBtn}
-          getAllProjects={getAllProjects}
-        />
-      ) : editProjectForm ? (
-        <EditProjectForm
-          projectId={projectId}
-          handleCancelAddSaveFormBtn={handleCancelAddSaveFormBtn}
-          getAllProjects={getAllProjects}
-        />
-      ) : (
-        <>
-          {/*Avatar con el nombre*/}
-          <div className="flex flex-row">
-            <Avatar round size="40" textSizeRatio={1.9} name={user.name} />
-
-            <h3 className="ml-2 mt-3">{user.name}</h3>
-          </div>
-
-          {/*Rol del usuario */}
-          <div className="mt-2">
-            <p className="text-gray-400 text-left">{user.role}</p>
-          </div>
-
-          {/*Boton de crear proyecto */}
-          <div className="mt-6 w-40">
-            <Button
-              position="column"
-              type="button"
-              action={handleNewProjectBtn}
-              text="New Project"
-              color="mainColor"
+        {newProjectForm ? (
+            <NewProjectForm
+                handleNewProjectBtn={handleNewProjectBtn}
+                handleCancelAddSaveFormBtn={handleCancelAddSaveFormBtn}
+                getAllProjects={getAllProjects}
             />
-          </div>
-        </>
-      )}
+        ) : editProjectForm ? (
+            <EditProjectForm
+                projectId={projectId}
+                handleCancelAddSaveFormBtn={handleCancelAddSaveFormBtn}
+                getAllProjects={getAllProjects}
+            />
+        ) : (
+            <>
+                <div className="flex flex-row justify-between m-2">
+
+                <div className="flex flex-col mt-2">
+                    {/*Avatar con el nombre*/}
+                    <div className="flex flex-row">
+                        <Avatar round size="40" textSizeRatio={1.9} name={user.name} />
+
+                        <h3 className="ml-2 mt-3">{user.name}</h3>
+                        </div>
+
+                        {/*Rol del usuario */}
+                        <div className="mt-2">
+                        <p className="text-gray-400 text-left">{user.role}</p>
+                    </div>
+                </div>
+                    
+
+                    {/*Boton de crear proyecto */}
+                    <div className="mt-2 mr-2 w-60">
+                        <Button
+                            position="column"
+                            type="button"
+                            action={handleNewProjectBtn}
+                            text="New Project"
+                            color="mainColor"
+                        />
+                    </div>
+                </div>
+            </>
+        )}
     </>
   );
 };

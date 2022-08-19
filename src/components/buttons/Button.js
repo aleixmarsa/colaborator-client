@@ -12,7 +12,7 @@ const Button = (props) => {
 
   if (color === "mainColor") {
     textColor = "white";
-    borderColor = "transparent";
+    borderColor = "mainColor";
     bgColor = "bg-mainColor";
     hoverBgColor = "hover:bg-secundaryColor";
     focusRingColor = "mainColor";
