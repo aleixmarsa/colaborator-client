@@ -5,12 +5,16 @@ import ProjectManagementSection from "../components/sections/projectPage/Project
 import ProjectsListSection from "../components/sections/projectPage/ProjectsListSection";
 import ProjectActivitySection from "../components/sections/projectPage/ProjectActivitySection";
 
+
 import { getAllCurrentProjectsService } from "../services/project.services";
 import { AuthContext } from "../context/auth.context";
 import { useState, useEffect, useContext } from "react";
 import { SocketContext } from "../context/socket.context";
 
 import io from "socket.io-client";
+
+import EditProjectModal from "../components/modals/EditProjectModal";
+import CreateProjectModal from "../components/modals/CreateProjectModal";
 
 const classNames = (...classes) => {
   return classes.filter(Boolean).join(" ");
@@ -102,7 +106,36 @@ const ProjectsPage = () => {
     <div className="bg-neutral-50 h-screen">
       <NavBar hasNewMessage={hasNewMessage} filterProjects={filterProjects} />
 
-      {loading && <div>Loading...</div>}
+            {
+                !loading && modalHasRender && (
+                    <DeletProjectModal
+                        projectId={projectId}
+                        getAllProjects={getAllProjects}
+                        projectTitle={projectTitle}
+                        setModalHasRender={setModalHasRender}
+                        modalHasRender={modalHasRender}
+                    />
+                )
+            }
+            {
+                !loading && editModalHasRender && (
+                    <EditProjectModal
+                        getAllProjects={getAllProjects}
+                        projectId={projectId}
+                        handleCancelAddSaveFormBtn={handleCancelAddSaveFormBtn}
+                        setEditModalHasRender={setEditModalHasRender}
+                        editModalHasRender={editModalHasRender}
+                    />
+                )
+            }
+            {
+                !loading && createModalHasRender && (
+                    <CreateProjectModal 
+                        setCreateModalHasRender={setCreateModalHasRender}
+                        createModalHasRender={createModalHasRender}
+                    />
+                )
+            }
 
       {!loading && modalHasRender && (
         <DeletProjectModal
@@ -128,8 +161,6 @@ const ProjectsPage = () => {
                     setEditProjectForm={setEditProjectForm}
                   />
                 </div>
-              </div>
-            </div>
 
             <div className="bg-neutral-50 lg:min-w-0 lg:flex-1">
               <div className="h-full py-6 px-2 sm:px-6 lg:px-8">
@@ -147,21 +178,10 @@ const ProjectsPage = () => {
                     setProjectTitle={setProjectTitle}
                   />
                 </div>
-              </div>
             </div>
-          </div>
-
-          <div className="bg-neutral-50 pr-4 sm:pr-6 lg:pr-8 lg:flex-shrink-0 lg:border-l lg:border-gray-200 xl:pr-0">
-            <div className="h-full pl-6 py-6 lg:w-80">
-              <div className="h-full  relative">
-                <ProjectActivitySection currentProjects={currentProjects} />
-              </div>
-            </div>
-          </div>
+        }
         </div>
-      }
-    </div>
-  );
+    );
 };
 
 export default ProjectsPage;

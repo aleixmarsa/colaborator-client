@@ -16,6 +16,7 @@ const ProjectsListSection = (props) => {
     setProjectId,
     setModalHasRender,
     setProjectTitle,
+    setEditModalHasRender
   } = props;
 
 
@@ -40,9 +41,10 @@ const ProjectsListSection = (props) => {
                 editProjectForm={editProjectForm}
                 setEditProjectForm={setEditProjectForm}
                 setNewProjectForm={setNewProjectForm}
-                setId={setProjectId}
+                setProjectId={setProjectId}
                 setModalHasRender={setModalHasRender}
                 setProjectTitle={setProjectTitle}
+                setEditModalHasRender={setEditModalHasRender}
               />
             </Link>
           );

@@ -9,24 +9,26 @@ function Project(props) {
         editProjectForm,
         setEditProjectForm,
         setNewProjectForm,
-        setId,
+        setProjectId,
         setModalHasRender,
         setProjectTitle,
+        setEditModalHasRender
     } = props;
 
     const handleEditProjectBtn = (e, id) => {
-        e.preventDefault();
-        setEditProjectForm(!editProjectForm);
-        setNewProjectForm(false);
-        setId(id);
-    };
+        setProjectId(project._id);
+        e.preventDefault()
+        setEditModalHasRender(true)
+        setModalHasRender(false)
+        
+    }
 
     const handleDeleteProjectBtn = (e, title, id) => {
         e.preventDefault();
         setModalHasRender(true);
         setEditProjectForm(false);
         setNewProjectForm(false);
-        setId(id);
+        setProjectId(id);
         setProjectTitle(title);
     };
 
