@@ -57,7 +57,7 @@ const EditTaskModal = (props) => {
   };
 
   return (
-    <Transition.Root show={editModalHasRender} as={Fragment}>
+    <Transition.Root appear show={editModalHasRender} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-10"

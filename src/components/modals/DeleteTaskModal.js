@@ -8,30 +8,31 @@ import { useContext } from "react";
 import { SocketContext } from "../../context/socket.context";
 
 const DeleteTaskModal = (props) => {
-
   const cancelButtonRef = useRef(null);
 
   const { user } = useContext(AuthContext);
-  const {socket} = useContext(SocketContext);
-  const {title, projectId, deleteTaskId, deleteModalHasRender,  setDeleteModalHasRender} = props
+  const { socket } = useContext(SocketContext);
+  const {
+    title,
+    projectId,
+    deleteTaskId,
+    deleteModalHasRender,
+    setDeleteModalHasRender,
+  } = props;
 
   const deleteTask = (taskId) => {
-
-
     const activityBody = {
       title: "Task deleted",
       project: projectId,
       user: user._id,
     };
     socket.emit("newActivity", activityBody);
-    socket.emit("deleteTask", taskId, projectId)
-    socket.emit("getEvents", projectId)
-
-
+    socket.emit("deleteTask", taskId, projectId);
+    socket.emit("getEvents", projectId);
   };
 
   return (
-    <Transition.Root show={deleteModalHasRender} as={Fragment}>
+    <Transition.Root appear show={deleteModalHasRender} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-10"
@@ -70,7 +71,7 @@ const DeleteTaskModal = (props) => {
                         aria-hidden="true"
                       />
                     </div>
-                    <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                    <div className=" sm:mt-0 sm:ml-4 text-left">
                       <Dialog.Title
                         as="h3"
                         className="text-lg leading-6 font-medium text-gray-900"

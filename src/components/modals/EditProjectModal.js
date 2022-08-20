@@ -5,78 +5,77 @@ import SelectMenu from "../menus/SelectMenu";
 
 import { Dialog, Transition } from "@headlessui/react";
 
-import { getProjectDetailsService, updateProjectService } from "../../services/project.services";
+import {
+  getProjectDetailsService,
+  updateProjectService,
+} from "../../services/project.services";
 import { AuthContext } from "../../context/auth.context";
 import { addNewActivityService } from "../../services/activity.services";
 import { SocketContext } from "../../context/socket.context";
 
 const EditProjectModal = (props) => {
+  console.log(props);
 
-    console.log(props);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [team, setTeam] = useState([]);
 
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [team, setTeam] = useState([]);
+  const [errorMessage, setErrorMessage] = useState(undefined);
 
-    const [errorMessage, setErrorMessage] = useState(undefined);
+  const cancelButtonRef = useRef(null);
 
-    const cancelButtonRef = useRef(null);
+  const {
+    projectId,
+    handleCancelAddSaveFormBtn,
+    setEditModalHasRender,
+    editModalHasRender,
+  } = props;
 
-    const { 
- 
-        projectId, 
-        handleCancelAddSaveFormBtn, 
-        setEditModalHasRender, 
-        editModalHasRender
+  console.log("ID DEL PROYECTO:", projectId);
 
-    } = props;
+  const { user } = useContext(AuthContext);
+  const { socket } = useContext(SocketContext);
 
-    console.log("ID DEL PROYECTO:", projectId);
+  const getProject = async (id) => {
+    try {
+      const response = await getProjectDetailsService(id);
+      const oneProject = response.data;
+      setTitle(oneProject.title);
+      setDescription(oneProject.description);
+      setTeam(oneProject.team);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-    const { user } = useContext(AuthContext);
-    const {socket} = useContext(SocketContext)
+  useEffect(() => {
+    getProject(projectId);
+  }, [projectId]);
 
-    const getProject = async (id) => {
-        try {
-            const response = await getProjectDetailsService(id);
-            const oneProject = response.data;
-            setTitle(oneProject.title);
-            setDescription(oneProject.description);
-            setTeam(oneProject.team);
-        } catch (err) {
-            console.log(err);
-        }
+  const handleSubmitEditProject = async (e) => {
+    e.preventDefault();
+    const projectBody = {
+      projectId: projectId,
+      title: title,
+      description: description,
+      team: team,
     };
 
-    useEffect(() => {
-        getProject(projectId);
-    }, [projectId]);
-
-    const handleSubmitEditProject = async (e) => {
-
-      e.preventDefault();
-      const projectBody = {
-        projectId: projectId,
-        title: title,
-        description: description,
-        team: team,
-      };
-  
-      const activityBody = {
-        title: "Project info edited",
-        project: projectId,
-        user: user._id,
-      };
-      socket.emit("newActivity", activityBody);
-      
-      socket.emit("updateProject", projectBody);
-
-      setEditModalHasRender(false);
+    const activityBody = {
+      title: "Project info edited",
+      project: projectId,
+      user: user._id,
     };
-    socket.on("errorMessage", setErrorMessage)
+    socket.emit("newActivity", activityBody);
+
+    socket.emit("updateProject", projectBody);
+
+    setEditModalHasRender(false);
+  };
+  socket.on("errorMessage", setErrorMessage);
 
   return (
-    <Transition.Root show={editModalHasRender} as={Fragment}>
+    <Transition.Root appear show={editModalHasRender} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-10"
@@ -106,13 +105,13 @@ const EditProjectModal = (props) => {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-                <Dialog.Panel className="relative bg-white rounded-lg text-left shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full">
-                    <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                        <div className="pt-2 space-y-6 sm:pt-10 sm:space-y-5">
-                        <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
-                        <h3 className="text-lg leading-6 font-medium text-gray-900">
-                            Edit your Project
-                        </h3> 
+              <Dialog.Panel className="relative bg-white rounded-lg text-left shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full">
+                <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                  <div className="pt-2 space-y-6 sm:pt-10 sm:space-y-5">
+                    <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
+                      <h3 className="text-lg leading-6 font-medium text-gray-900">
+                        Edit your Project
+                      </h3>
                       <div>
                         <div className="mt-6 sm:mt-5 space-y-6 sm:space-y-5">
                           <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
@@ -160,28 +159,27 @@ const EditProjectModal = (props) => {
                       </div>
                       <SelectMenu team={team} setTeam={setTeam} />
                     </div>
-                        
-                        </div>
-                    </div>
+                  </div>
+                </div>
 
-                    <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                        <button
-                            type="button"
-                            className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-mainColor text-base font-medium text-white hover:bg-secundaryColor focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
-                            onClick={(e) => handleSubmitEditProject(e)}
-                        >
-                            Save
-                        </button>
-                        <button
-                            type="button"
-                            className="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline focus:outline-buttonHover sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                            onClick={() => setEditModalHasRender(false)}
-                            ref={cancelButtonRef}
-                        >
-                            Cancel
-                        </button>
-                    </div>
-                </Dialog.Panel>
+                <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                  <button
+                    type="button"
+                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-mainColor text-base font-medium text-white hover:bg-secundaryColor focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                    onClick={(e) => handleSubmitEditProject(e)}
+                  >
+                    Save
+                  </button>
+                  <button
+                    type="button"
+                    className="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline focus:outline-buttonHover sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                    onClick={() => setEditModalHasRender(false)}
+                    ref={cancelButtonRef}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </Dialog.Panel>
             </Transition.Child>
           </div>
         </div>

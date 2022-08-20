@@ -4,20 +4,16 @@ import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationIcon } from "@heroicons/react/outline";
 import { deleteProjectService } from "../../services/project.services";
 import { SocketContext } from "../../context/socket.context";
-
 const DeletProjectModal = (props) => {
-  
   const { projectId, projectTitle, setModalHasRender, modalHasRender } = props;
-  const {socket} = useContext(SocketContext);
-
+  const { socket } = useContext(SocketContext);
 
   const handleDelete = (ProjecId) => {
-    socket.emit("deleteProject", ProjecId.toString())
-  }
+    socket.emit("deleteProject", ProjecId.toString());
+  };
 
   return (
-    
-    <Transition.Root show={modalHasRender} as={Fragment}>
+    <Transition.Root appear show={modalHasRender} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setModalHasRender}>
         <Transition.Child
           as={Fragment}
@@ -51,7 +47,7 @@ const DeletProjectModal = (props) => {
                         aria-hidden="true"
                       />
                     </div>
-                    <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                    <div className=" sm:mt-0 sm:ml-4 text-left">
                       <Dialog.Title
                         as="h3"
                         className="text-lg leading-6 font-medium text-gray-900"
