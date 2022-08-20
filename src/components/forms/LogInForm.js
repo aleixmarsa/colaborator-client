@@ -6,6 +6,8 @@ import { Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Button from "../buttons/Button";
 import { Link } from "react-router-dom";
+import CustomErrorMessage from "../messages/CustomErrorMessage";
+
 import {
   ExclamationCircleIcon,
   MailIcon,
@@ -43,7 +45,7 @@ const LogInForm = () => {
         }
       }}
       validationSchema={Yup.object().shape({
-        email: Yup.string().email().required("Required"),
+        email: Yup.string().email().required("Enter an email address"),
         password: Yup.string()
           .required("No password provided.")
           .min(6, "Password is too short - should be 6 chars minimum.")
@@ -85,29 +87,14 @@ const LogInForm = () => {
                       required
                       className={classNames(
                         errors.email
-                          ? "focus:outline-red-500"
+                          ? " outline outline-1 outline-red-500"
                           : "focus:outline-buttonHover",
                         "appearance-none block w-full px-8 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline sm:text-sm"
                       )}
                     />
                     <MailIcon className="absolute h-5 top-2.5 left-2 pr-3 flex items-center pointer-events-none text-mainColor" />
-                    {errors.email ? (
-                      <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                        <ExclamationCircleIcon
-                          className="h-5 w-5 text-red-500"
-                          aria-hidden="true"
-                        />
-                      </div>
-                    ) : (
-                      <p></p>
-                    )}
+                    <CustomErrorMessage errors={errors.email} type="email" />
                   </div>
-
-                  <ErrorMessage
-                    component="div"
-                    name="email"
-                    className="absolute left-1/2 w-full transform -translate-x-1/2 mt-2 text-xs text-red-600"
-                  />
                 </div>
 
                 <div className="relative">
@@ -129,29 +116,17 @@ const LogInForm = () => {
                       required
                       className={classNames(
                         errors.password
-                          ? "focus:outline-red-500"
+                          ? " outline outline-1 outline-red-500"
                           : "focus:outline-buttonHover",
                         "appearance-none block w-full px-8 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline sm:text-sm"
                       )}
                     />
                     <LockClosedIcon className="absolute h-5 top-2.5 left-2 pr-3 flex items-center pointer-events-none text-mainColor" />
-
-                    {errors.password ? (
-                      <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                        <ExclamationCircleIcon
-                          className="h-5 w-5 text-red-500"
-                          aria-hidden="true"
-                        />
-                      </div>
-                    ) : (
-                      <p></p>
-                    )}
+                    <CustomErrorMessage
+                      errors={errors.password}
+                      type="password"
+                    />
                   </div>
-                  <ErrorMessage
-                    component="div"
-                    name="password"
-                    className="absolute left-1/2 w-full transform -translate-x-1/2 mt-2 text-xs text-red-600"
-                  />
                 </div>
 
                 {/* <div className="flex items-center justify-between">
@@ -180,9 +155,15 @@ const LogInForm = () => {
               </div>
             </div> */}
                 {errorMessage && !errors.email && !errors.password && (
-                  <p className="absolute left-1/2 w-full transform -translate-x-1/2 mt-2 text-xs text-red-600">
-                    {errorMessage}
-                  </p>
+                  <div className="absolute bottom-32 left-1/2 w-full transform -translate-x-1/2">
+                    <ExclamationCircleIcon
+                      className="h-4 w-4 text-red-500 inline"
+                      aria-hidden="true"
+                    />
+                    <p className=" ml-1 text-xs text-red-600 inline">
+                      {errorMessage}
+                    </p>
+                  </div>
                 )}
 
                 <div className="flex flex-col">
