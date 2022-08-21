@@ -1,25 +1,21 @@
-import { Fragment, useRef, useState, useContext } from "react";
-import { addNewProjectService } from "../../services/project.services";
-import { addNewActivityService } from "../../services/activity.services";
+import { Fragment, useRef, useState, useContext, useEffect } from "react";
 import { AuthContext } from "../../context/auth.context";
 import { SocketContext } from "../../context/socket.context";
 import SelectMenu from "../menus/SelectMenu";
 import { Dialog, Transition } from "@headlessui/react";
-import { Formik, ErrorMessage } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
 import CustomErrorMessage from "../messages/CustomErrorMessage";
 import Button from "../buttons/Button";
 import { ExclamationCircleIcon } from "@heroicons/react/outline";
 
 const CreateProjectModal = (props) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
   const [team, setTeam] = useState([]);
-  const [isActive, setIsActive] = useState(true);
   const [teamError, setTeamError] = useState("");
   const cancelButtonRef = useRef(null);
+  const [errorMessage, setErrorMessage] = useState("")
 
-  const { setCreateModalHasRender, createModalHasRender, errorMessage } = props;
+  const { setCreateModalHasRender, createModalHasRender } = props;
 
   const { user } = useContext(AuthContext);
   const { socket } = useContext(SocketContext);
@@ -27,6 +23,12 @@ const CreateProjectModal = (props) => {
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
+
+  useEffect(() => {
+  socket.on("errorMessage", (message)=>{
+    setErrorMessage(message)
+  })
+}, [socket]);
 
   return (
     <Formik
@@ -44,13 +46,11 @@ const CreateProjectModal = (props) => {
         };
         if (!team.length) {
           setTeamError("Select a team");
-        }else if(!teamIds.includes(user._id)){
+        } else if (!teamIds.includes(user._id)) {
           setTeamError("You user must be include in the team");
           return;
-
         }
         setTeamError("");
-
         socket.emit("newProject", body);
       }}
       validationSchema={Yup.object().shape({
@@ -133,7 +133,7 @@ const CreateProjectModal = (props) => {
                                             errors.title
                                               ? " outline outline-1 outline-red-500"
                                               : "focus:outline-buttonHover",
-                                            "appearance-none block w-full px-8 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline sm:text-sm"
+                                            "appearance-none block w-full px-2 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline sm:text-sm"
                                           )}
                                         />
                                         <CustomErrorMessage
@@ -165,7 +165,7 @@ const CreateProjectModal = (props) => {
                                           errors.description
                                             ? " outline outline-1 outline-red-500"
                                             : "focus:outline-buttonHover",
-                                          "appearance-none block w-full px-8 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline sm:text-sm"
+                                          "appearance-none block w-full px-2 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline sm:text-sm"
                                         )}
                                       />
                                       <CustomErrorMessage
@@ -177,7 +177,11 @@ const CreateProjectModal = (props) => {
                                 </div>
                               </div>
                               <div className="relative">
-                                <SelectMenu team={team} setTeam={setTeam} teamError={teamError}/>
+                                <SelectMenu
+                                  team={team}
+                                  setTeam={setTeam}
+                                  teamError={teamError}
+                                />
                                 {teamError && (
                                   <div className="absolute -bottom-6 left-0 w-fit">
                                     <ExclamationCircleIcon

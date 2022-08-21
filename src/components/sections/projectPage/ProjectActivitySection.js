@@ -25,7 +25,12 @@ const ProjectActivitySection = (props) => {
       setActivity(allActivities);
 
     })
-    socket.on("newActivityCreated", () => {
+    socket.on("newActivityCreated", (newActivity) => {
+      console.log("🚀 ~ file: ProjectActivitySection.js ~ line 31 ~ socket.on ~ newActivityCreated")
+      if(newActivity.title === "Project deleted"){
+        socket.emit("leaveProjectRoom", newActivity.project);
+      }
+
       getActivity();
     });
 

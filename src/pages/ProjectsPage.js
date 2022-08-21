@@ -29,7 +29,6 @@ const ProjectsPage = () => {
   const [hasNewMessage, setHasNewMessage] = useState(false);
   const [modalHasRender, setModalHasRender] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState("")
   const [editModalHasRender, setEditModalHasRender] = useState(false);
   const [createModalHasRender, setCreateModalHasRender] = useState(false);
 
@@ -69,9 +68,7 @@ const ProjectsPage = () => {
       }
     });
 
-    socket.on("errorMessage", (message)=>{
-      setErrorMessage(message)
-    })
+
 
     socket.on("getCurrentProjects", (allCurrentProjects) => {
       const allCurrentProjectsCopy = [...allCurrentProjects];
@@ -96,9 +93,16 @@ const ProjectsPage = () => {
     });
 
     socket.on("projectDeleted", (projectId) => {
+      const activityBody = {
+        title: "Project deleted",
+        project: projectId,
+        user: user._id,
+      };
+      debugger;
       setModalHasRender(false);
-      socket.emit("leaveProjectRoom", projectId);
+      console.log("🚀 ~ file: ProjectsPage.js ~ line 101 ~ socket.on ~ projectId", projectId)
       socket.emit("getCurrentProjects");
+      socket.emit("newActivity", activityBody);
     });
   }, [socket]);
 
@@ -132,7 +136,6 @@ const ProjectsPage = () => {
         <CreateProjectModal
           setCreateModalHasRender={setCreateModalHasRender}
           createModalHasRender={createModalHasRender}
-          errorMessage={errorMessage}
         />
       )}
 
@@ -150,7 +153,6 @@ const ProjectsPage = () => {
                     editProjectForm={editProjectForm}
                     setEditProjectForm={setEditProjectForm}
                     setCreateModalHasRender={setCreateModalHasRender}
-                    setErrorMessage={setErrorMessage}
                   />
                 </div>
               </div>
