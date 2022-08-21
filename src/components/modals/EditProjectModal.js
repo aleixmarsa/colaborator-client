@@ -59,7 +59,12 @@ const EditProjectModal = (props) => {
   }, []);
 
 
-  socket.on("errorMessage", setErrorMessage);
+  useEffect(() => {
+    socket.on("errorMessage", (message)=>{
+      setErrorMessage(message)
+      console.log("🚀 ~ file: EditProjectModal.js ~ line 65 ~ socket.on ~ message", message)
+    })
+  }, [socket]);
 
   return ( title &&
     (<Formik
@@ -69,6 +74,7 @@ const EditProjectModal = (props) => {
         const description = values.description;
         const teamIds = team.map((user) => user._id);
         const body = {
+          projectId: projectId,
           title: title,
           description: description,
           admin: user._id,
@@ -77,6 +83,7 @@ const EditProjectModal = (props) => {
         };
         if (!team.length) {
           setTeamError("Select a team");
+          return;
         } else if (!teamIds.includes(user._id)) {
           setTeamError("You user must be include in the team");
           return;
@@ -158,7 +165,7 @@ const EditProjectModal = (props) => {
                                     </label>
                                     <br />
                                     <div className="sm:mt-0 sm:col-span-3">
-                                      <div className="max-w-lg flex rounded-md shadow-sm ">
+                                      <div className="relative max-w-lg flex rounded-md shadow-sm ">
                                         <input
                                           id="title"
                                           name="title"
@@ -233,6 +240,19 @@ const EditProjectModal = (props) => {
                                 )}
                               </div>
                             </div>
+                            {errorMessage && !errors.title && !teamError && (
+                              <div className="relative">
+                                <div className="absolute -bottom-2 left-1/3 w-full transform">
+                                  <ExclamationCircleIcon
+                                    className="h-4 w-4 text-red-500 inline"
+                                    aria-hidden="true"
+                                  />
+                                  <p className=" ml-1 text-xs text-red-600 inline">
+                                    {errorMessage}
+                                  </p>
+                                </div>
+                              </div>
+                            )}
                             <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                               <Button
                                 type="submit"

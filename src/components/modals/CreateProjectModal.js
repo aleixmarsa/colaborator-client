@@ -46,6 +46,7 @@ const CreateProjectModal = (props) => {
         };
         if (!team.length) {
           setTeamError("Select a team");
+          return;
         } else if (!teamIds.includes(user._id)) {
           setTeamError("You user must be include in the team");
           return;
@@ -195,7 +196,7 @@ const CreateProjectModal = (props) => {
                                 )}
                               </div>
                             </div>
-                            {errorMessage && !errors.email && !errors.password && (
+                            {errorMessage && !errors.title && !teamError && (
                               <div className="relative">
                                 <div className="absolute -bottom-2 left-1/3 w-full transform">
                                   <ExclamationCircleIcon
