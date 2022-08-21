@@ -10,9 +10,9 @@ const NewProjectForm = (props) => {
   const [description, setDescription] = useState("");
   const [team, setTeam] = useState([]);
   const [isActive, setIsActive] = useState(true);
-  const {handleCancelAddSaveFormBtn} = props;
+  const { handleCancelAddSaveFormBtn } = props;
   const { user } = useContext(AuthContext);
-  const {socket} = useContext(SocketContext)
+  const { socket } = useContext(SocketContext);
   const [errorMessage, setErrorMessage] = useState(undefined);
 
   const handleSubmit = async (e) => {
@@ -27,15 +27,10 @@ const NewProjectForm = (props) => {
       team: teamIds,
       active: isActive,
     };
-    socket.emit("newProject", body)
-    
+    socket.emit("newProject", body);
   };
 
-
-
-
-
-  socket.on("errorMessage", setErrorMessage)
+  socket.on("errorMessage", setErrorMessage);
 
   return (
     <Form

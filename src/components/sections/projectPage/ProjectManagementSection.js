@@ -14,18 +14,16 @@ const ProjectManagementSection = (props) => {
         editProjectForm,
         setEditProjectForm,
         getAllProjects,
-        createModalHasRender,
         setCreateModalHasRender,
-        setModalHasRender
+        setErrorMessage
     } = props;
 
     const { user } = useContext(AuthContext);
 
     const handleNewProjectBtn = (e) => {
-        console.log("ENTRAAAAA")
         e.preventDefault()
         setCreateModalHasRender(true)
-        setModalHasRender(false)
+        setErrorMessage("")
     };
 
     const handleCancelAddSaveFormBtn = () => {

@@ -1,6 +1,6 @@
 import NavBar from "../components/navbar/NavBar";
 
-import DeletProjectModal from "../components/modals/DeleteProjectModal";
+import DeleteProjectModal from "../components/modals/DeleteProjectModal";
 import ProjectManagementSection from "../components/sections/projectPage/ProjectManagementSection";
 import ProjectsListSection from "../components/sections/projectPage/ProjectsListSection";
 import ProjectActivitySection from "../components/sections/projectPage/ProjectActivitySection";
@@ -29,7 +29,7 @@ const ProjectsPage = () => {
   const [hasNewMessage, setHasNewMessage] = useState(false);
   const [modalHasRender, setModalHasRender] = useState(false);
   const [loading, setLoading] = useState(true);
-
+  const [errorMessage, setErrorMessage] = useState("")
   const [editModalHasRender, setEditModalHasRender] = useState(false);
   const [createModalHasRender, setCreateModalHasRender] = useState(false);
 
@@ -61,17 +61,17 @@ const ProjectsPage = () => {
       };
       setEditProjectForm(false);
       setNewProjectForm(false);
+      setCreateModalHasRender(false);
       socket.emit("getCurrentProjects");
       socket.emit("joinProjectRoom", project._id.toString());
-      console.log(
-        "🚀 ~ file: ProjectsPage.js ~ line 62 ~ socket.on ~ project.admin",
-        project.admin
-      );
-
       if (project.admin === user._id) {
         socket.emit("newActivity", activityBody);
       }
     });
+
+    socket.on("errorMessage", (message)=>{
+      setErrorMessage(message)
+    })
 
     socket.on("getCurrentProjects", (allCurrentProjects) => {
       const allCurrentProjectsCopy = [...allCurrentProjects];
@@ -112,7 +112,7 @@ const ProjectsPage = () => {
       <NavBar hasNewMessage={hasNewMessage} filterProjects={filterProjects} />
 
       {!loading && modalHasRender && (
-        <DeletProjectModal
+        <DeleteProjectModal
           projectId={projectId}
           projectTitle={projectTitle}
           setModalHasRender={setModalHasRender}
@@ -132,15 +132,7 @@ const ProjectsPage = () => {
         <CreateProjectModal
           setCreateModalHasRender={setCreateModalHasRender}
           createModalHasRender={createModalHasRender}
-        />
-      )}
-
-      {!loading && modalHasRender && (
-        <DeletProjectModal
-          projectId={projectId}
-          projectTitle={projectTitle}
-          setModalHasRender={setModalHasRender}
-          modalHasRender={modalHasRender}
+          errorMessage={errorMessage}
         />
       )}
 
@@ -158,6 +150,7 @@ const ProjectsPage = () => {
                     editProjectForm={editProjectForm}
                     setEditProjectForm={setEditProjectForm}
                     setCreateModalHasRender={setCreateModalHasRender}
+                    setErrorMessage={setErrorMessage}
                   />
                 </div>
               </div>

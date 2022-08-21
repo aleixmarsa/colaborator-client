@@ -11,7 +11,7 @@ function classNames(...classes) {
 
 const SelectMenu = (props) => {
   const [users, setUsers] = useState([]);
-  const { team, setTeam } = props;
+  const { team, setTeam, teamError } = props;
 
   const getAllUsers = async () => {
     try {
@@ -34,7 +34,14 @@ const SelectMenu = (props) => {
             Invite team
           </Listbox.Label>
           <div className="mt-1 relative">
-            <Listbox.Button className="relative min-h-42px w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline focus:outline-buttonHover sm:text-sm">
+            <Listbox.Button
+              className={classNames(
+                teamError
+                  ? " outline outline-1 outline-red-500"
+                  : "focus:outline-buttonHover",
+                "relative min-h-42px w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline focus:outline-buttonHover sm:text-sm"
+              )}
+            >
               {team.map((user) => (
                 <span key={user._id} className="flex items-center mt-1">
                   <Avatar round size="20" textSizeRatio={2} name={user.name} />

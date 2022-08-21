@@ -4,7 +4,8 @@ import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationIcon } from "@heroicons/react/outline";
 import { deleteProjectService } from "../../services/project.services";
 import { SocketContext } from "../../context/socket.context";
-const DeletProjectModal = (props) => {
+
+const DeleteProjectModal = (props) => {
   const { projectId, projectTitle, setModalHasRender, modalHasRender } = props;
   const { socket } = useContext(SocketContext);
 
@@ -90,4 +91,4 @@ const DeletProjectModal = (props) => {
   );
 };
 
-export default DeletProjectModal;
+export default DeleteProjectModal;
