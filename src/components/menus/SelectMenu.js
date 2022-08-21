@@ -16,7 +16,9 @@ const SelectMenu = (props) => {
   const getAllUsers = async () => {
     try {
       const response = await getAllUsersService();
+      const teamFromResponse = response.data.filter((user)=> team.some(member => user._id === member._id))
       setUsers(response.data);
+      setTeam(teamFromResponse)
     } catch (err) {
       console.log(err);
     }
