@@ -48,7 +48,7 @@ const CreateProjectModal = (props) => {
           setTeamError("Select a team");
           return;
         } else if (!teamIds.includes(user._id)) {
-          setTeamError("You user must be include in the team");
+          setTeamError("Your user must be included in the team");
           return;
         }
         setTeamError("");
