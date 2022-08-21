@@ -34,8 +34,7 @@ const CreateProjectModal = (props) => {
       onSubmit={(values) => {
         const title = values.title;
         const description = values.description;
-        const selectedTeam = team;
-        const teamIds = selectedTeam.map((user) => user._id);
+        const teamIds = team.map((user) => user._id);
         const body = {
           title: title,
           description: description,
@@ -45,7 +44,10 @@ const CreateProjectModal = (props) => {
         };
         if (!team.length) {
           setTeamError("Select a team");
+        }else if(!teamIds.includes(user._id)){
+          setTeamError("You user must be include in the team");
           return;
+
         }
         setTeamError("");
 
