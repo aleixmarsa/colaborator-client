@@ -6,7 +6,6 @@ function Project(props) {
 
     const {
         project,
-        editProjectForm,
         setEditProjectForm,
         setNewProjectForm,
         setProjectId,

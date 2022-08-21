@@ -33,20 +33,6 @@ const ProjectManagementSection = (props) => {
 
   return (
     <>
-        {newProjectForm ? (
-            <NewProjectForm
-                handleNewProjectBtn={handleNewProjectBtn}
-                handleCancelAddSaveFormBtn={handleCancelAddSaveFormBtn}
-                getAllProjects={getAllProjects}
-            />
-        ) : editProjectForm ? (
-            <EditProjectForm
-                projectId={projectId}
-                handleCancelAddSaveFormBtn={handleCancelAddSaveFormBtn}
-                getAllProjects={getAllProjects}
-            />
-        ) : (
-            <>
                 <div className="flex flex-row justify-between m-2">
 
                 <div className="flex flex-col mt-2">
@@ -75,8 +61,7 @@ const ProjectManagementSection = (props) => {
                         />
                     </div>
                 </div>
-            </>
-        )}
+
     </>
   );
 };

@@ -26,7 +26,7 @@ const EditTaskModal = (props) => {
       setTitle(response.data.title);
       setDescription(response.data.description);
       setColor(response.data.color);
-      setCardLimitDate(response.data.limitDate);
+      setCardLimitDate(response.data.limitDate); 
     } catch (err) {
       console.log(err);
     }
@@ -34,7 +34,7 @@ const EditTaskModal = (props) => {
 
   useEffect(() => {
     getTask(editTaskId);
-  }, [editTaskId]);
+  }, []);
 
   const handleSubmitEditForm = async (e) => {
     const taskBody = {
