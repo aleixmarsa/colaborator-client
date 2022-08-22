@@ -68,8 +68,6 @@ const ProjectsPage = () => {
       }
     });
 
-
-
     socket.on("getCurrentProjects", (allCurrentProjects) => {
       const allCurrentProjectsCopy = [...allCurrentProjects];
       setFilteredCurrentProjects([...allCurrentProjectsCopy]);
@@ -100,7 +98,10 @@ const ProjectsPage = () => {
       };
       debugger;
       setModalHasRender(false);
-      console.log("🚀 ~ file: ProjectsPage.js ~ line 101 ~ socket.on ~ projectId", projectId)
+      console.log(
+        "🚀 ~ file: ProjectsPage.js ~ line 101 ~ socket.on ~ projectId",
+        projectId
+      );
       socket.emit("getCurrentProjects");
       socket.emit("newActivity", activityBody);
     });
@@ -125,9 +126,7 @@ const ProjectsPage = () => {
       )}
       {!loading && editModalHasRender && (
         <EditProjectModal
-          //getAllProjects={getAllProjects}
           projectId={projectId}
-          //handleCancelAddSaveFormBtn={handleCancelAddSaveFormBtn}
           setEditModalHasRender={setEditModalHasRender}
           editModalHasRender={editModalHasRender}
         />
@@ -141,22 +140,10 @@ const ProjectsPage = () => {
 
       {
         <div className="flex-grow w-full  max-w-10xl mx-auto xl:px-6 lg:flex">
-          <div className="flex-1 min-w-0 bg-neutral-50 xl:flex">
-            <div className="border-b bg-neutral-50 border-gray-200 xl:border-b-0 xl:flex-shrink-0 xl:w-64 xl:border-r xl:border-gray-200">
-              <div className="pl-4 pr-6 py-6 sm:pl-6 lg:pl-8 xl:pl-0 mr-4">
-                <div className=" relative" style={{ minHeight: "12rem" }}>
-                  <ProjectManagementSection
-                    newProjectForm={newProjectForm}
-                    setNewProjectForm={setNewProjectForm}
-                    projectId={projectId}
-                    projectsInProgress={currentProjects}
-                    editProjectForm={editProjectForm}
-                    setEditProjectForm={setEditProjectForm}
-                    setCreateModalHasRender={setCreateModalHasRender}
-                  />
-                </div>
-              </div>
-            </div>
+          <div className="flex-1 flex-col min-w-0 bg-neutral-50 xl:flex xl:justify-between">
+            <ProjectManagementSection
+              setCreateModalHasRender={setCreateModalHasRender}
+            />
 
             <div className="bg-neutral-50 lg:min-w-0 lg:flex-1">
               <div className="h-full py-6 px-2 sm:px-6 lg:px-8">
@@ -179,13 +166,7 @@ const ProjectsPage = () => {
             </div>
           </div>
 
-          <div className="bg-neutral-50 pr-4 sm:pr-6 lg:pr-8 lg:flex-shrink-0 lg:border-l lg:border-gray-200 xl:pr-0">
-            <div className="h-full pl-6 py-6 lg:w-80">
-              <div className="h-full  relative">
-                <ProjectActivitySection currentProjects={currentProjects} />
-              </div>
-            </div>
-          </div>
+          <ProjectActivitySection currentProjects={currentProjects} />
         </div>
       }
     </div>
