@@ -40,6 +40,7 @@ const EditProjectModal = (props) => {
       console.log(err);
     }
   };
+
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
@@ -51,10 +52,6 @@ const EditProjectModal = (props) => {
   useEffect(() => {
     socket.on("errorMessage", (message) => {
       setErrorMessage(message);
-      console.log(
-        "🚀 ~ file: EditProjectModal.js ~ line 65 ~ socket.on ~ message",
-        message
-      );
     });
   }, [socket]);
 
@@ -190,7 +187,7 @@ const EditProjectModal = (props) => {
                                         Description
                                       </label>
                                       <br />
-                                      <div className="mt-1 sm:mt-0 sm:col-span-3">
+                                      <div className="realtive mt-1 sm:mt-0 sm:col-span-3">
                                         <textarea
                                           id="description"
                                           name="description"
