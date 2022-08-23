@@ -4,13 +4,11 @@ import DeleteProjectModal from "../components/modals/DeleteProjectModal";
 import ProjectManagementSection from "../components/sections/projectPage/ProjectManagementSection";
 import ProjectsListSection from "../components/sections/projectPage/ProjectsListSection";
 import ProjectActivitySection from "../components/sections/projectPage/ProjectActivitySection";
-
-import { getAllCurrentProjectsService } from "../services/project.services";
+import LoadingSpinner from "../components/spinner/LoadingSpinner";
 import { AuthContext } from "../context/auth.context";
 import { useState, useEffect, useContext } from "react";
 import { SocketContext } from "../context/socket.context";
 
-import io from "socket.io-client";
 
 import EditProjectModal from "../components/modals/EditProjectModal";
 import CreateProjectModal from "../components/modals/CreateProjectModal";
@@ -137,8 +135,8 @@ const ProjectsPage = () => {
         />
       )}
 
-      {
-        <div className="flex-grow w-full  max-w-10xl mx-auto xl:px-6 lg:flex">
+      {!loading ?
+       ( <div className="flex-grow w-full  max-w-10xl mx-auto xl:px-6 lg:flex">
           <div className="flex-1 flex-col min-w-0 bg-neutral-50 xl:flex xl:justify-between">
             <ProjectManagementSection
               setCreateModalHasRender={setCreateModalHasRender}
@@ -166,7 +164,7 @@ const ProjectsPage = () => {
           </div>
 
           <ProjectActivitySection currentProjects={currentProjects} />
-        </div>
+        </div>): (<LoadingSpinner/>)
       }
     </div>
   );

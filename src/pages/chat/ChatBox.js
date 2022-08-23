@@ -18,18 +18,6 @@ const ChatBox = (props) => {
     getAllMessages();
   }, [chatId]);
 
-  // const socketConnection = () => {
-  //   const storedToken = localStorage.getItem("authToken");
-  //   socket = io.connect(API_URL, {
-  //     extraHeaders: { Authorization: `Bearer ${storedToken}` },
-  //   });
-  //   socket.emit("join_chat", chatId);
-  //   console.log("Joinning chat: ", chatId);
-
-  //   socket.on("receive_message", (newMessage) => {
-  //     getAllMessages();
-  //   });
-  // };
 
   useEffect(() => {
     socket.on("receive_message", (newMessage) => {
