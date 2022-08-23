@@ -39,7 +39,10 @@ const ChatBox = (props) => {
         getAllMessages();
       }
     });
-  }, [socket]);
+    return () => {
+      socket.off('receive_message');
+    };
+  }, [chatId]);
 
   const getAllMessages = async () => {
     try {
