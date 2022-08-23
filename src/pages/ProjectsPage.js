@@ -96,7 +96,6 @@ const ProjectsPage = () => {
         project: projectId,
         user: user._id,
       };
-      debugger;
       setModalHasRender(false);
       console.log(
         "🚀 ~ file: ProjectsPage.js ~ line 101 ~ socket.on ~ projectId",

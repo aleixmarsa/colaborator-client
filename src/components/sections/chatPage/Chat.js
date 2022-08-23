@@ -54,10 +54,10 @@ const Chat = () => {
   const directChathandleClick = async (e, userChat) => {
 
     e.preventDefault();
-
     try {
       const response = await startDirectChatService(userChat._id);
       setShowChat(response.data._id);
+      console.log("🚀 ~ file: Chat.js ~ line 60 ~ directChathandleClick ~ response.data", showChat)
       setChatReceiver(userChat.name);
       setIsProjectChat(false);
       setChatActive(userChat._id);
@@ -75,6 +75,7 @@ const Chat = () => {
     try {
       const response = await startProjectChatService(projectChat._id);
       setShowChat(response.data._id);
+      console.log("🚀 ~ file: Chat.js ~ line 78 ~ projectChatHandleClick ~ response.data", showChat)
       setChatReceiver(projectChat.title);
       setIsProjectChat(true);
       setChatActive(projectChat._id);
@@ -88,7 +89,6 @@ const Chat = () => {
     return <h3>...Loading</h3>;
   }
 
-  console.log(showChat);
   return (
     <div className="drop-shadow-md h-5/6 w-full m-5 mt-3">
       <div className=" flex flex-col p-6 pt-4 h-full bg-white drop-shadow-2xl border border-black">
@@ -153,7 +153,7 @@ const Chat = () => {
           </div>
           <div className="col-span-3 xl:col-span-4 lg:col-span-4 flex h-full flex-col bg-white rounded  drop-shadow-lg divide-y border list-none ml-2">
               {showChat && (
-                <ChatBox chatId={showChat} chatReceiver={chatReceiver} isProjectChat={isProjectChat}/>
+                <ChatBox chatId={showChat} room={chatActive} chatReceiver={chatReceiver} isProjectChat={isProjectChat}/>
               )}
           </div>
         </div>

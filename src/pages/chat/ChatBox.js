@@ -4,41 +4,50 @@ import { getAllMessagesService } from "../../services/chat.services";
 import { AuthContext } from "../../context/auth.context";
 import { ChevronDoubleRightIcon } from "@heroicons/react/outline";
 import Avatar from "react-avatar";
-
-import io from "socket.io-client";
-
-let socket;
+import { SocketContext } from "../../context/socket.context";
 
 const ChatBox = (props) => {
-
   const [allMessages, setAllMessages] = useState([]);
   const [text, setText] = useState("");
-  const { chatId, chatReceiver, isProjectChat } = props;
+  const { chatId, room, chatReceiver, isProjectChat } = props;
+  const { socket } = useContext(SocketContext);
 
   const { user } = useContext(AuthContext);
-  const API_URL = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     getAllMessages();
-    socketConnection();
   }, [chatId]);
 
-  const socketConnection = () => {
-    const storedToken = localStorage.getItem("authToken");
-    socket = io.connect(API_URL, {
-      extraHeaders: { Authorization: `Bearer ${storedToken}` },
-    });
-    socket.emit("join_chat", chatId);
-    console.log("Joinning chat: ", chatId);
+  // const socketConnection = () => {
+  //   const storedToken = localStorage.getItem("authToken");
+  //   socket = io.connect(API_URL, {
+  //     extraHeaders: { Authorization: `Bearer ${storedToken}` },
+  //   });
+  //   socket.emit("join_chat", chatId);
+  //   console.log("Joinning chat: ", chatId);
 
+  //   socket.on("receive_message", (newMessage) => {
+  //     getAllMessages();
+  //   });
+  // };
+
+  useEffect(() => {
     socket.on("receive_message", (newMessage) => {
-      getAllMessages();
+      console.log("Message received, chat: ", chatId)
+
+      if (newMessage.chatId === chatId) {
+        getAllMessages();
+      }
     });
-  };
+  }, [socket]);
 
   const getAllMessages = async () => {
     try {
       const response = await getAllMessagesService(chatId);
+      console.log(
+        "🚀 ~ file: ChatBox.js ~ line 40 ~ getAllMessages ~ chatId",
+        chatId
+      );
       setAllMessages(response.data);
     } catch (err) {
       console.log(err);
@@ -47,7 +56,6 @@ const ChatBox = (props) => {
 
   const handleChange = (e) => {
     e.preventDefault();
-    console.log(e);
     setText(e.target.value);
   };
 
@@ -57,9 +65,9 @@ const ChatBox = (props) => {
 
   const sendMessage = (e) => {
     e.preventDefault();
-    console.log("Trying to send message: ", text);
-    const messageObj = { text, chatId };
-    socket.emit("send_message", messageObj);
+    console.log("Trying to send message: ", text, " to chat", chatId);
+    const messageObj = { text, chatId, room };
+    socket.emit("send_message", { messageObj, isProjectChat });
     setText("");
   };
 
@@ -70,12 +78,7 @@ const ChatBox = (props) => {
   return (
     <div className=" flex flex-col justify-between h-full">
       <div className="flex justify-center mt-2">
-        <Avatar
-          round
-          size="25"
-          textSizeRatio={1.9}
-          name={chatReceiver}
-        />
+        <Avatar round size="25" textSizeRatio={1.9} name={chatReceiver} />
         <h2 className="text-lg font-medium ml-3 ">{chatReceiver}</h2>
       </div>
 
@@ -91,7 +94,7 @@ const ChatBox = (props) => {
                     : "place-self-start"
                 }`}
               >
-                <p
+                <div
                   className={` py-2 px-3 rounded-2xl text-left ${
                     isMessageFromUser(message)
                       ? "bg-secundaryLowColor rounded-tr-none"
@@ -102,7 +105,7 @@ const ChatBox = (props) => {
                     <p className="text-sm font-bold">{message.sender.name}</p>
                   )}
                   {message.text}
-                </p>
+                </div>
               </div>
             );
           })}
