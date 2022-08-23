@@ -5,12 +5,14 @@ import { AuthContext } from "../../context/auth.context";
 import { ChevronDoubleRightIcon } from "@heroicons/react/outline";
 import Avatar from "react-avatar";
 import { SocketContext } from "../../context/socket.context";
+import LoadingSpinner from "../../components/spinner/LoadingSpinner";
 
 const ChatBox = (props) => {
   const [allMessages, setAllMessages] = useState([]);
   const [text, setText] = useState("");
   const { chatId, room, chatReceiver, isProjectChat } = props;
   const { socket } = useContext(SocketContext);
+  const [loading, setLoading] = useState(true);
 
   const { user } = useContext(AuthContext);
 
@@ -18,28 +20,24 @@ const ChatBox = (props) => {
     getAllMessages();
   }, [chatId]);
 
-
   useEffect(() => {
     socket.on("receive_message", (newMessage) => {
-      console.log("Message received, chat: ", chatId)
+      console.log("Message received, chat: ", chatId);
 
       if (newMessage.chatId === chatId) {
         getAllMessages();
       }
     });
     return () => {
-      socket.off('receive_message');
+      socket.off("receive_message");
     };
   }, [chatId]);
 
   const getAllMessages = async () => {
     try {
       const response = await getAllMessagesService(chatId);
-      console.log(
-        "🚀 ~ file: ChatBox.js ~ line 40 ~ getAllMessages ~ chatId",
-        chatId
-      );
       setAllMessages(response.data);
+      setLoading(false)
     } catch (err) {
       console.log(err);
     }
@@ -66,6 +64,9 @@ const ChatBox = (props) => {
     return user._id === message.sender._id;
   };
 
+  if(loading){
+    return <LoadingSpinner />
+  }
   return (
     <div className=" flex flex-col justify-between h-full">
       <div className="flex justify-center mt-2">
