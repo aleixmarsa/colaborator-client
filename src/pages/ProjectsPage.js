@@ -145,7 +145,7 @@ const ProjectsPage = () => {
             />
 
             <div className="bg-neutral-50 lg:min-w-0 lg:flex-1">
-              <div className="h-full py-6 px-2 sm:px-6 lg:px-8">
+              <div className="h-full px-2 sm:px-6 lg:px-8">
                 <div className="relative h-full">
                   <ProjectsListSection
                     title="Current Projects"
