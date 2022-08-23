@@ -4,7 +4,6 @@ import { useContext } from "react";
 import Avatar from "react-avatar";
 
 import { getAllCurrentProjectsIdService } from "../../../services/project.services";
-import { getAllActivityService } from "../../../services/activity.services";
 
 import { AuthContext } from "../../../context/auth.context";
 import { SocketContext } from "../../../context/socket.context";
@@ -20,12 +19,10 @@ const ProjectActivitySection = (props) => {
 
   useEffect(() => {
     socket.on("getActivities", (allActivities) => {
-      setActivity(allActivities);
+      const limitedActivities = allActivities.slice(0,5)
+      setActivity(limitedActivities);
     });
     socket.on("newActivityCreated", (newActivity) => {
-      console.log(
-        "🚀 ~ file: ProjectActivitySection.js ~ line 31 ~ socket.on ~ newActivityCreated"
-      );
       if (newActivity.title === "Project deleted") {
         socket.emit("leaveProjectRoom", newActivity.project);
       }
