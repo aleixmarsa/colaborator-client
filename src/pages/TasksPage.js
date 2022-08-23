@@ -16,7 +16,7 @@ import EditTaskModal from "../components/modals/EditTaskModal";
 import LateralBar from "../components/sections/LateralBar";
 import { SocketContext } from "../context/socket.context";
 import CreateTaskModal from "../components/modals/CreateTaskModal";
-
+import LoadingSpinner from "../components/spinner/LoadingSpinner";
 const API_URL = process.env.REACT_APP_API_URL;
 
 function ProjectCards(props) {
@@ -32,6 +32,8 @@ function ProjectCards(props) {
   const [editTaskId, seteditTaskId] = useState("");
   const [cards, setCards] = useState([]);
   const { socket } = useContext(SocketContext);
+  const [loading, setLoading] = useState(true);
+
   const updateTaskState = async (cardId, destination) => {
     const taskBody = {
       taskId: cardId,
@@ -43,27 +45,29 @@ function ProjectCards(props) {
   useEffect(() => {
     socket.on("getTasksByProject", (allTasks) => {
       setCards([...allTasks]);
+      setLoading(false);
     });
+
     socket.on("newTaskCreated", (task) => {
       socket.emit("getTasksByProject", projectId);
       setCreateModalHasRender(false);
     });
+
     socket.on("taskUpdated", (updatedTask) => {
-      console.log(
-        "🚀 ~ file: TasksPage.js ~ line 75 ~ socket.on ~ updatedTask",
-        updatedTask
-      );
       setEditModalHasRender(false);
       socket.emit("getTasksByProject", projectId);
     });
+
     socket.on("taskDeleted", (taskId) => {
       setDeleteModalHasRender(false);
       socket.emit("getTasksByProject", projectId);
     });
   }, [socket]);
+
   useEffect(() => {
     socket.emit("getTasksByProject", projectId);
   }, []);
+
   const reorder = (list, startIndex, endIndex) => {
     const result = [...list];
     const [removed] = result.splice(startIndex, 1);
@@ -98,250 +102,259 @@ function ProjectCards(props) {
     );
   };
   return (
-    <div className="h-screen">
-      <NavBar />
-      {deleteModalHasRender && (
-        <DeleteTaskModal
-          projectId={projectId}
-          setDeleteModalHasRender={setDeleteModalHasRender}
-          deleteModalHasRender={deleteModalHasRender}
-          deleteTaskId={deleteTaskId}
-        />
-      )}
-      {editModalHasRender && (
-        <EditTaskModal
-          projectId={projectId}
-          setEditModalHasRender={setEditModalHasRender}
-          editModalHasRender={editModalHasRender}
-          editTaskId={editTaskId}
-        />
-      )}
-      {createModalHasRender && (
-        <CreateTaskModal
-          projectId={projectId}
-          setCreateModalHasRender={setCreateModalHasRender}
-          createModalHasRender={createModalHasRender}
-        />
-      )}
-      <div className="flex flex-row h-full bg-neutral-50">
-        <LateralBar projectId={projectId} />
-        <DragDropContext onDragEnd={(result) => updateCards(result)}>
-          <div className=" container  mx-auto mt-2">
-            <div className="drop-shadow-lg grid  grid-cols-1 ml-5 mr-5 md:grid-cols-1 lg:grid-cols-3 gap-6 mt-5 mb-10 ">
-              
-                <Droppable droppableId="todo">
-                  {(droppableProvided) => (
-                    <div className="p-6 pt-2 bg-white border border-black">
-                      <div className=" border-b-2 mb-2 pb-2">
-                        <h2 className="text-xl border-color-black">TO-DO</h2>
-                      </div>
-                      <div
-                        {...droppableProvided.droppableProps}
-                        ref={droppableProvided.innerRef}
-                        className=""
-                      >
-                        <button
-                          onClick={() => setCreateModalHasRender(true)}
-                          type="button"
-                          className="inline-flex items-center p-1 border-2 border-mainColor rounded-full shadow-sm text-mainColor hover:bg-mainColor hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2"
+    <>
+      <div className="h-screen">
+        <NavBar />
+        {deleteModalHasRender && (
+          <DeleteTaskModal
+            projectId={projectId}
+            setDeleteModalHasRender={setDeleteModalHasRender}
+            deleteModalHasRender={deleteModalHasRender}
+            deleteTaskId={deleteTaskId}
+          />
+        )}
+        {editModalHasRender && (
+          <EditTaskModal
+            projectId={projectId}
+            setEditModalHasRender={setEditModalHasRender}
+            editModalHasRender={editModalHasRender}
+            editTaskId={editTaskId}
+          />
+        )}
+        {createModalHasRender && (
+          <CreateTaskModal
+            projectId={projectId}
+            setCreateModalHasRender={setCreateModalHasRender}
+            createModalHasRender={createModalHasRender}
+          />
+        )}
+        <div className="flex flex-row h-full bg-neutral-50">
+          <LateralBar projectId={projectId} />
+          {!loading ? (
+            <DragDropContext onDragEnd={(result) => updateCards(result)}>
+              <div className=" container  mx-auto mt-2">
+                <div className="drop-shadow-lg grid  grid-cols-1 ml-5 mr-5 md:grid-cols-1 lg:grid-cols-3 gap-6 mt-5 mb-10 ">
+                  <Droppable droppableId="todo">
+                    {(droppableProvided) => (
+                      <div className="p-6 pt-2 bg-white border border-black">
+                        <div className=" border-b-2 mb-2 pb-2">
+                          <h2 className="text-xl border-color-black">TO-DO</h2>
+                        </div>
+                        <div
+                          {...droppableProvided.droppableProps}
+                          ref={droppableProvided.innerRef}
+                          className=""
                         >
-                          <PlusSmIconSolid
-                            className="h-5 w-5"
-                            aria-hidden="true"
-                          />
-                        </button>
-                        {cards.map((card, index) => {
-                          if (
-                            card.state === "TODO" &&
-                            card.project === projectId
-                          ) {
-                            return (
-                              <Draggable
-                                key={card._id}
-                                draggableId={card._id}
-                                index={index}
-                              >
-                                {(draggableProvided, snapshot) => {
-                                  if (snapshot.isDragging) {
-                                    draggableProvided.draggableProps.style.left =
-                                      undefined;
-                                    draggableProvided.draggableProps.style.top =
-                                      undefined;
-                                  }
-                                  return (
-                                    <div
-                                      {...draggableProvided.draggableProps}
-                                      ref={draggableProvided.innerRef}
-                                      {...draggableProvided.dragHandleProps}
-                                      className="static"
-                                    >
-                                      <Card
-                                        title={card.title}
-                                        description={card.description}
-                                        state={card.state}
-                                        color={card.color}
-                                        cardId={card._id}
-                                        cardLimitDate={card.limitDate}
-                                        setDeleteModalHasRender={
-                                          setDeleteModalHasRender
-                                        }
-                                        setDeleteTaskId={setDeleteTaskId}
-                                        setEditModalHasRender={
-                                          setEditModalHasRender
-                                        }
-                                        setEditTaskId={seteditTaskId}
-                                        cardIndex={index}
-                                      />
-                                    </div>
-                                  );
-                                }}
-                              </Draggable>
-                            );
-                          }
-                        })}
+                          <button
+                            onClick={() => setCreateModalHasRender(true)}
+                            type="button"
+                            className="inline-flex items-center p-1 border-2 border-mainColor rounded-full shadow-sm text-mainColor hover:bg-mainColor hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2"
+                          >
+                            <PlusSmIconSolid
+                              className="h-5 w-5"
+                              aria-hidden="true"
+                            />
+                          </button>
+                          {cards.map((card, index) => {
+                            if (
+                              card.state === "TODO" &&
+                              card.project === projectId
+                            ) {
+                              return (
+                                <Draggable
+                                  key={card._id}
+                                  draggableId={card._id}
+                                  index={index}
+                                >
+                                  {(draggableProvided, snapshot) => {
+                                    if (snapshot.isDragging) {
+                                      draggableProvided.draggableProps.style.left =
+                                        undefined;
+                                      draggableProvided.draggableProps.style.top =
+                                        undefined;
+                                    }
+                                    return (
+                                      <div
+                                        {...draggableProvided.draggableProps}
+                                        ref={draggableProvided.innerRef}
+                                        {...draggableProvided.dragHandleProps}
+                                        className="static"
+                                      >
+                                        <Card
+                                          title={card.title}
+                                          description={card.description}
+                                          state={card.state}
+                                          color={card.color}
+                                          cardId={card._id}
+                                          cardLimitDate={card.limitDate}
+                                          setDeleteModalHasRender={
+                                            setDeleteModalHasRender
+                                          }
+                                          setDeleteTaskId={setDeleteTaskId}
+                                          setEditModalHasRender={
+                                            setEditModalHasRender
+                                          }
+                                          setEditTaskId={seteditTaskId}
+                                          cardIndex={index}
+                                        />
+                                      </div>
+                                    );
+                                  }}
+                                </Draggable>
+                              );
+                            }
+                          })}
+                        </div>
+                        {droppableProvided.placeholder}
                       </div>
-                      {droppableProvided.placeholder}
-                    </div>
-                  )}
-                </Droppable>
-            
-              <Droppable droppableId="progress">
-                {(droppableProvided) => (
-                  <div className="p-6 pt-2 bg-white border border-black">
-                    <div className=" border-b-2 mb-5  pb-2  ">
-                      <h2 className="text-xl  border-color-black">
-                        IN PROGRESS
-                      </h2>
-                    </div>
-                    <div
-                      {...droppableProvided.droppableProps}
-                      ref={droppableProvided.innerRef}
-                      className=""
-                    >
-                      {cards.map((card, index) => {
-                        if (
-                          card.state === "PROGRESS" &&
-                          card.project === projectId
-                        ) {
-                          return (
-                            <Draggable
-                              key={card._id}
-                              draggableId={card._id}
-                              index={index}
-                            >
-                              {(draggableProvided, snapshot) => {
-                                if (snapshot.isDragging) {
-                                  draggableProvided.draggableProps.style.left =
-                                    undefined;
-                                  draggableProvided.draggableProps.style.top =
-                                    undefined;
-                                }
-                                return (
-                                  <div
-                                    {...draggableProvided.draggableProps}
-                                    ref={draggableProvided.innerRef}
-                                    {...draggableProvided.dragHandleProps}
-                                  >
-                                    <Card
-                                      title={card.title}
-                                      description={card.description}
-                                      state={card.state}
-                                      color={card.color}
-                                      cardId={card._id}
-                                      cardLimitDate={card.limitDate}
-                                      setDeleteModalHasRender={
-                                        setDeleteModalHasRender
-                                      }
-                                      setOpenDeleteModal={setOpenDeleteModal}
-                                      setDeleteTaskId={setDeleteTaskId}
-                                      setEditModalHasRender={
-                                        setEditModalHasRender
-                                      }
-                                      setOpenEditModal={setOpenDeleteModal}
-                                      setEditTaskId={seteditTaskId}
-                                    />
-                                  </div>
-                                );
-                              }}
-                            </Draggable>
-                          );
-                        }
-                      })}
-                    </div>
-                    {droppableProvided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-              <Droppable droppableId="done">
-                {(droppableProvided) => (
-                  <div className="p-6 pt-2 bg-white border border-black">
-                    <div className=" border-b-2 mb-5  pb-2  ">
-                      <h2 className="text-xl  border-color-black">DONE</h2>
-                    </div>
-                    <div
-                      {...droppableProvided.droppableProps}
-                      ref={droppableProvided.innerRef}
-                      className=""
-                    >
-                      {cards.map((card, index) => {
-                        if (
-                          card.state === "DONE" &&
-                          card.project === projectId
-                        ) {
-                          return (
-                            <Draggable
-                              key={card._id}
-                              draggableId={card._id}
-                              index={index}
-                            >
-                              {(draggableProvided, snapshot) => {
-                                if (snapshot.isDragging) {
-                                  draggableProvided.draggableProps.style.left =
-                                    undefined;
-                                  draggableProvided.draggableProps.style.top =
-                                    undefined;
-                                }
-                                return (
-                                  <div
-                                    {...draggableProvided.draggableProps}
-                                    ref={draggableProvided.innerRef}
-                                    {...draggableProvided.dragHandleProps}
-                                  >
-                                    <Card
-                                      title={card.title}
-                                      description={card.description}
-                                      state={card.state}
-                                      color={card.color}
-                                      cardId={card._id}
-                                      cardLimitDate={card.limitDate}
-                                      setDeleteModalHasRender={
-                                        setDeleteModalHasRender
-                                      }
-                                      setOpenDeleteModal={setOpenDeleteModal}
-                                      setDeleteTaskId={setDeleteTaskId}
-                                      setEditModalHasRender={
-                                        setEditModalHasRender
-                                      }
-                                      setOpenEditModal={setOpenDeleteModal}
-                                      setEditTaskId={seteditTaskId}
-                                    />
-                                  </div>
-                                );
-                              }}
-                            </Draggable>
-                          );
-                        }
-                      })}
-                    </div>
-                    {droppableProvided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-            </div>
-          </div>
-        </DragDropContext>
+                    )}
+                  </Droppable>
+
+                  <Droppable droppableId="progress">
+                    {(droppableProvided) => (
+                      <div className="p-6 pt-2 bg-white border border-black">
+                        <div className=" border-b-2 mb-5  pb-2  ">
+                          <h2 className="text-xl  border-color-black">
+                            IN PROGRESS
+                          </h2>
+                        </div>
+                        <div
+                          {...droppableProvided.droppableProps}
+                          ref={droppableProvided.innerRef}
+                          className=""
+                        >
+                          {cards.map((card, index) => {
+                            if (
+                              card.state === "PROGRESS" &&
+                              card.project === projectId
+                            ) {
+                              return (
+                                <Draggable
+                                  key={card._id}
+                                  draggableId={card._id}
+                                  index={index}
+                                >
+                                  {(draggableProvided, snapshot) => {
+                                    if (snapshot.isDragging) {
+                                      draggableProvided.draggableProps.style.left =
+                                        undefined;
+                                      draggableProvided.draggableProps.style.top =
+                                        undefined;
+                                    }
+                                    return (
+                                      <div
+                                        {...draggableProvided.draggableProps}
+                                        ref={draggableProvided.innerRef}
+                                        {...draggableProvided.dragHandleProps}
+                                      >
+                                        <Card
+                                          title={card.title}
+                                          description={card.description}
+                                          state={card.state}
+                                          color={card.color}
+                                          cardId={card._id}
+                                          cardLimitDate={card.limitDate}
+                                          setDeleteModalHasRender={
+                                            setDeleteModalHasRender
+                                          }
+                                          setOpenDeleteModal={
+                                            setOpenDeleteModal
+                                          }
+                                          setDeleteTaskId={setDeleteTaskId}
+                                          setEditModalHasRender={
+                                            setEditModalHasRender
+                                          }
+                                          setOpenEditModal={setOpenDeleteModal}
+                                          setEditTaskId={seteditTaskId}
+                                        />
+                                      </div>
+                                    );
+                                  }}
+                                </Draggable>
+                              );
+                            }
+                          })}
+                        </div>
+                        {droppableProvided.placeholder}
+                      </div>
+                    )}
+                  </Droppable>
+                  <Droppable droppableId="done">
+                    {(droppableProvided) => (
+                      <div className="p-6 pt-2 bg-white border border-black">
+                        <div className=" border-b-2 mb-5  pb-2  ">
+                          <h2 className="text-xl  border-color-black">DONE</h2>
+                        </div>
+                        <div
+                          {...droppableProvided.droppableProps}
+                          ref={droppableProvided.innerRef}
+                          className=""
+                        >
+                          {cards.map((card, index) => {
+                            if (
+                              card.state === "DONE" &&
+                              card.project === projectId
+                            ) {
+                              return (
+                                <Draggable
+                                  key={card._id}
+                                  draggableId={card._id}
+                                  index={index}
+                                >
+                                  {(draggableProvided, snapshot) => {
+                                    if (snapshot.isDragging) {
+                                      draggableProvided.draggableProps.style.left =
+                                        undefined;
+                                      draggableProvided.draggableProps.style.top =
+                                        undefined;
+                                    }
+                                    return (
+                                      <div
+                                        {...draggableProvided.draggableProps}
+                                        ref={draggableProvided.innerRef}
+                                        {...draggableProvided.dragHandleProps}
+                                      >
+                                        <Card
+                                          title={card.title}
+                                          description={card.description}
+                                          state={card.state}
+                                          color={card.color}
+                                          cardId={card._id}
+                                          cardLimitDate={card.limitDate}
+                                          setDeleteModalHasRender={
+                                            setDeleteModalHasRender
+                                          }
+                                          setOpenDeleteModal={
+                                            setOpenDeleteModal
+                                          }
+                                          setDeleteTaskId={setDeleteTaskId}
+                                          setEditModalHasRender={
+                                            setEditModalHasRender
+                                          }
+                                          setOpenEditModal={setOpenDeleteModal}
+                                          setEditTaskId={seteditTaskId}
+                                        />
+                                      </div>
+                                    );
+                                  }}
+                                </Draggable>
+                              );
+                            }
+                          })}
+                        </div>
+                        {droppableProvided.placeholder}
+                      </div>
+                    )}
+                  </Droppable>
+                </div>
+              </div>
+            </DragDropContext>
+          ) : (
+            <LoadingSpinner />
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 export default ProjectCards;
