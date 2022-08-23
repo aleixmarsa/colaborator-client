@@ -32,7 +32,7 @@ const SelectMenu = (props) => {
     <Listbox value={team} onChange={setTeam} multiple>
       {({ open }) => (
         <div>
-          <Listbox.Label className="block text-sm  pt-2 font-medium text-gray-700">
+          <Listbox.Label className="block text-sm  py-3 font-medium text-gray-700">
             Invite team
           </Listbox.Label>
           <div className="mt-1 relative">
@@ -65,7 +65,7 @@ const SelectMenu = (props) => {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Listbox.Options className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
+              <Listbox.Options className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-36 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-y-scroll focus:outline-none sm:text-sm">
                 {users.map((person) => (
                   <Listbox.Option
                     key={person.id}
