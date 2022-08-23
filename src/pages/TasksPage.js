@@ -15,13 +15,18 @@ import DeleteTaskModal from "../components/modals/DeleteTaskModal";
 import EditTaskModal from "../components/modals/EditTaskModal";
 import LateralBar from "../components/sections/LateralBar";
 import { SocketContext } from "../context/socket.context";
+import CreateTaskModal from "../components/modals/CreateTaskModal";
+
 const API_URL = process.env.REACT_APP_API_URL;
+
 function ProjectCards(props) {
   const params = useParams();
   const projectId = params.projectId;
   const [cardForm, setCardForm] = useState(false);
   const [deleteModalHasRender, setDeleteModalHasRender] = useState(false);
   const [editModalHasRender, setEditModalHasRender] = useState(false);
+  const [createModalHasRender, setCreateModalHasRender] = useState(false);
+
   const [openDeleteModal, setOpenDeleteModal] = useState(true);
   const [deleteTaskId, setDeleteTaskId] = useState("");
   const [editTaskId, seteditTaskId] = useState("");
@@ -31,10 +36,9 @@ function ProjectCards(props) {
     const taskBody = {
       taskId: cardId,
       state: destination,
-      project: projectId
-  };
-    socket.emit("updateTaskState", taskBody)
-    
+      project: projectId,
+    };
+    socket.emit("updateTaskState", taskBody);
   };
   useEffect(() => {
     socket.on("getTasksByProject", (allTasks) => {
@@ -42,18 +46,20 @@ function ProjectCards(props) {
     });
     socket.on("newTaskCreated", (task) => {
       socket.emit("getTasksByProject", projectId);
-      setCardForm(false);
+      setCreateModalHasRender(false);
     });
     socket.on("taskUpdated", (updatedTask) => {
-      console.log("🚀 ~ file: TasksPage.js ~ line 75 ~ socket.on ~ updatedTask", updatedTask)
-      setEditModalHasRender(false)
+      console.log(
+        "🚀 ~ file: TasksPage.js ~ line 75 ~ socket.on ~ updatedTask",
+        updatedTask
+      );
+      setEditModalHasRender(false);
       socket.emit("getTasksByProject", projectId);
     });
-    socket.on("taskDeleted", (taskId)=>{
+    socket.on("taskDeleted", (taskId) => {
       setDeleteModalHasRender(false);
       socket.emit("getTasksByProject", projectId);
-      
-  })
+    });
   }, [socket]);
   useEffect(() => {
     socket.emit("getTasksByProject", projectId);
@@ -110,12 +116,19 @@ function ProjectCards(props) {
           editTaskId={editTaskId}
         />
       )}
+      {createModalHasRender && (
+        <CreateTaskModal
+          projectId={projectId}
+          setCreateModalHasRender={setCreateModalHasRender}
+          createModalHasRender={createModalHasRender}
+        />
+      )}
       <div className="flex flex-row h-full bg-neutral-50">
         <LateralBar projectId={projectId} />
         <DragDropContext onDragEnd={(result) => updateCards(result)}>
           <div className=" container  mx-auto mt-2">
             <div className="drop-shadow-lg grid  grid-cols-1 ml-5 mr-5 md:grid-cols-1 lg:grid-cols-3 gap-6 mt-5 mb-10 ">
-              {!cardForm ? (
+              
                 <Droppable droppableId="todo">
                   {(droppableProvided) => (
                     <div className="p-6 pt-2 bg-white border border-black">
@@ -128,7 +141,7 @@ function ProjectCards(props) {
                         className=""
                       >
                         <button
-                          onClick={() => setCardForm(true)}
+                          onClick={() => setCreateModalHasRender(true)}
                           type="button"
                           className="inline-flex items-center p-1 border-2 border-mainColor rounded-full shadow-sm text-mainColor hover:bg-mainColor hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2"
                         >
@@ -191,14 +204,7 @@ function ProjectCards(props) {
                     </div>
                   )}
                 </Droppable>
-              ) : (
-                <CardForm
-                  setCardForm={setCardForm}
-                  setCards={setCards}
-                  cards={cards}
-                  projectId={projectId}
-                />
-              )}
+            
               <Droppable droppableId="progress">
                 {(droppableProvided) => (
                   <div className="p-6 pt-2 bg-white border border-black">
