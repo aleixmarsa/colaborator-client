@@ -5,7 +5,7 @@ import {
 } from "../../../services/chat.services";
 import { getAllCurrentProjectsService } from "../../../services/project.services";
 import { getAllUsersService } from "../../../services/user.services";
-
+import LoadingSpinner from "../../spinner/LoadingSpinner";
 import Avatar from "react-avatar";
 import { AuthContext } from "../../../context/auth.context";
 import { useContext } from "react";
@@ -86,7 +86,7 @@ const Chat = () => {
   };
 
   if (!users) {
-    return <h3>...Loading</h3>;
+    return <LoadingSpinner />;
   }
 
   return (
