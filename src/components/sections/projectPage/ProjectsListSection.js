@@ -10,10 +10,8 @@ const ProjectsListSection = (props) => {
     filteredProjects,
     setFilteredProjects,
     classNames,
-    editProjectForm,
-    setEditProjectForm,
     setProjectId,
-    setModalHasRender,
+    setDeleteModalHasRender,
     setProjectTitle,
     setEditModalHasRender
   } = props;
@@ -37,10 +35,8 @@ const ProjectsListSection = (props) => {
             <Link key={project._id} to={`/project/${project._id}`}>
               <Project
                 project={project}
-                editProjectForm={editProjectForm}
-                setEditProjectForm={setEditProjectForm}
                 setProjectId={setProjectId}
-                setModalHasRender={setModalHasRender}
+                setDeleteModalHasRender={setDeleteModalHasRender}
                 setProjectTitle={setProjectTitle}
                 setEditModalHasRender={setEditModalHasRender}
               />

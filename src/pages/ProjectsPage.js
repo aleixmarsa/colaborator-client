@@ -19,12 +19,12 @@ const classNames = (...classes) => {
 const ProjectsPage = () => {
   const [projectId, setProjectId] = useState(0);
   const [projectTitle, setProjectTitle] = useState("");
-  const [editProjectForm, setEditProjectForm] = useState(false);
   const [currentProjects, setCurrentProjects] = useState([]);
   const [filteredCurrentProjects, setFilteredCurrentProjects] = useState([]);
   const [hasNewMessage, setHasNewMessage] = useState(false);
-  const [modalHasRender, setModalHasRender] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const [deleteModalHasRender, setDeleteModalHasRender] = useState(false);
   const [editModalHasRender, setEditModalHasRender] = useState(false);
   const [createModalHasRender, setCreateModalHasRender] = useState(false);
 
@@ -49,7 +49,6 @@ const ProjectsPage = () => {
       project: project._id,
       user: user._id,
     };
-    setEditProjectForm(false);
     setCreateModalHasRender(false);
     socket.emit("getCurrentProjects");
     socket.emit("joinProjectRoom", project._id.toString());
@@ -67,7 +66,6 @@ const ProjectsPage = () => {
 
   const projectUpdatedListener = (updatedProject) => {
     const projectRoom = updatedProject._id.toString();
-    setEditProjectForm(false);
     setEditModalHasRender(false);
     socket.emit("getCurrentProjects");
     socket.emit("leaveProjectRoom", projectRoom);
@@ -85,7 +83,7 @@ const ProjectsPage = () => {
       project: projectId,
       user: user._id,
     };
-    setModalHasRender(false);
+    setDeleteModalHasRender(false);
     console.log(
       "🚀 ~ file: ProjectsPage.js ~ line 101 ~ socket.on ~ projectId",
       projectId
@@ -123,12 +121,12 @@ const ProjectsPage = () => {
     <div className="bg-neutral-50 h-screen">
       <NavBar hasNewMessage={hasNewMessage} filterProjects={filterProjects} />
 
-      {!loading && modalHasRender && (
+      {!loading && deleteModalHasRender && (
         <DeleteProjectModal
           projectId={projectId}
           projectTitle={projectTitle}
-          setModalHasRender={setModalHasRender}
-          modalHasRender={modalHasRender}
+          setDeleteModalHasRender={setDeleteModalHasRender}
+          deleteModalHasRender={deleteModalHasRender}
         />
       )}
       {!loading && editModalHasRender && (
@@ -160,10 +158,8 @@ const ProjectsPage = () => {
                     filteredProjects={filteredCurrentProjects}
                     setFilteredProjects={setFilteredCurrentProjects}
                     classNames={classNames}
-                    editProjectForm={editProjectForm}
-                    setEditProjectForm={setEditProjectForm}
                     setProjectId={setProjectId}
-                    setModalHasRender={setModalHasRender}
+                    setDeleteModalHasRender={setDeleteModalHasRender}
                     setProjectTitle={setProjectTitle}
                     setEditModalHasRender={setEditModalHasRender}
                   />

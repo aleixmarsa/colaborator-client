@@ -279,7 +279,7 @@ const EditTaskModal = (props) => {
                                 <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                                   <Button
                                     type="submit"
-                                    text="Create"
+                                    text="Save"
                                     color="mainColor"
                                   />
                                   <Button

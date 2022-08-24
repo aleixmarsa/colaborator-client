@@ -6,9 +6,8 @@ function Project(props) {
 
     const {
         project,
-        setEditProjectForm,
         setProjectId,
-        setModalHasRender,
+        setDeleteModalHasRender,
         setProjectTitle,
         setEditModalHasRender
     } = props;
@@ -17,14 +16,13 @@ function Project(props) {
         setProjectId(project._id);
         e.preventDefault()
         setEditModalHasRender(true)
-        setModalHasRender(false)
+        setDeleteModalHasRender(false)
         
     }
 
     const handleDeleteProjectBtn = (e, title, id) => {
         e.preventDefault();
-        setModalHasRender(true);
-        setEditProjectForm(false);
+        setDeleteModalHasRender(true);
         setProjectId(id);
         setProjectTitle(title);
     };
