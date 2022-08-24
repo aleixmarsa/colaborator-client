@@ -16,20 +16,21 @@ const ChatBox = (props) => {
 
   const { user } = useContext(AuthContext);
 
+  const receiveMessageListener = (newMessage) => {
+    console.log("Message received, chat: ", chatId);
+    if (newMessage.chatId === chatId) {
+      getAllMessages();
+    }
+  };
+
   useEffect(() => {
     getAllMessages();
   }, [chatId]);
 
   useEffect(() => {
-    socket.on("receive_message", (newMessage) => {
-      console.log("Message received, chat: ", chatId);
-
-      if (newMessage.chatId === chatId) {
-        getAllMessages();
-      }
-    });
+    socket.on("receive_message", receiveMessageListener);
     return () => {
-      socket.off("receive_message");
+      socket.off("receive_message", receiveMessageListener);
     };
   }, [chatId]);
 
@@ -37,7 +38,7 @@ const ChatBox = (props) => {
     try {
       const response = await getAllMessagesService(chatId);
       setAllMessages(response.data);
-      setLoading(false)
+      setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -64,8 +65,8 @@ const ChatBox = (props) => {
     return user._id === message.sender._id;
   };
 
-  if(loading){
-    return <LoadingSpinner />
+  if (loading) {
+    return <LoadingSpinner />;
   }
   return (
     <div className=" flex flex-col justify-between h-full">

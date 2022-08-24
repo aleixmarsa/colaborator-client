@@ -17,18 +17,26 @@ const ProjectActivitySection = (props) => {
     getActivity();
   }, []);
 
-  useEffect(() => {
-    socket.on("getActivities", (allActivities) => {
-      const limitedActivities = allActivities.slice(0,5)
-      setActivity(limitedActivities);
-    });
-    socket.on("newActivityCreated", (newActivity) => {
-      if (newActivity.title === "Project deleted") {
-        socket.emit("leaveProjectRoom", newActivity.project);
-      }
+  const getActivitiesListener = (allActivities) => {
+    const limitedActivities = allActivities.slice(0, 5);
+    setActivity(limitedActivities);
+  };
 
-      getActivity();
-    });
+  const newActivityListener = (newActivity) => {
+    if (newActivity.title === "Project deleted") {
+      socket.emit("leaveProjectRoom", newActivity.project);
+    }
+
+    getActivity();
+  };
+
+  useEffect(() => {
+    socket.on("getActivities", getActivitiesListener);
+    socket.on("newActivityCreated", newActivityListener);
+    return () => {
+      socket.off("getActivities", getActivitiesListener);
+      socket.off("newActivityCreated", newActivityListener);
+    };
   }, [socket]);
 
   const getActivity = async () => {

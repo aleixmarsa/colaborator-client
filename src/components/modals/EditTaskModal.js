@@ -39,14 +39,19 @@ const EditTaskModal = (props) => {
     return classes.filter(Boolean).join(" ");
   }
 
+  const setErrorMessageListener = (message) => {
+    setErrorMessage(message);
+  };
+
   useEffect(() => {
     getTask(editTaskId);
   }, []);
 
   useEffect(() => {
-    socket.on("errorMessage", (message) => {
-      setErrorMessage(message);
-    });
+    socket.on("errorMessage", setErrorMessageListener);
+    return () => {
+      socket.off("errorMessage", setErrorMessageListener);
+    };
   }, [socket]);
 
   // const handleSubmitEditForm = async (e) => {

@@ -9,7 +9,6 @@ import { AuthContext } from "../context/auth.context";
 import { useState, useEffect, useContext } from "react";
 import { SocketContext } from "../context/socket.context";
 
-
 import EditProjectModal from "../components/modals/EditProjectModal";
 import CreateProjectModal from "../components/modals/CreateProjectModal";
 
@@ -20,7 +19,6 @@ const classNames = (...classes) => {
 const ProjectsPage = () => {
   const [projectId, setProjectId] = useState(0);
   const [projectTitle, setProjectTitle] = useState("");
-  const [newProjectForm, setNewProjectForm] = useState(false);
   const [editProjectForm, setEditProjectForm] = useState(false);
   const [currentProjects, setCurrentProjects] = useState([]);
   const [filteredCurrentProjects, setFilteredCurrentProjects] = useState([]);
@@ -45,63 +43,75 @@ const ProjectsPage = () => {
       : setFilteredCurrentProjects(currentProjects);
   };
 
-  useEffect(() => {
-    socket.on("receive_alert_message", (e) => {
-      setHasNewMessage(true);
-    });
+  const newProjectListener = (project) => {
+    const activityBody = {
+      title: "Project created",
+      project: project._id,
+      user: user._id,
+    };
+    setEditProjectForm(false);
+    setCreateModalHasRender(false);
+    socket.emit("getCurrentProjects");
+    socket.emit("joinProjectRoom", project._id.toString());
+    if (project.admin === user._id) {
+      socket.emit("newActivity", activityBody);
+    }
+  };
 
-    socket.on("newProjectCreated", (project) => {
-      const activityBody = {
-        title: "Project created",
-        project: project._id,
-        user: user._id,
-      };
-      setEditProjectForm(false);
-      setNewProjectForm(false);
-      setCreateModalHasRender(false);
-      socket.emit("getCurrentProjects");
-      socket.emit("joinProjectRoom", project._id.toString());
-      if (project.admin === user._id) {
-        socket.emit("newActivity", activityBody);
+  const getProjectsListener = (allCurrentProjects) => {
+    const allCurrentProjectsCopy = [...allCurrentProjects];
+    setFilteredCurrentProjects([...allCurrentProjectsCopy]);
+    setCurrentProjects([...allCurrentProjectsCopy]);
+    setLoading(false);
+  };
+
+  const projectUpdatedListener = (updatedProject) => {
+    const projectRoom = updatedProject._id.toString();
+    setEditProjectForm(false);
+    setEditModalHasRender(false);
+    socket.emit("getCurrentProjects");
+    socket.emit("leaveProjectRoom", projectRoom);
+    updatedProject.team.forEach((member) => {
+      if (member._id === user._id) {
+        console.log("USER: ", member.name, "IS A MEMBER");
+        socket.emit("joinProjectRoom", projectRoom);
       }
     });
+  };
 
-    socket.on("getCurrentProjects", (allCurrentProjects) => {
-      const allCurrentProjectsCopy = [...allCurrentProjects];
-      setFilteredCurrentProjects([...allCurrentProjectsCopy]);
-      setCurrentProjects([...allCurrentProjectsCopy]);
-      setLoading(false);
-    });
+  const projectDeletedListener = (projecId) => {
+    const activityBody = {
+      title: "Project deleted",
+      project: projectId,
+      user: user._id,
+    };
+    setModalHasRender(false);
+    console.log(
+      "🚀 ~ file: ProjectsPage.js ~ line 101 ~ socket.on ~ projectId",
+      projectId
+    );
+    socket.emit("getCurrentProjects");
+    socket.emit("newActivity", activityBody);
+  };
 
-    socket.on("projectUpdated", (updatedProject) => {
-      const projectRoom = updatedProject._id.toString();
-      setEditProjectForm(false);
-      setNewProjectForm(false);
-      setEditModalHasRender(false);
-      socket.emit("getCurrentProjects");
-      socket.emit("leaveProjectRoom", projectRoom);
-      updatedProject.team.forEach((member) => {
-        if (member._id === user._id) {
-          console.log("USER: ", member.name, "IS A MEMBER");
-          socket.emit("joinProjectRoom", projectRoom);
-        }
-      });
-    });
+  const receiveAlertListener = () => {
+    setHasNewMessage(true);
+  };
 
-    socket.on("projectDeleted", (projectId) => {
-      const activityBody = {
-        title: "Project deleted",
-        project: projectId,
-        user: user._id,
-      };
-      setModalHasRender(false);
-      console.log(
-        "🚀 ~ file: ProjectsPage.js ~ line 101 ~ socket.on ~ projectId",
-        projectId
-      );
-      socket.emit("getCurrentProjects");
-      socket.emit("newActivity", activityBody);
-    });
+  useEffect(() => {
+    socket.on("receive_alert_message", receiveAlertListener);
+    socket.on("newProjectCreated", newProjectListener);
+    socket.on("getCurrentProjects", getProjectsListener);
+    socket.on("projectUpdated", projectUpdatedListener);
+    socket.on("projectDeleted", projectDeletedListener);
+
+    return () => {
+      socket.off("receive_alert_message", receiveAlertListener);
+      socket.off("newProjectCreated", newProjectListener);
+      socket.off("getCurrentProjects", getProjectsListener);
+      socket.off("projectUpdated", projectUpdatedListener);
+      socket.off("projectDeleted", projectDeletedListener);
+    };
   }, [socket]);
 
   useEffect(() => {
@@ -135,8 +145,8 @@ const ProjectsPage = () => {
         />
       )}
 
-      {!loading ?
-       ( <div className="flex-grow w-full  max-w-10xl mx-auto xl:px-6 lg:flex">
+      {!loading ? (
+        <div className="flex-grow w-full  max-w-10xl mx-auto xl:px-6 lg:flex">
           <div className="flex-1 flex-col min-w-0 bg-neutral-50 xl:flex xl:justify-between">
             <ProjectManagementSection
               setCreateModalHasRender={setCreateModalHasRender}
@@ -152,7 +162,6 @@ const ProjectsPage = () => {
                     classNames={classNames}
                     editProjectForm={editProjectForm}
                     setEditProjectForm={setEditProjectForm}
-                    setNewProjectForm={setNewProjectForm}
                     setProjectId={setProjectId}
                     setModalHasRender={setModalHasRender}
                     setProjectTitle={setProjectTitle}
@@ -164,8 +173,10 @@ const ProjectsPage = () => {
           </div>
 
           <ProjectActivitySection currentProjects={currentProjects} />
-        </div>): (<LoadingSpinner/>)
-      }
+        </div>
+      ) : (
+        <LoadingSpinner />
+      )}
     </div>
   );
 };

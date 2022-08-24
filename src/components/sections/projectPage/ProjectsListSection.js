@@ -12,7 +12,6 @@ const ProjectsListSection = (props) => {
     classNames,
     editProjectForm,
     setEditProjectForm,
-    setNewProjectForm,
     setProjectId,
     setModalHasRender,
     setProjectTitle,
@@ -40,7 +39,6 @@ const ProjectsListSection = (props) => {
                 project={project}
                 editProjectForm={editProjectForm}
                 setEditProjectForm={setEditProjectForm}
-                setNewProjectForm={setNewProjectForm}
                 setProjectId={setProjectId}
                 setModalHasRender={setModalHasRender}
                 setProjectTitle={setProjectTitle}

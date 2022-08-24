@@ -7,7 +7,6 @@ function Project(props) {
     const {
         project,
         setEditProjectForm,
-        setNewProjectForm,
         setProjectId,
         setModalHasRender,
         setProjectTitle,
@@ -26,7 +25,6 @@ function Project(props) {
         e.preventDefault();
         setModalHasRender(true);
         setEditProjectForm(false);
-        setNewProjectForm(false);
         setProjectId(id);
         setProjectTitle(title);
     };

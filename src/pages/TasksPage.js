@@ -42,26 +42,38 @@ function ProjectCards(props) {
     };
     socket.emit("updateTaskState", taskBody);
   };
+
+  const getTasksByProjectListener = (allTasks) => {
+    setCards([...allTasks]);
+    setLoading(false);
+  };
+
+  const newTaskListener = (task) => {
+    socket.emit("getTasksByProject", projectId);
+    setCreateModalHasRender(false);
+  };
+
+  const taskUpdatedListener = (updatedTask) => {
+    setEditModalHasRender(false);
+    socket.emit("getTasksByProject", projectId);
+  };
+
+  const taskDeletedListener = (taskId) => {
+    setDeleteModalHasRender(false);
+    socket.emit("getTasksByProject", projectId);
+  };
+
   useEffect(() => {
-    socket.on("getTasksByProject", (allTasks) => {
-      setCards([...allTasks]);
-      setLoading(false);
-    });
-
-    socket.on("newTaskCreated", (task) => {
-      socket.emit("getTasksByProject", projectId);
-      setCreateModalHasRender(false);
-    });
-
-    socket.on("taskUpdated", (updatedTask) => {
-      setEditModalHasRender(false);
-      socket.emit("getTasksByProject", projectId);
-    });
-
-    socket.on("taskDeleted", (taskId) => {
-      setDeleteModalHasRender(false);
-      socket.emit("getTasksByProject", projectId);
-    });
+    socket.on("getTasksByProject", getTasksByProjectListener);
+    socket.on("newTaskCreated", newTaskListener);
+    socket.on("taskUpdated", taskUpdatedListener);
+    socket.on("taskDeleted", taskDeletedListener);
+    return () => {
+      socket.off("getTasksByProject", getTasksByProjectListener);
+      socket.off("newTaskCreated", newTaskListener);
+      socket.off("taskUpdated", taskUpdatedListener);
+      socket.off("taskDeleted", taskDeletedListener);
+    };
   }, [socket]);
 
   useEffect(() => {
