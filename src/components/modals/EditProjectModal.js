@@ -45,14 +45,20 @@ const EditProjectModal = (props) => {
     return classes.filter(Boolean).join(" ");
   }
 
+  
+  const setErrorMessageListener = (message) => {
+    setErrorMessage(message);
+  };
+
   useEffect(() => {
     getProject(projectId);
   }, []);
 
   useEffect(() => {
-    socket.on("errorMessage", (message) => {
-      setErrorMessage(message);
-    });
+    socket.on("errorMessage", setErrorMessageListener);
+    return () => {
+      socket.off("errorMessage", setErrorMessageListener);
+    };
   }, [socket]);
 
   return (

@@ -24,10 +24,16 @@ const CreateProjectModal = (props) => {
     return classes.filter(Boolean).join(" ");
   }
 
+  const setErrorMessageListener = (message) => {
+    setErrorMessage(message);
+  };
+
   useEffect(() => {
-    socket.on("errorMessage", (message) => {
-      setErrorMessage(message);
-    });
+    socket.on("errorMessage", setErrorMessageListener);
+
+    return () => {
+      socket.off("errorMessage", setErrorMessageListener);
+    };
   }, [socket]);
 
   return (
