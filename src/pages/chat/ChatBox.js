@@ -81,7 +81,7 @@ const ChatBox = (props) => {
             return (
               <div
                 key={message._id}
-                className={`mx-5 ${
+                className={`mx-3 ${
                   isMessageFromUser(message)
                     ? "place-self-end"
                     : "place-self-start"
