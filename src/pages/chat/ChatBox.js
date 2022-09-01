@@ -2,18 +2,21 @@ import { useEffect, useState, useContext } from "react";
 
 import { getAllMessagesService } from "../../services/chat.services";
 import { AuthContext } from "../../context/auth.context";
-import { ChevronDoubleRightIcon } from "@heroicons/react/outline";
+import {
+  ChevronDoubleRightIcon,
+  ArrowSmLeftIcon,
+} from "@heroicons/react/outline";
 import Avatar from "react-avatar";
 import { SocketContext } from "../../context/socket.context";
 import LoadingSpinner from "../../components/spinner/LoadingSpinner";
 
+
 const ChatBox = (props) => {
   const [allMessages, setAllMessages] = useState([]);
   const [text, setText] = useState("");
-  const { chatId, room, chatReceiver, isProjectChat } = props;
+  const { chatId, room, chatReceiver, isProjectChat, setShowChat } = props;
   const { socket } = useContext(SocketContext);
   const [loading, setLoading] = useState(true);
-
   const { user } = useContext(AuthContext);
 
   const receiveMessageListener = (newMessage) => {
@@ -69,12 +72,13 @@ const ChatBox = (props) => {
     return <LoadingSpinner />;
   }
   return (
-    <div className=" flex flex-col justify-between h-full">
+    <div className=" relative flex flex-col justify-between h-full">
       <div className="flex justify-center mt-2">
         <Avatar round size="25" textSizeRatio={1.9} name={chatReceiver} />
         <h2 className="text-lg font-medium ml-3 ">{chatReceiver}</h2>
       </div>
-
+        
+      <ArrowSmLeftIcon className=" absolute h-8 top-1 left-2 pr-3 cursor-pointer text-mainColor" onClick={() => setShowChat("")}/>
       <div className=" flex flex-col-reverse justify-between h-full overflow-auto">
         <div className=" space-y-10 grid grid-cols-1   ">
           {allMessages.map((message) => {
