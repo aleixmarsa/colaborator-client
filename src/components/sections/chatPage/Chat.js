@@ -84,7 +84,7 @@ const Chat = () => {
   }
 
   return (
-    <div className="drop-shadow-md h-5/6 w-full m-4 mt-3">
+    <div className="drop-shadow-md w-full m-3" >
       <div className=" flex flex-col p-6 pt-4 h-full bg-white drop-shadow-2xl border border-black">
         <div className="grid grid-cols-5 grid-rows-1 h-full">
           <div className={classNames(showChat ? "hidden  xl:block lg:block":"", "h-full col-span-5 xl:col-span-1 lg:col-span-1 mr-2")}>

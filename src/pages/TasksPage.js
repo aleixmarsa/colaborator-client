@@ -140,7 +140,7 @@ function ProjectCards(props) {
             createModalHasRender={createModalHasRender}
           />
         )}
-        <div className="flex flex-row h-full bg-neutral-50">
+        <div className="flex flex-row h-[calc(100vh-64px)] bg-neutral-50">
           <LateralBar projectId={projectId} />
           {!loading ? (
             <DragDropContext onDragEnd={(result) => updateCards(result)}>
