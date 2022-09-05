@@ -76,7 +76,7 @@ const SelectMenu = (props) => {
                     className={({ active }) =>
                       classNames(
                         active
-                          ? "text-white bg-secundaryColor"
+                          ? "text-white bg-secondaryColor"
                           : "text-gray-900",
                         "cursor-default select-none relative py-2 pl-3 pr-9"
                       )

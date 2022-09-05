@@ -72,13 +72,13 @@ const ChatBox = (props) => {
     return <LoadingSpinner />;
   }
   return (
-    <div className=" relative flex flex-col justify-between h-full">
-      <div className="flex justify-center mt-2">
-        <Avatar round size="25" textSizeRatio={1.9} name={chatReceiver} />
-        <h2 className="text-lg font-medium ml-3 ">{chatReceiver}</h2>
+    <div className=" relative flex flex-col justify-between h-full bg-secondaryLowColor">
+      <div className="flex justify-center py-1 bg-mainColor">
+        <Avatar round size="25" textSizeRatio={1.9} name={chatReceiver} className="border-solid"/>
+        <h2 className="text-lg font-small ml-3 text-white">{chatReceiver}</h2>
       </div>
         
-      <ArrowSmLeftIcon className=" absolute h-8 top-1 left-2 pr-3 cursor-pointer text-mainColor" onClick={() => setShowChat("")}/>
+      <ArrowSmLeftIcon className=" absolute h-8 top-0.5 left-2 pr-3 cursor-pointer  text-white" onClick={() => setShowChat("")}/>
       <div className=" flex flex-col-reverse justify-between h-full overflow-auto">
         <div className=" space-y-10 grid grid-cols-1   ">
           {allMessages.map((message) => {
@@ -94,8 +94,8 @@ const ChatBox = (props) => {
                 <div
                   className={` py-2 px-3 rounded-2xl text-left ${
                     isMessageFromUser(message)
-                      ? "bg-secundaryLowColor rounded-tr-none"
-                      : "bg-gray-200 rounded-tl-none"
+                      ? "bg-mainColor text-white rounded-tr-none"
+                      : "bg-white rounded-tl-none"
                   }`}
                 >
                   {!isMessageFromUser(message) && isProjectChat && (
@@ -108,9 +108,9 @@ const ChatBox = (props) => {
           })}
         </div>
       </div>
-      <div className="my-2 flex mx-2 border border-gray-200 h-10 items-center">
+      <div className="my-2 flex mx-2 border rounded-xl bg-white h-10 items-center ">
         <input
-          className="mx-1 w-full focus:outline-none"
+          className="mx-2 w-full focus:outline-none"
           type="text"
           placeholder=" Type a message..."
           name="text"

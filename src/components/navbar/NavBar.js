@@ -53,7 +53,7 @@ const NavBar = (props) => {
                 <></>
               )}
               <div className="flex lg:hidden">
-                <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-buttonHover hover:text-white hover:secundaryButton focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-secundaryColor focus:ring-white">
+                <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-buttonHover hover:text-white hover:secondaryButton focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-secondaryColor focus:ring-white">
                   <span className="sr-only">Open main menu</span>
                   {open ? (
                     <XIcon className="block h-6 w-6" aria-hidden="true" />
@@ -103,7 +103,7 @@ const NavBar = (props) => {
                     </div>
                     <Menu as="div" className="ml-4 relative flex-shrink-0 z-10">
                       <div>
-                        <Menu.Button className="bg-mainColor flex text-sm rounded-full text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-mainColor focus:ring-secundaryColor">
+                        <Menu.Button className="bg-mainColor flex text-sm rounded-full text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-mainColor focus:ring-secondaryColor">
                           <span className="sr-only">Open user menu</span>
                           <Avatar
                             round
@@ -191,7 +191,7 @@ const NavBar = (props) => {
                   className={classNames(
                     location.pathname === "/projects"
                       ? "text-buttonOrange bg-mainColor hover:text-buttonOrange"
-                      : "text-white hover:text-white hover:bg-secundaryColor",
+                      : "text-white hover:text-white hover:bg-secondaryColor",
                     "block px-3 py-2 rounded-md text-base font-medium"
                   )}
                 >
@@ -202,8 +202,8 @@ const NavBar = (props) => {
                   href="/chat"
                   className={classNames(
                     location.pathname === "/global-calendar"
-                      ? "text-buttonOrange bg-secundaryColor"
-                      : "text-white hover:bg-secundaryColor",
+                      ? "text-buttonOrange bg-secondaryColor"
+                      : "text-white hover:bg-secondaryColor",
                     "block px-3 py-2 rounded-md text-base font-medium"
                   )}
                 >
@@ -217,7 +217,7 @@ const NavBar = (props) => {
                       key={item.name}
                       as="a"
                       onClick={item.action}
-                      className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-secundaryColor"
+                      className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-secondaryColor"
                     >
                       {item.name}
                     </Disclosure.Button>
@@ -234,7 +234,7 @@ const NavBar = (props) => {
                   className={classNames(
                     location.pathname === "/"
                       ? "text-buttonOrange bg-mainColor hover:text-buttonOrange"
-                      : "text-white hover:text-white hover:bg-secundaryColor",
+                      : "text-white hover:text-white hover:bg-secondaryColor",
                     "block px-3 py-2 rounded-md text-base font-medium"
                   )}
                 >
@@ -247,7 +247,7 @@ const NavBar = (props) => {
                   className={classNames(
                     location.pathname === "/login"
                       ? "text-buttonOrange bg-mainColor hover:text-buttonOrange"
-                      : "text-white hover:text-white hover:bg-secundaryColor",
+                      : "text-white hover:text-white hover:bg-secondaryColor",
                     "block px-3 py-2 rounded-md text-base font-medium"
                   )}
                 >
@@ -260,7 +260,7 @@ const NavBar = (props) => {
                   className={classNames(
                     location.pathname === "/signup"
                       ? "text-buttonOrange bg-mainColor hover:text-buttonOrange"
-                      : "text-white hover:text-white hover:bg-secundaryColor",
+                      : "text-white hover:text-white hover:bg-secondaryColor",
                     "block px-3 py-2 rounded-md text-base font-medium"
                   )}
                 >
