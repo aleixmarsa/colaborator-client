@@ -84,10 +84,15 @@ const Chat = () => {
   }
 
   return (
-    <div className="drop-shadow-md w-full m-3" >
-      <div className=" flex flex-col p-6 pt-4 h-full bg-white drop-shadow-2xl border border-black">
-        <div className="grid grid-cols-5 grid-rows-1 h-full">
-          <div className={classNames(showChat ? "hidden  xl:block lg:block":"", "h-full col-span-5 xl:col-span-1 lg:col-span-1 mr-2")}>
+    <div className="drop-shadow-md w-full m-3">
+      <div className=" flex flex-col xl:p-3 lg:p-3 h-full bg-white drop-shadow-2xl border">
+        <div className="relative grid grid-cols-5 grid-rows-1 h-full">
+          <div
+            className={classNames(
+              showChat ? "hidden  xl:block lg:block" : "",
+              "h-full col-span-5 xl:col-span-1 lg:col-span-1 mr-2"
+            )}
+          >
             <h2 className=" flex justify-center text-2xl flex-1 border-b-2 pb-2">
               CHATS
             </h2>
@@ -101,8 +106,8 @@ const Chat = () => {
                     className={classNames(
                       chatActive === project._id
                         ? "outline outline-buttonHover"
-                        : "",
-                      "flex justify-start gap-2 bg-white mt-3 mr-3 cursor-pointer w-full p-2 border-mainColor drop-shadow-lg text-mainColor"
+                        : "border",
+                      "flex justify-start gap-2 bg-white mt-3 mr-3 cursor-pointer w-full p-2  drop-shadow-lg text-mainColor"
                     )}
                     onClick={(e) => projectChatHandleClick(e, project)}
                   >
@@ -128,7 +133,7 @@ const Chat = () => {
                       className={classNames(
                         chatActive === chatUser._id
                           ? "outline outline-buttonHover"
-                          : "",
+                          : "border",
                         "flex justify-start gap-2 hover:bg-gray-300 bg-white mt-3 mr-3 cursor-pointer w-full p-2 border-mainColor drop-shadow-lg text-mainColor"
                       )}
                       onClick={(e) => directChathandleClick(e, chatUser)}
@@ -147,11 +152,11 @@ const Chat = () => {
               })}
             </div>
           </div>
-          {showChat && (
+          {showChat ? (
             <div
               className={classNames(
                 showChat ? "flex col-span-5" : "",
-                "xl:col-span-4 lg:col-span-4  h-full flex-col bg-white rounded  drop-shadow-lg divide-y border list-none ml-2"
+                "xl:col-span-4 lg:col-span-4 h-full flex-col bg-white rounded  drop-shadow-lg divide-y border list-none"
               )}
             >
               <ChatBox
@@ -162,6 +167,14 @@ const Chat = () => {
                 setShowChat={setShowChat}
               />
             </div>
+          ) : (
+            <img
+              src="/images/chat_image.png"
+              alt=""
+              width="400"
+              heigth="150"
+              className="hidden lg:block xl:block absolute top-1/2 left-1/2 transform -translate-y-1/2"
+            ></img>
           )}
         </div>
       </div>

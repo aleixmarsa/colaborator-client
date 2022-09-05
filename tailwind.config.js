@@ -15,10 +15,10 @@ module.exports = {
         buttonHover: {
           DEFAULT: "#f89235",
         },
-        secundaryColor: {
+        secondaryColor: {
           DEFAULT: "#5b8d9d",
         },
-        secundaryLowColor: {
+        secondaryLowColor: {
           DEFAULT: "#b0cdd6",
         },
         buttonOrange: {

@@ -127,7 +127,7 @@ function CardForm(props) {
             </button>
             <button
               type="submit"
-              className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-mainColor hover:bg-secundaryColor focus:outline focus:outline-buttonHover"
+              className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-mainColor hover:bg-secondaryColor focus:outline focus:outline-buttonHover"
             >
               Add Task
             </button>

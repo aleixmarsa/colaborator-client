@@ -64,7 +64,7 @@ const SortMenu = (props) => {
               <button
                 onClick={() => sortProjects("name")}
                 className={classNames(
-                  active ? "bg-secundaryColor text-white" : "text-black",
+                  active ? "bg-secondaryColor text-white" : "text-black",
                   "block px-4 py-2 text-sm w-full"
                 )}
               >
@@ -77,7 +77,7 @@ const SortMenu = (props) => {
               <button
                 onClick={() => sortProjects("lastUpdate")}
                 className={classNames(
-                  active ? "bg-secundaryColor text-white" : "text-black",
+                  active ? "bg-secondaryColor text-white" : "text-black",
                   "block px-4 py-2 text-sm w-full"
                 )}
               >
@@ -90,7 +90,7 @@ const SortMenu = (props) => {
               <button
                 onClick={() => sortProjects("dateCreated")}
                 className={classNames(
-                  active ? "bg-secundaryColor text-white" : "text-gray-700",
+                  active ? "bg-secondaryColor text-white" : "text-gray-700",
                   "block px-4 py-2 text-sm w-full"
                 )}
               >

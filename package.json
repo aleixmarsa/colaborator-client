@@ -40,12 +40,10 @@
     "cypress:open": "cypress open"
   },
   "eslintConfig": {
-    "env": {
-      "cypress/global": true
-    },
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "plugin:cypress/recommended"
     ],
     "plugins": [
       "cypress"
