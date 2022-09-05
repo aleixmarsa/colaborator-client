@@ -162,7 +162,11 @@ const CreateProjectModal = (props) => {
                                           className="h-4 w-4 text-red-500 inline"
                                           aria-hidden="true"
                                         />
-                                        <p className=" ml-1 text-xs text-red-600 inline">
+
+                                        <p
+                                          className=" ml-1 text-xs text-red-600 inline"
+                                          data-test-id="create-project-team-error"
+                                        >
                                           {teamError}
                                         </p>
                                       </div>
@@ -207,7 +211,7 @@ const CreateProjectModal = (props) => {
                                     className="h-4 w-4 text-red-500 inline"
                                     aria-hidden="true"
                                   />
-                                  <p className=" ml-1 text-xs text-red-600 inline">
+                                  <p className=" ml-1 text-xs text-red-600 inline" data-test-id="create-project-error">
                                     {errorMessage}
                                   </p>
                                 </div>

@@ -161,7 +161,7 @@ const LogInForm = () => {
                       className="h-4 w-4 text-red-500 inline"
                       aria-hidden="true"
                     />
-                    <p className=" ml-1 text-xs text-red-600 inline">
+                    <p className=" ml-1 text-xs text-red-600 inline" data-test-id="login-error">
                       {errorMessage}
                     </p>
                   </div>

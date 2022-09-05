@@ -1,7 +1,17 @@
 describe("Colaborator App", () => {
   beforeEach(() => {
     cy.visit("http://localhost:3000");
+    cy.request("POST", "http://localhost:5005/colaborator-API/testing/reset")
+
+    const user = {
+      email: "admin@admin.com",
+      name: "Admin",
+      role: "TEST Admin",
+      password: "Admin123!" 
+    }
+    cy.request("POST", "http://localhost:5005/colaborator-API/auth/signup", user)
   });
+
   it("frontpage can be opened", () => {
     cy.contains("work together");
   });
@@ -9,6 +19,7 @@ describe("Colaborator App", () => {
   it("loginpage can be opened", () => {
     cy.contains("Open main menu").click();
     cy.get('[data-test-id="login-button"]').click();
+    cy.contains("Log in to your account");
   });
 
   it("user cannot log in. Invalid user", () => {
@@ -21,7 +32,7 @@ describe("Colaborator App", () => {
       .last()
       .type("Admin123!");
     cy.contains("Log In").click();
-    cy.contains("User not found.");
+    cy.get('[data-test-id="login-error"]').should("contain", "User not found.");
   });
 
   it("user cannot log in. Invalid password", () => {
@@ -34,7 +45,10 @@ describe("Colaborator App", () => {
       .last()
       .type("Admin123!!");
     cy.contains("Log In").click();
-    cy.contains("Unable to authenticate the user");
+    cy.get('[data-test-id="login-error"]').should(
+      "contain",
+      'Unable to authenticate the user'
+    );
   });
 
   it("user can log in", () => {
@@ -48,12 +62,15 @@ describe("Colaborator App", () => {
       .type("Admin123!");
     cy.contains("Log In").click();
     cy.contains("New Project");
+    cy.saveLocalStorage();
+
   });
 
-  it("user can log out", () => {
-    cy.contains("Open main menu").click();
-    cy.get('[data-test-id="logout-button"]').click();
-  });
+  // it("user can log out", () => {
+  //   cy.contains("Open main menu").click();
+  //   cy.get('[data-test-id="logout-button"]').click();
+  //   cy.contains("Log in to your account");
+  // });
 });
 
 describe("When logged in", () => {
@@ -62,15 +79,15 @@ describe("When logged in", () => {
   });
 
   it("create a project can be cancelled", () => {
-    cy.contains("Open main menu").click();
-    cy.get('[data-test-id="login-button"]').click();
-    cy.get('[data-test-id="login-form"] input[name="email"]').type(
-      "admin@admin.com"
-    );
-    cy.get('[data-test-id="login-form"] input[name="password"]')
-      .last()
-      .type("Admin123!");
-    cy.contains("Log In").click();
+    // cy.contains("Open main menu").click();
+    // cy.get('[data-test-id="login-button"]').click();
+    // cy.get('[data-test-id="login-form"] input[name="email"]').type(
+    //   "admin@admin.com"
+    // );
+    // cy.get('[data-test-id="login-form"] input[name="password"]')
+    //   .last()
+    //   .type("Admin123!");
+    // cy.contains("Log In").click();
     cy.contains("New Project");
     cy.contains("New Project").click();
     cy.get('[type="button"]').contains("Cancel").click();
@@ -81,6 +98,7 @@ describe("When logged in", () => {
   it("new project cannot be created. title not provided", () => {
     cy.contains("New Project").click();
     cy.get('[type="submit"]').contains("Create").click();
+
     cy.contains("Enter a title");
   });
 
@@ -89,7 +107,10 @@ describe("When logged in", () => {
       "test-project"
     );
     cy.get('[type="submit"]').contains("Create").click();
-    cy.contains("Select a team");
+    cy.get('[data-test-id="create-project-team-error"]').should(
+      "contain",
+      "Select a team"
+    );
   });
 
   it("a new project can be created", () => {
@@ -113,8 +134,12 @@ describe("When logged in", () => {
     cy.get('[data-test-id="team-listbox-options"]').contains("Admin").click();
     cy.get('[data-test-id="create-project-form"]').click();
     cy.get('[type="submit"]').contains("Create").click();
-    cy.contains("Duplicated project name");
+    cy.get('[data-test-id="create-project-error"]').should(
+      "contain",
+      "Duplicated project name"
+    );
     cy.get('[type="button"]').contains("Cancel").click();
+
     cy.contains("Cancel").should("not.exist");
   });
 
