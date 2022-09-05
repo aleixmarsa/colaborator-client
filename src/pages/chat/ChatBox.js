@@ -72,7 +72,7 @@ const ChatBox = (props) => {
     return <LoadingSpinner />;
   }
   return (
-    <div className=" relative flex flex-col justify-between h-full bg-secondaryLowColor">
+    <div className=" relative flex flex-col justify-between h-full bg-secondaryLowColor rounded-xl">
       <div className="flex justify-center py-1 bg-mainColor">
         <Avatar round size="25" textSizeRatio={1.9} name={chatReceiver} className="border-solid"/>
         <h2 className="text-lg font-small ml-3 text-white">{chatReceiver}</h2>

@@ -156,7 +156,7 @@ const Chat = () => {
             <div
               className={classNames(
                 showChat ? "flex col-span-5" : "",
-                "xl:col-span-4 lg:col-span-4 h-full flex-col bg-white rounded  drop-shadow-lg divide-y border list-none"
+                "xl:col-span-4 lg:col-span-4 h-full flex-col bg-white rounded-xl drop-shadow-lg divide-y border list-none"
               )}
             >
               <ChatBox
