@@ -15,8 +15,8 @@ const NavBar = (props) => {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
 
   const userNavigation = [
-    { name: "Your Profile", action: "#" , state: 'disabled'},
-    { name: "Log out", action: logOutUser, state: '' },
+    { name: "Your Profile", action: "#", state: "disabled" },
+    { name: "Log out", action: logOutUser, state: "" },
   ];
 
   const { hasNewMessage, filterProjects } = props;
@@ -228,7 +228,7 @@ const NavBar = (props) => {
           ) : (
             <Disclosure.Panel className="lg:hidden">
               <div className="px-2 pt-2 pb-3 space-y-1">
-              <Disclosure.Button
+                <Disclosure.Button
                   as="a"
                   href="/"
                   className={classNames(
@@ -241,6 +241,7 @@ const NavBar = (props) => {
                   HOME
                 </Disclosure.Button>
                 <Disclosure.Button
+                  data-test-id="login-button"
                   as="a"
                   href="/login"
                   className={classNames(
@@ -253,6 +254,7 @@ const NavBar = (props) => {
                   LOG IN
                 </Disclosure.Button>
                 <Disclosure.Button
+                  data-test-id="logout-button"
                   as="a"
                   href="/signup"
                   className={classNames(

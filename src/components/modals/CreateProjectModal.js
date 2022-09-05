@@ -107,6 +107,7 @@ const CreateProjectModal = (props) => {
                       <div className="bg-white px-4 pb-4 sm:p-6 sm:pb-4">
                         <div className="pt-2 space-y-6 sm:pt-10 sm:space-y-5">
                           <form
+                            data-test-id="create-project-form"
                             onSubmit={handleSubmit}
                             className="space-y-6"
                             action="#"

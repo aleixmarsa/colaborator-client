@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "./../../context/auth.context";
 import { loginService } from "../../services/auth.services";
-import { Formik} from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
 import Button from "../buttons/Button";
 import { Link } from "react-router-dom";
@@ -63,6 +63,7 @@ const LogInForm = () => {
           <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
             <div className="bg-white py-8 px-4 drop-shadow-lg sm:rounded-md sm:px-10">
               <form
+                data-test-id="login-form"
                 onSubmit={handleSubmit}
                 className="space-y-6"
                 action="#"
