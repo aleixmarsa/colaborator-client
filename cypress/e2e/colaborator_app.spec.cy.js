@@ -4,10 +4,10 @@ describe("Colaborator App", () => {
     cy.request("POST", "http://localhost:5005/colaborator-API/testing/reset")
 
     const user = {
-      email: "admin@admin.com",
-      name: "Admin",
-      role: "TEST Admin",
-      password: "Admin123!" 
+      email: "test@test.com",
+      name: "Test User",
+      role: "Tester",
+      password: "Test123!" 
     }
     cy.request("POST", "http://localhost:5005/colaborator-API/auth/signup", user)
   });
@@ -26,11 +26,11 @@ describe("Colaborator App", () => {
     cy.contains("Open main menu").click();
     cy.get('[data-test-id="login-button"]').click();
     cy.get('[data-test-id="login-form"] input[name="email"]').type(
-      "admi@admin.com"
+      "wrong@test.com"
     );
     cy.get('[data-test-id="login-form"] input[name="password"]')
       .last()
-      .type("Admin123!");
+      .type("Test123!");
     cy.contains("Log In").click();
     cy.get('[data-test-id="login-error"]').should("contain", "User not found.");
   });
@@ -39,11 +39,11 @@ describe("Colaborator App", () => {
     cy.contains("Open main menu").click();
     cy.get('[data-test-id="login-button"]').click();
     cy.get('[data-test-id="login-form"] input[name="email"]').type(
-      "admin@admin.com"
+      "test@test.com"
     );
     cy.get('[data-test-id="login-form"] input[name="password"]')
       .last()
-      .type("Admin123!!");
+      .type("Wrong123!!");
     cy.contains("Log In").click();
     cy.get('[data-test-id="login-error"]').should(
       "contain",
@@ -55,11 +55,11 @@ describe("Colaborator App", () => {
     cy.contains("Open main menu").click();
     cy.get('[data-test-id="login-button"]').click();
     cy.get('[data-test-id="login-form"] input[name="email"]').type(
-      "admin@admin.com"
+      "test@test.com"
     );
     cy.get('[data-test-id="login-form"] input[name="password"]')
       .last()
-      .type("Admin123!");
+      .type("Test123!");
     cy.contains("Log In").click();
     cy.contains("New Project");
     cy.saveLocalStorage();
@@ -82,11 +82,11 @@ describe("When logged in", () => {
     // cy.contains("Open main menu").click();
     // cy.get('[data-test-id="login-button"]').click();
     // cy.get('[data-test-id="login-form"] input[name="email"]').type(
-    //   "admin@admin.com"
+    //   "test@test.com"
     // );
     // cy.get('[data-test-id="login-form"] input[name="password"]')
     //   .last()
-    //   .type("Admin123!");
+    //   .type("Test123!");
     // cy.contains("Log In").click();
     cy.contains("New Project");
     cy.contains("New Project").click();
@@ -115,7 +115,7 @@ describe("When logged in", () => {
 
   it("a new project can be created", () => {
     cy.get('[data-test-id="team-listbox"]').click();
-    cy.get('[data-test-id="team-listbox-options"]').contains("Admin").click();
+    cy.get('[data-test-id="team-listbox-options"]').contains("Test User").click();
     cy.get('[data-test-id="create-project-form"]').click();
     cy.get(
       '[data-test-id="create-project-form"] textarea[name="description"]'
@@ -131,7 +131,7 @@ describe("When logged in", () => {
       "test-project"
     );
     cy.get('[data-test-id="team-listbox"]').click();
-    cy.get('[data-test-id="team-listbox-options"]').contains("Admin").click();
+    cy.get('[data-test-id="team-listbox-options"]').contains("Test User").click();
     cy.get('[data-test-id="create-project-form"]').click();
     cy.get('[type="submit"]').contains("Create").click();
     cy.get('[data-test-id="create-project-error"]').should(
@@ -164,7 +164,7 @@ describe("When logged in", () => {
     );
 
     cy.get('[data-test-id="team-listbox"]').click();
-    cy.get('[data-test-id="team-listbox-options"]').contains("Admin").click();
+    cy.get('[data-test-id="team-listbox-options"]').contains("Test").click();
     cy.get('[data-test-id="update-project-form"]').click();
     cy.get('[type="submit"]').contains("Save").click();
     cy.contains("Select a team");
@@ -177,7 +177,7 @@ describe("When logged in", () => {
       "test-project-updated"
     );
     cy.get('[data-test-id="team-listbox"]').click();
-    cy.get('[data-test-id="team-listbox-options"]').contains("Admin").click();
+    cy.get('[data-test-id="team-listbox-options"]').contains("Test").click();
     cy.get('[data-test-id="update-project-form"]').click();
     cy.get('[type="submit"]').contains("Save").click();
     cy.contains("Cancel").should("not.exist");
