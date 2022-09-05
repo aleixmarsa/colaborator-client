@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "./../../context/auth.context";
 import { loginService } from "../../services/auth.services";
-import { Formik} from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
 import Button from "../buttons/Button";
 import { Link } from "react-router-dom";
@@ -63,6 +63,7 @@ const LogInForm = () => {
           <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
             <div className="bg-white py-8 px-4 drop-shadow-lg sm:rounded-md sm:px-10">
               <form
+                data-test-id="login-form"
                 onSubmit={handleSubmit}
                 className="space-y-6"
                 action="#"
@@ -160,7 +161,7 @@ const LogInForm = () => {
                       className="h-4 w-4 text-red-500 inline"
                       aria-hidden="true"
                     />
-                    <p className=" ml-1 text-xs text-red-600 inline">
+                    <p className=" ml-1 text-xs text-red-600 inline" data-test-id="login-error">
                       {errorMessage}
                     </p>
                   </div>

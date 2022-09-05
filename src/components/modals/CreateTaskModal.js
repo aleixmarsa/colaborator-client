@@ -4,36 +4,20 @@ import { useContext } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { getTaskDetailsService } from "../../services/task.services";
 import { AuthContext } from "../../context/auth.context";
 import CustomErrorMessage from "../messages/CustomErrorMessage";
 import { SocketContext } from "../../context/socket.context";
 import Button from "../buttons/Button";
 import { ExclamationCircleIcon } from "@heroicons/react/outline";
 
-const EditTaskModal = (props) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [color, setColor] = useState("");
-  const [cardLimitDate, setCardLimitDate] = useState("");
+const CreateTaskModal = (props) => {
   const { user } = useContext(AuthContext);
   const cancelButtonRef = useRef(null);
   const { socket } = useContext(SocketContext);
-  const { editTaskId, projectId, setEditModalHasRender, editModalHasRender } =
+  const { projectId, setCreateModalHasRender, createModalHasRender } =
     props;
   const [errorMessage, setErrorMessage] = useState(undefined);
 
-  const getTask = async (editTaskId) => {
-    try {
-      const response = await getTaskDetailsService(editTaskId);
-      setTitle(response.data.title);
-      setDescription(response.data.description);
-      setColor(response.data.color);
-      setCardLimitDate(response.data.limitDate);
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
@@ -44,44 +28,20 @@ const EditTaskModal = (props) => {
   };
 
   useEffect(() => {
-    getTask(editTaskId);
-  }, []);
-
-  useEffect(() => {
-    socket.on("errorMessage", setErrorMessageListener);
+    socket.on("errorMessage", setErrorMessageListener)
     return () => {
       socket.off("errorMessage", setErrorMessageListener);
     };
   }, [socket]);
 
-  // const handleSubmitEditForm = async (e) => {
-  //   const taskBody = {
-  //     taskId: editTaskId,
-  //     title: title,
-  //     description: description,
-  //     color: color,
-  //     limitDate: cardLimitDate,
-  //     project: projectId,
-  //   };
-
-  //   const activityBody = {
-  //     title: "Task info edited",
-  //     project: projectId,
-  //     user: user._id,
-  //   };
-
-  //   socket.emit("newActivity", activityBody);
-  //   socket.emit("updateTask", taskBody);
-  // };
 
   return (
-    title && (
       <Formik
         initialValues={{
-          title: title,
-          description: description,
-          color: color,
-          limitDate: cardLimitDate,
+          title: "",
+          description: "",
+          color: "white",
+          limitDate: "",
         }}
         onSubmit={(values) => {
           const title = values.title;
@@ -90,21 +50,21 @@ const EditTaskModal = (props) => {
           const limitDate = values.limitDate;
 
           const taskBody = {
-            taskId: editTaskId,
             title: title,
             description: description,
+            state: "TODO",
             color: color,
             limitDate: limitDate,
             project: projectId,
           };
 
           const activityBody = {
-            title: "Task info edited",
-            project: projectId,
-            user: user._id,
-          };
-          socket.emit("newActivity", activityBody);
-          socket.emit("updateTask", taskBody);
+      title: "Task created",
+      project: projectId,
+      user: user._id,
+    };
+    socket.emit("newActivity", activityBody);
+    socket.emit("newTask", taskBody)
         }}
         validationSchema={Yup.object().shape({
           title: Yup.string().required("Enter a title"),
@@ -121,12 +81,12 @@ const EditTaskModal = (props) => {
             props;
 
           return (
-            <Transition.Root appear show={editModalHasRender} as={Fragment}>
+            <Transition.Root appear show={createModalHasRender} as={Fragment}>
               <Dialog
                 as="div"
                 className="relative z-10"
                 initialFocus={cancelButtonRef}
-                onClose={setEditModalHasRender}
+                onClose={setCreateModalHasRender}
               >
                 <Transition.Child
                   as={Fragment}
@@ -162,7 +122,7 @@ const EditTaskModal = (props) => {
                             >
                               <div>
                                 <h3 className="text-lg leading-6 font-medium text-gray-900">
-                                  Edit a task
+                                  Create a task
                                 </h3>
                               </div>
                               <div className="space-y-6 sm:space-y-5">
@@ -279,14 +239,14 @@ const EditTaskModal = (props) => {
                                 <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                                   <Button
                                     type="submit"
-                                    text="Save"
+                                    text="Create"
                                     color="mainColor"
                                   />
                                   <Button
                                     type="button"
                                     text="Cancel"
                                     color="white"
-                                    action={() => setEditModalHasRender(false)}
+                                    action={() => setCreateModalHasRender(false)}
                                   />
                                 </div>
                               </div>
@@ -302,8 +262,7 @@ const EditTaskModal = (props) => {
           );
         }}
       </Formik>
-    )
   );
 };
 
-export default EditTaskModal;
+export default CreateTaskModal;

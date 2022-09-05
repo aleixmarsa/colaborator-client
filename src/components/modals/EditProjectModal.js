@@ -40,22 +40,24 @@ const EditProjectModal = (props) => {
       console.log(err);
     }
   };
+
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
+
+  const setErrorMessageListener = (message) => {
+    setErrorMessage(message);
+  };
 
   useEffect(() => {
     getProject(projectId);
   }, []);
 
   useEffect(() => {
-    socket.on("errorMessage", (message) => {
-      setErrorMessage(message);
-      console.log(
-        "🚀 ~ file: EditProjectModal.js ~ line 65 ~ socket.on ~ message",
-        message
-      );
-    });
+    socket.on("errorMessage", setErrorMessageListener);
+    return () => {
+      socket.off("errorMessage", setErrorMessageListener);
+    };
   }, [socket]);
 
   return (
@@ -123,7 +125,7 @@ const EditProjectModal = (props) => {
                   <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
                 </Transition.Child>
 
-                <div className="fixed z-10 inset-0 overflow-y-auto">
+                <div className="fixed z-10 inset-0 overflow-y-auto ">
                   <div className="flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0">
                     <Transition.Child
                       as={Fragment}
@@ -134,10 +136,11 @@ const EditProjectModal = (props) => {
                       leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                       leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                     >
-                      <Dialog.Panel className="relative bg-white rounded-lg text-left shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full">
-                        <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                      <Dialog.Panel className="relative bg-white overflow-hidden rounded-lg text-left shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full">
+                        <div className="bg-white px-4 pb-4 sm:p-6 sm:pb-4">
                           <div className="pt-2 space-y-6 sm:pt-10 sm:space-y-5">
                             <form
+                              data-test-id="update-project-form"
                               onSubmit={handleSubmit}
                               className="space-y-6"
                               action="#"
@@ -145,10 +148,11 @@ const EditProjectModal = (props) => {
                             >
                               <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
                                 <h3 className="text-lg leading-6 font-medium text-gray-900">
-                                  Edit your Project
+                                  Update project:{" "}
+                                  <span className="text-gray-400">{title}</span>
                                 </h3>
                                 <div>
-                                  <div className="mt-6 sm:mt-5 space-y-6 sm:space-y-5">
+                                  <div className="mt-1 sm:mt-5 space-y-6 sm:space-y-5">
                                     <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
                                       <label
                                         htmlFor="title"
@@ -156,7 +160,6 @@ const EditProjectModal = (props) => {
                                       >
                                         Title
                                       </label>
-                                      <br />
                                       <div className="sm:mt-0 sm:col-span-3">
                                         <div className="relative max-w-lg flex rounded-md shadow-sm ">
                                           <input
@@ -181,16 +184,32 @@ const EditProjectModal = (props) => {
                                         </div>
                                       </div>
                                     </div>
-
-                                    <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start  sm:border-t sm:border-gray-200 sm:pt-5">
+                                    <div className="relative sm:border-t sm:border-gray-200">
+                                      <SelectMenu
+                                        team={team}
+                                        setTeam={setTeam}
+                                        teamError={teamError}
+                                      />
+                                      {teamError && (
+                                        <div className="absolute -bottom-6 left-0 w-fit">
+                                          <ExclamationCircleIcon
+                                            className="h-4 w-4 text-red-500 inline"
+                                            aria-hidden="true"
+                                          />
+                                          <p className=" ml-1 text-xs text-red-600 inline">
+                                            {teamError}
+                                          </p>
+                                        </div>
+                                      )}
+                                    </div>
+                                    <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-2">
                                       <label
                                         htmlFor="description"
                                         className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                                       >
                                         Description
                                       </label>
-                                      <br />
-                                      <div className="mt-1 sm:mt-0 sm:col-span-3">
+                                      <div className="relative mt-1 sm:mt-0 sm:col-span-3">
                                         <textarea
                                           id="description"
                                           name="description"
@@ -213,24 +232,6 @@ const EditProjectModal = (props) => {
                                       </div>
                                     </div>
                                   </div>
-                                </div>
-                                <div className="relative">
-                                  <SelectMenu
-                                    team={team}
-                                    setTeam={setTeam}
-                                    teamError={teamError}
-                                  />
-                                  {teamError && (
-                                    <div className="absolute -bottom-6 left-0 w-fit">
-                                      <ExclamationCircleIcon
-                                        className="h-4 w-4 text-red-500 inline"
-                                        aria-hidden="true"
-                                      />
-                                      <p className=" ml-1 text-xs text-red-600 inline">
-                                        {teamError}
-                                      </p>
-                                    </div>
-                                  )}
                                 </div>
                               </div>
                               {errorMessage && !errors.title && !teamError && (

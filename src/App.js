@@ -12,7 +12,6 @@ import HomePage from "./pages/HomePage";
 import PrivateRoute from './components/routes/PrivateRoute'; 
 import AnonRoute from './components/routes/AnonRoute'; 
 import ChatPage from "./pages/ChatPage";
-import ChatPageWBar from "./pages/chatPageWBar";
 import ErrorPage from "./pages/ErrorPage";
 
 function App() {
@@ -24,7 +23,7 @@ function App() {
         <Route exact path="/login" element={<AnonRoute><LoginPage /></AnonRoute>} />
         <Route exact path="/projects" element={<PrivateRoute><ProjectsPage /></PrivateRoute>} />
         <Route exact path="/chat" element={<PrivateRoute><ChatPage /></PrivateRoute>} />
-        <Route exact path="/project/:projectId/chat" element={<PrivateRoute><ChatPageWBar /></PrivateRoute>} />
+        <Route exact path="/project/:projectId/chat" element={<PrivateRoute><ChatPage /></PrivateRoute>} />
         <Route exact path="/project/:projectId" element={<PrivateRoute><ProjectDetailsPage /></PrivateRoute>} />
         <Route exact path="/project/:projectId/tasks" element={<PrivateRoute><ProjectCards /></PrivateRoute>} />
         <Route exact path="/project/:projectId/monthCalendar" element={<PrivateRoute><CalendarPage /></PrivateRoute>} />

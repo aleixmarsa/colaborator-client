@@ -55,17 +55,26 @@ function CalendarPage() {
   const [events, setEvents] = useState([]);
   const { socket } = useContext(SocketContext);
 
+  const getEventsListener = (events) => {
+    setEvents([...events]);
+  };
+
+  const updateCalendarListener = () => {
+    socket.emit("getEvents", projectId);
+  };
+
   useEffect(() => {
     socket.emit("getEvents", projectId);
   }, []);
 
   useEffect(() => {
-    socket.on("getEvents", (events) => {
-      setEvents([...events]);
-    });
-    socket.on("updateCalendar", () => {
-      socket.emit("getEvents", projectId);
-    });
+    socket.on("getEvents", getEventsListener);
+    socket.on("updateCalendar", updateCalendarListener);
+
+    return () => {
+      socket.off("getEvents");
+      socket.off("updateCalendar");
+    };
   }, [socket]);
 
   return (

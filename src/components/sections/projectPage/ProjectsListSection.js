@@ -10,11 +10,8 @@ const ProjectsListSection = (props) => {
     filteredProjects,
     setFilteredProjects,
     classNames,
-    editProjectForm,
-    setEditProjectForm,
-    setNewProjectForm,
     setProjectId,
-    setModalHasRender,
+    setDeleteModalHasRender,
     setProjectTitle,
     setEditModalHasRender
   } = props;
@@ -22,7 +19,7 @@ const ProjectsListSection = (props) => {
 
   return (
 
-    <div className="drop-shadow-lg lg:min-w-0 lg:flex-1 ml-5 mr-5 gap-6 mt-5 mb-10 ">
+    <div className="drop-shadow-lg lg:min-w-0 lg:flex-1 mr-2 ml-2 xl:ml-0 gap-6 mt-5 mb-10 ">
       <div className="p-2 bg-white border border-black">
         <div className=" flex items-center border-b-2 mb-5 pb-4">
           <h2 className="flex-1 xl:pl-24 text-xl">PROJECTS</h2>
@@ -38,11 +35,8 @@ const ProjectsListSection = (props) => {
             <Link key={project._id} to={`/project/${project._id}`}>
               <Project
                 project={project}
-                editProjectForm={editProjectForm}
-                setEditProjectForm={setEditProjectForm}
-                setNewProjectForm={setNewProjectForm}
                 setProjectId={setProjectId}
-                setModalHasRender={setModalHasRender}
+                setDeleteModalHasRender={setDeleteModalHasRender}
                 setProjectTitle={setProjectTitle}
                 setEditModalHasRender={setEditModalHasRender}
               />

@@ -6,7 +6,7 @@ import { deleteProjectService } from "../../services/project.services";
 import { SocketContext } from "../../context/socket.context";
 
 const DeleteProjectModal = (props) => {
-  const { projectId, projectTitle, setModalHasRender, modalHasRender } = props;
+  const { projectId, projectTitle, setDeleteModalHasRender, deleteModalHasRender } = props;
   const { socket } = useContext(SocketContext);
 
   const handleDelete = (ProjecId) => {
@@ -14,8 +14,8 @@ const DeleteProjectModal = (props) => {
   };
 
   return (
-    <Transition.Root appear show={modalHasRender} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={setModalHasRender}>
+    <Transition.Root appear show={deleteModalHasRender} as={Fragment}>
+      <Dialog as="div" className="relative z-10" onClose={setDeleteModalHasRender}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -77,7 +77,7 @@ const DeleteProjectModal = (props) => {
                   <button
                     type="button"
                     className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700  sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                    onClick={() => setModalHasRender(false)}
+                    onClick={() => setDeleteModalHasRender(false)}
                   >
                     Cancel
                   </button>

@@ -16,9 +16,11 @@ const SelectMenu = (props) => {
   const getAllUsers = async () => {
     try {
       const response = await getAllUsersService();
-      const teamFromResponse = response.data.filter((user)=> team.some(member => user._id === member._id))
+      const teamFromResponse = response.data.filter((user) =>
+        team.some((member) => user._id === member._id)
+      );
       setUsers(response.data);
-      setTeam(teamFromResponse)
+      setTeam(teamFromResponse);
     } catch (err) {
       console.log(err);
     }
@@ -32,11 +34,12 @@ const SelectMenu = (props) => {
     <Listbox value={team} onChange={setTeam} multiple>
       {({ open }) => (
         <div>
-          <Listbox.Label className="block text-sm  pt-2 font-medium text-gray-700">
+          <Listbox.Label className="block text-sm  py-3 font-medium text-gray-700">
             Invite team
           </Listbox.Label>
           <div className="mt-1 relative">
             <Listbox.Button
+              data-test-id="team-listbox"
               className={classNames(
                 teamError
                   ? " outline outline-1 outline-red-500"
@@ -65,9 +68,10 @@ const SelectMenu = (props) => {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Listbox.Options className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
+              <Listbox.Options className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-36 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-y-scroll focus:outline-none sm:text-sm">
                 {users.map((person) => (
                   <Listbox.Option
+                    data-test-id="team-listbox-options"
                     key={person.id}
                     className={({ active }) =>
                       classNames(
