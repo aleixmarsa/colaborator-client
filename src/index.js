@@ -6,12 +6,15 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router } from "react-router-dom";
 import { AuthProviderWrapper } from "./context/auth.context";
 import { SocketProviderWrapper } from "./context/socket.context";
+import MessageAlertWrapper from "./context/messageAlert.context";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Router>
     <SocketProviderWrapper>
       <AuthProviderWrapper>
-        <App />
+        <MessageAlertWrapper>
+          <App />
+        </MessageAlertWrapper>
       </AuthProviderWrapper>
     </SocketProviderWrapper>
   </Router>

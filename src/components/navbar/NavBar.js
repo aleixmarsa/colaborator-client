@@ -3,6 +3,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { MenuAlt1Icon, XIcon } from "@heroicons/react/outline";
 import { AuthContext } from "../../context/auth.context";
+import { MessageAlertContext } from "../../context/messageAlert.context";
 
 import Avatar from "react-avatar";
 import SearchMenu from "../menus/SearchMenu";
@@ -13,6 +14,7 @@ function classNames(...classes) {
 
 const NavBar = (props) => {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
+  const [messageAlert] = useContext(MessageAlertContext)
 
   const userNavigation = [
     { name: "Your Profile", action: "#", state: "disabled" },
@@ -81,7 +83,7 @@ const NavBar = (props) => {
                       </NavLink>
 
                       <div className=" relative py-2">
-                        {hasNewMessage ? (
+                        {messageAlert.length   ? (
                           <span className="flex h-3 w-3 absolute right-1">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500"></span>
                             <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>

@@ -10,25 +10,48 @@ import Avatar from "react-avatar";
 import { AuthContext } from "../../../context/auth.context";
 import { useContext } from "react";
 import ChatBox from "../../../pages/chat/ChatBox";
+import { SocketContext } from "../../../context/socket.context";
+import { MessageAlertContext } from "../../../context/messageAlert.context";
 
 const Chat = () => {
   const { user } = useContext(AuthContext);
-
+  const { socket } = useContext(SocketContext);
+  const[messageAlert, setMessageAlert] = useContext(MessageAlertContext)
   const [users, setUsers] = useState(null);
   const [projects, setProjects] = useState([]);
   const [showChat, setShowChat] = useState("");
   const [chatReceiver, setChatReceiver] = useState("");
   const [isProjectChat, setIsProjectChat] = useState(false);
   const [chatActive, setChatActive] = useState(null);
+  // const [messageAlerts, setMessageAlerts] = useState([]);
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
 
+  const receiveAlertListener = (alertMessage) => {
+    if (alertMessage.isProjectChat) {
+      if (!messageAlert.includes(alertMessage.fullMessage.room)) {
+        setMessageAlert(messageAlert.concat(alertMessage.fullMessage.room));
+      }
+      return;
+    }
+    if (!messageAlert.includes(alertMessage.fullMessage.sender._id)) {
+      setMessageAlert(
+        messageAlert.concat(alertMessage.fullMessage.sender._id)
+      );
+    }
+  };
+
   useEffect(() => {
     getUsers();
     getProjects();
+    socket.emit("joinAllProjectsRoom");
   }, []);
+
+  useEffect(() => {
+    socket.on("receive_alert_message", receiveAlertListener);
+  });
 
   const getUsers = async () => {
     try {
@@ -49,14 +72,14 @@ const Chat = () => {
   };
 
   const directChathandleClick = async (e, userChat) => {
+    console.log(
+      "🚀 ~ file: Chat.js ~ line 66 ~ directChathandleClick ~ userChat",
+      userChat
+    );
     e.preventDefault();
     try {
       const response = await startDirectChatService(userChat._id);
       setShowChat(response.data._id);
-      console.log(
-        "🚀 ~ file: Chat.js ~ line 60 ~ directChathandleClick ~ response.data",
-        showChat
-      );
       setChatReceiver(userChat.name);
       setIsProjectChat(false);
       setChatActive(userChat._id);
@@ -118,6 +141,14 @@ const Chat = () => {
                       name={project.title}
                     />
                     <p className="text-left truncate">{project.title}</p>
+                    {messageAlert.includes(project._id) ? (
+                      <span className="flex h-3 w-3 absolute right-3 top-3.5">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500"></span>
+                        <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                      </span>
+                    ) : (
+                      <></>
+                    )}
                     <hr className="mt-3" />
                   </div>
                 );
@@ -145,6 +176,14 @@ const Chat = () => {
                         name={chatUser.name}
                       />
                       <p>{chatUser.name}</p>
+                      {messageAlert.includes(chatUser._id) ? (
+                        <span className="flex h-3 w-3 absolute right-3 top-3.5">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500"></span>
+                          <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                        </span>
+                      ) : (
+                        <></>
+                      )}
                       <hr className="mt-3" />
                     </div>
                   );
