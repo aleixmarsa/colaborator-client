@@ -113,7 +113,7 @@ const Chat = () => {
           <div
             className={classNames(
               showChat ? "hidden  xl:block lg:block" : "",
-              "h-full col-span-5 xl:col-span-1 lg:col-span-1 mr-2"
+              "h-full col-span-5 xl:col-span-1 lg:col-span-1 mr-2 ml-2"
             )}
           >
             <h2 className=" flex justify-center text-2xl flex-1 border-b-2 pb-2">
