@@ -212,7 +212,7 @@ const Chat = () => {
               alt=""
               width="400"
               heigth="150"
-              className="hidden lg:block xl:block absolute top-1/2 left-1/2 transform -translate-y-1/2"
+              className="hidden lg:block xl:block absolute top-1/2 left-1/2 transform -translate-y-1/2 opacity-50"
             ></img>
           )}
         </div>
