@@ -35,12 +35,12 @@ const ProjectDetailsPage = () => {
       <div className="flex flex-row">
         <LateralBar projectId={projectId} />
 
-        <div className="flex flex-col flex-wrap w-screen mx-16 lg:mx-48 xl:mx-40 my-5">
+        <div className="flex flex-col flex-wrap w-screen mx-4 lg:mx-48 xl:mx-40 my-5">
           <h1 className="flex font-normal text-2xl xl:text-4xl pb-4 border-b-2 b-color-gray-200">
             {title}
           </h1>
 
-          <div className="flex flex-row items-center mb-6 mt-2">
+          <div className="flex flex-col xl:flex-row lg:flex-row sm:flex-row items-start mb-6 mt-2">
             <h3 className="font-bold">Members: </h3>
             {team.map((member) => {
               return (
@@ -61,7 +61,7 @@ const ProjectDetailsPage = () => {
             {description}
           </h6>
 
-          <div className="flex flex-col items-center lg:flex-row xl:flex-row justify-between  lg: mt-20 xl:mt-28">
+          <div className="flex flex-col items-center lg:flex-row xl:flex-row justify-around  lg:mt-20 xl:mt-28">
             <div>
               <Link to={`/project/${projectId}/tasks`}>
                 <img
