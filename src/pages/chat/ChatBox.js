@@ -9,26 +9,37 @@ import {
 import Avatar from "react-avatar";
 import { SocketContext } from "../../context/socket.context";
 import LoadingSpinner from "../../components/spinner/LoadingSpinner";
-
+import { MessageAlertContext } from "../../context/messageAlert.context";
 
 const ChatBox = (props) => {
+  const { user } = useContext(AuthContext);
+  const { socket } = useContext(SocketContext);
+  const[messageAlert, setMessageAlert] = useContext(MessageAlertContext)
+
   const [allMessages, setAllMessages] = useState([]);
   const [text, setText] = useState("");
   const { chatId, room, chatReceiver, isProjectChat, setShowChat } = props;
-  const { socket } = useContext(SocketContext);
   const [loading, setLoading] = useState(true);
-  const { user } = useContext(AuthContext);
 
   const receiveMessageListener = (newMessage) => {
+    console.log("🚀 ~ file: ChatBox.js ~ line 23 ~ receiveMessageListener ~ newMessage", newMessage)
     console.log("Message received, chat: ", chatId);
     if (newMessage.chatId === chatId) {
       getAllMessages();
     }
   };
+  const removeMessageAlert = (() => {
+    setMessageAlert(messageAlert.filter(alert => alert !== room));
+  })
 
   useEffect(() => {
     getAllMessages();
+    removeMessageAlert()
   }, [chatId]);
+
+  // useEffect(() => {
+  //   removeMessageAlert()
+  // }, [messageAlert]);
 
   useEffect(() => {
     socket.on("receive_message", receiveMessageListener);
