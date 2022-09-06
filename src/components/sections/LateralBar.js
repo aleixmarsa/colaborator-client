@@ -64,6 +64,7 @@ function LateralBar(props) {
   ];
 
   return (
+    ( pathname !== "/chat" &&
     <div className={`flex flex-col  h-[calc(100vh-64px)] border-r border-gray-200 pb-4 bg-neutral-50 relative ${open ? "w-48" : "w-fit"} duration-300`} >
       <ArrowCircleLeftIcon
         className={`w-8 h-8 bg-neutral-50 text-mainColor absolute -right-4 top-6 rounded-full  cursor-pointer ${!open && "rotate-180"} duration-300`}
@@ -105,6 +106,7 @@ function LateralBar(props) {
         </nav>
       </div>
     </div>
+    )
   );
 }
 
