@@ -44,7 +44,7 @@ const ProjectDetailsPage = () => {
             <h3 className="font-bold">Members: </h3>
             {team.map((member) => {
               return (
-                <div key={member._id} className="ml-4">
+                <div key={member._id} className="ml-4 mt-1">
                   <Avatar
                     round
                     size="30"
