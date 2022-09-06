@@ -38,20 +38,20 @@ function LateralBar(props) {
       link: `/project/${projectId}/tasks`,
     },
     {
-      name: "Chats",
-      icon: ChatIcon,
-      href: "#",
-      current: false,
-      keyLink: { projectId },
-      link: `/project/${projectId}/chat`,
-    },
-    {
       name: "Calendar",
       icon: CalendarIcon,
       href: "#",
       current: false,
       keyLink: { projectId },
       link: `/project/${projectId}/monthCalendar`,
+    },
+    {
+      name: "Chats",
+      icon: ChatIcon,
+      href: "#",
+      current: false,
+      keyLink: { projectId },
+      link: `/project/${projectId}/chat`,
     },
     {
       name: "Projects",
