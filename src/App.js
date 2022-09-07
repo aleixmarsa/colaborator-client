@@ -13,6 +13,7 @@ import PrivateRoute from './components/routes/PrivateRoute';
 import AnonRoute from './components/routes/AnonRoute'; 
 import ChatPage from "./pages/ChatPage";
 import ErrorPage from "./pages/ErrorPage";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route exact path="/project/:projectId" element={<PrivateRoute><ProjectDetailsPage /></PrivateRoute>} />
         <Route exact path="/project/:projectId/tasks" element={<PrivateRoute><ProjectCards /></PrivateRoute>} />
         <Route exact path="/project/:projectId/monthCalendar" element={<PrivateRoute><CalendarPage /></PrivateRoute>} />
+        <Route exact path="/profile" element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
         <Route exact path="/*" element={<ErrorPage />} />
 
       </Routes>

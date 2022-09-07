@@ -14,14 +14,14 @@ function classNames(...classes) {
 
 const NavBar = (props) => {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
-  const [messageAlert] = useContext(MessageAlertContext)
+  const [messageAlert] = useContext(MessageAlertContext);
 
   const userNavigation = [
-    { name: "Your Profile", action: "#", state: "disabled" },
+    { name: "Your Profile", action: "/profile", state: "disabled" },
     { name: "Log out", action: logOutUser, state: "" },
   ];
 
-  const { hasNewMessage, filterProjects } = props;
+  const { filterProjects } = props;
   const [search, setSearch] = useState("");
 
   const handleSearch = (e) => {
@@ -83,7 +83,7 @@ const NavBar = (props) => {
                       </NavLink>
 
                       <div className=" relative py-2">
-                        {messageAlert.length   ? (
+                        {messageAlert.length ? (
                           <span className="flex h-3 w-3 absolute right-1">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500"></span>
                             <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
@@ -125,22 +125,33 @@ const NavBar = (props) => {
                         leaveFrom="transform opacity-100 scale-100"
                         leaveTo="transform opacity-0 scale-95"
                       >
-                        <Menu.Items className="origin-top-right absolute right-0 mt-2 w-36 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                          {userNavigation.map((item) => (
-                            <Menu.Item key={item.name}>
-                              {({ active }) => (
-                                <button
-                                  onClick={item.action}
-                                  className={classNames(
-                                    active ? "bg-gray-100 " : "",
-                                    "block w-full px-4 py-2 text-sm cursor-pointer text-gray-700"
-                                  )}
-                                >
-                                  {item.name}
-                                </button>
-                              )}
-                            </Menu.Item>
-                          ))}
+                        <Menu.Items className="origin-top-right absolute right-0 mt-2 w-36 rounded-md shadow-lg  bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                          <Menu.Item>
+                            {({ active }) => (
+                              <NavLink
+                                to="/profile"
+                                className={classNames(
+                                  active ? "bg-gray-100 " : "",
+                                  "block w-full px-4 py-2 text-sm cursor-pointer rounded-md  text-gray-700 hover:text-buttonHover hover:bg-mainColor"
+                                )}
+                              >
+                                Your Profile
+                              </NavLink>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <button
+                                onClick={logOutUser}
+                                className={classNames(
+                                  active ? "bg-gray-100 " : "",
+                                  "block w-full px-4 py-2 text-sm cursor-pointer rounded-md  text-gray-700 hover:text-buttonHover hover:bg-mainColor"
+                                )}
+                              >
+                                Log Out
+                              </button>
+                            )}
+                          </Menu.Item>
                         </Menu.Items>
                       </Transition>
                     </Menu>
